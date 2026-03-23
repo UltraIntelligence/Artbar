@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Artbar Tokyo | Paint & Sip Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              // Updated Body Font Stack to use variable with fallbacks
+              sans: ['var(--font-body)', '"ヒラギノ角ゴ ProN W3"', '"Hiragino Kaku Gothic ProN"', '"游ゴシック"', 'YuGothic', '"メイリオ"', 'Meiryo', 'sans-serif'],
+              // New Heading Font using variable
+              heading: ['var(--font-heading)', '"Josefin Sans"', 'sans-serif'],
+            },
+            fontWeight: {
+              // Re-map bold to 600 as the main usage for headers
+              bold: '600',
+              // Add heavy for 700 weight (h1s)
+              heavy: '700',
+            },
+            colors: {
+              artbar: {
+                // New Approved Brand Colors
+                navy: '#053761',    // Primary Brand Color (Was #003B5C)
+                taupe: '#A39384',   // Secondary/Accent (Was Gold/Orange)
+                'light-taupe': '#D1C7B8', 
+                bg: '#F1EFEC',      // Background (Was Beige)
+                gray: '#797979',    // Text Gray
+                blue: '#3E6686',    // Lighter Blue
+                
+                // Backward Compatibility Mappings
+                gold: '#A39384',    // Mapping old gold to new Taupe
+                beige: '#F1EFEC',   // Mapping old beige to new Off-white
+                orange: '#A39384',  // Mapping old orange CTA to Taupe (or could use blue #3E6686)
+                text: '#053761',    // Deep Navy for text
+              }
+            },
+            borderRadius: {
+              '2xl': '1rem',
+              '3xl': '1.5rem',
+              '4xl': '2.5rem',
+              '5xl': '3rem',
+            },
+            keyframes: {
+              "fade-in": {
+                "0%": { opacity: "0" },
+                "100%": { opacity: "1" },
+              },
+              "slide-in-from-top-2": {
+                "0%": { transform: "translateY(-0.5rem)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              "slide-in-from-top-4": {
+                "0%": { transform: "translateY(-1rem)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              "slide-in-from-top-5": {
+                "0%": { transform: "translateY(-1.25rem)", opacity: "0" },
+                "100%": { transform: "translateY(0)", opacity: "1" },
+              },
+              "zoom-in-95": {
+                "0%": { transform: "scale(0.95)", opacity: "0" },
+                "100%": { transform: "scale(1)", opacity: "1" },
+              }
+            },
+            animation: {
+              "in": "fade-in 0.2s ease-out", 
+              "fade-in": "fade-in 0.3s ease-out",
+              "slide-in-from-top-2": "slide-in-from-top-2 0.3s ease-out",
+              "slide-in-from-top-4": "slide-in-from-top-4 0.5s ease-out",
+              "slide-in-from-top-5": "slide-in-from-top-5 0.3s ease-out",
+              "zoom-in-95": "zoom-in-95 0.2s ease-out",
+            },
+          }
+        }
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/index.css">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

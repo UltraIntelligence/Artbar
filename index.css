@@ -1,0 +1,72 @@
+
+/* 
+  Since we are using the Tailwind CDN in index.html, 
+  we do not need @tailwind directives here.
+  We place global custom CSS here instead.
+*/
+
+:root {
+  --font-heading: 'Josefin Sans';
+  --font-body: 'Hiragino Kaku Gothic ProN';
+}
+
+body {
+  background-color: #F1EFEC;
+  color: #053761;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide Scrollbar Utilities */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animation Utilities to mimic tailwindcss-animate plugin */
+.animate-in {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.fade-in {
+  animation-name: fade-in-kf;
+}
+
+.slide-in-from-top-4 {
+  animation-name: slide-in-top-4-kf;
+}
+
+.slide-in-from-top-2 {
+  animation-name: slide-in-top-2-kf;
+}
+
+.zoom-in-95 {
+  animation-name: zoom-in-95-kf;
+}
+
+@keyframes fade-in-kf {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-top-4-kf {
+  from { transform: translateY(-1rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-in-top-2-kf {
+  from { transform: translateY(-0.5rem); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoom-in-95-kf {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}

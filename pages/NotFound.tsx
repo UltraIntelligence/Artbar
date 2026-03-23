@@ -1,0 +1,23 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '../components/ui/Button';
+import { useContent } from '../context/ContentContext';
+
+export const NotFound: React.FC = () => {
+  const { site } = useContent();
+  
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg text-center px-6">
+      <h1 className="text-9xl font-heading font-heavy text-artbar-taupe mb-4 opacity-50 select-none">404</h1>
+      <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy mb-6">Page Not Found</h2>
+      <p className="text-artbar-gray text-lg mb-10 max-w-md leading-relaxed">
+        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+      <Link to="/">
+        <Button className="bg-artbar-navy text-white hover:bg-artbar-taupe border-none rounded-full px-8 py-4 text-lg shadow-lg">
+          Back to Home
+        </Button>
+      </Link>
+    </div>
+  );
+};
