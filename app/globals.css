@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* ─── Brand Tokens ─────────────────────────────────────── */
+@theme {
+  /* Colors */
+  --color-artbar-navy: #053761;
+  --color-artbar-taupe: #A39384;
+  --color-artbar-light-taupe: #D1C7B8;
+  --color-artbar-bg: #F1EFEC;
+  --color-artbar-gray: #797979;
+  --color-artbar-blue: #3E6686;
+  /* Backward-compat aliases */
+  --color-artbar-gold: #A39384;
+  --color-artbar-beige: #F1EFEC;
+  --color-artbar-orange: #A39384;
+  --color-artbar-text: #053761;
+
+  /* Font families */
+  --font-family-sans: var(--font-body), "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+    "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+  --font-family-heading: var(--font-heading), "Josefin Sans", sans-serif;
+
+  /* Border radius */
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2.5rem;
+  --radius-5xl: 3rem;
+
+  /* Animations */
+  --animate-in: fade-in 0.2s ease-out;
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-in-from-top-2: slide-in-from-top-2 0.3s ease-out;
+  --animate-slide-in-from-top-4: slide-in-from-top-4 0.5s ease-out;
+  --animate-slide-in-from-top-5: slide-in-from-top-5 0.3s ease-out;
+  --animate-zoom-in-95: zoom-in-95 0.2s ease-out;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slide-in-from-top-2 {
+  from { transform: translateY(-0.5rem); opacity: 0; }
+  to   { transform: translateY(0);       opacity: 1; }
+}
+@keyframes slide-in-from-top-4 {
+  from { transform: translateY(-1rem);   opacity: 0; }
+  to   { transform: translateY(0);       opacity: 1; }
+}
+@keyframes slide-in-from-top-5 {
+  from { transform: translateY(-1.25rem); opacity: 0; }
+  to   { transform: translateY(0);        opacity: 1; }
+}
+@keyframes zoom-in-95 {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ─── Base Styles ───────────────────────────────────────── */
+:root {
+  --font-heading: 'Josefin Sans';
+  --font-body: 'Hiragino Kaku Gothic ProN';
+}
+
+body {
+  background-color: #F1EFEC;
+  color: #053761;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Utility Classes ───────────────────────────────────── */
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.animate-in { animation-duration: 0.5s; animation-timing-function: ease-out; animation-fill-mode: forwards; }
+.fade-in           { animation-name: fade-in; }
+.slide-in-from-top-4 { animation-name: slide-in-from-top-4; }
+.slide-in-from-top-2 { animation-name: slide-in-from-top-2; }
+.zoom-in-95        { animation-name: zoom-in-95; }
+
+/* Font weight utilities matching old Tailwind config */
+.font-bold  { font-weight: 600; }
+.font-heavy { font-weight: 700; }
