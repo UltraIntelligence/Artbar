@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Upload, Sparkles, Image as ImageIcon, Download, Loader2, RotateCcw } from 'lucide-react';
 import { Button } from './ui/Button';
-import { GoogleGenAI } from "@google/genai";
 
 export const PetSketcher: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -60,56 +59,19 @@ export const PetSketcher: React.FC = () => {
   const generateSketch = async () => {
     if (!image) return;
     setLoading(true);
-
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      // Image is now guaranteed to be image/jpeg from handleFileUpload
       const base64Data = image.split(',')[1];
-      const mimeType = 'image/jpeg';
-
-      // Prompt asking for a visual transformation, not code
-      const prompt = `
-        Create a high-quality, black and white line drawing of this pet.
-        Style: Realistic sketch, clean lines, white background.
-        Focus on the facial features and fur texture.
-        Do not add color. Make it look like a coloring book page.
-      `;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-            parts: [
-                { inlineData: { mimeType, data: base64Data } },
-                { text: prompt }
-            ]
-        }
+      const res = await fetch('/api/generate-sketch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageBase64: base64Data }),
       });
-
-      // Parse the response for IMAGE data, not text
-      let foundImage = false;
-      const parts = response.candidates?.[0]?.content?.parts;
-      
-      if (parts) {
-        for (const part of parts) {
-            if (part.inlineData) {
-                const imgBase64 = part.inlineData.data;
-                const imgMime = part.inlineData.mimeType || 'image/png';
-                setGeneratedImage(`data:${imgMime};base64,${imgBase64}`);
-                foundImage = true;
-                break;
-            }
-        }
-      }
-
-      if (!foundImage) {
-          // Fallback if the model refused and sent text instead
-          console.warn("Model returned text:", response.text);
-          alert("The AI couldn't generate an image this time. Please try a different photo.");
-      }
-
+      if (!res.ok) throw new Error('API error');
+      const { imageBase64, mimeType } = await res.json();
+      setGeneratedImage(`data:${mimeType};base64,${imageBase64}`);
     } catch (error) {
-      console.error("Sketch generation failed", error);
-      alert("Something went wrong. Please check your connection or try a smaller image.");
+      console.error('Sketch generation failed', error);
+      alert('Something went wrong. Please check your connection or try a smaller image.');
     } finally {
       setLoading(false);
     }
