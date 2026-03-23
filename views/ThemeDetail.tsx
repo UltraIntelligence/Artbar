@@ -5,7 +5,6 @@ import React from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
-import { SEO } from '../components/SEO';
 import { Button } from '../components/ui/Button';
 import { 
   MapPin, Sparkles, Paintbrush, Wind, Wine, Heart, 
@@ -478,8 +477,6 @@ export const ThemeDetail: React.FC = () => {
 
   return (
     <div className="bg-artbar-bg min-h-screen">
-      <SEO title={theme.seoTitle} description={theme.seoDesc} slug={`/themes/${slug}`} />
-
       {/* Hero Section */}
       <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-16 md:py-0">
         <img 

@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
-import { SEO } from '../components/SEO';
-
 export const BlogPost: React.FC = () => {
   const params = useParams();
   const slug = params.slug as string;
@@ -47,15 +45,6 @@ export const BlogPost: React.FC = () => {
 
   return (
     <div className="bg-artbar-bg min-h-screen pb-20">
-      <SEO 
-        title={title}
-        description={excerpt}
-        image={post.image}
-        type="article"
-        slug={`/blog/${post.slug}`}
-        schema={articleSchema}
-      />
-      
       {/* Hero Image */}
       <div className="relative h-[50vh] md:h-[60vh] w-full overflow-hidden">
         <img src={post.image} alt={title} className="absolute inset-0 w-full h-full object-cover" />

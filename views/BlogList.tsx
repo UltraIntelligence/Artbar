@@ -4,20 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
 import { ArrowRight, Calendar, User } from 'lucide-react';
-import { SEO } from '../components/SEO';
-
 export const BlogList: React.FC = () => {
   const { content, site, lang } = useContent();
   const posts = content.blog.filter(p => p.published);
 
   return (
     <div className="pt-40 pb-20 bg-artbar-bg min-h-screen">
-      <SEO 
-        title={site.blogPage.title}
-        description={site.blogPage.subtitle}
-        slug="/blog"
-      />
-
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         
         {/* Header */}

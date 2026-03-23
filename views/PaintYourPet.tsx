@@ -5,20 +5,12 @@ import { useContent } from '../context/ContentContext';
 import { Button } from '../components/ui/Button';
 import { PetSketcher } from '../components/PetSketcher';
 import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
-import { SEO } from '../components/SEO';
-
 export const PaintYourPet: React.FC = () => {
   const { site, lang } = useContent();
   const content = site.paintYourPet;
 
   return (
     <div className="pt-32 pb-20 bg-artbar-bg min-h-screen">
-      <SEO 
-        title={content.title}
-        description={content.subtitle}
-        slug="/paint-your-pet"
-      />
-
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         
         {/* Header */}

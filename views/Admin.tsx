@@ -5,8 +5,6 @@ import { useContent } from '../context/ContentContext';
 import { Button } from '../components/ui/Button';
 import { Save, RotateCcw, Check, Plus, Trash2, Image as ImageIcon, ChevronDown, ChevronUp, Layout, Users, MapPin, Newspaper, Settings, Briefcase, PartyPopper, BookOpen, Wand2, Sparkles, Loader2, X, RotateCcw as Reload, AlertCircle, Edit3 } from 'lucide-react';
 import { ContentData } from '../types';
-import { GoogleGenAI } from "@google/genai";
-
 // --- Types & Helpers ---
 
 const updateNested = (obj: any, path: string[], value: any): any => {
@@ -178,50 +176,27 @@ const ImageInput: React.FC<{ label: string; path: string[]; localContent: Conten
 
   const generateImage = async () => {
     if (!prompt.trim()) return;
-    if (!process.env.API_KEY) {
-      setError("API Key missing. Cannot generate image.");
-      return;
-    }
 
     setIsGenerating(true);
     setGeneratedPreview(null);
     setError(null);
-    
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash-image',
-        contents: {
-            parts: [{ text: prompt }]
-        },
-        config: {
-            imageConfig: {
-                aspectRatio: aspectRatio
-            }
-        }
-      });
 
-      let foundImage = false;
-      if (response.candidates?.[0]?.content?.parts) {
-        for (const part of response.candidates[0].content.parts) {
-          if (part.inlineData) {
-            const base64 = part.inlineData.data;
-            const mimeType = part.inlineData.mimeType || 'image/png';
-            const dataUrl = `data:${mimeType};base64,${base64}`;
-            setGeneratedPreview(dataUrl);
-            foundImage = true;
-            break; 
-          }
-        }
-      }
-      
-      if (!foundImage) {
+    try {
+      const res = await fetch('/api/generate-sketch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, aspectRatio }),
+      });
+      if (!res.ok) throw new Error('API error');
+      const { imageBase64, mimeType } = await res.json();
+      if (imageBase64) {
+        setGeneratedPreview(`data:${mimeType};base64,${imageBase64}`);
+      } else {
         setError("The model generated text instead of an image. Try refining your prompt.");
       }
-
     } catch (err: any) {
       console.error("Generation error:", err);
-      setError("Generation failed. Please check your API key and try again.");
+      setError("Generation failed. Please try again.");
     } finally {
       setIsGenerating(false);
     }
@@ -350,49 +325,22 @@ const MagicBlogWriter: React.FC<MagicWriterProps> = ({ isOpen, onClose, onApply 
 
     const generate = async () => {
         if (!topic.trim()) return;
-        if (!process.env.API_KEY) {
-          alert("API Key missing. Cannot generate text.");
-          return;
-        }
 
         setIsGenerating(true);
         setPreview(null);
 
         try {
-            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.5-flash',
-                contents: `
-                Role: You are the Editor-in-Chief of "Artbar Tokyo", a sophisticated paint & sip studio in Japan.
-                Brand Voice: ${tone}. Use terms like "大人の隠れ家" (Adult Hideaway), "Mindfulness", "Creativity".
-                Task: Write a blog post about: "${topic}".
-                
-                Requirements:
-                1. Bilingual (English & Japanese).
-                2. English should be magazine-quality (Monocle, Kinfolk style).
-                3. Japanese should be natural, modern, and polite (not robotic).
-                4. Use HTML tags (<p>, <h3>, <ul>, <li>) for the content fields. No markdown formatting outside the HTML.
-                
-                Return ONLY a JSON object with this structure:
-                {
-                    "titleEn": "...",
-                    "titleJp": "...",
-                    "excerptEn": "...",
-                    "excerptJp": "...",
-                    "contentEn": "...",
-                    "contentJp": "..."
-                }
-                `,
-                config: {
-                    responseMimeType: "application/json"
-                }
+            const res = await fetch('/api/generate-sketch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic, tone }),
             });
-            
-            const responseText = response.text || "{}";
-            // ROBUST PARSING: Clean any markdown blocks
-            const cleanText = cleanJson(responseText);
-            setPreview(JSON.parse(cleanText));
-
+            if (!res.ok) throw new Error('API error');
+            const data = await res.json();
+            if (data.blog) {
+                const cleanText = cleanJson(data.blog);
+                setPreview(JSON.parse(cleanText));
+            }
         } catch (e) {
             console.error("Magic Writer Error", e);
             alert("Failed to generate content. Please try again.");

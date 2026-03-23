@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef } from 'react';
 import { Upload, Sparkles, Image as ImageIcon, Download, Loader2, RotateCcw } from 'lucide-react';
 import { Button } from './ui/Button';

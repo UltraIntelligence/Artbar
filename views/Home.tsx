@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { SEO } from '../components/SEO';
-
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
@@ -116,12 +114,6 @@ export const Home: React.FC = () => {
         }
       `}</style>
       
-      <SEO 
-        title={lang === 'en' ? "Paint & Sip Studio" : "ペイント＆シップ スタジオ"}
-        description={site.home.hero.subtitle}
-        schema={orgSchema}
-      />
-
       {/* Hero Section */}
       <section className="relative h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0 md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
@@ -594,7 +586,7 @@ export const Home: React.FC = () => {
                    {site.home.cta.btnBook}
                  </Button>
                  <Button 
-                   onClick={() => window.location.href = '#/contact'}
+                   onClick={() => router.push('/contact')}
                    variant="outline"
                    className="border-white text-white hover:bg-white hover:text-artbar-navy px-10 py-4 md:py-5 text-base md:text-lg rounded-full w-full sm:w-auto min-w-[200px] pt-5 pb-4"
                  >

@@ -5,9 +5,6 @@ import { Navigation, Star, MapPin, Loader2, Info, Sparkles } from 'lucide-react'
 import { Logo } from '../components/Logo';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { GoogleGenAI } from "@google/genai";
-import { SEO } from '../components/SEO';
-
 export const Locations: React.FC = () => {
   const { lang, content, site } = useContent();
   
@@ -26,25 +23,18 @@ export const Locations: React.FC = () => {
     // If already loaded, don't fetch again
     if (insights[id]) return;
 
-    if (!process.env.API_KEY) {
-      alert("API Key is missing. Cannot fetch AI insights.");
-      return;
-    }
-
     setLoading((prev) => ({ ...prev, [id]: true }));
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: `Find the place "${name}" located at "${address}" on Google Maps. 
-                   Provide a concise summary (max 2 sentences) including its star rating (e.g., "4.8 Stars") and what people love about it.`,
-        config: {
-          tools: [{ googleMaps: {} }],
-        },
+      const res = await fetch('/api/generate-sketch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ locationName: name, locationAddress: address }),
       });
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
 
-      const text = response.text || "Could not fetch insights at this time.";
-      const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks || [];
+      const text = data.insight || "Could not fetch insights at this time.";
+      const chunks = data.chunks || [];
 
       if (isMounted.current) {
         setInsights((prev) => ({ ...prev, [id]: { text, chunks } }));
@@ -52,9 +42,9 @@ export const Locations: React.FC = () => {
     } catch (error) {
       console.error("Failed to fetch location insights:", error);
       if (isMounted.current) {
-        setInsights((prev) => ({ 
-            ...prev, 
-            [id]: { text: "Unable to load Google Maps data.", chunks: [] } 
+        setInsights((prev) => ({
+            ...prev,
+            [id]: { text: "Unable to load Google Maps data.", chunks: [] }
         }));
       }
     } finally {
@@ -66,12 +56,6 @@ export const Locations: React.FC = () => {
 
   return (
     <div className="pt-24 md:pt-32 pb-16 md:pb-20 bg-artbar-bg min-h-screen">
-      <SEO 
-        title={site.nav.locations}
-        description={lang === 'en' ? "Find your nearest Artbar studio in Tokyo, Yokohama, and Osaka." : "東京、横浜、大阪のArtbarスタジオを探す。"}
-        slug="/locations"
-      />
-
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         
         {/* Page Header */}
