@@ -330,15 +330,16 @@ const MagicBlogWriter: React.FC<MagicWriterProps> = ({ isOpen, onClose, onApply 
         setPreview(null);
 
         try {
-            const res = await fetch('/api/generate-sketch', {
+            const prompt = `You are a creative writer for Artbar Tokyo, an art and wine experience studio. Write a bilingual (English and Japanese) blog article about the following topic with a ${tone} tone.\n\nTopic: ${topic}\n\nReturn a JSON object with fields: titleEn, titleJp, bodyEn, bodyJp, excerpt.`;
+            const res = await fetch('/api/ai-text', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ topic, tone }),
+                body: JSON.stringify({ prompt }),
             });
             if (!res.ok) throw new Error('API error');
             const data = await res.json();
-            if (data.blog) {
-                const cleanText = cleanJson(data.blog);
+            if (data.text) {
+                const cleanText = cleanJson(data.text);
                 setPreview(JSON.parse(cleanText));
             }
         } catch (e) {

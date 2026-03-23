@@ -25,16 +25,17 @@ export const Locations: React.FC = () => {
 
     setLoading((prev) => ({ ...prev, [id]: true }));
     try {
-      const res = await fetch('/api/generate-sketch', {
+      const prompt = `You are a helpful assistant for Artbar Tokyo. Write a short, engaging 2-3 sentence AI summary about the following location that highlights its atmosphere and local area for visitors.\n\nLocation: ${name}\nAddress: ${address}`;
+      const res = await fetch('/api/ai-text', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ locationName: name, locationAddress: address }),
+        body: JSON.stringify({ prompt }),
       });
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
 
-      const text = data.insight || "Could not fetch insights at this time.";
-      const chunks = data.chunks || [];
+      const text = data.text || "Could not fetch insights at this time.";
+      const chunks: any[] = [];
 
       if (isMounted.current) {
         setInsights((prev) => ({ ...prev, [id]: { text, chunks } }));
