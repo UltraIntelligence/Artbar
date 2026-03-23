@@ -4,30 +4,31 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Artbar Tokyo (artbar.co.jp) — a bilingual (EN/JP) marketing site for a paint-and-sip studio business in Tokyo. Recently migrated from WordPress to a React SPA. Includes an AI-powered pet sketch feature using Google Gemini.
+Artbar Tokyo (artbar.co.jp) — a bilingual (EN/JP) marketing site for a paint-and-sip studio business in Tokyo. Migrated from WordPress to a Next.js 15 App Router site. Includes an AI-powered pet sketch feature using Google Gemini.
 
 **GitHub:** https://github.com/UltraIntelligence/Artbar
 
 ## Commands
 
 ```bash
-npm run dev      # Vite dev server on http://localhost:3000
+npm run dev      # Next.js dev server on http://localhost:3000
 npm run build    # Production build
-npm run preview  # Preview production build
+npm run start    # Start production server
 ```
 
 No test framework is configured.
 
 ## Architecture
 
-**Stack:** React 19 + TypeScript + Vite 6 + Tailwind CSS v4 (CDN) + HashRouter
+**Stack:** React 19 + TypeScript + Next.js 15 (App Router) + Tailwind CSS v4 (PostCSS)
 
 ### Key architectural decisions
 
-- **Client-side SPA** with hash-based routing (`/#/path`) — no SSR/SSG
-- **Tailwind via CDN** in `index.html` (not PostCSS) — theme colors, fonts, and animations are configured inline in the `<script>` tag in `index.html`, not in a tailwind config file
-- **ES module import map** in `index.html` for React, React-DOM, Router, Lucide, and Google GenAI
+- **Next.js 15 App Router** with file-based routing in `app/` — supports SSR and Server Components
+- **Tailwind v4 via PostCSS** — theme tokens configured in `app/globals.css`, not a JS config file
+- **Server Components** for route files (`app/**/page.tsx`, `app/layout.tsx`); client components for views and interactive UI
 - **No backend/database** — all content lives in `data/content.ts` with localStorage persistence for admin edits (key: `artbar_content_v5`)
+- **Server-side AI route** at `/api/generate-sketch` — Gemini API key stays server-side
 
 ### Content & i18n system
 
@@ -40,20 +41,22 @@ No test framework is configured.
 
 ### File organization
 
-- `pages/` — route-level components (one per route in `App.tsx`)
+- `app/` — route files: `page.tsx` per route, `layout.tsx`, `globals.css`, `not-found.tsx`, `robots.ts`, `sitemap.ts`, and API routes under `app/api/`
+- `views/` — client-side page components (`'use client'`), one per route (e.g. `Home.tsx`, `BlogPost.tsx`)
 - `components/` — shared UI (`Navbar`, `Footer`, `SEO`, `PetSketcher`, `Logo`, etc.)
 - `components/ui/` — primitives (`Button`)
+- `context/` — `ContentContext.tsx` (`'use client'`)
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
 - `constants.ts` — app constants
 
 ### Routing
 
-Routes are defined in `App.tsx` using `react-router-dom` v7 `HashRouter`. Key routes: `/`, `/instructors`, `/team-building`, `/private-parties`, `/locations`, `/press`, `/contact`, `/blog`, `/blog/:slug`, `/paint-your-pet`, `/themes/:slug`, `/admin`.
+Routes are file-based in `app/`. Key routes: `/`, `/instructors`, `/team-building`, `/private-parties`, `/locations`, `/press`, `/contact`, `/blog`, `/blog/[slug]`, `/paint-your-pet`, `/themes/[slug]`, `/admin`.
 
 ### AI Feature (PetSketcher)
 
-`components/PetSketcher.tsx` uses `@google/genai` to generate line-art sketches from pet photos via Gemini. Images are normalized to JPEG and resized to max 1536px before sending.
+`components/PetSketcher.tsx` uploads a pet photo and calls the server-side route `app/api/generate-sketch/route.ts`, which uses `@google/genai` to generate line-art sketches via Gemini. Images are normalized to JPEG and resized to max 1536px before sending.
 
 ## Environment Variables
 
@@ -62,7 +65,7 @@ Create `.env.local` with:
 GEMINI_API_KEY=your_key_here
 ```
 
-Vite injects this as `process.env.API_KEY` and `process.env.GEMINI_API_KEY` (see `vite.config.ts` `define` block).
+The API key is read server-side in `app/api/generate-sketch/route.ts` via `process.env.GEMINI_API_KEY`.
 
 ## Design Tokens
 
@@ -73,8 +76,8 @@ Vite injects this as `process.env.API_KEY` and `process.env.GEMINI_API_KEY` (see
 - **Heading font:** Josefin Sans (weights 600, 700) — class `font-heading`
 - **Body font:** system Japanese stack (Hiragino Kaku Gothic ProN, Meiryo)
 
-These are defined in the Tailwind config inside `index.html`, referenced as `text-artbar-navy`, `bg-artbar-taupe`, etc.
+These are defined in `app/globals.css` under `@theme`, referenced as `text-artbar-navy`, `bg-artbar-taupe`, etc.
 
 ## SEO & Migration
 
-The site was migrated from WordPress (see `migration.md`). The `SEO` component (`components/SEO.tsx`) handles meta tags, OG tags, and JSON-LD structured data using React 19's automatic head hoisting. A `vercel.json` with 301 redirects from old WordPress URL patterns is planned but not yet created.
+The site was migrated from WordPress (see `migration.md`). The `SEO` component (`components/SEO.tsx`) handles meta tags, OG tags, and JSON-LD structured data. A `vercel.json` with 301 redirects from old WordPress URL patterns is in place.
