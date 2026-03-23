@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Navigation, Star, MapPin, Loader2, Info, Sparkles } from 'lucide-react';
 import { Logo } from '../components/Logo';

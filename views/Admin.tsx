@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useContent } from '../context/ContentContext';
 import { Button } from '../components/ui/Button';

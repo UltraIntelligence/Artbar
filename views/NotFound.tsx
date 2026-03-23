@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
 
@@ -13,7 +15,7 @@ export const NotFound: React.FC = () => {
       <p className="text-artbar-gray text-lg mb-10 max-w-md leading-relaxed">
         The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
       </p>
-      <Link to="/">
+      <Link href="/">
         <Button className="bg-artbar-navy text-white hover:bg-artbar-taupe border-none rounded-full px-8 py-4 text-lg shadow-lg">
           Back to Home
         </Button>

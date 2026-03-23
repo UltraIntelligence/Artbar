@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import { SEO } from '../components/SEO';
@@ -34,7 +36,7 @@ export const BlogList: React.FC = () => {
             
             return (
               <article key={post.id} className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-gray-100">
-                <Link to={`/blog/${post.slug}`} className="block relative overflow-hidden aspect-[4/3]">
+                <Link href={`/blog/${post.slug}`} className="block relative overflow-hidden aspect-[4/3]">
                   <img 
                     src={post.image} 
                     alt={title}
@@ -58,7 +60,7 @@ export const BlogList: React.FC = () => {
                      <span className="flex items-center gap-1"><User size={12} /> {author}</span>
                   </div>
                   
-                  <Link to={`/blog/${post.slug}`} className="block group-hover:text-artbar-taupe transition-colors">
+                  <Link href={`/blog/${post.slug}`} className="block group-hover:text-artbar-taupe transition-colors">
                      <h2 className="text-2xl font-heading font-bold text-artbar-navy mb-4 leading-tight">{title}</h2>
                   </Link>
                   
@@ -67,7 +69,7 @@ export const BlogList: React.FC = () => {
                   </p>
 
                   <Link 
-                    to={`/blog/${post.slug}`} 
+                    href={`/blog/${post.slug}`} 
                     className="inline-flex items-center gap-2 font-heading font-bold text-artbar-navy hover:text-artbar-taupe transition-colors text-sm uppercase tracking-wider mt-auto"
                   >
                     {site.blogPage.readMore} <ArrowRight size={16} />

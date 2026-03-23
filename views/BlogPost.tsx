@@ -1,11 +1,15 @@
+'use client';
+
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { SEO } from '../components/SEO';
 
 export const BlogPost: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const slug = params.slug as string;
   const { content, lang, site } = useContent();
 
   const post = content.blog.find(p => p.slug === slug);
@@ -14,7 +18,7 @@ export const BlogPost: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg">
         <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4">Article Not Found</h1>
-        <Link to="/blog" className="text-artbar-taupe hover:underline">Back to Journal</Link>
+        <Link href="/blog" className="text-artbar-taupe hover:underline">Back to Journal</Link>
       </div>
     );
   }
@@ -59,7 +63,7 @@ export const BlogPost: React.FC = () => {
         <div className="absolute top-32 left-0 w-full px-6">
            <div className="max-w-[1000px] mx-auto">
              <Link 
-              to="/blog" 
+              href="/blog" 
               className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/30 transition-colors"
              >
                <ArrowLeft size={16} /> {site.blogPage.back}
@@ -125,7 +129,7 @@ export const BlogPost: React.FC = () => {
          <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">More from the Journal</h3>
          <div className="grid md:grid-cols-2 gap-8">
             {content.blog.filter(p => p.id !== post.id).slice(0, 2).map(p => (
-               <Link key={p.id} to={`/blog/${p.slug}`} className="bg-white rounded-2xl p-6 flex gap-4 items-center hover:shadow-lg transition-all">
+               <Link key={p.id} href={`/blog/${p.slug}`} className="bg-white rounded-2xl p-6 flex gap-4 items-center hover:shadow-lg transition-all">
                   <img src={p.image} alt={p.titleEn} className="w-24 h-24 rounded-xl object-cover" />
                   <div>
                      <h4 className="font-heading font-bold text-artbar-navy mb-2 line-clamp-2">{lang === 'en' ? p.titleEn : p.titleJp}</h4>

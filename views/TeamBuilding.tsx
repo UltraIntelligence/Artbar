@@ -1,12 +1,14 @@
+'use client';
+
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { site, content } = useContent();
 
   const scroll = (direction: 'left' | 'right') => {
@@ -72,7 +74,7 @@ export const TeamBuilding: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 w-full px-4 sm:px-0">
             <Button 
-              onClick={() => navigate('/contact')}
+              onClick={() => router.push('/contact')}
               className="bg-artbar-taupe text-white hover:bg-opacity-90 border-none px-8 py-4 md:px-10 md:py-5 h-auto text-base md:text-lg rounded-full shadow-xl w-full sm:w-auto"
             >
                {site.teamBuilding.hero.cta}
@@ -205,7 +207,7 @@ export const TeamBuilding: React.FC = () => {
               </div>
               <div className="md:w-1/2 flex justify-end w-full">
                  <Button 
-                    onClick={() => navigate('/contact')}
+                    onClick={() => router.push('/contact')}
                     className="bg-artbar-navy text-white hover:bg-artbar-taupe border-none py-4 px-8 text-lg rounded-2xl shadow-lg w-full md:w-auto"
                  >
                     {site.teamBuilding.specialty.cta}
@@ -295,7 +297,7 @@ export const TeamBuilding: React.FC = () => {
                       <div className="flex justify-between text-sm"><span className="opacity-80">{site.teamBuilding.pricing.feeLabel}</span><span className="font-bold">{site.teamBuilding.pricing.feePrice}</span></div>
                       <div className="flex justify-between text-sm"><span className="opacity-80">{site.teamBuilding.pricing.offsiteLabel}</span><span className="font-bold">{site.teamBuilding.pricing.offsitePrice}</span></div>
                    </div>
-                   <Button onClick={() => navigate('/contact')} className="w-full bg-artbar-taupe hover:bg-white hover:text-artbar-navy border-none py-5 rounded-xl font-bold text-lg transition-all mt-4">{site.teamBuilding.pricing.cta}</Button>
+                   <Button onClick={() => router.push('/contact')} className="w-full bg-artbar-taupe hover:bg-white hover:text-artbar-navy border-none py-5 rounded-xl font-bold text-lg transition-all mt-4">{site.teamBuilding.pricing.cta}</Button>
                 </div>
               </div>
             </div>

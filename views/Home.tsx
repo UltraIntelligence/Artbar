@@ -1,13 +1,16 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { Wine, Star, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Newspaper } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
 import { SEO } from '../components/SEO';
 
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
-  const navigate = useNavigate();
+  const router = useRouter();
   const theme = content.theme.typography;
   
   // Testimonial cycling logic
@@ -294,7 +297,7 @@ export const Home: React.FC = () => {
                </div>
                
                <Button 
-                  onClick={() => navigate('/team-building')}
+                  onClick={() => router.push('/team-building')}
                   size="lg"
                   className="bg-artbar-taupe hover:bg-opacity-90 text-white border-none rounded-full px-12 py-4 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2"
                >
@@ -426,7 +429,7 @@ export const Home: React.FC = () => {
               return (
                 <Link 
                   key={index} 
-                  to={`/themes/${slug}`}
+                  href={`/themes/${slug}`}
                   className="group relative h-[300px] md:h-[500px] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
                 >
                   <img 
@@ -488,7 +491,7 @@ export const Home: React.FC = () => {
             {site.home.testimonials.items.map((item, index) => (
               <div key={index} className="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 relative flex flex-col h-full">
                  <div className="absolute top-6 right-6 md:top-8 md:right-8 text-artbar-taupe opacity-20">
-                    <Heart size={32} md:size={40} fill="currentColor" />
+                    <Heart size={32} fill="currentColor" />
                  </div>
                  <div className="flex items-center gap-1.5 text-yellow-400 mb-6">
                     <Star size={14} fill="currentColor" />

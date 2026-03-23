@@ -1,6 +1,9 @@
+'use client';
+
 
 import React from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { SEO } from '../components/SEO';
 import { Button } from '../components/ui/Button';
@@ -464,8 +467,9 @@ const DISCOVERY_CATEGORIES = [
 ];
 
 export const ThemeDetail: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
+  const params = useParams();
+  const slug = params.slug as string;
+  const router = useRouter();
   const theme = THEME_CONFIG[slug || ''] || THEME_CONFIG['japan-inspired'];
 
   const otherThemes = DISCOVERY_CATEGORIES
@@ -691,7 +695,7 @@ export const ThemeDetail: React.FC = () => {
               </p>
             </div>
             <Button 
-                onClick={() => navigate('/')}
+                onClick={() => router.push('/')}
                 variant="outline"
                 className="rounded-full px-10 py-2 border-artbar-navy text-artbar-navy hover:bg-artbar-navy hover:text-white w-full md:w-auto text-xs font-heading font-bold uppercase tracking-widest h-12 pt-3"
             >
@@ -701,7 +705,7 @@ export const ThemeDetail: React.FC = () => {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {otherThemes.map((t, i) => (
-              <Link key={i} to={`/themes/${t.slug}`} className="group relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500">
+              <Link key={i} href={`/themes/${t.slug}`} className="group relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500">
                 <img 
                   src={getPh(800, 1000, t.title)} 
                   alt={t.title}
