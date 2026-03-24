@@ -1,3 +1,13 @@
 .env*.local
 node_modules
 .next/
+
+# Dev / local tooling
+.DS_Store
+.cursor/
+.vercel/
+.playwright-mcp/
+tsconfig.tsbuildinfo
+
+# Duplicate Vite snapshot (main app is Next.js at repo root)
+SPA/

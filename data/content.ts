@@ -8,9 +8,7 @@ import {
   POPULAR_THEMES,
   SITE_IMAGES,
 } from '../constants';
-
-// Helper for the new placeholder format
-const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
+import { GI } from './generated-image-paths';
 
 export const defaultContent: ContentData = {
   theme: {
@@ -19,8 +17,9 @@ export const defaultContent: ContentData = {
       body: "Hiragino Kaku Gothic ProN"
     },
     typography: {
-      // Adjusted from text-6xl to text-5xl for a "tiny bit smaller" mobile look
-      heroTitle: "text-5xl sm:text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
+      // Mobile-first scale: avoid collision with fixed nav; sm+ steps match desktop impact
+      heroTitle:
+        'text-[clamp(1.65rem,5.2vw+0.6rem,2.25rem)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight',
       pageTitle: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
       sectionTitle: "text-3xl sm:text-4xl md:text-5xl",
       cardTitle: "text-2xl md:text-3xl",
@@ -34,20 +33,13 @@ export const defaultContent: ContentData = {
     logoLight: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_e.png", 
     hero: {
       home: SITE_IMAGES.hero.home,
-      teamBuilding: getPh(1920, 1080),
-      video: "/media/artbar-home-video-desktop.mp4",
-      videoMobile: "/media/artbar-home-video-mobile-3.mp4"
+      teamBuilding: SITE_IMAGES.hero.teamBuilding,
+      video: SITE_IMAGES.hero.video,
+      videoMobile: SITE_IMAGES.hero.videoMobile
     },
-    concept: {
-      main: getPh(1200, 800),
-      detail: getPh(800, 800)
-    },
-    features: {
-      drink: getPh(800, 600),
-      guide: getPh(800, 600),
-      bilingual: getPh(800, 600)
-    },
-    cta: getPh(2000, 600)
+    concept: SITE_IMAGES.concept,
+    features: SITE_IMAGES.features,
+    cta: SITE_IMAGES.cta
   },
   // Use imported constants
   instructors: INSTRUCTORS,
@@ -62,7 +54,7 @@ export const defaultContent: ContentData = {
       id: "13",
       slug: "yokohama-walk",
       published: true,
-      image: getPh(1200, 800),
+      image: GI.blog.yokohamaCover,
       date: "2024.03.20",
       tags: ["Travel", "Best Of List"],
       titleEn: "Project Spotlight: Yokohama Walk",
@@ -71,8 +63,8 @@ export const defaultContent: ContentData = {
       authorJp: "キャシー・トンプソン",
       excerptEn: "Introduction Yokohama, the second largest city in Japan, is a city known to locals for its mix of history and modern creative culture.",
       excerptJp: "日本で2番目に大きな都市、横浜。歴史と現代のクリエイティブカルチャーが融合した街として地元の人々に愛されています。",
-      contentEn: `<p>Introduction Yokohama, the second largest city in Japan, is a city known to locals for its mix of history and modern creative culture. Just a short train ride from Tokyo, it offers a completely different atmosphere with its open port, red brick warehouses, and Chinatown.</p><p>Join us as we explore the best spots for a creative day out, finishing, of course, with a relaxing session at our Yokohama Motomachi studio.</p><img src="${getPh(800, 500)}" alt="Yokohama Street" />`,
-      contentJp: `<p>日本で2番目に大きな都市、横浜。歴史と現代のクリエイティブカルチャーが融合した街として地元の人々に愛されています。東京から電車ですぐの場所にありながら、開港の歴史、赤レンガ倉庫、中華街など、全く異なる雰囲気を持っています。</p><p>クリエイティブな一日を過ごすためのベストスポットを探索し、最後はもちろん、横浜元町スタジオでのリラックスしたセッションで締めくくりましょう。</p><img src="${getPh(800, 500)}" alt="横浜の街並み" />`
+      contentEn: `<p>Introduction Yokohama, the second largest city in Japan, is a city known to locals for its mix of history and modern creative culture. Just a short train ride from Tokyo, it offers a completely different atmosphere with its open port, red brick warehouses, and Chinatown.</p><p>Join us as we explore the best spots for a creative day out, finishing, of course, with a relaxing session at our Yokohama Motomachi studio.</p><img src="${GI.blog.yokohamaInline}" alt="Yokohama Street" />`,
+      contentJp: `<p>日本で2番目に大きな都市、横浜。歴史と現代のクリエイティブカルチャーが融合した街として地元の人々に愛されています。東京から電車ですぐの場所にありながら、開港の歴史、赤レンガ倉庫、中華街など、全く異なる雰囲気を持っています。</p><p>クリエイティブな一日を過ごすためのベストスポットを探索し、最後はもちろん、横浜元町スタジオでのリラックスしたセッションで締めくくりましょう。</p><img src="${GI.blog.yokohamaInline}" alt="横浜の街並み" />`
     }
   ],
   
@@ -134,9 +126,9 @@ export const defaultContent: ContentData = {
         title: "The Artbar Experience",
         subtitle: "Everything you need for a perfect creative escape.",
         items: [
-          { title: "All-Inclusive", desc: "We provide all art materials, aprons, and guidance. Just bring yourself.", image: getPh(800, 600) },
-          { title: "Free-Flow Drinks", desc: "Enjoy wine, tea, coffee, and light snacks throughout your session.", image: getPh(800, 600) },
-          { title: "Bilingual Instruction", desc: "All sessions are taught in English and Japanese by our friendly instructors.", image: getPh(800, 600) }
+          { title: "All-Inclusive", desc: "We provide all art materials, aprons, and guidance. Just bring yourself.", image: GI.featureAllInclusive },
+          { title: "Free-Flow Drinks", desc: "Enjoy wine, tea, coffee, and light snacks throughout your session.", image: GI.featureFreeFlowDrinks },
+          { title: "Bilingual Instruction", desc: "All sessions are taught in English and Japanese by our friendly instructors.", image: GI.featureBilingual }
         ]
       },
       testimonials: {
@@ -252,10 +244,10 @@ export const defaultContent: ContentData = {
         subtitle: "Birthdays, bachelorette parties, or just a night out with friends. Make it memorable with Artbar."
       },
       occasions: [
-        { title: "Birthday Parties", image: getPh(800, 600) },
-        { title: "Bachelorette", image: getPh(800, 600) },
-        { title: "Kids Parties", image: getPh(800, 600) },
-        { title: "Anniversaries", image: getPh(800, 600) }
+        { title: "Birthday Parties", image: GI.privateOccasions.birthday },
+        { title: "Bachelorette", image: GI.privateOccasions.bachelorette },
+        { title: "Kids Parties", image: GI.privateOccasions.kidsParty },
+        { title: "Anniversaries", image: GI.privateOccasions.anniversary }
       ],
       pricing: {
         adult: {
@@ -424,9 +416,9 @@ export const defaultContent: ContentData = {
         title: "Artbarの体験",
         subtitle: "日常を忘れて没頭できる、充実のサービス。",
         items: [
-          { title: "オールインクルーシブ", desc: "画材、エプロン、お持ち帰り袋など、必要なものは全てご用意。手ぶらでお越しください。", image: getPh(800, 600) },
-          { title: "フリーフロードリンク", desc: "セッション中は、ワイン、紅茶、コーヒー、軽食をフリーフロー（飲み放題）でお楽しみいただけます。", image: getPh(800, 600) },
-          { title: "バイリンガル対応", desc: "英語・日本語でインストラクターがサポート。グローバルな雰囲気も魅力です。", image: getPh(800, 600) }
+          { title: "オールインクルーシブ", desc: "画材、エプロン、お持ち帰り袋など、必要なものは全てご用意。手ぶらでお越しください。", image: GI.featureAllInclusive },
+          { title: "フリーフロードリンク", desc: "セッション中は、ワイン、紅茶、コーヒー、軽食をフリーフロー（飲み放題）でお楽しみいただけます。", image: GI.featureFreeFlowDrinks },
+          { title: "バイリンガル対応", desc: "英語・日本語でインストラクターがサポート。グローバルな雰囲気も魅力です。", image: GI.featureBilingual }
         ]
       },
       testimonials: {
@@ -542,10 +534,10 @@ export const defaultContent: ContentData = {
         subtitle: "誕生日、バチェロレッテ、あるいは友人との特別な集まりに。\nArtbarでしか味わえない、洗練されたパーティーを。"
       },
       occasions: [
-        { title: "バースデー・パーティー", image: getPh(800, 600) },
-        { title: "バチェロレッテ", image: getPh(800, 600) },
-        { title: "キッズ・パーティー", image: getPh(800, 600) },
-        { title: "記念日のお祝い", image: getPh(800, 600) }
+        { title: "バースデー・パーティー", image: GI.privateOccasions.birthday },
+        { title: "バチェロレッテ", image: GI.privateOccasions.bachelorette },
+        { title: "キッズ・パーティー", image: GI.privateOccasions.kidsParty },
+        { title: "記念日のお祝い", image: GI.privateOccasions.anniversary }
       ],
       pricing: {
         adult: {

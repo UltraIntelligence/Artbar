@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
+import { geminiImageGenerationConfig, resolveGeminiImageModel } from '@/lib/gemini-image-config';
 
 export async function POST(req: NextRequest) {
   const { imageBase64 } = await req.json();
@@ -18,12 +19,15 @@ export async function POST(req: NextRequest) {
   `;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash-image',
+    model: resolveGeminiImageModel(),
     contents: {
       parts: [
         { inlineData: { mimeType: 'image/jpeg', data: imageBase64 } },
         { text: prompt },
       ],
+    },
+    config: {
+      ...geminiImageGenerationConfig,
     },
   });
 

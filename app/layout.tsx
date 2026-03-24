@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Josefin_Sans } from 'next/font/google';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
@@ -14,6 +14,12 @@ const josefinSans = Josefin_Sans({
   variable: '--font-josefin',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 
 export const metadata: Metadata = {
   title: {

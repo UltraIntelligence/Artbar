@@ -19,7 +19,7 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-artbar-navy pt-24 pb-8 mt-0 text-white rounded-t-[3rem] mx-0 md:mx-2 relative overflow-hidden">
+      <footer className="bg-artbar-navy pt-24 pb-[max(2rem,env(safe-area-inset-bottom,0px))] mt-0 text-white rounded-t-[3rem] mx-0 md:mx-2 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
 
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-10">

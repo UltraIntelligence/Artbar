@@ -18,7 +18,7 @@ export const Home: React.FC = () => {
 
   /** Hero primary actions: fixed width/height so Book / LINE / Find match; icons stay within the box. */
   const heroCtaFrame =
-    'box-border inline-flex flex-nowrap items-center justify-center gap-2 rounded-full px-6 py-0 text-lg md:px-10 md:text-xl h-[3.65rem] md:h-[4.1rem] w-full max-w-[min(100%,17.5rem)] sm:w-[17.5rem] sm:max-w-[17.5rem] font-heading font-bold transition-all duration-300 transform animate-pulse-soft';
+    'box-border inline-flex flex-nowrap items-center justify-center gap-2 rounded-full px-5 py-0 text-base sm:text-lg md:px-10 md:text-xl h-[3.35rem] sm:h-[3.5rem] md:h-[4.1rem] w-full max-w-[min(100%,17.5rem)] sm:w-[17.5rem] sm:max-w-[17.5rem] font-heading font-bold transition-all duration-300 transform animate-pulse-soft';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -148,9 +148,9 @@ export const Home: React.FC = () => {
         }
       `}</style>
       
-      {/* Hero Section */}
-      <section className="relative h-[100svh] w-full overflow-hidden">
-        <div className="absolute inset-0 md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
+      {/* Hero: mobile uses top offset below fixed nav + safe area; md+ stays vertically centered */}
+      <section className="relative min-h-[100svh] w-full overflow-x-hidden overflow-y-auto md:h-[100svh] md:overflow-hidden">
+        <div className="absolute inset-0 min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
           <img
             src={heroBgSrc}
             alt="Artbar Experience"
@@ -158,25 +158,25 @@ export const Home: React.FC = () => {
           />
           <div className="absolute inset-0 bg-artbar-navy/80" />
           
-          <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-20 max-w-[1400px] mx-auto text-center">
-            <div className="max-w-5xl flex flex-col items-center pt-16 md:pt-20">
+          <div className="absolute inset-0 flex min-h-[100svh] flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.75rem)] pb-[max(1.25rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-0 md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
+            <div className="max-w-5xl flex w-full flex-col items-center pt-0 md:pt-20">
               
-              <span className="animate-sheen inline-flex items-center justify-center text-center pt-2 pb-1 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-20 md:mb-32 tracking-widest uppercase text-[9px] md:text-sm">
+              <span className="animate-sheen inline-flex items-center justify-center text-center pt-2 pb-1 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-6 md:mb-20 lg:mb-32 tracking-widest uppercase text-[9px] md:text-sm">
                 {site.home.hero.badge}
               </span>
               
-              <h1 className="font-heading font-heavy text-white mb-6 md:mb-10 leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center">
+              <h1 className="font-heading font-heavy text-white mb-4 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1">
                 <span className={`${theme.heroTitle} block`}>{site.home.hero.title}</span>
                 <span className={`${theme.heroTitle} block text-artbar-taupe mt-1 md:mt-0`}>{site.home.hero.titleHighlight}</span>
               </h1>
               
-              <div className="w-full max-w-2xl mx-auto px-2">
-                <h2 className={`${theme.bodyLarge} text-white/90 mb-8 md:mb-12 font-light leading-relaxed drop-shadow-md px-4 whitespace-pre-line text-sm md:text-xl`}>
+              <div className="w-full max-w-2xl mx-auto px-1 sm:px-2">
+                <h2 className={`${theme.bodyLarge} text-white/90 mb-6 md:mb-12 font-light leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.9375rem] sm:text-sm md:text-xl`}>
                   {site.home.hero.subtitle}
                 </h2>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mb-10 md:mb-12">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 md:gap-4 mb-6 md:mb-12">
                 <div
                   className={`${heroProofPill} cursor-default`}
                   aria-label={`${site.home.hero.ratingScore} out of 5 · ${site.home.hero.ratingSource}`}

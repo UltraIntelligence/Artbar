@@ -1,6 +1,7 @@
 import { Instructor, Location, Testimonial, MediaItem } from './types';
+import { GI } from './data/generated-image-paths';
 
-// Helper for the new placeholder format
+// Helper for the new placeholder format (non-generated fallbacks only)
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
 /** Default hero background image (served from /public/media). */
@@ -15,39 +16,40 @@ export const LINE_BRAND_ICON_SRC = '/media/LINE_Brand_icon.png';
 export const SITE_IMAGES = {
   hero: {
     home: HERO_HOME_FALLBACK,
-    teamBuilding: getPh(1920, 1080),
+    teamBuilding: GI.heroTeamBuilding,
     video: "/media/artbar-home-video-desktop.mp4",
     videoMobile: "/media/artbar-home-video-mobile-3.mp4"
   },
   concept: {
-    main: getPh(1200, 800),
-    detail: getPh(800, 800)
+    main: GI.conceptMain,
+    detail: GI.conceptDetail
   },
   features: {
-    drink: getPh(800, 600),
-    guide: getPh(800, 600),
-    bilingual: getPh(800, 600)
+    drink: GI.featureFreeFlowDrinks,
+    guide: GI.featureAllInclusive,
+    bilingual: GI.featureBilingual
   },
   privateParties: {
-    wine: getPh(800, 600),
-    materials: getPh(800, 600),
-    instruction: getPh(800, 600),
-  }
+    wine: GI.featureFreeFlowDrinks,
+    materials: GI.featureAllInclusive,
+    instruction: GI.featureBilingual,
+  },
+  cta: GI.ctaBanner,
 };
 
 export const POPULAR_THEMES = [
-  { title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: getPh(800, 800) },
-  { title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: getPh(800, 800) },
-  { title: "Paint Your Pet", desc: "Immortalize your furry friend", image: getPh(800, 800) },
-  { title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: getPh(800, 800) },
-  { title: "Van Gogh", desc: "Starry nights & sunflower fields", image: getPh(800, 800) },
-  { title: "Monet", desc: "Impressionist gardens & water lilies", image: getPh(800, 800) },
-  { title: "Picasso", desc: "Cubist portraits & bold expressions", image: getPh(800, 800) },
-  { title: "Renoir", desc: "Soft light & romantic scenes", image: getPh(800, 800) },
-  { title: "Matisse", desc: "Vibrant colors & expressive forms", image: getPh(800, 800) },
-  { title: "Kids!", desc: "Fun & simple designs for young artists", image: getPh(800, 800) },
-  { title: "Texture Painting", desc: "Sculptural & dimensional art", image: getPh(800, 800) },
-  { title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: getPh(800, 800) },
+  { title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
+  { title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
+  { title: "Paint Your Pet", desc: "Immortalize your furry friend", image: GI.themes.paintYourPet },
+  { title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk },
+  { title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh },
+  { title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet },
+  { title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso },
+  { title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
+  { title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
+  { title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
+  { title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
+  { title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
 ];
 
 export const INSTRUCTORS: Instructor[] = [
@@ -59,8 +61,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Cathy is Artbar Tokyo's CEO - the driving force behind Artbar! She strives to make it a fun and relaxing space for people to express their creative self and spark their love for art. Although most of her work is behind the scenes, she is often in the studio and looks forward to meeting you at any of our sessions.",
     descJp: "Artbar Tokyoの創設者兼CEO。Artbarが単なる絵画教室ではなく、誰もがクリエイティビティを解放できる「大人のサードプレイス」であり続けるよう情熱を注いでいます。スタジオ運営の指揮を執りながら、ゲストの皆様とアートを通じた時間を共有することを楽しみにしています。",
     languages: "English, Japanese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.cathy.profile,
+    artworkImage: GI.instructors.cathy.artwork
   },
   {
     id: "naomi",
@@ -70,8 +72,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Naomi is both an instructor and Artbar’s marketing director. She shapes the image of Artbar and finds or creates new trends to keep Artbar exciting! She is very friendly and will make your session lots of fun. Come try some of her new abstract sessions such as paint pour or alcohol inks, or learn detailed techniques with classic paintings together.",
     descJp: "インストラクターとマーケティングディレクターを兼務し、常にArtbarの新しいトレンドを発信しています。ポーリングアートやアルコールインクなどのモダンなスタイルから、古典的な名画のテクニックまで幅広く精通。親しみやすい人柄で、リラックスしたセッションを提供します。",
     languages: "English, Japanese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.naomi.profile,
+    artworkImage: GI.instructors.naomi.artwork
   },
   {
     id: "luci",
@@ -81,8 +83,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Luci brings a soft, dreamy style to his paintings that will make you feel like you’re transported to a fantasyland of colorful sunsets and milky ways! He loves to encourage people to find their own style during his sessions, Luci’s calming guidance will make you feel relaxed and creative. Come paint along with him sometime and unleash your creativity.",
     descJp: "ファンタジーの世界へ迷い込んだような、柔らかく色彩豊かなスタイルが特徴のアーティスト。ゲスト一人ひとりが独自のスタイルを見つけられるよう、穏やかな雰囲気の中で丁寧にガイドします。日常を忘れ、クリエイティビティを解放する時間をお楽しみください。",
     languages: "English, Japanese, Chinese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.luci.profile,
+    artworkImage: GI.instructors.luci.artwork
   },
   {
     id: "momo",
@@ -92,8 +94,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Momo is an awesome instructor and specializes in her original dot technique art style and abstract art! She is also very bright and knows a lot about different paint mediums, she offers extremely good advice about color theory! Come join her class sometime and get to learn about her unique style.",
     descJp: "国内外で活躍する現役アーティスト。独自のドットテクニックや抽象画を専門とし、色彩理論や画材に関する深い知識を持っています。プロフェッショナルな視点からのアドバイスで、あなたの作品作りをサポートします。",
     languages: "English, Japanese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.momo.profile,
+    artworkImage: GI.instructors.momo.artwork
   },
   {
     id: "nanako",
@@ -103,8 +105,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Nanako's specialty is Japanese painting and acrylic painting. She is very helpful if you have questions about your painting process. She will happily give you great advice so you can feel confident in your masterpiece!",
     descJp: "日本画とアクリル画を中心に制作活動を行っています。「その瞬間の感情」を大切に、自由に表現することを重視したセッションです。繊細な色使いを得意とし、皆様が思いのままに個性を発揮できるよう技術面でもサポートします。",
     languages: "Japanese, English",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.nanako.profile,
+    artworkImage: GI.instructors.nanako.artwork
   },
   {
     id: "aika",
@@ -114,8 +116,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Aika's style is very soft and colorful with inspiration taken from natural elements. She makes large tapestry paintings! Aika is very sweet, you will be sure to feel relaxed by her calming atmosphere.",
     descJp: "自然の要素からインスピレーションを得た、ソフトでカラフルな作風が特徴。普段は大型のタペストリー作品も制作しています。Aikaの穏やかで優しい雰囲気の中で、リラックスしたアートの時間をお過ごしください。",
     languages: "Japanese, English",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.aika.profile,
+    artworkImage: GI.instructors.aika.artwork
   },
   {
     id: "kiyoe",
@@ -125,8 +127,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Kiyoe is a pottery specialist and makes her amazing art and designs from scratch such as plates, cups, pots, and many other works of art! Kiyoe has the sweetest and kindest soul - she teaches both kids and adults sessions so you’ll never feel worried, always at ease.",
     descJp: "陶芸を専門とし、器やポットなど温かみのある作品を制作しています。とても穏やかな人柄で、大人のセッションからキッズセッションまで幅広く担当。土に触れて心を落ち着けたい方、リラックスしたい方におすすめです。",
     languages: "English, Japanese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.kiyoe.profile,
+    artworkImage: GI.instructors.kiyoe.artwork
   },
   {
     id: "michi",
@@ -136,8 +138,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Michi creates lots of fun paintings for many of Artbar’s kids sessions! Her bright and energetic atmosphere will be sure to make your kids smile while they create masterpieces to decorated the house with. Leave it to Michi Sensei to guide your kids in a fun way during their art class!",
     descJp: "Artbarのキッズセッションを中心に、多くの作品を生み出しています。明るくエネルギッシュなMichi先生は、子供たちの自由な発想と笑顔を引き出すのが得意です。お子様の初めてのアート体験は、ぜひMichiにお任せください。",
     languages: "English, Japanese, Korean",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.michi.profile,
+    artworkImage: GI.instructors.michi.artwork
   },
   {
     id: "ken",
@@ -147,8 +149,8 @@ export const INSTRUCTORS: Instructor[] = [
     descEn: "Ken specializes in his signature pen drawings that are so detailed and whimsical. Ken is knowledgeable not only art but about many very interesting subjects, which makes it so much fun to chat together! Come feel inspired with Ken, you will learn about art and much more.",
     descJp: "緻密で遊び心のあるペン画を得意とするKen。アートだけでなく幅広い分野に精通しており、会話も弾む楽しいセッションが魅力です。新しい技法を学びながら、インスピレーション溢れる時間を共有しましょう。",
     languages: "English, Japanese",
-    profileImage: getPh(400, 400),
-    artworkImage: getPh(800, 600)
+    profileImage: GI.instructors.ken.profile,
+    artworkImage: GI.instructors.ken.artwork
   }
 ];
 
@@ -161,7 +163,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒150-0034 東京都渋谷区代官山町 7-2 ベルビュー代官山 1階",
     accessEn: "5-minute walk from Daikanyama Station | 8-minute walk from Ebisu Station",
     accessJp: "代官山駅 徒歩5分 | 恵比寿駅 徒歩8分",
-    image: getPh(1200, 800)
+    image: GI.locations.daikanyama
   },
   {
     id: "harajuku",
@@ -171,7 +173,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒150-0001 東京都渋谷区神宮前5-30-2 Takaraビル 201",
     accessEn: "7-minute walk from Shibuya Station",
     accessJp: "渋谷駅 徒歩7分 | 明治神宮前駅 徒歩5分",
-    image: getPh(1200, 800)
+    image: GI.locations.harajuku
   },
   {
     id: "ginza",
@@ -181,7 +183,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒104-0061 東京都中央区銀座3-3-12 銀座ビル3階",
     accessEn: "1-minute walk from Ginza Station Exit C8 of Metro Marunouchi, Hibiya and Ginza Line.\n4-minute walk from Ginza-itchome Station Exit 4 of Metro Yurakucho Line.\n5-minute walk from Yurakucho Station Exit D8 of Metro Yurakucho Line.",
     accessJp: "銀座駅 C8出口 徒歩1分\n銀座一丁目駅 4番出口 徒歩4分\n有楽町駅 D8出口 徒歩5分",
-    image: getPh(1200, 800)
+    image: GI.locations.ginza
   },
   {
     id: "yokohama",
@@ -191,7 +193,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒231-0861 神奈川県横浜市中区元町1-27-2 エンセント横濱元町ビル 2F",
     accessEn: "Motomachi-Chukagai station – 3 min walk\nIshikawacho station – 10 min walk",
     accessJp: "みなとみらい線 元町・中華街駅 徒歩3分\nJR石川町駅 徒歩10分",
-    image: getPh(1200, 800)
+    image: GI.locations.yokohama
   },
   {
     id: "osaka_namba",
@@ -201,7 +203,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒542-0076 大阪府大阪市中央区難波5-1-60 なんばスカイオ 17F",
     accessEn: "Please change to the low-floor elevator on the 10th floor common area and go up to the 17th floor. The studio is at the end of the corridor on your left.",
     accessJp: "10階で低層階用エレベーターに乗り換え、17階へお上がりください。スタジオは廊下突き当たり左手です。",
-    image: getPh(1200, 800)
+    image: GI.locations.osaka_namba
   },
   {
     id: "osaka_caso",
@@ -211,7 +213,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒552-0022 大阪府大阪市港区海岸通2-7-23 シーサイドスタジオCASO",
     accessEn: "Seaside Studio CASO",
     accessJp: "シーサイドスタジオCASO内",
-    image: getPh(1200, 800)
+    image: GI.locations.osaka_caso
   },
   {
     id: "osaka_umeda",
@@ -221,7 +223,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "大阪府大阪市北区大深町6-38 グラングリーン大阪 ショップ＆レストラン 北館 2F",
     accessEn: "Inside Tully's Coffee / Yurindo",
     accessJp: "タリーズコーヒー / 有隣堂 併設",
-    image: getPh(1200, 800)
+    image: GI.locations.osaka_umeda
   },
   {
     id: "osaka_hirakata",
@@ -231,7 +233,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒573-0032 大阪府枚方市1-9-1 枚方モール 2F",
     accessEn: "Inside TULLY'S COFFEE",
     accessJp: "タリーズコーヒー併設",
-    image: getPh(1200, 800)
+    image: GI.locations.osaka_hirakata
   },
   {
     id: "okinawa",
@@ -241,7 +243,7 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒901-1515 沖縄県南城市知念字山里137-3 MSYビル3F",
     accessEn: "Tel: 050-1808-2882",
     accessJp: "Tel: 050-1808-2882",
-    image: getPh(1200, 800)
+    image: GI.locations.okinawa
   }
 ];
 
@@ -249,12 +251,12 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     text: "Very fun and relaxing! It completely took my mind off my extremely busy days in Tokyo. Ami, our instructor, was easy to follow, and when I needed help she was right there for me. So much better than the usual Thursday night options!",
     author: "Ryan Stephen Alldridge",
-    userImage: getPh(200, 200)
+    userImage: GI.testimonials.ryan
   },
   {
     text: "ワインを飲みながらリラックスして、ほろ酔いでキャンバスに描くってこんなに気持ちいんだぁという発見が新鮮でした。何回でも参加したいです。",
     author: "Ritsuko Milliner",
-    userImage: getPh(200, 200)
+    userImage: GI.testimonials.ritsuko
   },
   {
     text: "At this friendly art studio, the wine is just liquid motivation to let your creative juice flow. You don’t need to be an artist to get stuck in!",

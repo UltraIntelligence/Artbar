@@ -78,13 +78,15 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 ease-in-out ${
-        isTransparent
-          ? 'bg-transparent py-6 md:py-10 shadow-none'
-          : 'bg-artbar-bg/95 backdrop-blur-md shadow-sm py-4'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out pt-[env(safe-area-inset-top,0px)] ${
+        isTransparent ? 'bg-transparent shadow-none' : 'bg-artbar-bg/95 backdrop-blur-md shadow-sm'
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-16 lg:px-24 flex justify-between items-center">
+      <div
+        className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-24 flex justify-between items-center ${
+          isTransparent ? 'py-6 md:py-10' : 'py-4'
+        }`}
+      >
         <Link href="/" onClick={handleLogoClick} className="z-50 group relative">
           <Logo variant={isTransparent ? 'light' : 'dark'} />
         </Link>
@@ -128,7 +130,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {isOpen && (
-          <div className="fixed inset-0 bg-artbar-bg z-40 flex flex-col pt-32 px-8 pb-10 overflow-y-auto h-screen animate-in slide-in-from-top-5 duration-200">
+          <div className="fixed inset-0 bg-artbar-bg z-40 flex flex-col pt-[calc(7.5rem+env(safe-area-inset-top,0px))] px-6 sm:px-8 pb-10 pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] overflow-y-auto min-h-[100dvh] animate-in slide-in-from-top-5 duration-200">
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
                 <Link
