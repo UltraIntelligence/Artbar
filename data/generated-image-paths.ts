@@ -45,6 +45,12 @@ const instructorPhotos = Object.fromEntries(
 
 export const GI = {
   heroTeamBuilding: g('hero-team-building.jpg'),
+  /** Team Building page — curated activities (order matches `teamBuilding.activities.items`). */
+  teamBuildingActivities: {
+    paintSip: g('team-building-paint-sip.jpg'),
+    collaborativeMural: g('team-building-collaborative-mural.jpg'),
+    actionPainting: g('team-building-action-painting.jpg'),
+  },
   conceptMain: g('concept-main.jpg'),
   conceptDetail: g('concept-detail.jpg'),
   featureAllInclusive: g('feature-all-inclusive.jpg'),

@@ -17,9 +17,9 @@ export const defaultContent: ContentData = {
       body: "Hiragino Kaku Gothic ProN"
     },
     typography: {
-      // Mobile-first scale: avoid collision with fixed nav; sm+ steps match desktop impact
+      // Mobile-first scale; cap xl so two headline rows fit in viewport with proof + CTAs (no clip/overlap)
       heroTitle:
-        'text-[clamp(1.9rem,5.65vw+0.68rem,2.7rem)] sm:text-[4.25rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[8.75rem] tracking-tight',
+        'text-[clamp(1.9rem,5.65vw+0.68rem,2.7rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight',
       pageTitle: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
       sectionTitle: "text-3xl sm:text-4xl md:text-5xl",
       cardTitle: "text-2xl md:text-3xl",
@@ -94,9 +94,9 @@ export const defaultContent: ContentData = {
         ctaLineChat: "Chat With Us",
         ctaFindPainting: "Find Your Painting",
         ratingScore: "4.8",
-        ratingSource: "rating",
+        ratingSource: "Average rating",
         guestsNumber: "53,600",
-        guestsSuffix: "guests"
+        guestsSuffix: "guests and counting"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
@@ -388,9 +388,9 @@ export const defaultContent: ContentData = {
         ctaLineChat: "LINEで相談する",
         ctaFindPainting: "描きたい絵を探す",
         ratingScore: "4.8",
-        ratingSource: "評価",
+        ratingSource: "平均評価",
         guestsNumber: "53,600",
-        guestsSuffix: "名のお客様"
+        guestsSuffix: "名のゲスト（増加中）"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",

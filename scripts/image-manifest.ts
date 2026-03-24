@@ -2,6 +2,9 @@
  * Gemini image generation manifest. Paths must match data/generated-image-paths.ts.
  * Set `enabled: false` to skip a slot. Add optional `referencePaths` (repo-relative files).
  *
+ * Review workflow: set `needsRevision: true` and short `reviewNotes` when feedback is pending;
+ * update `prompt` when you have final copy, then regenerate (see `npm run generate:images` with `--needs-revision`).
+ *
  * Prompts for hero/themes/features/CTA/private/blog/testimonials: client-supplied (Claude batch).
  * Instructor + location slots: disabled — replace with client-provided photos in /public and GI paths when ready.
  */
@@ -13,12 +16,16 @@ export type ManifestItem = {
   publicUrl: string;
   prompt: string;
   enabled: boolean;
+  /** True when this slot is flagged for a prompt/image redo (see review workflow in file header). */
+  needsRevision?: boolean;
+  /** Short feedback to remember before the prompt is rewritten (optional). */
+  reviewNotes?: string;
   /** Optional reference images (paths relative to repo root) */
   referencePaths?: string[];
 };
 
 function item(partial: Omit<ManifestItem, 'enabled'> & { enabled?: boolean }): ManifestItem {
-  return { enabled: true, ...partial };
+  return { enabled: true, needsRevision: false, ...partial };
 }
 
 export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
@@ -28,6 +35,24 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
       publicUrl: GI.heroTeamBuilding,
       prompt:
         'Wide 16:9 cinematic editorial photo. Corporate team of 10 adults at wooden tripod easels in a bright Tokyo paint studio. Mixed group — Japanese men and women aged 25–40 in smart casual attire, two Western colleagues. Black aprons, paint-splattered tables, colorful canvases on white wall shelves behind. Warm overhead string fairy lights, large windows, collaborative and engaged atmosphere. Polished Vogue Japan editorial quality, rich warm tones. No overlaid text, no watermarks, no brand logos in frame.',
+    }),
+    item({
+      id: 'team-building-paint-sip',
+      publicUrl: GI.teamBuildingActivities.paintSip,
+      prompt:
+        'Vertical 3:4 editorial photo. Large international corporate office in Tokyo — bright open plan with glass walls and floor-to-ceiling windows. One breakout area set up as a team event: mixed Japanese and Western colleagues in business casual with black painting aprons, each at their own easel and canvas, instructor-style step-by-step guidance; nearby credenza with wine glasses and carafes. Premium B2B team-building mood, warm lighting, Vogue Japan editorial quality. No overlaid text, no watermarks, no brand logos in frame.',
+    }),
+    item({
+      id: 'team-building-collaborative-mural',
+      publicUrl: GI.teamBuildingActivities.collaborativeMural,
+      prompt:
+        'Vertical 3:4 editorial photo. Same tier of modern Tokyo corporate HQ: colleagues in black aprons stand at multiple easels along a long wall, aligning separate painted canvases that slot together into one giant collaborative mural, coordinating and gesturing. International Japanese office team, engaged and unified. Neutral executive interior, soft daylight, editorial photography. No overlaid text, no watermarks, no brand logos in frame.',
+    }),
+    item({
+      id: 'team-building-action-painting',
+      publicUrl: GI.teamBuildingActivities.actionPainting,
+      prompt:
+        'Vertical 3:4 editorial photo. Corporate event space inside a large Tokyo office: floors and walls protected with drop cloths; diverse Japanese and international professionals in black aprons doing high-energy Jackson Pollock-style splatter and drip painting on wide floor canvases, motion and flying paint. Daylight from tall windows, bold but professional editorial mood. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'concept-main',

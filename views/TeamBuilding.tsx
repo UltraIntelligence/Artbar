@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { TEAM_BUILDING_ACTIVITY_IMAGES } from '../constants';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,7 @@ export const TeamBuilding: React.FC = () => {
   return (
     <div className="w-full bg-artbar-bg">
       {/* Hero */}
-      <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-16 md:py-0">
+      <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-14 md:py-16 lg:py-20">
         <img 
           src={content.images.hero.teamBuilding}
           className="absolute inset-0 w-full h-full object-cover opacity-50" 
@@ -63,11 +64,16 @@ export const TeamBuilding: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90"></div>
         
         <div className="relative z-10 text-center px-6 max-w-5xl w-full">
-          <span className="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-xs md:text-sm mb-6 md:mb-8 uppercase tracking-widest">
+          <span className="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-xs md:text-sm mb-5 md:mb-6 uppercase tracking-widest">
              {site.teamBuilding.hero.badge}
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-heavy mb-6 md:mb-8 leading-tight tracking-tight">
-            {site.teamBuilding.hero.title} <br className="hidden md:block"/><span className="text-artbar-taupe block md:inline">{site.teamBuilding.hero.titleHighlight}</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-heading font-heavy mb-6 md:mb-8 tracking-tight text-center flex flex-col items-center gap-1.5 md:gap-2">
+            <span className="block text-white leading-[1.05] md:leading-[1.02]">
+              {site.teamBuilding.hero.title}
+            </span>
+            <span className="block text-artbar-taupe leading-[1.05] md:leading-[1.02]">
+              {site.teamBuilding.hero.titleHighlight}
+            </span>
           </h1>
           <p className="text-base sm:text-lg md:text-2xl opacity-90 mb-8 md:mb-12 max-w-3xl mx-auto font-light leading-relaxed">
             {site.teamBuilding.hero.subtitle}
@@ -163,10 +169,11 @@ export const TeamBuilding: React.FC = () => {
               {site.teamBuilding.activities.items.map((act, i) => {
                  const icons = [Puzzle, Users, Palette];
                  const Icon = icons[i] || Puzzle;
+                 const activityImage = TEAM_BUILDING_ACTIVITY_IMAGES[i] ?? TEAM_BUILDING_ACTIVITY_IMAGES[0];
                  return (
                     <div key={i} className="group relative h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden cursor-pointer">
                         <img 
-                        src={`https://picsum.photos/seed/${i+50}/600/800`} 
+                        src={activityImage}
                         alt={act.title} 
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                         />
@@ -174,7 +181,7 @@ export const TeamBuilding: React.FC = () => {
                         <div className="absolute bottom-0 left-0 p-8 md:p-10 text-white">
                             <Icon size={40} className="mb-6 text-artbar-taupe" />
                             <h3 className="text-2xl md:text-3xl font-heading font-bold mb-3">{act.title}</h3>
-                            <p className="text-white/80 leading-relaxed mb-6 opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500">
+                            <p className="text-white/80 leading-relaxed mb-6 text-sm md:text-base opacity-100 max-h-40 md:opacity-0 md:max-h-0 md:mb-6 md:group-hover:opacity-100 md:group-hover:max-h-40 transition-all duration-500">
                                 {act.desc}
                             </p>
                             <span className="inline-flex items-center gap-2 font-bold text-sm uppercase tracking-widest group-hover:text-artbar-taupe transition-colors">

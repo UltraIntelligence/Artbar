@@ -676,11 +676,11 @@ export const Admin: React.FC = () => {
             </div>
              <div className="grid grid-cols-2 gap-4 mt-4">
                 <BilingualInput localContent={localContent} updateField={updateField} label="Rating score (e.g. 4.8)" path={['home', 'hero', 'ratingScore']} />
-                <BilingualInput localContent={localContent} updateField={updateField} label="Rating label (e.g. rating / 評価)" path={['home', 'hero', 'ratingSource']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Rating label (e.g. Average rating / 平均評価)" path={['home', 'hero', 'ratingSource']} />
             </div>
             <div className="grid grid-cols-2 gap-4 mt-4">
                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests number" path={['home', 'hero', 'guestsNumber']} />
-                <BilingualInput localContent={localContent} updateField={updateField} label="Guests label (e.g. guests)" path={['home', 'hero', 'guestsSuffix']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Guests label (e.g. guests and counting)" path={['home', 'hero', 'guestsSuffix']} />
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
                 <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-artbar-gray">Hero Media</h4>

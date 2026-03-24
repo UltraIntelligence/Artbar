@@ -5,6 +5,7 @@
  *   npm run generate:images              # all enabled items
  *   npm run generate:images -- --dry-run
  *   npm run generate:images -- --id=hero-team-building
+ *   npm run generate:images -- --needs-revision   # only slots with needsRevision: true in image-manifest.ts
  *
  * Requires GEMINI_API_KEY in .env.local (or env).
  */
@@ -46,11 +47,12 @@ function extMime(path: string): string {
 function parseArgs() {
   const argv = process.argv.slice(2);
   const dryRun = argv.includes('--dry-run');
+  const needsRevisionOnly = argv.includes('--needs-revision');
   let id: string | undefined;
   for (const a of argv) {
     if (a.startsWith('--id=')) id = a.slice('--id='.length);
   }
-  return { dryRun, id };
+  return { dryRun, id, needsRevisionOnly };
 }
 
 async function generateOne(
@@ -107,7 +109,7 @@ async function generateOne(
 
 async function main() {
   loadEnvLocal();
-  const { dryRun, id } = parseArgs();
+  const { dryRun, id, needsRevisionOnly } = parseArgs();
   const key = process.env.GEMINI_API_KEY;
   if (!key && !dryRun) {
     console.error('GEMINI_API_KEY is not set. Add it to .env.local or export it.');
@@ -116,6 +118,7 @@ async function main() {
 
   const model = resolveGeminiImageModel();
   let items = IMAGE_MANIFEST.items.filter((i) => i.enabled);
+  if (needsRevisionOnly) items = items.filter((i) => i.needsRevision === true);
   if (id) items = items.filter((i) => i.id === id);
   if (!items.length) {
     console.log('No items to process.');

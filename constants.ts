@@ -47,6 +47,13 @@ export const SITE_IMAGES = {
   cta: GI.ctaBanner,
 };
 
+/** Order matches `site.teamBuilding.activities.items` (EN/JP same sequence). */
+export const TEAM_BUILDING_ACTIVITY_IMAGES = [
+  GI.teamBuildingActivities.paintSip,
+  GI.teamBuildingActivities.collaborativeMural,
+  GI.teamBuildingActivities.actionPainting,
+];
+
 export const POPULAR_THEMES = [
   { title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
   { title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
