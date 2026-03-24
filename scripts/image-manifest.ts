@@ -9,6 +9,7 @@
  * Instructor + location slots: disabled — replace with client-provided photos in /public and GI paths when ready.
  */
 import { GI, INSTRUCTOR_IDS } from '../data/generated-image-paths';
+import { THEME_PAGE_MANIFEST_ITEMS } from './theme-page-manifest-items';
 
 export type ManifestItem = {
   id: string;
@@ -281,5 +282,6 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
       prompt:
         'Portrait 3:4 head and shoulders editorial photo. Friendly Japanese woman aged late 20s, warm natural smile, smart casual clothing. Neutral soft-focus Tokyo studio or café background. Clean professional portrait quality, warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
+    ...THEME_PAGE_MANIFEST_ITEMS,
   ],
 };

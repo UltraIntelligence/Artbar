@@ -43,6 +43,52 @@ const instructorPhotos = Object.fromEntries(
   INSTRUCTOR_IDS.map((id) => [id, instructorPhoto(id)])
 ) as { [K in InstructorId]: ReturnType<typeof instructorPhoto> };
 
+/** Keys match `THEME_CONFIG` in `views/ThemeDetail.tsx` (`texture-painting` URL resolves to `texture-art`). */
+export const THEME_PAGE_SLUGS = [
+  'japan-inspired',
+  'van-gogh',
+  'paint-pouring',
+  'alcohol-ink',
+  'monet',
+  'picasso',
+  'renoir',
+  'matisse',
+  'kids',
+  'texture-art',
+  'paint-your-pet',
+  'paint-your-idol',
+] as const;
+
+export type ThemePageSlug = (typeof THEME_PAGE_SLUGS)[number];
+
+function themePageImageSet(slug: string) {
+  return {
+    hero: g(`theme-${slug}-hero.jpg`),
+    examples: [1, 2, 3, 4].map((n) => g(`theme-${slug}-example-${n}.jpg`)) as [
+      string,
+      string,
+      string,
+      string,
+    ],
+    experience: g(`theme-${slug}-experience.jpg`),
+  };
+}
+
+export const THEME_PAGE_IMAGES: Record<ThemePageSlug, ReturnType<typeof themePageImageSet>> = {
+  'japan-inspired': themePageImageSet('japan-inspired'),
+  'van-gogh': themePageImageSet('van-gogh'),
+  'paint-pouring': themePageImageSet('paint-pouring'),
+  'alcohol-ink': themePageImageSet('alcohol-ink'),
+  monet: themePageImageSet('monet'),
+  picasso: themePageImageSet('picasso'),
+  renoir: themePageImageSet('renoir'),
+  matisse: themePageImageSet('matisse'),
+  kids: themePageImageSet('kids'),
+  'texture-art': themePageImageSet('texture-art'),
+  'paint-your-pet': themePageImageSet('paint-your-pet'),
+  'paint-your-idol': themePageImageSet('paint-your-idol'),
+};
+
 export const GI = {
   heroTeamBuilding: g('hero-team-building.jpg'),
   /** Team Building page — curated activities (order matches `teamBuilding.activities.items`). */

@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { pickDiscoveryThemes } from '../lib/theme-slugs';
+import { THEME_PAGE_IMAGES } from '../data/generated-image-paths';
 import { Button } from '../components/ui/Button';
 import { 
   MapPin, Sparkles, Paintbrush, Wind, Wine, Heart, 
@@ -467,6 +468,7 @@ export const ThemeDetail: React.FC = () => {
   const router = useRouter();
   const { site } = useContent();
   const theme = THEME_CONFIG[resolvedSlug] || THEME_CONFIG['japan-inspired'];
+  const pageImages = THEME_PAGE_IMAGES[resolvedSlug as keyof typeof THEME_PAGE_IMAGES];
 
   const discoveryThemes = useMemo(
     () => pickDiscoveryThemes(resolvedSlug, site.home.themes.items, 4),
@@ -478,7 +480,7 @@ export const ThemeDetail: React.FC = () => {
       {/* Hero Section */}
       <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-16 md:py-0">
         <img 
-          src={getPh(1920, 1080, theme.title)} 
+          src={pageImages?.hero ?? getPh(1920, 1080, theme.title)} 
           className="absolute inset-0 w-full h-full object-cover opacity-50" 
           alt={theme.title}
         />
@@ -555,7 +557,7 @@ export const ThemeDetail: React.FC = () => {
              {theme.examples.map((ex, i) => (
                 <div key={i} className="group flex flex-col items-center">
                    <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
-                      <img src={ex.image} alt={ex.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                      <img src={pageImages?.examples[i] ?? ex.image} alt={ex.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                       <div className="absolute inset-0 bg-artbar-navy/0 group-hover:bg-artbar-navy/20 transition-colors"></div>
                    </div>
                    <h4 className="text-center font-heading font-bold text-artbar-navy text-sm md:text-base group-hover:text-artbar-taupe transition-colors px-2">
@@ -572,7 +574,7 @@ export const ThemeDetail: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
              <div className="relative aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl order-2 lg:order-1">
-                <img src={getPh(1000, 750, "Studio Atmosphere")} className="w-full h-full object-cover" alt="Artbar Atmosphere" />
+                <img src={pageImages?.experience ?? getPh(1000, 750, "Studio Atmosphere")} className="w-full h-full object-cover" alt="Artbar Atmosphere" />
                 <div className="absolute inset-0 bg-artbar-navy/10"></div>
                 <div className="absolute bottom-6 right-6 bg-white/90 backdrop-blur px-6 py-3 rounded-2xl shadow-lg border border-white/50">
                    <div className="flex items-center gap-3">

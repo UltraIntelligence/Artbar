@@ -118,6 +118,8 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 
 `app/themes/[slug]/page.tsx` defines `THEME_TITLES` for `<title>` tags; keys should stay aligned with the same slugs.
 
+- **Imagery:** Hero, four example paintings, and the “experience” block use `THEME_PAGE_IMAGES` in `data/generated-image-paths.ts` (JPEGs under `public/media/generated/`, ids like `theme-{slug}-hero`, `theme-{slug}-example-1` … `-4`, `theme-{slug}-experience`). Prompts are in `data/theme-page-image-prompts.ts` and merged into `scripts/image-manifest.ts`; regenerate with `npm run generate:images:theme-pages`.
+
 ### Pet sketch / AI text
 
 - **Create:** Each request is independent; no server-side storage. Client holds images in React state until navigation away.

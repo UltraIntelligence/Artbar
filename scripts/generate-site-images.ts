@@ -6,6 +6,7 @@
  *   npm run generate:images -- --dry-run
  *   npm run generate:images -- --id=hero-team-building
  *   npm run generate:images -- --needs-revision   # only slots with needsRevision: true in image-manifest.ts
+ *   npm run generate:images -- --theme-pages     # only /themes/[slug] hero + 4 examples + experience (72 items)
  *
  * Requires GEMINI_API_KEY in .env.local (or env).
  */
@@ -44,15 +45,19 @@ function extMime(path: string): string {
   return 'image/jpeg';
 }
 
+/** Matches manifest ids for theme detail pages only (excludes home tile ids like theme-monet). */
+const THEME_PAGE_MANIFEST_ID = /^theme-.+-(hero|experience|example-[1-4])$/;
+
 function parseArgs() {
   const argv = process.argv.slice(2);
   const dryRun = argv.includes('--dry-run');
   const needsRevisionOnly = argv.includes('--needs-revision');
+  const themePagesOnly = argv.includes('--theme-pages');
   let id: string | undefined;
   for (const a of argv) {
     if (a.startsWith('--id=')) id = a.slice('--id='.length);
   }
-  return { dryRun, id, needsRevisionOnly };
+  return { dryRun, id, needsRevisionOnly, themePagesOnly };
 }
 
 async function generateOne(
@@ -109,7 +114,7 @@ async function generateOne(
 
 async function main() {
   loadEnvLocal();
-  const { dryRun, id, needsRevisionOnly } = parseArgs();
+  const { dryRun, id, needsRevisionOnly, themePagesOnly } = parseArgs();
   const key = process.env.GEMINI_API_KEY;
   if (!key && !dryRun) {
     console.error('GEMINI_API_KEY is not set. Add it to .env.local or export it.');
@@ -119,6 +124,7 @@ async function main() {
   const model = resolveGeminiImageModel();
   let items = IMAGE_MANIFEST.items.filter((i) => i.enabled);
   if (needsRevisionOnly) items = items.filter((i) => i.needsRevision === true);
+  if (themePagesOnly) items = items.filter((i) => THEME_PAGE_MANIFEST_ID.test(i.id));
   if (id) items = items.filter((i) => i.id === id);
   if (!items.length) {
     console.log('No items to process.');

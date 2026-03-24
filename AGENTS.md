@@ -14,8 +14,10 @@ Artbar Tokyo (artbar.co.jp) — a bilingual (EN/JP) marketing site for a paint-a
 npm run dev      # Next.js dev server on http://localhost:3000
 npm run build    # Production build
 npm run start    # Start production server
-npm run generate:images      # Gemini marketing pack → public/media/generated/ (needs GEMINI_API_KEY)
+npm run generate:images      # All enabled manifest slots → public/media/generated/ (needs GEMINI_API_KEY)
 npm run generate:images:dry  # List slots without calling the API
+npm run generate:images:theme-pages  # 72 /themes/[slug] images only (hero + 4 examples + experience per theme)
+npm run generate:images:revision     # Only slots with needsRevision in scripts/image-manifest.ts
 ```
 
 No test framework is configured.
@@ -53,7 +55,8 @@ No test framework is configured.
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
 - `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`)
-- `data/generated-image-paths.ts` — `GI` public URLs; `INSTRUCTOR_IDS` lists instructor slugs (keep in sync with `INSTRUCTOR_ROWS`). Client instructor photos: `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`
+- `data/generated-image-paths.ts` — `GI` public URLs; `THEME_PAGE_IMAGES` maps each theme slug to hero / four examples / experience URLs under `public/media/generated/`; `INSTRUCTOR_IDS` lists instructor slugs (keep in sync with `INSTRUCTOR_ROWS`). Client instructor photos: `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`
+- `data/theme-page-image-prompts.ts` — Gemini prompts for theme detail imagery; merged into `scripts/image-manifest.ts` via `scripts/theme-page-manifest-items.ts`
 
 ### Routing
 
