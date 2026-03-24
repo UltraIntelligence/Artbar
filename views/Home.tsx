@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
+import { SITE_IMAGES } from '../constants';
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
@@ -20,9 +21,12 @@ export const Home: React.FC = () => {
   const heroVideoMobile = (heroImages.videoMobile ?? "").trim() || heroVideoDesktop;
   const hasHeroVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
 
-  const [heroMobileVideoReady, setHeroMobileVideoReady] = useState(false);
-  const [heroDesktopVideoReady, setHeroDesktopVideoReady] = useState(false);
-  
+  const rawHeroHome = (heroImages.home ?? '').trim();
+  const heroPosterUrl =
+    !rawHeroHome || rawHeroHome.includes('toolandtea.com')
+      ? SITE_IMAGES.hero.home
+      : rawHeroHome;
+
   // Testimonial cycling logic
   const [activeIndex, setActiveIndex] = useState(0);
   const topTestimonials = site.home.testimonials.items.slice(0, 3);
@@ -130,34 +134,22 @@ export const Home: React.FC = () => {
       <section className="relative h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0 md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
           {hasHeroVideo ? (
-            <>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                onLoadedData={() => setHeroMobileVideoReady(true)}
-                className={`h-full w-full object-cover transition-opacity duration-500 md:hidden ${
-                  heroMobileVideoReady ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
-              </video>
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                onLoadedData={() => setHeroDesktopVideoReady(true)}
-                className={`hidden h-full w-full object-cover transition-opacity duration-500 md:block ${
-                  heroDesktopVideoReady ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                <source src={heroVideoDesktop || heroVideoMobile} type="video/mp4" />
-              </video>
-            </>
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              className="h-full w-full object-cover"
+              poster={heroPosterUrl}
+            >
+              <source
+                src={heroVideoDesktop || heroVideoMobile}
+                type="video/mp4"
+                media="(min-width: 768px)"
+              />
+              <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
+            </video>
           ) : (
             <div className="w-full h-full relative">
                <img 
