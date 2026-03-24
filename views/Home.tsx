@@ -7,11 +7,14 @@ import { Button } from '../components/ui/Button';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { useContent } from '../context/ContentContext';
 import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL } from '../constants';
+import { formatGuestCountDisplay, formatGuestConceptLabel } from '../lib/guest-count';
 
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
   const theme = content.theme.typography;
+  const guestCountFormatted = formatGuestCountDisplay(lang);
+  const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
 
   const scrollToPopularThemes = () => {
     document.getElementById('popular-themes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -130,6 +133,25 @@ export const Home: React.FC = () => {
           animation: float 6s infinite ease-in-out;
         }
 
+        @keyframes text-shimmer {
+          0% { background-position: 200% center; }
+          15% { background-position: -200% center; }
+          100% { background-position: -200% center; }
+        }
+        .animate-text-shimmer {
+          background: linear-gradient(
+            90deg,
+            currentColor 30%,
+            rgba(255,255,255,0.9) 50%,
+            currentColor 70%
+          );
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: text-shimmer 5s infinite ease-in-out;
+        }
+
         /* Very slow, subtle hero background drift — ease-in-out + alternate = seamless loop */
         @keyframes hero-bg-drift {
           0% {
@@ -193,7 +215,7 @@ export const Home: React.FC = () => {
                 </div>
                 <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
                 <span className="text-white/40 text-lg">·</span>
-                <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{site.home.hero.guestsNumber}+ {site.home.hero.guestsSuffix}</span>
+                <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{guestCountFormatted}+ {site.home.hero.guestsSuffix}</span>
               </div>
 
               {/* H1 */}
@@ -235,8 +257,8 @@ export const Home: React.FC = () => {
                 onClick={scrollToPopularThemes}
                 className="inline-flex items-center gap-1.5 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
               >
-                <span className="animate-sheen">{site.home.hero.ctaFindPainting}</span>
-                <ArrowRight size={14} className="text-white/50" aria-hidden />
+                <span className="animate-text-shimmer">{site.home.hero.ctaFindPainting}</span>
+                <ArrowRight size={14} className="animate-text-shimmer text-white/50" aria-hidden />
               </button>
             </div>
           </div>
@@ -424,12 +446,12 @@ export const Home: React.FC = () => {
                       ))}
                       <div className="w-[4.5rem] h-[4.5rem] md:w-36 md:h-36 rounded-full border-[3px] md:border-[6px] border-white bg-artbar-navy text-white flex items-center justify-center shadow-xl px-1">
                         <span className="text-sm md:text-2xl font-heading font-heavy tabular-nums leading-none text-center">
-                          {site.home.concept.guestsCount}
+                          {guestCountFormatted}
                         </span>
                       </div>
                   </div>
                   <div className="text-center">
-                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">{site.home.concept.guestsLabel}</p>
+                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">{guestConceptLabel}</p>
                      <p className="text-[10px] md:text-base font-bold text-artbar-taupe uppercase tracking-[0.2em] flex items-center justify-center gap-3">
                         <ShieldCheck size={20} className="text-green-600" /> Professional Bilingual Instruction Provided
                      </p>
