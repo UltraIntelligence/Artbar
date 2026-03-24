@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Wine, Star, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Newspaper } from 'lucide-react';
-import Link from 'next/link';
+import { Wine, Star, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Newspaper, Play } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
+import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { useContent } from '../context/ContentContext';
-import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES } from '../constants';
+import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL } from '../constants';
+
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
@@ -27,7 +28,7 @@ export const Home: React.FC = () => {
   };
   const heroVideoDesktop = (heroImages.video ?? "").trim();
   const heroVideoMobile = (heroImages.videoMobile ?? "").trim() || heroVideoDesktop;
-  /** Former hero videos now play in the concept / lifestyle block. */
+  /** MP4 sources for the concept block when no YouTube ID is set. */
   const hasConceptVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
 
   const rawHeroHome = (heroImages.home ?? "").trim();
@@ -51,9 +52,6 @@ export const Home: React.FC = () => {
     return icons[index] || Calendar;
   };
 
-  /** Hero social proof: compact inline pill badges. */
-  const heroProofPill =
-    'inline-flex items-center gap-2 md:gap-3 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm px-4 py-2 md:px-5 md:py-2.5';
 
   const REGULAR_LOGOS = [
     { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
@@ -96,14 +94,6 @@ export const Home: React.FC = () => {
           opacity: 0;
           display: inline-block;
         }
-        @keyframes pulse-soft {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.02); }
-        }
-        .animate-pulse-soft {
-          animation: pulse-soft 3s infinite ease-in-out;
-        }
-
         /* Glassy Sheen Animation */
         @keyframes sheen {
           0% { transform: translateX(-120%) skewX(-20deg); }
@@ -161,6 +151,7 @@ export const Home: React.FC = () => {
             will-change: auto;
           }
         }
+
       `}</style>
       
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
@@ -171,10 +162,13 @@ export const Home: React.FC = () => {
             <img
               src={heroBgSrc}
               alt="Artbar Experience"
-              className="hero-bg-motion h-full w-full min-h-full min-w-full object-cover"
+              className="hero-bg-motion h-full w-full min-h-full min-w-full object-cover object-[center_19%]"
             />
           </div>
-          <div className="absolute inset-0 bg-artbar-navy/80" />
+          {/* Neutral darkening — top-down for readability (no color cast on the photo) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 from-0% via-black/22 via-[45%] to-black/12 to-[100%] pointer-events-none" />
+          {/* Brand navy — top-down; clears toward the bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-artbar-navy from-0% via-artbar-navy/50 via-[58%] to-transparent to-[96%] opacity-75 pointer-events-none" />
           
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
@@ -195,48 +189,25 @@ export const Home: React.FC = () => {
                 {site.home.hero.subtitle}
               </h2>
 
-              {/* Compact proof pills */}
-              <div className="flex flex-wrap items-center justify-center gap-2.5 md:gap-3 pt-1 md:pt-3">
-                <div
-                  className={heroProofPill}
-                  aria-label={`${site.home.hero.ratingScore} out of 5, ${site.home.hero.ratingSource}`}
-                >
-                  <span className="font-heading font-heavy text-white text-base md:text-lg tabular-nums">{site.home.hero.ratingScore}</span>
-                  <div className="flex gap-0.5 text-yellow-400">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <Star
-                        key={i}
-                        className="animate-star h-3.5 w-3.5 md:h-4 md:w-4"
-                        style={{ animationDelay: `${600 + i * 100}ms` }}
-                        fill="currentColor"
-                        aria-hidden
-                      />
-                    ))}
-                  </div>
-                  <span className="text-white/60 font-heading text-[10px] md:text-xs tracking-wide">{site.home.hero.ratingSource}</span>
+              {/* Inline proof line */}
+              <div className="flex items-center justify-center gap-2 md:gap-3 pt-1 md:pt-2 text-white/70">
+                <div className="flex gap-0.5 text-yellow-400">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star
+                      key={i}
+                      className="animate-star h-3 w-3 md:h-3.5 md:w-3.5"
+                      style={{ animationDelay: `${600 + i * 100}ms` }}
+                      fill="currentColor"
+                      aria-hidden
+                    />
+                  ))}
                 </div>
-
-                <div
-                  className={heroProofPill}
-                  aria-label={`${site.home.hero.guestsNumber} ${site.home.hero.guestsSuffix}`}
-                >
-                  <div className="flex -space-x-1.5">
-                    {[1, 2, 3, 4].map((i) => (
-                      <img
-                        key={i}
-                        className="animate-star h-6 w-6 rounded-full border-[1.5px] border-white/40 object-cover"
-                        style={{ animationDelay: `${900 + i * 80}ms` }}
-                        src={`https://picsum.photos/seed/guestface${i}/100`}
-                        alt=""
-                      />
-                    ))}
-                  </div>
-                  <span className="font-heading font-heavy text-white text-base md:text-lg tabular-nums">{site.home.hero.guestsNumber}+</span>
-                  <span className="text-white/60 font-heading text-[10px] md:text-xs tracking-wide">{site.home.hero.guestsSuffix}</span>
-                </div>
+                <span className="font-heading font-heavy text-white text-sm md:text-base tabular-nums">{site.home.hero.ratingScore}</span>
+                <span className="text-white/40">·</span>
+                <span className="font-heading text-sm md:text-base text-white/70 tracking-wide">{site.home.hero.guestsNumber}+ {site.home.hero.guestsSuffix}</span>
               </div>
 
-              {/* CTAs */}
+              {/* Primary CTAs */}
               <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-3 md:gap-4 pt-2 md:pt-4">
                 <Button
                   onClick={() => { window.location.hash = 'schedule'; }}
@@ -256,16 +227,17 @@ export const Home: React.FC = () => {
                   {site.home.hero.ctaLineChat}
                   <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
                 </a>
-
-                <button
-                  type="button"
-                  onClick={scrollToPopularThemes}
-                  className={`${heroCtaFrame} border border-white/40 bg-white/8 text-white backdrop-blur-sm hover:bg-white/15`}
-                >
-                  {site.home.hero.ctaFindPainting}
-                  <ArrowRight size={16} className="shrink-0 text-white/80" aria-hidden />
-                </button>
               </div>
+
+              {/* Tertiary text link */}
+              <button
+                type="button"
+                onClick={scrollToPopularThemes}
+                className="inline-flex items-center gap-1.5 font-heading text-sm md:text-base text-white/70 tracking-wide hover:text-white transition-colors duration-200"
+              >
+                {site.home.hero.ctaFindPainting}
+                <ArrowRight size={14} className="text-white/50" aria-hidden />
+              </button>
             </div>
           </div>
         </div>
@@ -388,16 +360,16 @@ export const Home: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex flex-col items-center text-center">
             
-            {/* Massive Centered Heading */}
-            <h2 className="text-[2.25rem] sm:text-6xl md:text-8xl lg:text-9xl xl:text-[10rem] font-heading font-heavy text-artbar-navy leading-[1] md:leading-[0.85] tracking-tighter whitespace-pre-line mb-12 md:mb-24 flex flex-col items-center">
-               <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-lg uppercase mb-4 md:mb-8 opacity-80">
+            {/* Section heading — matches site section title scale */}
+            <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy tracking-tight leading-tight whitespace-pre-line mb-10 md:mb-16 flex flex-col items-center max-w-4xl`}>
+               <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-3 md:mb-5 opacity-80">
                  {site.home.concept.est}
                </span>
                {site.home.concept.title}
             </h2>
 
-            {/* High impact centered collage — video (ex–hero) or fallback image */}
-            <div className="group relative mb-16 md:mb-24 aspect-square w-full max-w-[min(100%,42rem)] overflow-hidden rounded-[3rem] shadow-2xl md:rounded-[5.5rem]">
+            {/* Video / lifestyle — self-hosted MP4 (loop) + glass play → full video on YouTube */}
+            <div className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[3rem] shadow-2xl md:rounded-[5.5rem]">
               {hasConceptVideo ? (
                 <video
                   autoPlay
@@ -421,30 +393,21 @@ export const Home: React.FC = () => {
                   className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105"
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/40 via-transparent to-transparent" />
-               
-               {/* Detail Floating Image Overlay */}
-               <div className="absolute -bottom-8 -right-8 md:-bottom-12 md:-right-12 z-20 w-32 h-32 md:w-80 md:h-80 rounded-[2rem] md:rounded-[4.5rem] overflow-hidden border-[8px] md:border-[24px] border-artbar-bg shadow-2xl hidden sm:block">
-                  <img src={content.images.concept.detail} alt="Art Detail" className="w-full h-full object-cover hover:scale-110 transition-transform duration-1000" />
-               </div>
-
-               {/* Centered Rating Overlay - SHRUNKEN FOR BETTER FOCUS */}
-               <div className="absolute bottom-6 left-6 md:bottom-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 z-30 bg-white/90 backdrop-blur-xl p-4 md:p-10 rounded-2xl md:rounded-[4rem] shadow-xl border border-white/50 flex flex-col items-center animate-pulse-soft pointer-events-none min-w-[120px] md:min-w-[260px]">
-                  <div className="flex items-baseline justify-center gap-0.5 md:gap-1 mb-2 md:mb-4">
-                    <span className="text-5xl md:text-8xl lg:text-9xl font-heading font-heavy text-artbar-navy leading-none tracking-tighter tabular-nums">
-                      {site.home.hero.ratingScore}
-                    </span>
-                    <span className="text-yellow-500 text-3xl md:text-6xl lg:text-7xl leading-none" aria-hidden>★</span>
-                  </div>
-                  <div className="flex text-yellow-500 gap-0.5 md:gap-2 mb-2 md:mb-6">
-                     {[1,2,3,4,5].map(i => (
-                       <Star key={i} fill="currentColor" className="w-6 h-6 md:w-12 md:h-12" />
-                     ))}
-                  </div>
-                  <p className="text-[8px] md:text-xs font-heavy text-artbar-navy uppercase tracking-[0.3em] opacity-90 text-center">
-                    {site.home.concept.ratingLabel}
-                  </p>
-               </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/40 via-transparent to-transparent pointer-events-none" />
+              <a
+                href={CONCEPT_BLOCK_YOUTUBE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute left-1/2 top-1/2 z-20 flex h-[4.25rem] w-[4.25rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/45 bg-white/18 shadow-[0_8px_32px_-4px_rgba(5,55,97,0.35)] backdrop-blur-md transition-transform duration-200 hover:scale-105 hover:bg-white/28 hover:border-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:h-[5.5rem] md:w-[5.5rem]"
+                aria-label="Watch the full video on YouTube"
+              >
+                <Play
+                  className="ml-1 h-9 w-9 text-white drop-shadow-md md:h-12 md:w-12"
+                  fill="currentColor"
+                  strokeWidth={0}
+                  aria-hidden
+                />
+              </a>
             </div>
 
             {/* Bold Paragraph Copy - NORMAL SIZED */}
@@ -530,31 +493,7 @@ export const Home: React.FC = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
-            {site.home.themes.items.map((themeItem, index) => {
-              const slug = themeItem.title.toLowerCase().replace(/ /g, '-').replace('!', '');
-              return (
-                <Link 
-                  key={index} 
-                  href={`/themes/${slug}`}
-                  className="group relative h-[300px] md:h-[500px] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
-                >
-                  <img 
-                    src={themeItem.image} 
-                    alt={themeItem.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy via-artbar-navy/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                  <div className="absolute bottom-0 left-0 p-4 md:p-10 w-full">
-                    <h3 className="text-lg md:text-3xl font-heading font-bold text-white mb-2 leading-tight tracking-tight">{themeItem.title}</h3>
-                    <p className="text-white/85 text-[10px] sm:text-xs md:text-sm font-light leading-snug md:leading-relaxed mb-0 md:mb-4 opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300">
-                      {themeItem.desc}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <PopularThemesGrid items={site.home.themes.items} />
         </div>
       </section>
 
