@@ -1,16 +1,25 @@
 'use client';
 
 import React, { useRef } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { TEAM_BUILDING_ACTIVITY_IMAGES } from '../constants';
+import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS } from '../constants';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { site, content } = useContent();
+  const { site, content, lang } = useContent();
+  const socialReveal = useScrollReveal();
+  const valueReveal = useScrollReveal();
+  const activitiesReveal = useScrollReveal();
+  const specialtyReveal = useScrollReveal();
+  const testimonialsReveal = useScrollReveal();
+  const logisticsReveal = useScrollReveal();
+  const pricingReveal = useScrollReveal();
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -52,14 +61,18 @@ export const TeamBuilding: React.FC = () => {
     }
   };
 
+  const bookTeamCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
+
   return (
-    <div className="w-full bg-artbar-bg">
-      {/* Hero */}
+    <div className="grain relative w-full bg-artbar-bg">
       <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-14 md:py-16 lg:py-20">
-        <img 
+        <Image
           src={content.images.hero.teamBuilding}
-          className="absolute inset-0 w-full h-full object-cover opacity-50" 
           alt="Team building"
+          fill
+          priority
+          className="object-cover opacity-50"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90"></div>
         
@@ -93,8 +106,10 @@ export const TeamBuilding: React.FC = () => {
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-24">
         
-        {/* Social Proof - Logos with Tinted Fallback */}
-        <div className="mb-24 md:mb-32">
+        <div
+          ref={socialReveal.ref}
+          className={`reveal mb-24 md:mb-32 ${socialReveal.isVisible ? 'visible' : ''}`}
+        >
           <div className="flex items-center gap-4 mb-16">
              <div className="h-px bg-artbar-navy/10 flex-grow"></div>
              <p className="text-[10px] md:text-xs font-heading font-bold text-artbar-gray uppercase tracking-[0.4em] px-4">{site.teamBuilding.socialProof.title}</p>
@@ -121,8 +136,10 @@ export const TeamBuilding: React.FC = () => {
           </div>
         </div>
 
-        {/* Value Proposition */}
-        <div className="bg-white rounded-[3rem] p-8 md:p-16 mb-24 md:mb-32 shadow-sm border border-white relative overflow-hidden">
+        <div
+          ref={valueReveal.ref}
+          className={`reveal bg-white rounded-[3rem] p-8 md:p-16 mb-24 md:mb-32 shadow-sm border border-white relative overflow-hidden ${valueReveal.isVisible ? 'visible' : ''}`}
+        >
            <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none">
               <Briefcase size={400} />
            </div>
@@ -150,7 +167,7 @@ export const TeamBuilding: React.FC = () => {
                             <Icon size={24} />
                         </div>
                         <h4 className="font-heading font-bold text-artbar-navy text-xl mb-2">{item.title}</h4>
-                        <p className="text-sm text-artbar-gray leading-relaxed">{item.desc}</p>
+                        <p className="text-base md:text-lg text-artbar-gray leading-relaxed">{item.desc}</p>
                         </div>
                     );
                  })}
@@ -158,30 +175,31 @@ export const TeamBuilding: React.FC = () => {
            </div>
         </div>
 
-        {/* Activities */}
-        <div className="mb-16">
+        <div ref={activitiesReveal.ref} className={`reveal mb-16 ${activitiesReveal.isVisible ? 'visible' : ''}`}>
            <div className="flex flex-col md:flex-row justify-between items-end mb-12">
              <h2 className="text-3xl md:text-5xl font-heading font-bold text-artbar-navy max-w-xl">{site.teamBuilding.activities.title}</h2>
              <p className="text-artbar-gray md:text-right max-w-md mt-4 md:mt-0">{site.teamBuilding.activities.subtitle}</p>
            </div>
            
-           <div className="grid lg:grid-cols-3 gap-6">
+           <div className={`grid lg:grid-cols-3 gap-6 reveal-stagger ${activitiesReveal.isVisible ? 'visible' : ''}`}>
               {site.teamBuilding.activities.items.map((act, i) => {
                  const icons = [Puzzle, Users, Palette];
                  const Icon = icons[i] || Puzzle;
                  const activityImage = TEAM_BUILDING_ACTIVITY_IMAGES[i] ?? TEAM_BUILDING_ACTIVITY_IMAGES[0];
                  return (
                     <div key={i} className="group relative h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden cursor-pointer">
-                        <img 
+                        <Image 
                         src={activityImage}
                         alt={act.title} 
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 1024px) 100vw, 33vw"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/40 to-transparent"></div>
                         <div className="absolute bottom-0 left-0 p-8 md:p-10 text-white">
                             <Icon size={40} className="mb-6 text-artbar-taupe" />
                             <h3 className="text-2xl md:text-3xl font-heading font-bold mb-3">{act.title}</h3>
-                            <p className="text-white/80 leading-relaxed mb-6 text-sm md:text-base opacity-100 max-h-40 md:opacity-0 md:max-h-0 md:mb-6 md:group-hover:opacity-100 md:group-hover:max-h-40 transition-all duration-500">
+                            <p className="text-white/80 leading-relaxed mb-6 text-base md:text-lg opacity-100 max-h-40 md:opacity-0 md:max-h-0 md:mb-6 md:group-hover:opacity-100 md:group-hover:max-h-40 transition-all duration-500">
                                 {act.desc}
                             </p>
                             <span className="inline-flex items-center gap-2 font-bold text-sm uppercase tracking-widest group-hover:text-artbar-taupe transition-colors">
@@ -194,8 +212,7 @@ export const TeamBuilding: React.FC = () => {
            </div>
         </div>
 
-        {/* Specialty */}
-        <div className="mb-24 md:mb-32">
+        <div ref={specialtyReveal.ref} className={`reveal mb-24 md:mb-32 ${specialtyReveal.isVisible ? 'visible' : ''}`}>
            <div className="bg-artbar-taupe/10 border border-artbar-taupe/20 rounded-[3rem] p-8 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="md:w-1/2">
                  <div className="flex items-center gap-3 mb-4">
@@ -227,24 +244,23 @@ export const TeamBuilding: React.FC = () => {
            </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="mb-24 md:mb-32 relative bg-white border border-gray-200 rounded-[3rem] p-8 md:p-20 overflow-hidden">
+        <div ref={testimonialsReveal.ref} className={`reveal mb-24 md:mb-32 relative bg-white border border-gray-200 rounded-[3rem] p-8 md:p-20 overflow-hidden ${testimonialsReveal.isVisible ? 'visible' : ''}`}>
             <div className="absolute top-0 right-0 p-20 opacity-5">
                <Quote size={200} className="text-artbar-navy" />
             </div>
             
             <div className="flex justify-between items-end mb-12 relative z-10">
                <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy">{site.teamBuilding.testimonials.title}</h2>
-               <div className="flex gap-2">
-                  <button onClick={() => scroll('left')} className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors"><ChevronLeft size={20} /></button>
-                  <button onClick={() => scroll('right')} className="w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors"><ChevronRight size={20} /></button>
+               <div className="hidden md:flex gap-2">
+                  <button type="button" onClick={() => scroll('left')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors" aria-label="Previous"><ChevronLeft size={20} /></button>
+                  <button type="button" onClick={() => scroll('right')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors" aria-label="Next"><ChevronRight size={20} /></button>
                </div>
             </div>
             
             <div className="relative z-10">
-               <div ref={scrollRef} className="flex overflow-x-auto gap-8 pb-4 hide-scrollbar snap-x snap-mandatory" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+               <div ref={scrollRef} className="flex overflow-x-auto gap-8 pb-4 hide-scrollbar snap-x snap-mandatory touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                   {content.teamBuildingTestimonials.map((t, i) => (
-                    <div key={i} className="flex-shrink-0 w-[300px] md:w-[500px] snap-center">
+                    <div key={i} className="flex-shrink-0 w-[300px] md:w-[500px] snap-start">
                        <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed mb-8 font-light italic">"{t.text}"</p>
                        <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-artbar-taupe rounded-full flex items-center justify-center text-white font-heading font-bold text-lg">{t.author.charAt(0)}</div>
@@ -256,8 +272,7 @@ export const TeamBuilding: React.FC = () => {
             </div>
         </div>
 
-        {/* Logistics */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-24 md:mb-32">
+        <div ref={logisticsReveal.ref} className={`reveal grid lg:grid-cols-2 gap-8 mb-24 md:mb-32 ${logisticsReveal.isVisible ? 'visible' : ''}`}>
            <div className="bg-artbar-bg border border-artbar-light-taupe/30 p-8 md:p-12 rounded-[3rem]">
               <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-8 text-artbar-taupe shadow-sm"><Wine size={32} /></div>
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-6">{site.teamBuilding.logistics.included.title}</h3>
@@ -280,17 +295,23 @@ export const TeamBuilding: React.FC = () => {
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-6">{site.teamBuilding.logistics.locations.title}</h3>
               <p className="text-artbar-gray mb-8 text-base md:text-lg">{site.teamBuilding.logistics.locations.desc}</p>
               <div className="space-y-4">
-                 <div className="bg-white p-4 rounded-xl flex justify-between items-center"><span className="font-heading font-bold text-artbar-navy text-sm md:text-base">Artbar Ginza</span><span className="text-xs md:text-sm bg-artbar-bg px-3 py-1 rounded-full text-artbar-navy">Max 30</span></div>
-                 <div className="bg-white p-4 rounded-xl flex justify-between items-center"><span className="font-heading font-bold text-artbar-navy text-sm md:text-base">Artbar Cat Street Harajuku</span><span className="text-xs md:text-sm bg-artbar-bg px-3 py-1 rounded-full text-artbar-navy">Max 20</span></div>
-                 <div className="bg-white p-4 rounded-xl flex justify-between items-center"><span className="font-heading font-bold text-artbar-navy text-sm md:text-base">Artbar Yokohama</span><span className="text-xs md:text-sm bg-artbar-bg px-3 py-1 rounded-full text-artbar-navy">Max 40</span></div>
-                 <div className="bg-white p-4 rounded-xl flex justify-between items-center border border-artbar-taupe/30"><span className="font-heading font-bold text-artbar-navy text-sm md:text-base">Your Office / Offsite</span><span className="text-xs md:text-sm bg-artbar-taupe text-white px-3 py-1 rounded-full">15 - 100+ Guests</span></div>
+                 {TEAM_BUILDING_LOGISTICS_ROWS.map((row, i) => (
+                   <div
+                     key={i}
+                     className={`bg-white p-4 rounded-xl flex justify-between items-center ${i === TEAM_BUILDING_LOGISTICS_ROWS.length - 1 ? 'border border-artbar-taupe/30' : ''}`}
+                   >
+                     <span className="font-heading font-bold text-artbar-navy text-sm md:text-base">{row.name[lang]}</span>
+                     <span className={`text-xs md:text-sm px-3 py-1 rounded-full ${i === TEAM_BUILDING_LOGISTICS_ROWS.length - 1 ? 'bg-artbar-taupe text-white' : 'bg-artbar-bg text-artbar-navy'}`}>
+                       {row.cap[lang]}
+                     </span>
+                   </div>
+                 ))}
               </div>
               <p className="text-center text-artbar-gray mt-6 text-sm">{site.teamBuilding.logistics.locations.note}</p>
            </div>
         </div>
 
-        {/* Pricing */}
-        <div className="bg-artbar-navy text-white rounded-[3rem] p-8 md:p-20 relative overflow-hidden shadow-2xl">
+        <div ref={pricingReveal.ref} className={`reveal bg-artbar-navy text-white rounded-[3rem] p-8 md:p-20 relative overflow-hidden shadow-2xl ${pricingReveal.isVisible ? 'visible' : ''}`}>
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
             <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -314,7 +335,7 @@ export const TeamBuilding: React.FC = () => {
                      onClick={() => router.push('/contact')}
                      className="mt-4 w-full rounded-xl text-base hover:bg-white hover:text-artbar-navy"
                    >
-                     {site.teamBuilding.pricing.cta}
+                     {bookTeamCta}
                    </Button>
                 </div>
               </div>

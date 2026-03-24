@@ -1,15 +1,18 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
   const { content, site, lang } = useContent();
   const posts = content.blog.filter(p => p.published);
+  const gridReveal = useScrollReveal();
 
   return (
-    <div className="pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         
         {/* Header */}
@@ -19,8 +22,10 @@ export const BlogList: React.FC = () => {
           <p className="text-lg md:text-xl text-artbar-gray max-w-2xl mx-auto">{site.blogPage.subtitle}</p>
         </header>
 
-        {/* Blog Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div
+          ref={gridReveal.ref}
+          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 reveal-stagger ${gridReveal.isVisible ? 'visible' : ''}`}
+        >
           {posts.map((post, idx) => {
             const title = lang === 'en' ? post.titleEn : post.titleJp;
             const excerpt = lang === 'en' ? post.excerptEn : post.excerptJp;
@@ -29,10 +34,12 @@ export const BlogList: React.FC = () => {
             return (
               <article key={post.id} className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-gray-100">
                 <Link href={`/blog/${post.slug}`} className="block relative overflow-hidden aspect-[4/3]">
-                  <img 
+                  <Image 
                     src={post.image} 
                     alt={title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-artbar-navy/10 group-hover:bg-transparent transition-colors"></div>
                   
@@ -47,7 +54,7 @@ export const BlogList: React.FC = () => {
                 </Link>
 
                 <div className="p-8 flex flex-col flex-grow">
-                  <div className="flex items-center gap-4 text-xs text-artbar-taupe font-bold uppercase tracking-wider mb-4">
+                  <div className="flex items-center gap-4 text-sm text-artbar-taupe font-bold uppercase tracking-wider mb-4">
                      <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
                      <span className="flex items-center gap-1"><User size={12} /> {author}</span>
                   </div>

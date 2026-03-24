@@ -8,7 +8,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'toolandtea.com' },
       { protocol: 'https', hostname: '**.supabase.co' },
+      { protocol: 'https', hostname: 'artbar.co.jp' },
+      { protocol: 'https', hostname: 'www.artbar.co.jp' },
+      { protocol: 'https', hostname: 'upload.wikimedia.org' },
+      { protocol: 'https', hostname: 'picsum.photos' },
     ],
+    // Avoid Sharp-based optimization in dev — reduces crashes on macOS (malloc / bad free) when
+    // assets 404 or during heavy Fast Refresh; production builds still optimize images.
+    ...(process.env.NODE_ENV === 'development' ? { unoptimized: true } : {}),
   },
 };
 

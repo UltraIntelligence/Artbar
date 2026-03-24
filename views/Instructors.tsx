@@ -1,13 +1,16 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useContent } from '../context/ContentContext';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const Instructors: React.FC = () => {
   const { content, site, lang } = useContent();
+  const gridReveal = useScrollReveal();
 
   return (
-    <div className="pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="text-center mb-20">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6">{site.instructorsPage.title}</h1>
@@ -16,26 +19,32 @@ export const Instructors: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+        <div
+          ref={gridReveal.ref}
+          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 reveal-stagger ${gridReveal.isVisible ? 'visible' : ''}`}
+        >
           {content.instructors.map((instructor) => (
             <div key={instructor.id} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
-              {/* Header Art Background */}
               <div className="h-56 relative overflow-hidden bg-artbar-bg">
-                 <div className="absolute inset-0 bg-artbar-navy/10"></div>
-                 <img 
+                 <div className="absolute inset-0 bg-artbar-navy/10 z-[1]"></div>
+                 <Image 
                    src={instructor.artworkImage} 
                    alt={`${instructor.name}'s Art`}
-                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                   fill
+                   className="object-cover group-hover:scale-105 transition-transform duration-700"
+                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                  />
               </div>
               
               <div className="px-8 pb-10 relative flex-grow flex flex-col">
                  <div className="relative -mt-16 mb-6 flex justify-between items-end">
-                    <div className="w-32 h-32 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white">
-                       <img 
+                    <div className="w-32 h-32 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white relative">
+                       <Image 
                          src={instructor.profileImage} 
                          alt={instructor.name}
-                         className="w-full h-full object-cover"
+                         width={128}
+                         height={128}
+                         className="object-cover"
                        />
                     </div>
                     
@@ -51,7 +60,7 @@ export const Instructors: React.FC = () => {
                     <p className="text-sm font-bold text-artbar-taupe uppercase tracking-wider mb-4">
                         {lang === 'en' ? instructor.roleEn : instructor.roleJp}
                     </p>
-                    <p className="text-artbar-gray leading-relaxed text-sm md:text-base">
+                    <p className="text-artbar-gray leading-relaxed text-base md:text-lg">
                       {lang === 'en' ? instructor.descEn : instructor.descJp}
                     </p>
                  </div>

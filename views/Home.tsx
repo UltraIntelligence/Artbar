@@ -1,13 +1,37 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Wine, Star, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Newspaper, Play } from 'lucide-react';
+import Image from 'next/image';
+import { Wine, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Play } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
+import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL } from '../constants';
 import { formatGuestCountDisplay, formatGuestConceptLabel } from '../lib/guest-count';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
+function LogoItem({ name, url }: { name: string; url: string }) {
+  const [failed, setFailed] = useState(false);
+  const scaleClass = name === 'Coca-Cola' || name === 'Netflix' ? 'scale-90' : '';
+  return (
+    <div className="w-full flex items-center justify-center h-12 md:h-20 max-w-[160px] md:max-w-[200px] px-2">
+      {failed ? (
+        <span className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-widest text-center leading-tight opacity-70">
+          {name}
+        </span>
+      ) : (
+        <img
+          src={url}
+          alt={name}
+          className={`max-h-[60%] max-w-[80%] object-contain transition-all duration-700 opacity-100 grayscale-0 filter drop-shadow-sm ${scaleClass}`}
+          onError={() => setFailed(true)}
+        />
+      )}
+    </div>
+  );
+}
 
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
@@ -15,6 +39,15 @@ export const Home: React.FC = () => {
   const theme = content.theme.typography;
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
+
+  const trustReveal = useScrollReveal();
+  const conceptReveal = useScrollReveal();
+  const howItWorksReveal = useScrollReveal();
+  const themesReveal = useScrollReveal();
+  const featuresReveal = useScrollReveal();
+  const testimonialsReveal = useScrollReveal();
+  const asSeenInReveal = useScrollReveal();
+  const bottomCtaReveal = useScrollReveal();
 
   const scrollToPopularThemes = () => {
     document.getElementById('popular-themes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -38,16 +71,23 @@ export const Home: React.FC = () => {
   const heroBgSrc =
     rawHeroHome && !rawHeroHome.includes("toolandtea.com") ? rawHeroHome : SITE_IMAGES.hero.home;
 
-  // Testimonial cycling logic
   const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const topTestimonials = site.home.testimonials.items.slice(0, 3);
 
   useEffect(() => {
+    if (paused) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % topTestimonials.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [topTestimonials.length]);
+  }, [topTestimonials.length, paused]);
+
+  useEffect(() => {
+    if (!paused) return;
+    const resume = setTimeout(() => setPaused(false), 12000);
+    return () => clearTimeout(resume);
+  }, [paused]);
 
   // Icon mapping helper
   const getStepIcon = (index: number) => {
@@ -71,121 +111,29 @@ export const Home: React.FC = () => {
     { name: "LUMINE", url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Lumine_logo.svg" }
   ];
 
-  // Structured Data for Organization (Brand)
-  const orgSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Artbar Tokyo",
-    "url": "https://artbar.co.jp",
-    "logo": "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_200.png",
-    "sameAs": [
-      "https://www.facebook.com/artbartokyo",
-      "https://www.instagram.com/artbartokyo"
-    ]
-  };
+  const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : 'ご利用企業様';
+  const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
+  const bilingualInstructionLine =
+    lang === 'en' ? 'Professional Bilingual Instruction Provided' : 'プロのバイリンガルインストラクター';
+  const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : 'メディア掲載';
+  const asSeenInHeading = lang === 'en' ? 'As Seen In' : 'メディア掲載実績';
 
   return (
     <div className="w-full bg-artbar-bg">
-      <style>{`
-        @keyframes star-pop {
-          0% { transform: scale(0) rotate(-15deg); opacity: 0; }
-          70% { transform: scale(1.3) rotate(5deg); }
-          100% { transform: scale(1) rotate(0); opacity: 1; }
-        }
-        .animate-star {
-          animation: star-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-          opacity: 0;
-          display: inline-block;
-        }
-        /* Glassy Sheen Animation */
-        @keyframes sheen {
-          0% { transform: translateX(-120%) skewX(-20deg); }
-          15% { transform: translateX(250%) skewX(-20deg); }
-          100% { transform: translateX(250%) skewX(-20deg); }
-        }
-        .animate-sheen {
-          position: relative;
-          overflow: hidden;
-        }
-        .animate-sheen::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 60%;
-          height: 100%;
-          background: linear-gradient(
-            to right,
-            transparent,
-            rgba(255, 255, 255, 0.5),
-            transparent
-          );
-          transform: translateX(-120%) skewX(-20deg);
-          animation: sheen 5s infinite ease-in-out;
-        }
-
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-15px); }
-          100% { transform: translateY(0px); }
-        }
-        .animate-float {
-          animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes text-shimmer {
-          0% { background-position: 200% center; }
-          15% { background-position: -200% center; }
-          100% { background-position: -200% center; }
-        }
-        .animate-text-shimmer {
-          background: linear-gradient(
-            90deg,
-            currentColor 30%,
-            rgba(255,255,255,0.9) 50%,
-            currentColor 70%
-          );
-          background-size: 200% 100%;
-          -webkit-background-clip: text;
-          background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: text-shimmer 5s infinite ease-in-out;
-        }
-
-        /* Very slow, subtle hero background drift — ease-in-out + alternate = seamless loop */
-        @keyframes hero-bg-drift {
-          0% {
-            transform: scale(1.045) translate(0%, 0%);
-          }
-          100% {
-            transform: scale(1.09) translate(-0.9%, -0.55%);
-          }
-        }
-        .hero-bg-motion {
-          transform-origin: center center;
-          animation: hero-bg-drift 48s ease-in-out infinite alternate;
-          will-change: transform;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-bg-motion {
-            animation: none;
-            transform: scale(1.05);
-            will-change: auto;
-          }
-        }
-
-      `}</style>
-      
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
-        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
-          {/* Wrapper holds fade-in; img alone runs hero-bg-drift (animate-in on same node overrides CSS animation) */}
+        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy">
           <div className="absolute inset-0 animate-in fade-in duration-1000">
-            <img
-              src={heroBgSrc}
-              alt="Artbar Experience"
-              className="hero-bg-motion h-full w-full min-h-full min-w-full object-cover object-[center_19%]"
-            />
+            <div className="relative h-full w-full min-h-full min-w-full">
+              <Image
+                src={heroBgSrc}
+                alt="Artbar Experience"
+                fill
+                priority
+                sizes="100vw"
+                className="hero-bg-motion object-cover object-[center_19%]"
+              />
+            </div>
           </div>
           {/* Brand navy wash — matches site primary (e.g. artbar-navy) */}
           <div className="absolute inset-0 bg-artbar-navy/82 pointer-events-none" />
@@ -200,17 +148,12 @@ export const Home: React.FC = () => {
 
               {/* Proof line — trust primer above headline */}
               <div className="flex items-center justify-center gap-2.5 md:gap-3.5 text-white/70">
-                <div className="flex gap-0.5 text-yellow-400">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <Star
-                      key={i}
-                      className="animate-star h-4 w-4 md:h-5 md:w-5"
-                      style={{ animationDelay: `${600 + i * 100}ms` }}
-                      fill="currentColor"
-                      aria-hidden
-                    />
-                  ))}
-                </div>
+                <StarRating
+                  size={16}
+                  animated
+                  delayBase={600}
+                  className="md:[&>svg]:w-5 md:[&>svg]:h-5"
+                />
                 <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
                 <span className="text-white/40 text-lg">·</span>
                 <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{guestCountFormatted}+ {site.home.hero.guestsSuffix}</span>
@@ -265,10 +208,12 @@ export const Home: React.FC = () => {
 
       {/* Trust & Social Proof Section */}
       <section className="relative z-[2] px-4 md:px-10">
-        <div className="max-w-5xl mx-auto -mt-14 md:-mt-12 lg:-mt-16">
-          
+        <div
+          ref={trustReveal.ref}
+          className={`max-w-5xl mx-auto -mt-14 md:-mt-12 lg:-mt-16 reveal ${trustReveal.isVisible ? 'visible' : ''}`}
+        >
           {/* Centered High-Impact Review Card (Horizontal Cycling Animation) */}
-          <div className="bg-white rounded-[3rem] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[360px] md:min-h-[420px] justify-center">
+          <div className="bg-white rounded-[var(--radius-feature)] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[360px] md:min-h-[420px] justify-center">
             {topTestimonials.map((testimonial, idx) => (
               <div 
                 key={idx} 
@@ -280,18 +225,17 @@ export const Home: React.FC = () => {
                       : 'opacity-0 translate-x-full pointer-events-none'
                 }`}
               >
-                <div className="flex items-center gap-1 text-yellow-400 mb-6">
-                    <Star size={18} fill="currentColor" className="animate-star md:w-5 md:h-5" style={{ animationDelay: '100ms' }} />
-                    <Star size={18} fill="currentColor" className="animate-star md:w-5 md:h-5" style={{ animationDelay: '200ms' }} />
-                    <Star size={18} fill="currentColor" className="animate-star md:w-5 md:h-5" style={{ animationDelay: '300ms' }} />
-                    <Star size={18} fill="currentColor" className="animate-star md:w-5 md:h-5" style={{ animationDelay: '400ms' }} />
-                    <Star size={18} fill="currentColor" className="animate-star md:w-5 md:h-5" style={{ animationDelay: '500ms' }} />
-                </div>
+                <StarRating
+                  size={18}
+                  animated
+                  delayBase={100}
+                  className="mb-6 md:[&>svg]:w-5 md:[&>svg]:h-5"
+                />
 
                 <div className="relative mb-8">
                     <Quote size={40} className="text-artbar-taupe/10 absolute -top-4 -left-4 md:-top-6 md:-left-10 md:w-16 md:h-16" />
                     <p className="text-lg md:text-3xl font-heading font-normal text-artbar-navy leading-snug max-w-xl relative z-10 px-4">
-                      "{testimonial.text}"
+                      &ldquo;{testimonial.text}&rdquo;
                     </p>
                 </div>
 
@@ -319,7 +263,10 @@ export const Home: React.FC = () => {
                  <button
                    key={i}
                    type="button"
-                   onClick={() => setActiveIndex(i)}
+                   onClick={() => {
+                     setActiveIndex(i);
+                     setPaused(true);
+                   }}
                    aria-label={`Show testimonial ${i + 1}`}
                    className={`h-1 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-6 bg-artbar-taupe' : 'w-1 bg-gray-200 hover:bg-gray-300'}`}
                  />
@@ -328,34 +275,14 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Standardized Corporate Logo Grid */}
-          <div className="bg-white rounded-[3rem] shadow-[0_20px_60px_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="bg-white rounded-[var(--radius-feature)] shadow-[0_20px_60px_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="bg-artbar-navy py-5 text-center">
-               <h3 className="font-heading font-heavy text-white text-[10px] md:text-xs tracking-[0.4em] uppercase">Meet Our Regulars</h3>
+               <h3 className="font-heading font-heavy text-white text-[10px] md:text-xs tracking-[0.4em] uppercase">{meetRegularsHeading}</h3>
             </div>
             <div className="p-10 md:p-20 flex flex-col items-center">
                <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 md:gap-x-12 gap-y-12 md:gap-y-16 items-center justify-items-center mb-16">
                   {REGULAR_LOGOS.map((logo, i) => (
-                    <div key={i} className="w-full flex items-center justify-center h-12 md:h-20 max-w-[160px] md:max-w-[200px] px-2">
-                      <img 
-                        src={logo.url} 
-                        alt={logo.name} 
-                        className="max-h-[60%] max-w-[80%] object-contain transition-all duration-700 opacity-100 grayscale-0 filter drop-shadow-sm" 
-                        style={{ 
-                          transform: logo.name === 'Coca-Cola' || logo.name === 'Netflix' ? 'scale(0.9)' : 'scale(1)' 
-                        }}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            const span = document.createElement('span');
-                            span.innerText = logo.name;
-                            span.className = "font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-widest text-center leading-tight opacity-70";
-                            parent.appendChild(span);
-                          }
-                        }}
-                      />
-                    </div>
+                    <LogoItem key={i} name={logo.name} url={logo.url} />
                   ))}
                </div>
                
@@ -366,7 +293,7 @@ export const Home: React.FC = () => {
                   onClick={() => router.push('/team-building')}
                   className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
                >
-                  Book Team Building
+                  {bookTeamBuildingCta}
                   <ArrowRight size={18} className="shrink-0" aria-hidden />
                </Button>
             </div>
@@ -376,9 +303,9 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Concept Section - Refined for better balance */}
-      <section className="py-24 md:py-64 bg-artbar-bg overflow-hidden relative">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="flex flex-col items-center text-center">
+      <section className="py-24 md:py-64 bg-artbar-bg overflow-hidden relative grain">
+        <div ref={conceptReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
+          <div className={`flex flex-col items-center text-center reveal ${conceptReveal.isVisible ? 'visible' : ''}`}>
             
             {/* Section heading — matches site section title scale */}
             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy tracking-tight leading-tight whitespace-pre-line mb-10 md:mb-16 flex flex-col items-center max-w-4xl`}>
@@ -389,7 +316,7 @@ export const Home: React.FC = () => {
             </h2>
 
             {/* Video / lifestyle — self-hosted MP4 (loop) + glass play → full video on YouTube */}
-            <div className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[3rem] shadow-2xl md:rounded-[5.5rem]">
+            <div className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[var(--radius-feature)] shadow-2xl md:rounded-[var(--radius-feature)]">
               {hasConceptVideo ? (
                 <video
                   autoPlay
@@ -407,10 +334,12 @@ export const Home: React.FC = () => {
                   <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
                 </video>
               ) : (
-                <img
+                <Image
                   src={content.images.concept.main}
                   alt="Artbar Lifestyle"
-                  className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, min(56rem, 100vw)"
+                  className="object-cover transition-transform duration-[4s] ease-out group-hover:scale-105"
                 />
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/40 via-transparent to-transparent pointer-events-none" />
@@ -451,7 +380,7 @@ export const Home: React.FC = () => {
                   <div className="text-center">
                      <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">{guestConceptLabel}</p>
                      <p className="text-[10px] md:text-base font-bold text-artbar-taupe uppercase tracking-[0.2em] flex items-center justify-center gap-3">
-                        <ShieldCheck size={20} className="text-green-600" /> Professional Bilingual Instruction Provided
+                        <ShieldCheck size={20} className="text-green-600" /> {bilingualInstructionLine}
                      </p>
                   </div>
                </div>
@@ -462,20 +391,20 @@ export const Home: React.FC = () => {
       </section>
 
        {/* How It Works */}
-       <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[2.5rem] md:rounded-[3rem]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="text-center mb-12 md:mb-20">
+       <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
+        <div ref={howItWorksReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className={`text-center mb-12 md:mb-20 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
              <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-6`}>{site.home.howItWorks.title}</h2>
              <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
                {site.home.howItWorks.subtitle}
              </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
             {site.home.howItWorks.steps.map((step, index) => {
               const Icon = getStepIcon(index);
               return (
-                <div key={index} className="group relative bg-artbar-bg p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] hover:bg-artbar-navy transition-all duration-300">
+                <div key={index} className="group relative bg-artbar-bg p-6 md:p-8 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] hover:bg-artbar-navy transition-all duration-300">
                   <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white text-artbar-taupe flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
                     <Icon size={24} className="md:w-7 md:h-7" />
                   </div>
@@ -495,8 +424,8 @@ export const Home: React.FC = () => {
         id="popular-themes"
         className="scroll-mt-28 py-16 md:scroll-mt-32 md:py-32 bg-artbar-bg"
       >
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6">
+        <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
             <div>
               <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none">{site.home.themes.title}</h2>
               <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
@@ -513,25 +442,34 @@ export const Home: React.FC = () => {
             </Button>
           </div>
 
-          <PopularThemesGrid items={site.home.themes.items} />
+          <PopularThemesGrid
+            items={site.home.themes.items}
+            className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
+          />
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[2.5rem] md:rounded-[3rem]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-           <div className="text-center mb-12 md:mb-20">
+      <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
+        <div ref={featuresReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+           <div className={`text-center mb-12 md:mb-20 reveal ${featuresReveal.isVisible ? 'visible' : ''}`}>
              <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-4`}>{site.home.features.title}</h2>
              <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
                {site.home.features.subtitle}
              </p>
            </div>
            
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+           <div className={`grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 reveal-stagger ${featuresReveal.isVisible ? 'visible' : ''}`}>
               {site.home.features.items.map((feature, i) => (
                 <div key={i} className="flex flex-col items-center text-center group">
-                   <div className="w-full h-56 md:h-64 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden mb-6 md:mb-8 shadow-sm relative">
-                      <img src={feature.image} alt={feature.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                   <div className="w-full h-56 md:h-64 rounded-[var(--radius-card)] overflow-hidden mb-6 md:mb-8 shadow-sm relative">
+                      <Image
+                        src={feature.image}
+                        alt={feature.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
                       <div className="absolute inset-0 bg-artbar-navy/10 group-hover:bg-transparent transition-colors"></div>
                    </div>
                    <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-3 md:mb-4">{feature.title}</h3>
@@ -545,29 +483,23 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Bottom Testimonials Grid */}
-      <section className="py-16 md:py-32 bg-artbar-bg">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="flex items-center gap-4 mb-12 md:mb-16">
+      <section className="py-16 md:py-32 bg-artbar-bg grain relative">
+        <div ref={testimonialsReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
+          <div className={`flex items-center gap-4 mb-12 md:mb-16 reveal ${testimonialsReveal.isVisible ? 'visible' : ''}`}>
              <div className="h-px bg-artbar-navy/10 flex-grow"></div>
              <h2 className="text-xl md:text-3xl font-heading font-heavy text-artbar-navy text-center px-4 uppercase tracking-widest">{site.home.testimonials.title}</h2>
              <div className="h-px bg-artbar-navy/10 flex-grow"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 reveal-stagger ${testimonialsReveal.isVisible ? 'visible' : ''}`}>
             {site.home.testimonials.items.map((item, index) => (
-              <div key={index} className="bg-white p-8 md:p-10 rounded-[2rem] md:rounded-[2.5rem] shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 relative flex flex-col h-full">
+              <div key={index} className="bg-white p-8 md:p-10 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 relative flex flex-col h-full">
                  <div className="absolute top-6 right-6 md:top-8 md:right-8 text-artbar-taupe opacity-20">
                     <Heart size={32} fill="currentColor" />
                  </div>
-                 <div className="flex items-center gap-1.5 text-yellow-400 mb-6">
-                    <Star size={14} fill="currentColor" />
-                    <Star size={14} fill="currentColor" />
-                    <Star size={14} fill="currentColor" />
-                    <Star size={14} fill="currentColor" />
-                    <Star size={14} fill="currentColor" />
-                 </div>
+                 <StarRating size={14} className="mb-6" />
                  <p className="text-artbar-navy text-base md:text-lg leading-relaxed mb-8 font-light italic flex-grow">
-                   "{item.text}"
+                   &ldquo;{item.text}&rdquo;
                  </p>
                  <div className="flex items-center gap-4 mt-auto">
                     {item.userImage ? (
@@ -594,15 +526,15 @@ export const Home: React.FC = () => {
 
       {/* As Seen In Section - GALLERY STYLE */}
       <section className="py-24 md:py-48 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className="text-center mb-16 md:mb-24">
-             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">Media Coverage</span>
-             <h2 className="text-4xl md:text-7xl font-heading font-heavy text-artbar-navy tracking-tight">As Seen In</h2>
+        <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
+             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">{mediaCoverageLabel}</span>
+             <h2 className="text-4xl md:text-7xl font-heading font-heavy text-artbar-navy tracking-tight">{asSeenInHeading}</h2>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-10">
+          <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-10 reveal-stagger ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
              {content.media.map((item, i) => (
-                <div key={i} className="group relative aspect-[4/5] rounded-[2rem] overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                <div key={i} className="group relative aspect-[4/5] rounded-[var(--radius-card)] overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
                    {/* Background Image (Main) */}
                    <img 
                       src={item.image} 
@@ -642,7 +574,8 @@ export const Home: React.FC = () => {
 
       {/* Bottom CTA */}
       <section className="py-16 md:py-32 px-4 md:px-6">
-        <div className="max-w-[1400px] mx-auto bg-artbar-navy rounded-[2.5rem] md:rounded-[3rem] overflow-hidden relative shadow-2xl">
+        <div ref={bottomCtaReveal.ref} className="max-w-[1400px] mx-auto">
+        <div className={`bg-artbar-navy rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)] overflow-hidden relative shadow-2xl reveal ${bottomCtaReveal.isVisible ? 'visible' : ''}`}>
            <img 
               src={content.images.cta || "https://picsum.photos/seed/artbarcta/1920/600"} 
               alt="Artbar Studio" 
@@ -679,6 +612,7 @@ export const Home: React.FC = () => {
                  </Button>
               </div>
            </div>
+        </div>
         </div>
       </section>
     </div>

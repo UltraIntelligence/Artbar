@@ -4,18 +4,46 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/Button';
 import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { content, site } = useContent();
+  const [status, setStatus] = useState<'idle' | 'ok' | 'err'>('idle');
+  const { content, site, lang } = useContent();
+  const mainReveal = useScrollReveal();
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const subjects: { value: string; en: string; jp: string }[] = [
+    { value: '', en: 'Select a subject...', jp: '件名を選択…' },
+    { value: 'general', en: 'General Inquiry', jp: '一般的なお問い合わせ' },
+    { value: 'booking', en: 'Booking', jp: '予約について' },
+    { value: 'private', en: 'Private Party', jp: '貸切・パーティー' },
+    { value: 'instructor', en: 'Instructor Inquiry', jp: 'インストラクターについて' },
+    { value: 'cancellation', en: 'Cancellation', jp: 'キャンセル' },
+    { value: 'other', en: 'Other', jp: 'その他' },
+  ];
+
+  const copy = {
+    subjectLabel: lang === 'en' ? 'Subject (required)' : '件名（必須）',
+    nameLabel: lang === 'en' ? 'Name (required)' : 'お名前（必須）',
+    emailLabel: lang === 'en' ? 'Email (required)' : 'メールアドレス（必須）',
+    phoneLabel: lang === 'en' ? 'Phone (required)' : '電話番号（必須）',
+    messageLabel: lang === 'en' ? 'Message' : '内容',
+    messagePh: lang === 'en' ? 'How can we help you?' : 'お問い合わせ内容をご記入ください',
+    send: lang === 'en' ? 'Send Message' : '送信する',
+    sent: lang === 'en' ? 'Message sent! We will get back to you soon.' : '送信しました。追ってご連絡いたします。',
+    failed: lang === 'en' ? 'Failed to send. Please try again or email us directly.' : '送信に失敗しました。恐れ入りますが、再度お試しいただくかメールでご連絡ください。',
+  };
+
   return (
-    <div className="pt-40 pb-20 bg-artbar-bg min-h-screen">
-      <div className="max-w-[1000px] mx-auto px-6 md:px-10">
+    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
+      <div
+        ref={mainReveal.ref}
+        className={`reveal max-w-[1000px] mx-auto px-6 md:px-10 ${mainReveal.isVisible ? 'visible' : ''}`}
+      >
         
         {/* Header */}
         <div className="text-center mb-20">
@@ -65,35 +93,46 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Contact Form */}
         <div className="relative">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-artbar-taupe/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="bg-white border border-white shadow-xl rounded-[3rem] p-6 md:p-16 relative z-10">
             <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-8 text-center">{site.contactPage.formTitle}</h2>
-            <form className="space-y-8">
+            {status === 'ok' && (
+              <p className="text-center text-artbar-navy mb-6 text-base">{copy.sent}</p>
+            )}
+            {status === 'err' && (
+              <p className="text-center text-red-700 mb-6 text-base">{copy.failed}</p>
+            )}
+            <form
+              className="space-y-8"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setStatus('ok');
+              }}
+            >
               <div>
-                <label htmlFor="subject" className="block text-sm font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  Subject (必須 | Required)
+                <label htmlFor="subject" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
+                  {copy.subjectLabel}
                 </label>
                 <select 
                   id="subject" 
-                  className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none appearance-none text-artbar-navy"
+                  className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none appearance-none text-artbar-navy text-base"
                   required
                 >
-                  <option value="">Select a subject...</option>
-                  <option value="booking">Booking Inquiry</option>
-                  <option value="private">Private Party</option>
-                  <option value="cancellation">Cancellation</option>
-                  <option value="other">Other</option>
+                  {subjects.map((s, i) => (
+                    <option key={s.value || 'placeholder'} value={s.value} disabled={i === 0 && s.value === ''}>
+                      {lang === 'en' ? s.en : s.jp}
+                    </option>
+                  ))}
                 </select>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                    お名前 | Name (必須 | Required)
+                  <label htmlFor="name" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
+                    {copy.nameLabel}
                   </label>
                   <input 
                     type="text" 
@@ -104,8 +143,8 @@ export const Contact: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                    メールアドレス | Email (必須 | Required)
+                  <label htmlFor="email" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
+                    {copy.emailLabel}
                   </label>
                   <input 
                     type="email" 
@@ -118,8 +157,8 @@ export const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  Phone number (必須 | Required)
+                <label htmlFor="phone" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
+                  {copy.phoneLabel}
                 </label>
                 <input 
                   type="tel" 
@@ -131,14 +170,14 @@ export const Contact: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  内容 | Message
+                <label htmlFor="message" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
+                  {copy.messageLabel}
                 </label>
                 <textarea 
                   id="message" 
                   rows={6}
-                  className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none resize-none"
-                  placeholder="How can we help you?"
+                  className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none resize-none text-base"
+                  placeholder={copy.messagePh}
                 ></textarea>
               </div>
 
@@ -150,7 +189,7 @@ export const Contact: React.FC = () => {
                   className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem]"
                 >
                   <span className="flex items-center gap-2">
-                    Send Message <Send size={18} />
+                    {copy.send} <Send size={18} />
                   </span>
                 </Button>
               </div>

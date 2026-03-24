@@ -1,19 +1,38 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { Check, Clock, Users, Wine, Palette, MapPin, Utensils, Sparkles } from 'lucide-react';
+import { PRIVATE_PARTY_CAPACITY_ROWS } from '../constants';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import { Check, Clock, Users, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
 
 export const PrivateParties: React.FC = () => {
-  const { site } = useContent();
+  const { site, lang } = useContent();
   const { privateParties } = site;
+  const occasionsReveal = useScrollReveal();
+  const pricingReveal = useScrollReveal();
+  const capacityReveal = useScrollReveal();
+  const timelineReveal = useScrollReveal();
+
+  const maxGuestsLabel = lang === 'en' ? 'Max Guests' : '最大収容';
 
   return (
-    <div className="pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        
-        {/* Hero Section */}
+        <div className="relative w-full max-w-5xl mx-auto mb-12 h-[40vh] min-h-[220px] rounded-[2.5rem] overflow-hidden md:mb-16">
+          <Image
+            src={privateParties.occasions[0]?.image ?? ''}
+            alt=""
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 1200px) 100vw, 80vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-artbar-bg via-artbar-bg/40 to-transparent" />
+        </div>
+
         <div className="text-center max-w-4xl mx-auto mb-20">
           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-6 block">{privateParties.hero.badge}</span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-heavy text-artbar-navy mb-8 leading-tight">
@@ -25,23 +44,30 @@ export const PrivateParties: React.FC = () => {
           </p>
         </div>
 
-        {/* Occasions Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-32">
+        <div
+          ref={occasionsReveal.ref}
+          className={`reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-32 ${occasionsReveal.isVisible ? 'visible' : ''}`}
+        >
           {privateParties.occasions.map((item, idx) => (
             <div key={idx} className="group relative h-48 md:h-96 rounded-[2rem] overflow-hidden cursor-pointer">
-              <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                sizes="(max-width: 768px) 50vw, 25vw"
+              />
               <div className="absolute inset-0 bg-artbar-navy/20 group-hover:bg-artbar-navy/40 transition-colors"></div>
               <div className="absolute bottom-6 left-4 right-4 md:left-6 md:right-6">
                 <div className="bg-white/90 backdrop-blur-sm py-2 md:py-3 px-4 md:px-6 rounded-xl text-center shadow-lg">
-                  <span className="font-heading font-bold text-artbar-navy text-xs md:text-base">{item.title}</span>
+                  <span className="font-heading font-bold text-artbar-navy text-sm md:text-base">{item.title}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-32">
+        <div ref={pricingReveal.ref} className={`reveal grid md:grid-cols-2 gap-8 mb-32 ${pricingReveal.isVisible ? 'visible' : ''}`}>
             {/* Adult Pricing */}
             <div className="bg-white p-8 md:p-14 rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-300 border border-white relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 md:p-10 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -67,7 +93,7 @@ export const PrivateParties: React.FC = () => {
                             <div className="w-6 h-6 rounded-full bg-artbar-bg flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
                             <span className="font-heading font-bold text-artbar-navy block">{item.title}</span>
-                            <span className="text-sm text-artbar-gray">{item.desc}</span>
+                            <span className="text-base md:text-lg text-artbar-gray">{item.desc}</span>
                             </div>
                         </div>
                       ))}
@@ -119,7 +145,7 @@ export const PrivateParties: React.FC = () => {
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
                             <span className="font-heading font-bold text-artbar-navy block">{item.title}</span>
-                            <span className="text-sm text-artbar-gray">{item.desc}</span>
+                            <span className="text-base md:text-lg text-artbar-gray">{item.desc}</span>
                             </div>
                         </div>
                       ))}
@@ -147,8 +173,7 @@ export const PrivateParties: React.FC = () => {
             </div>
         </div>
 
-        {/* Studio Capacity Grid */}
-        <div className="mb-32">
+        <div ref={capacityReveal.ref} className={`reveal mb-32 ${capacityReveal.isVisible ? 'visible' : ''}`}>
           <div className="flex items-center gap-4 mb-12">
              <div className="h-px bg-artbar-light-taupe flex-grow"></div>
              <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy text-center px-4">{privateParties.capacity.title}</h2>
@@ -156,25 +181,18 @@ export const PrivateParties: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-             {[
-               { name: "Daikanyama", cap: "12", desc: "Cozy & Intimate" },
-               { name: "Harajuku", cap: "20", desc: "Cat Street View" },
-               { name: "Ginza", cap: "30", desc: "Elegant Studio" },
-               { name: "Yokohama", cap: "40", desc: "Spacious & Bright" },
-               { name: "Offsite", cap: "100+", desc: "We come to you", highlight: true }
-             ].map((loc, i) => (
+             {PRIVATE_PARTY_CAPACITY_ROWS.map((loc, i) => (
                <div key={i} className={`p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
                   <span className="text-3xl md:text-4xl font-heading font-bold mb-2">{loc.cap}</span>
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4">Max Guests</span>
-                  <h4 className="font-bold text-base md:text-lg leading-tight">{loc.name}</h4>
-                  {loc.desc && <span className="text-xs mt-2 opacity-80">{loc.desc}</span>}
+                  <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4">{maxGuestsLabel}</span>
+                  <h4 className="font-bold text-base md:text-lg leading-tight">{loc.name[lang]}</h4>
+                  <span className="text-sm md:text-base mt-2 opacity-80">{loc.desc[lang]}</span>
                </div>
              ))}
           </div>
         </div>
 
-        {/* Timeline & Catering Section */}
-        <div className="bg-white rounded-[3rem] p-8 md:p-16 border border-artbar-bg shadow-sm">
+        <div ref={timelineReveal.ref} className={`reveal bg-white rounded-[3rem] p-8 md:p-16 border border-artbar-bg shadow-sm ${timelineReveal.isVisible ? 'visible' : ''}`}>
            <div className="grid lg:grid-cols-2 gap-16">
               
               {/* Timeline */}
@@ -190,7 +208,7 @@ export const PrivateParties: React.FC = () => {
                           <div>
                              <span className="text-xs font-bold text-artbar-gray bg-artbar-bg px-2 py-1 rounded mb-1 inline-block">{step.time}</span>
                              <h4 className="font-bold text-artbar-navy">{step.title}</h4>
-                             <p className="text-sm text-artbar-gray">{step.desc}</p>
+                             <p className="text-base md:text-lg text-artbar-gray">{step.desc}</p>
                           </div>
                        </div>
                     ))}
@@ -207,7 +225,7 @@ export const PrivateParties: React.FC = () => {
                   </p>
                   <ul className="space-y-4 mb-8">
                      {privateParties.catering.items.map((item, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm text-artbar-gray">
+                        <li key={i} className="flex items-start gap-3 text-base text-artbar-gray">
                             <Sparkles size={16} className="text-artbar-taupe mt-1 flex-shrink-0" />
                             <span>{item}</span>
                         </li>

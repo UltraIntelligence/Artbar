@@ -11,3 +11,6 @@ tsconfig.tsbuildinfo
 
 # Duplicate Vite snapshot (main app is Next.js at repo root)
 SPA/
+
+# Optional local staging for location photos (canonical URLs use public/media/generated/loc-*.jpg)
+media/locations/

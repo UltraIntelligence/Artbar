@@ -1,12 +1,17 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { Navigation, Star, MapPin, Loader2, Info, Sparkles } from 'lucide-react';
 import { Logo } from '../components/Logo';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import type { Location } from '../types';
+
 export const Locations: React.FC = () => {
   const { lang, content, site } = useContent();
+  const operatingReveal = useScrollReveal();
   
   // State for AI Insights
   const [insights, setInsights] = useState<Record<string, { text: string; chunks: any[] }>>({});
@@ -56,7 +61,7 @@ export const Locations: React.FC = () => {
   };
 
   return (
-    <div className="pt-24 md:pt-32 pb-16 md:pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-24 md:pt-32 pb-16 md:pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         
         {/* Page Header */}
@@ -71,20 +76,80 @@ export const Locations: React.FC = () => {
         </div>
 
         <div className="space-y-12 md:space-y-16">
-          {content.locations.map((loc, idx) => (
-            <div key={idx} className="bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col lg:flex-row group transition-all hover:shadow-xl">
-              
-              {/* Image Section */}
+          {content.locations.map((loc) => (
+            <LocationCard
+              key={loc.id}
+              loc={loc}
+              lang={lang}
+              insights={insights}
+              loading={loading}
+              fetchLocationInsights={fetchLocationInsights}
+            />
+          ))}
+        </div>
+
+        <div ref={operatingReveal.ref} className={`reveal mt-16 md:mt-24 pt-12 md:pt-16 border-t border-artbar-light-taupe/30 ${operatingReveal.isVisible ? 'visible' : ''}`}>
+           <div className="bg-white border md:border-2 border-artbar-navy p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] max-w-4xl mx-auto text-center md:text-left">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                 <div>
+                    <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-4">{site.locationsPage.operating.title}</h3>
+                    <p className="font-bold text-base md:text-lg mb-1">{site.locationsPage.operating.name}</p>
+                    <p className="text-xs md:text-sm opacity-70 mb-1">{site.locationsPage.operating.address}</p>
+                    <p className="text-xs md:text-sm opacity-70">{site.locationsPage.operating.ceo}</p>
+                 </div>
+                 <div className="flex flex-col gap-3 items-center md:items-end w-full md:w-auto">
+                    <Button
+                      variant="taupe"
+                      size="cta"
+                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
+                    >
+                       {site.locationsPage.operating.btnHiring}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="cta"
+                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
+                    >
+                       {site.locationsPage.operating.btnFranchise}
+                    </Button>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+function LocationCard({
+  loc,
+  lang,
+  insights,
+  loading,
+  fetchLocationInsights,
+}: {
+  loc: Location;
+  lang: 'en' | 'jp';
+  insights: Record<string, { text: string; chunks: { web?: { uri?: string }; maps?: { uri?: string } }[] }>;
+  loading: Record<string, boolean>;
+  fetchLocationInsights: (id: string, name: string, address: string) => Promise<void>;
+}) {
+  const reveal = useScrollReveal();
+  return (
+            <div
+              ref={reveal.ref}
+              className={`reveal bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col lg:flex-row group transition-all hover:shadow-xl ${reveal.isVisible ? 'visible' : ''}`}
+            >
               <div className="lg:w-2/5 relative min-h-[220px] lg:min-h-full overflow-hidden">
-                <img 
+                <Image 
                   src={loc.image} 
                   alt={lang === 'en' ? loc.nameEn : loc.nameJp} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 40vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/50 to-transparent opacity-60 lg:opacity-30"></div>
-                <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/90 backdrop-blur-md px-3 py-1 md:px-4 md:py-2 rounded-full shadow-sm">
-                   <Logo className="h-5 md:h-6 w-auto scale-75 md:scale-90 origin-left" />
-                </div>
               </div>
 
               {/* Details Section */}
@@ -190,40 +255,5 @@ export const Locations: React.FC = () => {
 
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Operating Company Section */}
-        <div className="mt-16 md:mt-24 pt-12 md:pt-16 border-t border-artbar-light-taupe/30">
-           <div className="bg-white border md:border-2 border-artbar-navy p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] max-w-4xl mx-auto text-center md:text-left">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                 <div>
-                    <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-4">{site.locationsPage.operating.title}</h3>
-                    <p className="font-bold text-base md:text-lg mb-1">{site.locationsPage.operating.name}</p>
-                    <p className="text-xs md:text-sm opacity-70 mb-1">{site.locationsPage.operating.address}</p>
-                    <p className="text-xs md:text-sm opacity-70">{site.locationsPage.operating.ceo}</p>
-                 </div>
-                 <div className="flex flex-col gap-3 items-center md:items-end w-full md:w-auto">
-                    <Button
-                      variant="taupe"
-                      size="cta"
-                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
-                    >
-                       {site.locationsPage.operating.btnHiring}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="cta"
-                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
-                    >
-                       {site.locationsPage.operating.btnFranchise}
-                    </Button>
-                 </div>
-              </div>
-           </div>
-        </div>
-
-      </div>
-    </div>
   );
-};
+}

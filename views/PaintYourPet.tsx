@@ -1,16 +1,21 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useContent } from '../context/ContentContext';
 import { Button } from '../components/ui/Button';
 import { PetSketcher } from '../components/PetSketcher';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
 export const PaintYourPet: React.FC = () => {
   const { site, lang } = useContent();
   const content = site.paintYourPet;
+  const examplesReveal = useScrollReveal();
+  const petReveal = useScrollReveal();
+  const infoReveal = useScrollReveal();
 
   return (
-    <div className="pt-32 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-32 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1200px] mx-auto px-6 md:px-10">
         
         {/* Header */}
@@ -22,14 +27,15 @@ export const PaintYourPet: React.FC = () => {
           </p>
         </div>
 
-        {/* Real Example Section */}
-        <div className="mb-24 text-center">
+        <div ref={examplesReveal.ref} className={`reveal mb-24 text-center ${examplesReveal.isVisible ? 'visible' : ''}`}>
            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 max-w-4xl mx-auto">
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[-3deg]">
-                 <img
+                 <Image
                    src="/media/petbefore.jpg"
                    alt={lang === 'en' ? 'Original pet photo' : '元のペットの写真'}
-                   className="absolute inset-0 h-full w-full object-cover"
+                   fill
+                   className="object-cover"
+                   sizes="(max-width: 768px) 256px, 320px"
                  />
                  <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
                     <span className="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-artbar-navy">Original Photo</span>
@@ -37,30 +43,30 @@ export const PaintYourPet: React.FC = () => {
               </div>
               <ArrowRight size={32} className="text-artbar-taupe shrink-0 rotate-90 md:rotate-0" />
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[3deg] bg-white">
-                 <img
+                 <Image
                    src="/media/petafter.png"
                    alt={lang === 'en' ? 'Pet sketch on canvas' : 'キャンバス上のペット下書き'}
-                   className="absolute inset-0 h-full w-full object-cover"
+                   fill
+                   className="object-cover"
+                   sizes="(max-width: 768px) 256px, 320px"
                  />
                  <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
                     <span className="bg-artbar-navy px-3 py-1 rounded-full text-xs font-bold text-white">Canvas Sketch</span>
                  </div>
               </div>
            </div>
-           <p className="mt-8 text-artbar-gray text-sm italic max-w-md mx-auto">
+           <p className="mt-8 text-artbar-gray text-base md:text-lg italic max-w-md mx-auto">
               {lang === 'en' 
                 ? "*Our artists prepare a professional sketch like this on your canvas before you arrive!" 
                 : "※アーティストが事前にキャンバスにこのような下書きを用意してお待ちしています！"}
            </p>
         </div>
 
-        {/* AI Tool Section */}
-        <div className="mb-24">
+        <div ref={petReveal.ref} className={`reveal mb-24 ${petReveal.isVisible ? 'visible' : ''}`}>
            <PetSketcher />
         </div>
 
-        {/* Info Grid */}
-        <div className="grid md:grid-cols-2 gap-8 mb-24 items-stretch">
+        <div ref={infoReveal.ref} className={`reveal grid md:grid-cols-2 gap-8 mb-24 items-stretch ${infoReveal.isVisible ? 'visible' : ''}`}>
            
            {/* Left Column: How it Works */}
            <div className="h-full">
@@ -77,7 +83,7 @@ export const PaintYourPet: React.FC = () => {
                                 <div className="w-10 h-10 rounded-full bg-artbar-taupe flex items-center justify-center font-bold flex-shrink-0">{i + 1}</div>
                                 <div>
                                     <p className="font-bold text-lg mb-1">{step.title}</p>
-                                    <p className="text-sm text-artbar-light-taupe/90 leading-relaxed">{step.desc}</p>
+                                    <p className="text-base text-artbar-light-taupe/90 leading-relaxed">{step.desc}</p>
                                 </div>
                             </div>
                         ))}

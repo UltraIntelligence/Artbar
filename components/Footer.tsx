@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
+import { LOCATION_SHORT_LABELS } from '../constants';
 
 export const Footer: React.FC = () => {
-  const { site } = useContent();
+  const { site, lang } = useContent();
   const currentYear = new Date().getFullYear();
   const router = useRouter();
 
@@ -19,9 +20,7 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      <footer className="bg-artbar-navy pt-24 pb-[max(2rem,env(safe-area-inset-bottom,0px))] mt-0 text-white rounded-t-[3rem] mx-0 md:mx-2 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
-
+      <footer className="grain bg-artbar-navy pt-24 pb-[max(2rem,env(safe-area-inset-bottom,0px))] mt-0 text-white rounded-t-[var(--radius-feature)] mx-0 md:mx-2 relative overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
 
@@ -50,12 +49,16 @@ export const Footer: React.FC = () => {
                 <MapPin size={18} className="text-artbar-taupe" /> {site.footer.locations}
               </h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Daikanyama</Link></li>
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Cat Street Harajuku</Link></li>
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Ginza</Link></li>
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Yokohama Motomachi</Link></li>
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Osaka</Link></li>
-                <li><Link href="/locations" className="hover:text-white hover:translate-x-1 transition-all inline-block">Okinawa</Link></li>
+                {LOCATION_SHORT_LABELS.map((loc) => (
+                  <li key={loc.en}>
+                    <Link
+                      href="/locations"
+                      className="hover:text-white hover:translate-x-1 transition-all inline-block"
+                    >
+                      {loc[lang]}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 

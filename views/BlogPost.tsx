@@ -1,14 +1,18 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
 export const BlogPost: React.FC = () => {
   const params = useParams();
   const slug = params.slug as string;
   const { content, lang, site } = useContent();
+  const proseReveal = useScrollReveal();
+  const moreReveal = useScrollReveal();
 
   const post = content.blog.find(p => p.slug === slug);
 
@@ -24,30 +28,14 @@ export const BlogPost: React.FC = () => {
   const title = lang === 'en' ? post.titleEn : post.titleJp;
   const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
-  const excerpt = lang === 'en' ? post.excerptEn : post.excerptJp;
-
-  // Simple share (just opens new window)
-  const shareUrl = window.location.href;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareTitle = encodeURIComponent(title);
-
-  // Article Schema
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": title,
-    "image": [post.image],
-    "datePublished": post.date.replace(/\./g, '-'),
-    "author": [{
-        "@type": "Person",
-        "name": author
-    }]
-  };
+  const shareLabel = lang === 'en' ? 'Share this story' : 'この記事をシェア';
 
   return (
-    <div className="bg-artbar-bg min-h-screen pb-20">
-      {/* Hero Image */}
+    <div className="grain relative bg-artbar-bg min-h-screen pb-20">
       <div className="relative h-[50vh] md:h-[60vh] w-full overflow-hidden">
-        <img src={post.image} alt={title} className="absolute inset-0 w-full h-full object-cover" />
+        <Image src={post.image} alt={title} fill priority className="object-cover" sizes="100vw" />
         <div className="absolute inset-0 bg-gradient-to-b from-artbar-navy/30 via-transparent to-artbar-bg"></div>
         <div className="absolute top-32 left-0 w-full px-6">
            <div className="max-w-[1000px] mx-auto">
@@ -76,7 +64,7 @@ export const BlogPost: React.FC = () => {
                {title}
              </h1>
              
-             <div className="flex items-center justify-center gap-6 text-sm text-artbar-gray border-t border-b border-gray-100 py-4">
+             <div className="flex items-center justify-center gap-6 text-sm md:text-base text-artbar-gray border-t border-b border-gray-100 py-4">
                 <div className="flex items-center gap-2">
                    <User size={16} className="text-artbar-taupe" />
                    <span className="font-heading font-bold">{author}</span>
@@ -88,45 +76,87 @@ export const BlogPost: React.FC = () => {
              </div>
           </header>
 
-          {/* Content */}
-          <div 
-            className="prose prose-lg md:prose-xl max-w-none prose-headings:font-heading prose-headings:font-bold prose-headings:text-artbar-navy prose-p:text-artbar-gray prose-p:leading-relaxed prose-a:text-artbar-taupe prose-img:rounded-2xl prose-img:w-full prose-img:shadow-lg prose-img:my-8"
-            dangerouslySetInnerHTML={{ __html: bodyContent }} 
+          <div
+            ref={proseReveal.ref}
+            className={`reveal artbar-prose max-w-none ${proseReveal.isVisible ? 'visible' : ''}`}
+            dangerouslySetInnerHTML={{ __html: bodyContent }}
           />
-          
-          {/* Share */}
+
           <div className="mt-16 pt-8 border-t border-gray-100">
-             <h3 className="text-center font-heading font-bold text-artbar-navy mb-6 text-sm uppercase tracking-widest">Share this story</h3>
-             <div className="flex justify-center gap-4">
-                <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-opacity-90 transition-colors">
-                   <Facebook size={20} />
-                </a>
-                <a href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-sky-500 text-white flex items-center justify-center hover:bg-opacity-90 transition-colors">
-                   <Twitter size={20} />
-                </a>
-                <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`} target="_blank" rel="noreferrer" className="w-12 h-12 rounded-full bg-blue-700 text-white flex items-center justify-center hover:bg-opacity-90 transition-colors">
-                   <Linkedin size={20} />
-                </a>
-             </div>
+            <h3 className="text-center font-heading font-bold text-artbar-navy mb-6 text-sm uppercase tracking-widest">
+              {shareLabel}
+            </h3>
+            <div className="flex justify-center gap-4">
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#3b5998] hover:opacity-80 transition-opacity shadow-sm"
+                aria-label="Facebook"
+              >
+                <Facebook size={20} className="text-current" strokeWidth={2} />
+              </a>
+              <a
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${shareTitle}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#1DA1F2] hover:opacity-80 transition-opacity shadow-sm"
+                aria-label="X"
+              >
+                <Twitter size={20} className="text-current" strokeWidth={2} />
+              </a>
+              <a
+                href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#0077B5] hover:opacity-80 transition-opacity shadow-sm"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} className="text-current" strokeWidth={2} />
+              </a>
+            </div>
           </div>
 
         </div>
       </article>
 
-      {/* Recommended */}
       <section className="max-w-[1000px] mx-auto px-6 mt-20">
-         <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">More from the Journal</h3>
-         <div className="grid md:grid-cols-2 gap-8">
-            {content.blog.filter(p => p.id !== post.id).slice(0, 2).map(p => (
-               <Link key={p.id} href={`/blog/${p.slug}`} className="bg-white rounded-2xl p-6 flex gap-4 items-center hover:shadow-lg transition-all">
-                  <img src={p.image} alt={p.titleEn} className="w-24 h-24 rounded-xl object-cover" />
-                  <div>
-                     <h4 className="font-heading font-bold text-artbar-navy mb-2 line-clamp-2">{lang === 'en' ? p.titleEn : p.titleJp}</h4>
-                     <span className="text-xs text-artbar-taupe font-bold uppercase tracking-wider">{lang === 'en' ? 'Read Story' : '記事を読む'}</span>
-                  </div>
-               </Link>
+        <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">
+          {lang === 'en' ? 'More from the Journal' : 'ジャーナルのほかの記事'}
+        </h3>
+        <div
+          ref={moreReveal.ref}
+          className={`grid md:grid-cols-2 gap-8 reveal-stagger ${moreReveal.isVisible ? 'visible' : ''}`}
+        >
+          {content.blog
+            .filter((p) => p.id !== post.id)
+            .slice(0, 2)
+            .map((p) => (
+              <Link
+                key={p.id}
+                href={`/blog/${p.slug}`}
+                className="bg-white rounded-2xl p-6 flex gap-4 items-center hover:shadow-lg transition-all snap-start"
+              >
+                <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
+                  <Image
+                    src={p.image}
+                    alt={lang === 'en' ? p.titleEn : p.titleJp}
+                    fill
+                    className="object-cover"
+                    sizes="96px"
+                  />
+                </div>
+                <div>
+                  <h4 className="font-heading font-bold text-artbar-navy mb-2 line-clamp-2">
+                    {lang === 'en' ? p.titleEn : p.titleJp}
+                  </h4>
+                  <span className="text-sm text-artbar-taupe font-bold uppercase tracking-wider">
+                    {lang === 'en' ? 'Read Story' : '記事を読む'}
+                  </span>
+                </div>
+              </Link>
             ))}
-         </div>
+        </div>
       </section>
 
     </div>

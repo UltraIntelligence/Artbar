@@ -267,6 +267,70 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
 
 export const INSTRUCTORS: Instructor[] = INSTRUCTOR_ROWS.map(attachInstructorPhotos);
 
+/** Short area names for footer / capacity grids (`row[lang]`). Distinct from full `LOCATIONS` entries. */
+export const LOCATION_SHORT_LABELS = [
+  { en: 'Daikanyama', jp: '代官山' },
+  { en: 'Cat Street Harajuku', jp: '原宿キャットストリート' },
+  { en: 'Ginza', jp: '銀座' },
+  { en: 'Yokohama Motomachi', jp: '横浜元町' },
+  { en: 'Osaka', jp: '大阪' },
+  { en: 'Okinawa', jp: '沖縄' },
+] as const;
+
+export const OFFSITE_LABEL = { en: 'Offsite', jp: '出張' } as const;
+
+/** Team building logistics column — studio rows + offsite. */
+export const TEAM_BUILDING_LOGISTICS_ROWS: {
+  name: { en: string; jp: string };
+  cap: { en: string; jp: string };
+}[] = [
+  { name: { en: 'Artbar Ginza', jp: 'Artbar 銀座' }, cap: { en: 'Max 30', jp: '最大30名' } },
+  {
+    name: { en: 'Artbar Cat Street Harajuku', jp: 'Artbar キャットストリート原宿' },
+    cap: { en: 'Max 20', jp: '最大20名' },
+  },
+  { name: { en: 'Artbar Yokohama', jp: 'Artbar 横浜' }, cap: { en: 'Max 40', jp: '最大40名' } },
+  {
+    name: { en: 'Your Office / Offsite', jp: '貴社オフィス／出張' },
+    cap: { en: '15 - 100+ Guests', jp: '15〜100名以上' },
+  },
+];
+
+/** Private parties capacity grid — matches marketing short names + offsite. */
+export const PRIVATE_PARTY_CAPACITY_ROWS: {
+  name: { en: string; jp: string };
+  cap: string;
+  desc: { en: string; jp: string };
+  highlight?: boolean;
+}[] = [
+  {
+    name: { en: 'Daikanyama', jp: '代官山' },
+    cap: '12',
+    desc: { en: 'Cozy & Intimate', jp: 'あたたかみのある空間' },
+  },
+  {
+    name: { en: 'Harajuku', jp: '原宿' },
+    cap: '20',
+    desc: { en: 'Cat Street View', jp: 'キャットストリート沿い' },
+  },
+  {
+    name: { en: 'Ginza', jp: '銀座' },
+    cap: '30',
+    desc: { en: 'Elegant Studio', jp: 'エレガントなスタジオ' },
+  },
+  {
+    name: { en: 'Yokohama', jp: '横浜' },
+    cap: '40',
+    desc: { en: 'Spacious & Bright', jp: '広く明るい空間' },
+  },
+  {
+    name: { en: 'Offsite', jp: '出張' },
+    cap: '100+',
+    desc: { en: 'We come to you', jp: 'ご指定の会場へ' },
+    highlight: true,
+  },
+];
+
 export const LOCATIONS: Location[] = [
   {
     id: "daikanyama",
