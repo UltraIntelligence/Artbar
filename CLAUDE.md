@@ -39,6 +39,8 @@ No test framework is configured.
 - Shared data (instructors, locations, blog posts, FAQs, media) lives outside the language split on `ContentData`
 - Admin panel at `/admin` persists edits to localStorage with deep-merge on load
 
+**Domain model:** [`data-model.md`](data-model.md) — entities (`ContentData`, `BlogPost`, themes), relationships, lifecycles, localStorage vs build-time content, and API boundaries.
+
 ### File organization
 
 - `app/` — route files: `page.tsx` per route, `layout.tsx`, `globals.css`, `not-found.tsx`, `robots.ts`, `sitemap.ts`, and API routes under `app/api/`

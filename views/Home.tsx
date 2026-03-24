@@ -186,22 +186,22 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 flex min-h-full flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-[100svh] md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
             <div className="max-w-5xl flex w-full flex-col items-center pt-0 md:pt-20">
               
-              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-4 md:mb-20 lg:mb-32 tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm">
+              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-10 md:mb-20 lg:mb-32 tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm">
                 {site.home.hero.badge}
               </span>
               
-              <h1 className="font-heading font-heavy text-white mb-3 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1">
+              <h1 className="font-heading font-heavy text-white mb-6 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1 max-md:mt-1">
                 <span className={`${theme.heroTitle} block`}>{site.home.hero.title}</span>
                 <span className={`${theme.heroTitle} block text-artbar-taupe mt-1 md:mt-0`}>{site.home.hero.titleHighlight}</span>
               </h1>
               
               <div className="w-full max-w-2xl mx-auto px-1 sm:px-2">
-                <h2 className={`${theme.bodyLarge} text-white/90 mb-4 md:mb-12 font-light leading-snug sm:leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.875rem] sm:text-sm md:text-xl`}>
+                <h2 className={`${theme.bodyLarge} text-white/90 mb-8 md:mb-12 font-light leading-snug sm:leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.875rem] sm:text-sm md:text-xl`}>
                   {site.home.hero.subtitle}
                 </h2>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2.5 md:gap-4 mb-4 md:mb-12">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2.5 md:gap-4 mb-8 md:mb-12">
                 <div
                   className={`${heroProofPill} cursor-default`}
                   aria-label={`${site.home.hero.ratingScore} out of 5 · ${site.home.hero.ratingSource}`}
@@ -252,7 +252,7 @@ export const Home: React.FC = () => {
                 </div>
               </div>
               
-              <div className="mb-4 flex w-full flex-col items-center justify-center gap-2 sm:gap-3 px-4 sm:flex-row sm:flex-wrap sm:px-0 md:mb-8">
+              <div className="mt-6 flex w-full flex-col items-center justify-center gap-2.5 sm:gap-3 px-4 sm:flex-row sm:flex-wrap sm:px-0 mb-6 md:mt-0 md:mb-8">
                 <Button
                   onClick={() => {
                     window.location.hash = 'schedule';
@@ -562,7 +562,7 @@ export const Home: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy via-artbar-navy/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-0 left-0 p-4 md:p-10 w-full">
                     <h3 className="text-lg md:text-3xl font-heading font-bold text-white mb-2 leading-tight tracking-tight">{themeItem.title}</h3>
-                    <p className="text-white/80 text-[9px] md:text-sm font-light leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                    <p className="text-white/85 text-[10px] sm:text-xs md:text-sm font-light leading-snug md:leading-relaxed mb-0 md:mb-4 opacity-100 translate-y-0 md:opacity-0 md:translate-y-4 md:group-hover:opacity-100 md:group-hover:translate-y-0 transition-all duration-300">
                       {themeItem.desc}
                     </p>
                   </div>
