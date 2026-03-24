@@ -185,7 +185,7 @@ Each card needs a small **square-ish** image that matches the theme name (Japan,
    - **What:** A piece in their style (abstract, ink, pottery, kids’ art, etc.)—shows **their creative flavor**.  
    - **Why:** Proves they’re working artists, not generic stock.
 
-- **Your prompt adjustment (names: Cathy, Naomi, Luci, Momo, Nanako, Aika, Kiyoe, Michi, Ken):**
+- **Your prompt adjustment:** Roster changes over time; canonical list is `INSTRUCTOR_IDS` in `data/generated-image-paths.ts` (bios in `constants.ts` as `INSTRUCTOR_ROWS`). Real photos live under `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`.
 
 
 *(Best long-term: **real photos** of your team. AI can fill in until you have a shoot.)*

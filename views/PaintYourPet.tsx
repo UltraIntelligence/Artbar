@@ -25,16 +25,24 @@ export const PaintYourPet: React.FC = () => {
         {/* Real Example Section */}
         <div className="mb-24 text-center">
            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 max-w-4xl mx-auto">
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[-3deg]">
-                 <img src="https://www.toolandtea.com/placeholder.svg?height=600&width=600&text=Original+Photo" alt="Original Dog" className="w-full h-full object-cover" />
-                 <div className="absolute bottom-4 left-0 right-0 text-center">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[-3deg]">
+                 <img
+                   src="/media/petbefore.jpg"
+                   alt={lang === 'en' ? 'Original pet photo' : '元のペットの写真'}
+                   className="absolute inset-0 h-full w-full object-cover"
+                 />
+                 <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
                     <span className="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-artbar-navy">Original Photo</span>
                  </div>
               </div>
-              <ArrowRight size={32} className="text-artbar-taupe rotate-90 md:rotate-0" />
-              <div className="w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[3deg] bg-white">
-                 <img src="https://www.toolandtea.com/placeholder.svg?height=600&width=600&text=Canvas+Sketch" alt="Canvas Sketch" className="w-full h-full object-contain p-6" />
-                 <div className="absolute bottom-4 left-0 right-0 text-center">
+              <ArrowRight size={32} className="text-artbar-taupe shrink-0 rotate-90 md:rotate-0" />
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[3deg] bg-white">
+                 <img
+                   src="/media/petafter.png"
+                   alt={lang === 'en' ? 'Pet sketch on canvas' : 'キャンバス上のペット下書き'}
+                   className="absolute inset-0 h-full w-full object-cover"
+                 />
+                 <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
                     <span className="bg-artbar-navy px-3 py-1 rounded-full text-xs font-bold text-white">Canvas Sketch</span>
                  </div>
               </div>

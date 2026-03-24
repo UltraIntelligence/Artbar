@@ -1,8 +1,47 @@
 /**
  * Public URLs for Gemini-generated assets under public/media/generated/.
- * Keep filenames in sync with scripts/image-manifest.json.
+ * Real instructor photos live under public/media/instructors/{id}-profile|banner.jpg.
  */
 const g = (name: string) => `/media/generated/${name}`;
+
+const instructorPhoto = (id: string) => ({
+  profile: `/media/instructors/${id}-profile.jpg`,
+  artwork: `/media/instructors/${id}-banner.jpg`,
+});
+
+/**
+ * Slugs for `/media/instructors/{id}-*.jpg`. Keep in sync with row order in `constants.ts` (`INSTRUCTOR_ROWS`).
+ * Add/remove ids here — `GI.instructors` and `scripts/image-manifest.ts` follow automatically.
+ */
+export const INSTRUCTOR_IDS = [
+  'cathy',
+  'naomi',
+  'luci',
+  'momo',
+  'nanako',
+  'kiyoe',
+  'michi',
+  'mineko',
+  'sakura',
+  'daria',
+  'diamanteyuko',
+  'rie',
+  'ken',
+  'naoko',
+  'helen',
+  'yuka',
+  'jenna',
+  'akiko',
+  'minako',
+  'akko',
+  'glicinapeony',
+] as const;
+
+export type InstructorId = (typeof INSTRUCTOR_IDS)[number];
+
+const instructorPhotos = Object.fromEntries(
+  INSTRUCTOR_IDS.map((id) => [id, instructorPhoto(id)])
+) as { [K in InstructorId]: ReturnType<typeof instructorPhoto> };
 
 export const GI = {
   heroTeamBuilding: g('hero-team-building.jpg'),
@@ -26,17 +65,7 @@ export const GI = {
     texturePainting: g('theme-texture-painting.jpg'),
     paintYourIdol: g('theme-paint-your-idol.jpg'),
   },
-  instructors: {
-    cathy: { profile: g('instructor-cathy-profile.jpg'), artwork: g('instructor-cathy-artwork.jpg') },
-    naomi: { profile: g('instructor-naomi-profile.jpg'), artwork: g('instructor-naomi-artwork.jpg') },
-    luci: { profile: g('instructor-luci-profile.jpg'), artwork: g('instructor-luci-artwork.jpg') },
-    momo: { profile: g('instructor-momo-profile.jpg'), artwork: g('instructor-momo-artwork.jpg') },
-    nanako: { profile: g('instructor-nanako-profile.jpg'), artwork: g('instructor-nanako-artwork.jpg') },
-    aika: { profile: g('instructor-aika-profile.jpg'), artwork: g('instructor-aika-artwork.jpg') },
-    kiyoe: { profile: g('instructor-kiyoe-profile.jpg'), artwork: g('instructor-kiyoe-artwork.jpg') },
-    michi: { profile: g('instructor-michi-profile.jpg'), artwork: g('instructor-michi-artwork.jpg') },
-    ken: { profile: g('instructor-ken-profile.jpg'), artwork: g('instructor-ken-artwork.jpg') },
-  },
+  instructors: instructorPhotos,
   locations: {
     daikanyama: g('loc-daikanyama.jpg'),
     harajuku: g('loc-harajuku.jpg'),

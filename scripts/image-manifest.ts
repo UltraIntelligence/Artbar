@@ -1,8 +1,11 @@
 /**
  * Gemini image generation manifest. Paths must match data/generated-image-paths.ts.
  * Set `enabled: false` to skip a slot. Add optional `referencePaths` (repo-relative files).
+ *
+ * Prompts for hero/themes/features/CTA/private/blog/testimonials: client-supplied (Claude batch).
+ * Instructor + location slots: disabled — replace with client-provided photos in /public and GI paths when ready.
  */
-import { GI } from '../data/generated-image-paths';
+import { GI, INSTRUCTOR_IDS } from '../data/generated-image-paths';
 
 export type ManifestItem = {
   id: string;
@@ -14,9 +17,6 @@ export type ManifestItem = {
   referencePaths?: string[];
 };
 
-const brand =
-  'Art direction: premium editorial photo, warm inviting light, paint-and-sip studio mood in Tokyo. No overlaid text, no watermarks, no brand logos in the frame. Photorealistic, high detail.';
-
 function item(partial: Omit<ManifestItem, 'enabled'> & { enabled?: boolean }): ManifestItem {
   return { enabled: true, ...partial };
 }
@@ -26,277 +26,235 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
     item({
       id: 'hero-team-building',
       publicUrl: GI.heroTeamBuilding,
-      prompt: `Wide cinematic hero: diverse professionals laughing together at easels in a bright modern art studio, wine glasses on tables, collaborative creative energy. ${brand}`,
+      prompt:
+        'Wide 16:9 cinematic editorial photo. Corporate team of 10 adults at wooden tripod easels in a bright Tokyo paint studio. Mixed group — Japanese men and women aged 25–40 in smart casual attire, two Western colleagues. Black aprons, paint-splattered tables, colorful canvases on white wall shelves behind. Warm overhead string fairy lights, large windows, collaborative and engaged atmosphere. Polished Vogue Japan editorial quality, rich warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'concept-main',
       publicUrl: GI.conceptMain,
-      prompt: `Lounge-style art studio interior: guests painting on canvases with drinks, soft evening light, plants, cozy upscale Tokyo vibe. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial lifestyle photo. Interior of a modern Tokyo paint-and-sip studio, three Japanese women aged 20s seated at wooden tripod easels with wine glasses on the table. Soft warm string fairy lights overhead, black aprons, colorful finished canvases displayed on white shelves. Relaxed, social, premium atmosphere. TimeOut Tokyo editorial quality, warm rich tones, shallow depth of field. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'concept-detail',
       publicUrl: GI.conceptDetail,
-      prompt: `Close-up of hands holding a brush applying acrylic on canvas, palette and colors visible, shallow depth of field. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up. Two Japanese women aged early 20s laughing together at a paint-splattered wooden studio table, paintbrushes in hand, black aprons, wine glass visible in foreground. Warm bokeh string lights overhead, wooden easel with canvas in background. Candid joyful moment, Vogue Japan editorial quality, warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'feature-all-inclusive',
       publicUrl: GI.featureAllInclusive,
-      prompt: `Flat lay of pristine art supplies on a table: canvas, brushes, acrylic paints, apron neatly folded—everything provided for a class. ${brand}`,
+      prompt:
+        'Square 1:1 editorial flat lay. Art supplies neatly arranged on a paint-splattered wooden studio table — stretched canvas, assorted paintbrushes, acrylic paint palette, folded black apron, red plastic paint cups. Warm overhead studio lighting, no people. Clean and premium, TimeOut Tokyo editorial style. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'feature-free-flow-drinks',
       publicUrl: GI.featureFreeFlowDrinks,
-      prompt: `Elegant still life: wine glasses, tea cup, small snacks on a studio side table next to a painting in progress. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up. Two wine glasses, a sparkling water, and small plates of light snacks on a paint-splattered wooden studio table. Wooden tripod easels and canvases softly blurred in background, warm bokeh string fairy lights overhead. Relaxed and social Tokyo studio atmosphere, rich warm tones, shallow depth of field. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'feature-bilingual',
       publicUrl: GI.featureBilingual,
-      prompt: `Friendly instructor gesturing at an easel while guests listen; diverse group, welcoming international atmosphere. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial photo. Female Japanese art instructor aged late 20s in black apron gesturing at a canvas on a wooden tripod easel, explaining technique to a small group — one Japanese woman, one Western woman with brown hair, both smiling and engaged. Warm string fairy lights, colorful canvases on white shelves in background. Welcoming bilingual workshop energy, Vogue Japan editorial quality. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'cta-banner',
       publicUrl: GI.ctaBanner,
-      prompt: `Ultra-wide banner crop: blurred studio background with colorful canvases and warm bokeh lights, space for UI text elsewhere—center area calm and uncluttered. ${brand}`,
+      prompt:
+        'Ultra-wide 21:9 panoramic editorial photo. Empty Tokyo paint-and-sip studio interior, wooden tripod easels set up with blank canvases, paint-splattered tables, red paint cups, colorful finished artworks on white wall shelves. Soft warm bokeh string fairy lights, large windows with soft daylight. Calm premium atmosphere, generous empty center space for text overlay, muted warm tones, no people. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     // Themes (order matches POPULAR_THEMES in constants.ts)
     item({
       id: 'theme-japan-inspired',
       publicUrl: GI.themes.japanInspired,
-      prompt: `Painting on easel showing Mount Fuji, cherry blossoms, soft Japanese-inspired palette, studio setting. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished acrylic painting on canvas resting on a wooden easel. Mount Fuji with cherry blossoms in soft pink and blue tones, impressionist brushwork, Japanese art mood. Warm studio lighting, slightly blurred studio background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-paint-pouring',
       publicUrl: GI.themes.paintPouring,
-      prompt: `Vibrant acrylic pour painting with cells and swirls on canvas, fluid art close-up. ${brand}`,
+      prompt:
+        'Square 1:1 overhead editorial close-up of a finished fluid acrylic pour painting on canvas. Vivid flowing cells of deep blue, gold, and white, abstract organic texture, high detail. Warm studio surface beneath, no people. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-paint-your-pet',
       publicUrl: GI.themes.paintYourPet,
-      prompt: `Cheerful pet portrait painting on canvas on easel, colorful brushwork, studio background soft blur. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished oil-style portrait painting of a Shiba Inu on canvas, resting on a wooden easel. Warm painterly background, soft expressive brushwork. Warm Tokyo studio lighting behind. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-alcohol-ink',
       publicUrl: GI.themes.alcoholInk,
-      prompt: `Dreamy alcohol ink abstract: flowing blues and pinks on synthetic paper, ethereal textures. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of finished alcohol ink artwork on white paper. Soft flowing teal, coral, and gold tones, organic marble-like texture, delicate ink blooms. Clean studio surface, warm light. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-van-gogh',
       publicUrl: GI.themes.vanGogh,
-      prompt: `Canvas with impressionist starry night inspired brushstrokes, thick paint texture, gold and blue tones. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished canvas painting on a wooden easel. Swirling night sky in deep blue and gold, bold expressive post-impressionist brushstrokes, Van Gogh inspired mood. Not copying a specific painting. Warm studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-monet',
       publicUrl: GI.themes.monet,
-      prompt: `Soft impressionist water lilies style painting on easel, pastel greens and blues. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished impressionist canvas painting on a wooden easel. Soft water lily garden scene, dappled light, loose pastel greens and pinks, painterly Monet-inspired mood. Warm studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-picasso',
       publicUrl: GI.themes.picasso,
-      prompt: `Bold cubist-inspired portrait study on canvas, geometric color blocks, art studio context. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished canvas painting on a wooden easel. Bold geometric abstract portrait in cubist style, primary colors, flat angular shapes, expressive and graphic. Warm studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-renoir',
       publicUrl: GI.themes.renoir,
-      prompt: `Romantic soft-light figurative painting detail on canvas, warm skin tones and rose hues. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished impressionist canvas painting on a wooden easel. Soft romantic portrait of a woman in warm golden light, blush and cream tones, loose Renoir-inspired brushwork. Warm studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-matisse',
       publicUrl: GI.themes.matisse,
-      prompt: `Matisse-inspired cut-out style vibrant shapes on canvas, expressive color. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished canvas painting on a wooden easel. Bright expressive flat color shapes, bold outlines, flowers and figures in a joyful vivid palette, Matisse-inspired. Warm studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-kids',
       publicUrl: GI.themes.kids,
-      prompt: `Bright fun kids painting class: small canvases, cheerful colors, paint splatters, playful energy. ${brand}`,
+      prompt:
+        "Square 1:1 editorial close-up of a finished children's acrylic canvas painting on a small easel. Bright colorful animals and rainbows, thick simple brushwork, cheerful and playful. Clean bright studio lighting, no people. No overlaid text, no watermarks, no brand logos in frame.",
     }),
     item({
       id: 'theme-texture-painting',
       publicUrl: GI.themes.texturePainting,
-      prompt: `Heavy texture impasto abstract painting with palette knife, sculptural paint peaks. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished impasto texture painting on canvas. Thick layered palette knife strokes, rich earth tones and gold, highly dimensional tactile surface. Warm studio lighting, no people. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'theme-paint-your-idol',
       publicUrl: GI.themes.paintYourIdol,
-      prompt: `Pop-art style portrait on canvas, bold colors, music or stage mood suggested without recognizable celebrity face—stylized silhouette. ${brand}`,
+      prompt:
+        'Square 1:1 editorial close-up of a finished pop-art inspired portrait painting on canvas on a wooden easel. Bold graphic stylized face, vibrant flat colors, no real celebrity likeness. Warm Tokyo studio bokeh background. No overlaid text, no watermarks, no brand logos in frame.',
     }),
-    // Instructors
-    item({
-      id: 'instructor-cathy-profile',
-      publicUrl: GI.instructors.cathy.profile,
-      prompt: `Professional headshot portrait of a friendly woman creative director, warm smile, soft studio lighting, neutral background, business-casual. ${brand}`,
-    }),
-    item({
-      id: 'instructor-cathy-artwork',
-      publicUrl: GI.instructors.cathy.artwork,
-      prompt: `Colorful abstract acrylic painting on canvas in studio, expressive brushwork, leadership and creativity metaphor. ${brand}`,
-    }),
-    item({
-      id: 'instructor-naomi-profile',
-      publicUrl: GI.instructors.naomi.profile,
-      prompt: `Professional headshot of a stylish young woman, marketing creative, confident smile, soft light, neutral background. ${brand}`,
-    }),
-    item({
-      id: 'instructor-naomi-artwork',
-      publicUrl: GI.instructors.naomi.artwork,
-      prompt: `Modern abstract pour and ink painting, trendy palette, dynamic composition on easel. ${brand}`,
-    }),
-    item({
-      id: 'instructor-luci-profile',
-      publicUrl: GI.instructors.luci.profile,
-      prompt: `Professional headshot of a young man artist, gentle expression, dreamy creative vibe, soft gradient background. ${brand}`,
-    }),
-    item({
-      id: 'instructor-luci-artwork',
-      publicUrl: GI.instructors.luci.artwork,
-      prompt: `Fantasy-inspired colorful landscape painting, sunset and galaxy hues, whimsical but tasteful. ${brand}`,
-    }),
-    item({
-      id: 'instructor-momo-profile',
-      publicUrl: GI.instructors.momo.profile,
-      prompt: `Professional headshot of a woman artist, bright energetic smile, contemporary style. ${brand}`,
-    }),
-    item({
-      id: 'instructor-momo-artwork',
-      publicUrl: GI.instructors.momo.artwork,
-      prompt: `Dot technique abstract painting, meticulous colorful dots forming patterns on canvas. ${brand}`,
-    }),
-    item({
-      id: 'instructor-nanako-profile',
-      publicUrl: GI.instructors.nanako.profile,
-      prompt: `Professional headshot of a Japanese woman artist, calm elegant, traditional-modern blend, soft light. ${brand}`,
-    }),
-    item({
-      id: 'instructor-nanako-artwork',
-      publicUrl: GI.instructors.nanako.artwork,
-      prompt: `Japanese painting inspired floral work on canvas, delicate brushwork, muted elegant colors. ${brand}`,
-    }),
-    item({
-      id: 'instructor-aika-profile',
-      publicUrl: GI.instructors.aika.profile,
-      prompt: `Professional headshot of a woman artist, soft colorful styling, natural warmth. ${brand}`,
-    }),
-    item({
-      id: 'instructor-aika-artwork',
-      publicUrl: GI.instructors.aika.artwork,
-      prompt: `Large tapestry-style textile art detail, organic natural motifs, soft fibers and color. ${brand}`,
-    }),
-    item({
-      id: 'instructor-kiyoe-profile',
-      publicUrl: GI.instructors.kiyoe.profile,
-      prompt: `Professional headshot of a woman pottery artist, earthy warm tones, gentle smile. ${brand}`,
-    }),
-    item({
-      id: 'instructor-kiyoe-artwork',
-      publicUrl: GI.instructors.kiyoe.artwork,
-      prompt: `Handmade ceramic plates and cups on a table, artisan pottery, warm studio light. ${brand}`,
-    }),
-    item({
-      id: 'instructor-michi-profile',
-      publicUrl: GI.instructors.michi.profile,
-      prompt: `Professional headshot of a woman kids art teacher, bright friendly expression, colorful scarf. ${brand}`,
-    }),
-    item({
-      id: 'instructor-michi-artwork',
-      publicUrl: GI.instructors.michi.artwork,
-      prompt: `Playful kids painting: bright animals and shapes on canvas, joyful colors. ${brand}`,
-    }),
-    item({
-      id: 'instructor-ken-profile',
-      publicUrl: GI.instructors.ken.profile,
-      prompt: `Professional headshot of a man artist, thoughtful smile, glasses optional, creative intellectual vibe. ${brand}`,
-    }),
-    item({
-      id: 'instructor-ken-artwork',
-      publicUrl: GI.instructors.ken.artwork,
-      prompt: `Intricate whimsical ink illustration style artwork on paper at easel, fine line detail. ${brand}`,
-    }),
-    // Locations
+    // Instructors — client-provided photos; generation disabled (ids from INSTRUCTOR_IDS)
+    ...INSTRUCTOR_IDS.flatMap((id) => [
+      item({
+        id: `instructor-${id}-profile`,
+        publicUrl: GI.instructors[id].profile,
+        prompt: 'Client-provided image — generation disabled.',
+        enabled: false,
+      }),
+      item({
+        id: `instructor-${id}-artwork`,
+        publicUrl: GI.instructors[id].artwork,
+        prompt: 'Client-provided image — generation disabled.',
+        enabled: false,
+      }),
+    ]),
+    // Locations — client-provided photos; generation disabled
     item({
       id: 'loc-daikanyama',
       publicUrl: GI.locations.daikanyama,
-      prompt: `Exterior or storefront of a chic Tokyo neighborhood art studio near Daikanyama, daytime, stylish signage area blurred—no readable text. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-harajuku',
       publicUrl: GI.locations.harajuku,
-      prompt: `Trendy Harajuku-area creative studio entrance, colorful urban Tokyo, youthful energy. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-ginza',
       publicUrl: GI.locations.ginza,
-      prompt: `Upscale Ginza district art lounge interior glimpsed from entrance, refined luxury mood. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-yokohama',
       publicUrl: GI.locations.yokohama,
-      prompt: `Yokohama bay city creative space, soft port-city light, Motomachi chic vibe, art class interior. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-osaka-namba',
       publicUrl: GI.locations.osaka_namba,
-      prompt: `Modern high-rise studio interior in Osaka, panoramic city view through windows, bright and airy. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-osaka-caso',
       publicUrl: GI.locations.osaka_caso,
-      prompt: `Seaside warehouse-style creative studio, industrial chic, Osaka harbor light. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-osaka-umeda',
       publicUrl: GI.locations.osaka_umeda,
-      prompt: `Contemporary mall-adjacent studio lounge in Umeda, polished interior, evening ambiance. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-osaka-hirakata',
       publicUrl: GI.locations.osaka_hirakata,
-      prompt: `Family-friendly mall studio space, welcoming bright interior, Hirakata suburban warmth. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
     item({
       id: 'loc-okinawa',
       publicUrl: GI.locations.okinawa,
-      prompt: `Tropical Okinawa-inspired art studio interior, natural wood, ocean-tone accents, relaxed island vibe. ${brand}`,
+      prompt: 'Client-provided image — generation disabled.',
+      enabled: false,
     }),
-    // Private parties
     item({
       id: 'private-birthday',
       publicUrl: GI.privateOccasions.birthday,
-      prompt: `Celebration birthday table with cake and painting supplies, friends clinking glasses in art studio, festive warm lights. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial lifestyle photo. Group of four Japanese women aged 20s celebrating at a paint-and-sip studio in Tokyo, birthday cake on the paint-splattered table, balloons in background, paintbrushes and wine glasses visible. Black aprons, warm string fairy lights, joyful and warm atmosphere. Vogue Japan editorial quality. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'private-bachelorette',
       publicUrl: GI.privateOccasions.bachelorette,
-      prompt: `Group of friends laughing at easels, sparkling drinks, fun night-out energy in a studio. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial lifestyle photo. Group of five stylish Japanese women aged mid-20s painting together at wooden tripod easels in a Tokyo studio, laughing and toasting wine glasses. Black aprons, string fairy lights overhead, fun and chic energy, safe for work. TimeOut Tokyo editorial quality, rich warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'private-kids-party',
       publicUrl: GI.privateOccasions.kidsParty,
-      prompt: `Kids painting party: colorful aprons, small canvases, balloons soft blur in background. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial lifestyle photo. Four children aged 6–10 at small wooden easels painting bright colorful designs, big smiles, colorful aprons. One Japanese mother watching warmly in background. Bright clean studio lighting, cheerful and family-friendly. Artbar Lab alcohol-free setting. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'private-anniversary',
       publicUrl: GI.privateOccasions.anniversary,
-      prompt: `Couple painting together at adjacent easels, romantic warm lighting, champagne glasses side table. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial lifestyle photo. Japanese couple aged late 20s painting side by side at a Tokyo studio, leaning toward each other and smiling. Shared paint-splattered table, wine glasses, warm string fairy lights overhead, soft bokeh background. Romantic but tasteful, warm golden tones, Vogue Japan editorial quality. No overlaid text, no watermarks, no brand logos in frame.',
     }),
-    // Blog
     item({
       id: 'blog-yokohama-cover',
       publicUrl: GI.blog.yokohamaCover,
-      prompt: `Yokohama waterfront promenade at golden hour, red brick warehouse district distant, travel editorial photo. ${brand}`,
+      prompt:
+        'Wide 16:9 cinematic editorial photo. Scenic Yokohama waterfront street scene, late afternoon golden hour light, mix of modern and historic architecture, tree-lined shopping street, warm inviting atmosphere. No people required, travel lifestyle quality, rich warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'blog-yokohama-inline',
       publicUrl: GI.blog.yokohamaInline,
-      prompt: `Yokohama Chinatown street scene, lanterns bokeh, no readable text, vibrant editorial travel photo. ${brand}`,
+      prompt:
+        'Wide 16:9 editorial travel photo. Charming Yokohama Motomachi shopping street detail — café terrace, boutique storefronts, soft afternoon light filtering through trees. Warm editorial travel photography style, inviting and unhurried mood. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'testimonial-ryan',
       publicUrl: GI.testimonials.ryan,
-      prompt: `Neutral professional avatar portrait placeholder: smiling man, casual smart, soft gray background, realistic but generic—not a specific celebrity. ${brand}`,
+      prompt:
+        'Portrait 3:4 head and shoulders editorial photo. Friendly Western man aged early 30s, brown hair, warm natural smile, smart casual clothing. Neutral soft-focus Tokyo studio or café background. Clean professional portrait quality, warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'testimonial-ritsuko',
       publicUrl: GI.testimonials.ritsuko,
-      prompt: `Neutral professional avatar portrait placeholder: smiling Japanese woman, casual elegant, soft gray background, realistic generic. ${brand}`,
+      prompt:
+        'Portrait 3:4 head and shoulders editorial photo. Friendly Japanese woman aged late 20s, warm natural smile, smart casual clothing. Neutral soft-focus Tokyo studio or café background. Clean professional portrait quality, warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
   ],
 };

@@ -1,5 +1,12 @@
 import { Instructor, Location, Testimonial, MediaItem } from './types';
-import { GI } from './data/generated-image-paths';
+import { GI, type InstructorId } from './data/generated-image-paths';
+
+type InstructorRow = Omit<Instructor, 'profileImage' | 'artworkImage'> & { id: InstructorId };
+
+function attachInstructorPhotos(row: InstructorRow): Instructor {
+  const photos = GI.instructors[row.id];
+  return { ...row, profileImage: photos.profile, artworkImage: photos.artwork };
+}
 
 // Helper for the new placeholder format (non-generated fallbacks only)
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
@@ -12,6 +19,9 @@ export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
 
 /** Official LINE app mark (squircle); sits on #06C755 so colors align. Served from /public/media. */
 export const LINE_BRAND_ICON_SRC = '/media/LINE_Brand_icon.png';
+
+/** Tokyo studio inbox (footer mail, Paint Your Pet sketch “email for class”). */
+export const ARTBAR_TOKYO_EMAIL = 'tokyo@artbar.co.jp';
 
 export const SITE_IMAGES = {
   hero: {
@@ -52,7 +62,8 @@ export const POPULAR_THEMES = [
   { title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
 ];
 
-export const INSTRUCTORS: Instructor[] = [
+/** Bios only; image URLs come from `INSTRUCTOR_IDS` + `GI.instructors` (see `data/generated-image-paths.ts`). */
+const INSTRUCTOR_ROWS: InstructorRow[] = [
   {
     id: "cathy",
     name: "Cathy Thompson",
@@ -60,31 +71,25 @@ export const INSTRUCTORS: Instructor[] = [
     roleJp: "Artbar Tokyo CEO",
     descEn: "Cathy is Artbar Tokyo's CEO - the driving force behind Artbar! She strives to make it a fun and relaxing space for people to express their creative self and spark their love for art. Although most of her work is behind the scenes, she is often in the studio and looks forward to meeting you at any of our sessions.",
     descJp: "Artbar Tokyoの創設者兼CEO。Artbarが単なる絵画教室ではなく、誰もがクリエイティビティを解放できる「大人のサードプレイス」であり続けるよう情熱を注いでいます。スタジオ運営の指揮を執りながら、ゲストの皆様とアートを通じた時間を共有することを楽しみにしています。",
-    languages: "English, Japanese",
-    profileImage: GI.instructors.cathy.profile,
-    artworkImage: GI.instructors.cathy.artwork
+    languages: "English, Japanese"
   },
   {
     id: "naomi",
     name: "Naomi",
     roleEn: "Marketing Director",
     roleJp: "マーケティング・ディレクター",
-    descEn: "Naomi is both an instructor and Artbar’s marketing director. She shapes the image of Artbar and finds or creates new trends to keep Artbar exciting! She is very friendly and will make your session lots of fun. Come try some of her new abstract sessions such as paint pour or alcohol inks, or learn detailed techniques with classic paintings together.",
+    descEn: "Naomi is both an instructor and Artbar's marketing director. She shapes the image of Artbar and finds or creates new trends to keep Artbar exciting! She is very friendly and will make your session lots of fun. Come try some of her new abstract sessions such as paint pour or alcohol inks, or learn detailed techniques with classic paintings together.",
     descJp: "インストラクターとマーケティングディレクターを兼務し、常にArtbarの新しいトレンドを発信しています。ポーリングアートやアルコールインクなどのモダンなスタイルから、古典的な名画のテクニックまで幅広く精通。親しみやすい人柄で、リラックスしたセッションを提供します。",
-    languages: "English, Japanese",
-    profileImage: GI.instructors.naomi.profile,
-    artworkImage: GI.instructors.naomi.artwork
+    languages: "English, Japanese"
   },
   {
     id: "luci",
     name: "Luci",
     roleEn: "Instructor",
     roleJp: "インストラクター",
-    descEn: "Luci brings a soft, dreamy style to his paintings that will make you feel like you’re transported to a fantasyland of colorful sunsets and milky ways! He loves to encourage people to find their own style during his sessions, Luci’s calming guidance will make you feel relaxed and creative. Come paint along with him sometime and unleash your creativity.",
+    descEn: "Luci brings a soft, dreamy style to his paintings that will make you feel like you're transported to a fantasyland of colorful sunsets and milky ways! He loves to encourage people to find their own style during his sessions, Luci's calming guidance will make you feel relaxed and creative. Come paint along with him sometime and unleash your creativity.",
     descJp: "ファンタジーの世界へ迷い込んだような、柔らかく色彩豊かなスタイルが特徴のアーティスト。ゲスト一人ひとりが独自のスタイルを見つけられるよう、穏やかな雰囲気の中で丁寧にガイドします。日常を忘れ、クリエイティビティを解放する時間をお楽しみください。",
-    languages: "English, Japanese, Chinese",
-    profileImage: GI.instructors.luci.profile,
-    artworkImage: GI.instructors.luci.artwork
+    languages: "English, Japanese, Chinese"
   },
   {
     id: "momo",
@@ -93,9 +98,7 @@ export const INSTRUCTORS: Instructor[] = [
     roleJp: "インストラクター",
     descEn: "Momo is an awesome instructor and specializes in her original dot technique art style and abstract art! She is also very bright and knows a lot about different paint mediums, she offers extremely good advice about color theory! Come join her class sometime and get to learn about her unique style.",
     descJp: "国内外で活躍する現役アーティスト。独自のドットテクニックや抽象画を専門とし、色彩理論や画材に関する深い知識を持っています。プロフェッショナルな視点からのアドバイスで、あなたの作品作りをサポートします。",
-    languages: "English, Japanese",
-    profileImage: GI.instructors.momo.profile,
-    artworkImage: GI.instructors.momo.artwork
+    languages: "English, Japanese"
   },
   {
     id: "nanako",
@@ -104,55 +107,155 @@ export const INSTRUCTORS: Instructor[] = [
     roleJp: "インストラクター",
     descEn: "Nanako's specialty is Japanese painting and acrylic painting. She is very helpful if you have questions about your painting process. She will happily give you great advice so you can feel confident in your masterpiece!",
     descJp: "日本画とアクリル画を中心に制作活動を行っています。「その瞬間の感情」を大切に、自由に表現することを重視したセッションです。繊細な色使いを得意とし、皆様が思いのままに個性を発揮できるよう技術面でもサポートします。",
-    languages: "Japanese, English",
-    profileImage: GI.instructors.nanako.profile,
-    artworkImage: GI.instructors.nanako.artwork
-  },
-  {
-    id: "aika",
-    name: "Aika",
-    roleEn: "Instructor",
-    roleJp: "インストラクター",
-    descEn: "Aika's style is very soft and colorful with inspiration taken from natural elements. She makes large tapestry paintings! Aika is very sweet, you will be sure to feel relaxed by her calming atmosphere.",
-    descJp: "自然の要素からインスピレーションを得た、ソフトでカラフルな作風が特徴。普段は大型のタペストリー作品も制作しています。Aikaの穏やかで優しい雰囲気の中で、リラックスしたアートの時間をお過ごしください。",
-    languages: "Japanese, English",
-    profileImage: GI.instructors.aika.profile,
-    artworkImage: GI.instructors.aika.artwork
+    languages: "Japanese, English"
   },
   {
     id: "kiyoe",
     name: "Kiyoe",
     roleEn: "Pottery Specialist",
     roleJp: "陶芸スペシャリスト",
-    descEn: "Kiyoe is a pottery specialist and makes her amazing art and designs from scratch such as plates, cups, pots, and many other works of art! Kiyoe has the sweetest and kindest soul - she teaches both kids and adults sessions so you’ll never feel worried, always at ease.",
+    descEn: "Kiyoe is a pottery specialist and makes her amazing art and designs from scratch such as plates, cups, pots, and many other works of art! Kiyoe has the sweetest and kindest soul - she teaches both kids and adults sessions so you'll never feel worried, always at ease.",
     descJp: "陶芸を専門とし、器やポットなど温かみのある作品を制作しています。とても穏やかな人柄で、大人のセッションからキッズセッションまで幅広く担当。土に触れて心を落ち着けたい方、リラックスしたい方におすすめです。",
-    languages: "English, Japanese",
-    profileImage: GI.instructors.kiyoe.profile,
-    artworkImage: GI.instructors.kiyoe.artwork
+    languages: "English, Japanese"
   },
   {
     id: "michi",
     name: "Michi Kim",
     roleEn: "Instructor",
     roleJp: "インストラクター",
-    descEn: "Michi creates lots of fun paintings for many of Artbar’s kids sessions! Her bright and energetic atmosphere will be sure to make your kids smile while they create masterpieces to decorated the house with. Leave it to Michi Sensei to guide your kids in a fun way during their art class!",
+    descEn: "Michi creates lots of fun paintings for many of Artbar's kids sessions! Her bright and energetic atmosphere will be sure to make your kids smile while they create masterpieces to decorate the house with. Leave it to Michi Sensei to guide your kids in a fun way during their art class!",
     descJp: "Artbarのキッズセッションを中心に、多くの作品を生み出しています。明るくエネルギッシュなMichi先生は、子供たちの自由な発想と笑顔を引き出すのが得意です。お子様の初めてのアート体験は、ぜひMichiにお任せください。",
-    languages: "English, Japanese, Korean",
-    profileImage: GI.instructors.michi.profile,
-    artworkImage: GI.instructors.michi.artwork
+    languages: "English, Japanese, Korean"
+  },
+  {
+    id: "mineko",
+    name: "Mineko",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "A graduate of Bunka Fashion College, Mineko has worked for many years in apparel fashion and the accessories industry, and has published a recipe book for bead accessories she designed herself. Her accessories feature cheerful, colorful tones that also come through in her paintings. Mineko loves animals and fantasy worlds, and creates illustrations that feel like scenes from a storybook. In kids classes she supports everyone so you can enjoy painting together.",
+    descJp: "文化服装学院卒。長年アパレルファッション業界、アクセサリーパーツ業界を経て自らデザインしたビーズアクセサリーのレシピ本も発売しています。アクセサリーは元気が出るようなカラフルな色が特徴で、それは絵にも表れています。Minekoは動物とファンタジーの世界感が大好きで、物語に登場するようなイラストを描きます。キッズクラスでは皆で楽しく描けるようサポートいたします！",
+    languages: "Japanese, English"
+  },
+  {
+    id: "sakura",
+    name: "Sakura",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Graduate of University of Tsukuba, Art & Design Department, majoring in Japanese-style painting; Tokyo University of the Arts, Master of Art studies (Art Education, current). Sakura specializes in Japanese painting but is also a multi-style artist who creates 3D works using acrylic paints. Her experience living in Germany and riding horses at university encourage her to paint horses and other animals in a colorful, energetic way. She is looking for you to join her fantasy world and enjoy art!",
+    descJp: "筑波大学芸術専門学群日本画領域卒業、東京藝術大学院美術研究科修士課程在籍中。Sakuraは日本画を専門としていますが、アクリル絵の具を使った立体表現も行うマルチスタイルアーティストです。ドイツに住んでいた経験や大学で馬術をしていたことから馬をはじめとした動物を表現するのが得意で、カラフルでエネルギッシュな色使いをします。アートを楽しみながらメルヘンの世界に飛び込んでくれる仲間をお待ちしています！",
+    languages: "English, Japanese, German"
+  },
+  {
+    id: "daria",
+    name: "Daria",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Daria is an Italian artist who studied painting in Florence. She is an illustrator with a oneiric style and likes to experiment with different materials and techniques. She believes art is a powerful tool to self-reflect and be yourself, but also to connect with others. During her classes she will passionately encourage you to express your creativity without limits, feeling free from all inhibitions and worries!",
+    descJp: "Leon Battista Alberti（フィレンツェ）、International School of Illustration Štěpán Zavřel（サルメーデ）、Ca' Foscari University（ヴェネツィア）などで学んだイタリア人アーティスト。オネアリスティックなスタイルのイラストレーターで、さまざまな素材や技法を試すのが好き。アートは自分を見つめ直し、自分らしくいるための強力なツールであると同時に、他者とつながるためのツールでもあると信じている。彼女のクラスでは、すべての抑制や心配から解放され、制限なく創造性を表現できるよう、情熱的に励まします！",
+    languages: "English, Japanese, Italian"
+  },
+  {
+    id: "diamanteyuko",
+    name: "Diamante Yuko",
+    roleEn: "Candle artist",
+    roleJp: "キャンドルアーティスト",
+    descEn: "Yuko is a candle artist and will gently teach you how to make your own aroma and art candles during our Craft Morning workshops!",
+    descJp: "クラフトモーニングのワークショップでは、キャンドルアーティストであるユウコさんが、アロマキャンドルやアートキャンドルの作り方を優しく教えてくれます！",
+    languages: "Japanese, English"
+  },
+  {
+    id: "rie",
+    name: "Rie",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Rie specializes in alcohol ink art and resin art. She also organizes workshops that give people a chance of self-reflection through art. Rie's bright personality and passion for supporting students to express themselves through art will guide you to create your own masterpiece!",
+    descJp: "Rieはアルコールインクアートとレジンアートを専門とする先生です。彼女は普段、アートと心理学を組み合わせて、アートを通じた自己対話や自分発見のワークショップも開催しています！Artbarでは、持ち前の明るさと丁寧なフォローで、楽しみながらみなさんが表現したいアートを一緒に叶えてくれます！是非、彼女のセッションに参加してオリジナルアートを作りましょう！",
+    languages: "English, Japanese"
   },
   {
     id: "ken",
     name: "Ken Tanaka",
     roleEn: "Instructor",
     roleJp: "インストラクター",
-    descEn: "Ken specializes in his signature pen drawings that are so detailed and whimsical. Ken is knowledgeable not only art but about many very interesting subjects, which makes it so much fun to chat together! Come feel inspired with Ken, you will learn about art and much more.",
-    descJp: "緻密で遊び心のあるペン画を得意とするKen。アートだけでなく幅広い分野に精通しており、会話も弾む楽しいセッションが魅力です。新しい技法を学びながら、インスピレーション溢れる時間を共有しましょう。",
-    languages: "English, Japanese",
-    profileImage: GI.instructors.ken.profile,
-    artworkImage: GI.instructors.ken.artwork
+    descEn: "Ken specializes in his signature pen drawings that are so detailed and whimsical. Ken is knowledgeable not only about art but about many very interesting subjects, which makes it so much fun to chat together! Come feel inspired with Ken, you will learn about art and much more.",
+    descJp: "Kenの得意とするペンを使ったドローイングを教えてくれます。アートだけではなくあらゆる事に精通しているのでお話をしているだけでもとっても楽しい先生です。Kenのセッションに参加して新しいアートの技法を学びましょう！",
+    languages: "English, Japanese"
+  },
+  {
+    id: "naoko",
+    name: "Naoko",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Naoko hopes you can enjoy expressing yourself freely through your work. She also hopes that after experiencing making art, you will feel interested in visiting museums and exploring art further.",
+    descJp: "武蔵野美術大学短期大学部卒業。Naoko先生は生徒の皆さんに作品を通して自由に表現する事を楽しんでいただける時間にしたいと考えています。アートを体験する事をきっかけに美術館に行くことや、芸術に興味を持ってもらえたら嬉しいです。",
+    languages: "Japanese, English"
+  },
+  {
+    id: "helen",
+    name: "Helen",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Helen is a very calm and caring instructor who will gently guide you through the session so you can have a relaxing time.",
+    descJp: "Helenはとても穏やかで思いやりのあるインストラクターで、皆様がリラックスした時間を過ごせるよう、優しく指導してくれます。",
+    languages: "English, Japanese, Thai"
+  },
+  {
+    id: "yuka",
+    name: "Yuka",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Yuka is a very kind teacher and will guide the class gently - the students can feel relaxed and free to express themselves through their art. Yuka specializes in children's book illustrations and her colorful artwork is absolutely lovely!",
+    descJp: "日本児童教育専門学校 絵本童話科 卒業。Yukaはとても親切な先生で、クラスを優しく指導してくれます。生徒さんはリラックスして、自由にアートを通して自分を表現することができます。Yukaは児童書のイラストを専門としており、彼女のカラフルなアートワークはとても素敵です。",
+    languages: "English, Japanese"
+  },
+  {
+    id: "jenna",
+    name: "Jenna",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Jenna specializes in crafting colorful and relaxing pieces inspired by the beauty of nature. Her goal is to make everyone feel calm, happy, and inspired during their time in class. Whether you're seeking a peaceful escape or simply looking to explore your creativity, Jenna's classes provide the perfect opportunity to unwind and reconnect with nature through art. Come join us and experience the joy of painting with Jenna!",
+    descJp: "University of Hamburg、学習院女子大学。ジェナは、自然の美しさにインスパイアされた、カラフルでリラックスできる作品を作るのが専門。彼女のゴールは、クラスで過ごしている間、誰もが穏やかで幸せな気持ちになり、インスピレーションを得られるようにすること。穏やかなひとときを過ごしたい方にも、自分の創造性を探求したい方にも、ジェナのクラスは、アートを通してくつろぎ、自然とのつながりを取り戻す絶好の機会を提供します。ジェナと一緒に絵を描く楽しさを体験してみませんか？",
+    languages: "English, Japanese, German"
+  },
+  {
+    id: "akiko",
+    name: "Akiko",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Graduate of Musashino Art University, Department of Japanese Painting. Akiko is good at creating colorful and exciting pieces. She has been involved in various illustrations. Akiko also loves copying and understands the importance of learning from copying. Whether you've never had much experience with art or just love art, join Akiko in her class and have fun creating art with someone who is always calm and natural.",
+    descJp: "武蔵野美術大学 日本画学科卒業。Akikoはカラフルでワクワクする作品を作るのが得意です。今まで様々なイラストを担ってきました。Akikoはまた模写をする事が大好きで、模写から学ぶ事の大切さも心得ています。いつも穏やかで自然体のAkikoと一緒に、アートに今まであまり触れてこなかった人も、アートが大好きという方もAkikoのクラスで一緒に楽しく作品作りを体験してみませんか？",
+    languages: "English, Japanese"
+  },
+  {
+    id: "minako",
+    name: "Minako",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "MA in Illustration at Kingston University, London; BA in Visual Communication Design at Musashino Art University. Minako has worked as a package designer, graphic designer, illustrator, and jewelry maker. She is now a printmaker and art educator, active in Japan, the UK, Slovenia, and Italy. Join her unique art style classes and enjoy expressing yourself. Especially for kids, Minako's classes are full of fun and creativity, as she loves working with children!",
+    descJp: "キングストン大学院修士課程イラストレーション科卒業、武蔵野美術大学視覚伝達デザイン学科卒業。ミナコは、パッケージデザイナー、グラフィックデザイナー、イラストレーター、ジュエリーメーカーとして活躍した後、現在は日本、イギリス、スロベニア、イタリアで版画家兼アートエデュケーターとして活動しています。彼女のユニークなアートスタイルのクラスに参加し、自己表現を楽しんでください。特に子供が大好きなミナコのキッズクラスは、楽しさ満載です！",
+    languages: "English, Japanese"
+  },
+  {
+    id: "akko",
+    name: "Akko",
+    roleEn: "Instructor",
+    roleJp: "インストラクター",
+    descEn: "Education: Media and Communication at London School of Economics and Political Science (LSE), 2021; Woodworking Traditional Arts Super College of Kyoto, 2025. Akko creates work with acrylic paints, often featuring animals and original patterns in the background to express her inner self. She loves the freedom that painting offers and does her best to make the class fun and relaxing.",
+    descJp: "2021年 LSE メディア・コミュニケーション、2025年 京都伝統木工芸スーパー専門学校。アクリル絵の具を使って作品を制作しています。モチーフには動物を取り入れることが多く、背景にはオリジナルの模様を描くことで、自分自身を表現しています。絵を描くことの自由さがとても好きで、クラスでは楽しく、リラックスできる雰囲気づくりを心がけています。",
+    languages: "English, Japanese"
+  },
+  {
+    id: "glicinapeony",
+    name: "Glicina Peony",
+    roleEn: "Craft partner",
+    roleJp: "クラフトパートナー",
+    descEn: "Glicina Peony is a craft partner that specializes in dried flower arrangements and wreaths.",
+    descJp: "グリシーナ・ピオニーは、ドライフラワーのアレンジメントやリースを専門に扱うクラフトパートナーです。",
+    languages: "Japanese, English"
   }
 ];
+
+export const INSTRUCTORS: Instructor[] = INSTRUCTOR_ROWS.map(attachInstructorPhotos);
 
 export const LOCATIONS: Location[] = [
   {

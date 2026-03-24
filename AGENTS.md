@@ -50,7 +50,8 @@ No test framework is configured.
 - `context/` — `ContentContext.tsx` (`'use client'`)
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
-- `constants.ts` — app constants
+- `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`)
+- `data/generated-image-paths.ts` — `GI` public URLs; `INSTRUCTOR_IDS` lists instructor slugs (keep in sync with `INSTRUCTOR_ROWS`). Client instructor photos: `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`
 
 ### Routing
 

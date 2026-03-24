@@ -17,8 +17,8 @@ export const Instructors: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {content.instructors.map((instructor, index) => (
-            <div key={index} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
+          {content.instructors.map((instructor) => (
+            <div key={instructor.id} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
               {/* Header Art Background */}
               <div className="h-56 relative overflow-hidden bg-artbar-bg">
                  <div className="absolute inset-0 bg-artbar-navy/10"></div>

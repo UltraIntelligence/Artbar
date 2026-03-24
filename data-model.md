@@ -42,7 +42,7 @@ There is **no sync** from runtime back to the repo or to the server bundle. Trea
 | **ContentData** | Root aggregate for all site content + theme tokens | `en`, `jp`, `images`, `theme`, shared arrays | `types.ts` (`ContentData`), `data/content.ts` (`defaultContent`), runtime merge in `context/ContentContext.tsx` |
 | **SiteContent** | Per-language marketing copy (nav, home sections, page-specific blocks) | Nested `nav`, `home`, `footer`, `teamBuilding`, `privateParties`, `blogPage`, etc. | `types.ts` (`SiteContent`), `data/content.ts` (`en` / `jp`) |
 | **ThemeConfig** | Admin-editable font stacks + Tailwind class strings for typography scale | `fonts.heading`, `fonts.body`, `typography.*` | `types.ts`, `data/content.ts` → `theme`; consumed by `components/ThemeInjector.tsx` |
-| **Instructor** | Staff profile for `/instructors` | `id`, `name`, `roleEn`/`roleJp`, `descEn`/`descJp`, `languages`, `profileImage`, `artworkImage` | `types.ts`, `constants.ts` (`INSTRUCTORS`), merged in `data/content.ts` |
+| **Instructor** | Staff profile for `/instructors` | `id`, `name`, `roleEn`/`roleJp`, `descEn`/`descJp`, `languages`, `profileImage`, `artworkImage` | `types.ts`; bios in `constants.ts` (`INSTRUCTOR_ROWS` → `INSTRUCTORS`); image slugs in `INSTRUCTOR_IDS` + `GI.instructors` (`data/generated-image-paths.ts`); merged in `data/content.ts` |
 | **Location** | Studio / franchise location | `id`, `nameEn`/`nameJp`, addresses, `accessEn`/`accessJp`, `image` | `types.ts`, `constants.ts` (`LOCATIONS`), `data/content.ts` |
 | **BlogPost** | Journal article | `id`, `slug`, `published`, `titleEn`/`titleJp`, `contentEn`/`contentJp` (HTML), `excerpt*`, `author*`, `date`, `tags`, `image` | `types.ts`, `data/content.ts` `blog`; list UI `views/BlogList.tsx` |
 | **Testimonial** | Quote + attribution | `text`, `author`, optional `role`, `userImage` | `types.ts`; **home** testimonials in `site.home.testimonials.items`; **team building** in `content.teamBuildingTestimonials` (`constants.ts` + `data/content.ts`) |
@@ -131,7 +131,7 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 - **`BlogPost.published`:** Listing and sitemap generation **intended** for published-only; implementation split between client list (`BlogList`) and build-time sitemap (`app/sitemap.ts`).
 - **`deepMerge`:** Empty arrays in saved JSON **do not** override defaults—non-empty arrays replace. **Object** keys merge recursively.
 - **API routes** expect `GEMINI_API_KEY` in the environment (`app/api/generate-sketch/route.ts`, `app/api/ai-text/route.ts`; image model override via `GEMINI_IMAGE_MODEL` per `lib/gemini-image-config.ts`).
-- **Asset URLs:** Public files must live under `public/`; `GI` (`data/generated-image-paths.ts`) maps to `/media/generated/...`.
+- **Asset URLs:** Public files must live under `public/`; `GI` (`data/generated-image-paths.ts`) maps to `/media/generated/...` and `/media/instructors/...` (see `INSTRUCTOR_IDS`).
 - **Home hero images:** `views/Home.tsx` falls back to `SITE_IMAGES.hero.home` from `constants.ts` when `content.images.hero.home` is empty or still a **toolandtea.com** placeholder URL—editing only one path can look “stuck.”
 
 ---
@@ -157,6 +157,7 @@ No sessions, quotas, or user IDs—only the Gemini call.
 | New `/themes/...` landing page | Add `THEME_CONFIG` entry + `THEME_TITLES` + ensure home theme **titles** slugify to that key |
 | Fonts / typography scale | `content.theme` / Admin, consumed by `components/ThemeInjector.tsx` |
 | Generated marketing images paths | `data/generated-image-paths.ts` (and assets under `public/media/generated/`) |
+| Instructor list + photos | `INSTRUCTOR_IDS` + `INSTRUCTOR_ROWS` in `constants.ts`; JPEGs under `public/media/instructors/`; `scripts/image-manifest.ts` derives instructor slots from `INSTRUCTOR_IDS` |
 | Global layout, nav shell | `app/layout.tsx`, `components/Navbar.tsx`, `components/Footer.tsx` |
 
 ---
