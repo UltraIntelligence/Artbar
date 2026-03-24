@@ -176,11 +176,14 @@ export const Home: React.FC = () => {
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative min-h-[calc(100svh+6rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-hidden">
         <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
-          <img
-            src={heroBgSrc}
-            alt="Artbar Experience"
-            className="hero-bg-motion h-full w-full object-cover animate-in fade-in duration-1000"
-          />
+          {/* Wrapper holds fade-in; img alone runs hero-bg-drift (animate-in on same node overrides CSS animation) */}
+          <div className="absolute inset-0 animate-in fade-in duration-1000">
+            <img
+              src={heroBgSrc}
+              alt="Artbar Experience"
+              className="hero-bg-motion h-full w-full min-h-full min-w-full object-cover"
+            />
+          </div>
           <div className="absolute inset-0 bg-artbar-navy/80" />
           
           <div className="absolute inset-0 flex min-h-full flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-[100svh] md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
