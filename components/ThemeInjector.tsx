@@ -3,6 +3,12 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
 
+/** Single font-family name, safe for CSS custom properties (multi-word names must be quoted). */
+function cssFontFamilyName(name: string): string {
+  const escaped = name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  return `'${escaped}'`;
+}
+
 export const ThemeInjector: React.FC = () => {
   const { content } = useContent();
   const { fonts } = content.theme || { fonts: { heading: 'Josefin Sans', body: 'Hiragino Kaku Gothic ProN' } };
@@ -31,8 +37,8 @@ export const ThemeInjector: React.FC = () => {
       {/* Inject CSS Variables for Tailwind using native style tag */}
       <style>{`
         :root {
-          --font-heading: ${fonts.heading};
-          --font-body: ${fonts.body};
+          --font-heading: ${cssFontFamilyName(fonts.heading)};
+          --font-body: ${cssFontFamilyName(fonts.body)};
         }
       `}</style>
       

@@ -10,6 +10,15 @@ export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
   const theme = content.theme.typography;
+
+  const heroImages = content.images.hero as {
+    home: string;
+    video?: string;
+    videoMobile?: string;
+  };
+  const heroVideoDesktop = (heroImages.video ?? "").trim();
+  const heroVideoMobile = (heroImages.videoMobile ?? "").trim() || heroVideoDesktop;
+  const hasHeroVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
   
   // Testimonial cycling logic
   const [activeIndex, setActiveIndex] = useState(0);
@@ -35,12 +44,12 @@ export const Home: React.FC = () => {
     { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
     { name: "L'Oreal", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/L%27Or%C3%A9al_logo.svg" },
     { name: "Nike", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" },
-    { name: "Bloomberg", url: "https://upload.wikimedia.org/wikipedia/commons/5/54/Bloomberg_logo.svg" },
+    { name: "Bloomberg", url: "https://upload.wikimedia.org/wikipedia/commons/5/56/Bloomberg_logo.svg" },
     { name: "Spotify", url: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
     { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
-    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Morrison_%26_Foerster_logo.svg" },
+    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" },
     { name: "GE", url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/General_Electric_logo.svg" },
-    { name: "LUMINE", url: "https://artbar.co.jp/wp-content/uploads/Lumine_logo.svg" }
+    { name: "LUMINE", url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Lumine_logo.svg" }
   ];
 
   // Structured Data for Organization (Brand)
@@ -49,7 +58,7 @@ export const Home: React.FC = () => {
     "@type": "Organization",
     "name": "Artbar Tokyo",
     "url": "https://artbar.co.jp",
-    "logo": "https://artbar.co.jp/logo.png",
+    "logo": "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_200.png",
     "sameAs": [
       "https://www.facebook.com/artbartokyo",
       "https://www.instagram.com/artbartokyo"
@@ -117,22 +126,33 @@ export const Home: React.FC = () => {
       {/* Hero Section */}
       <section className="relative h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0 md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
-          {content.images.hero.video ? (
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
-              className="w-full h-full object-cover"
-              poster={content.images.hero.home}
-            >
-              <source src={content.images.hero.video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          {hasHeroVideo ? (
+            <>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover md:hidden"
+                poster={heroImages.home}
+              >
+                <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
+              </video>
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="hidden h-full w-full object-cover md:block"
+                poster={heroImages.home}
+              >
+                <source src={heroVideoDesktop || heroVideoMobile} type="video/mp4" />
+              </video>
+            </>
           ) : (
             <div className="w-full h-full relative">
                <img 
-                src={content.images.hero.home} 
+                src={heroImages.home} 
                 alt="Artbar Experience" 
                 className="w-full h-full object-cover animate-in fade-in duration-1000 scale-105" 
                />
@@ -207,11 +227,11 @@ export const Home: React.FC = () => {
         <div className="max-w-5xl mx-auto -mt-10 md:-mt-24 -translate-y-px">
           
           {/* Centered High-Impact Review Card (Horizontal Cycling Animation) */}
-          <div className="bg-white rounded-[3rem] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[340px] md:min-h-[400px] justify-center">
+          <div className="bg-white rounded-[3rem] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[360px] md:min-h-[420px] justify-center">
             {topTestimonials.map((testimonial, idx) => (
               <div 
                 key={idx} 
-                className={`absolute inset-0 p-8 md:p-14 flex flex-col items-center justify-center transition-all duration-700 ease-in-out ${
+                className={`absolute inset-0 p-8 md:p-14 pb-16 md:pb-20 flex flex-col items-center justify-center transition-all duration-700 ease-in-out ${
                   idx === activeIndex 
                     ? 'opacity-100 translate-x-0 pointer-events-auto' 
                     : idx < activeIndex 
@@ -245,7 +265,7 @@ export const Home: React.FC = () => {
             ))}
 
             {/* Pagination dots */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+            <div className="absolute bottom-4 md:bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                {topTestimonials.map((_, i) => (
                  <button 
                    key={i} 

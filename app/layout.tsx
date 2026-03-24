@@ -10,7 +10,8 @@ import { ScrollToTop } from '@/components/ScrollToTop';
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
   weight: ['600', '700'],
-  variable: '--font-heading',
+  /** Must not be `--font-heading`: that name is the Tailwind v4 token for `font-heading`. */
+  variable: '--font-josefin',
   display: 'swap',
 });
 

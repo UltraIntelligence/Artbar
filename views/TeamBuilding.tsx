@@ -36,7 +36,7 @@ export const TeamBuilding: React.FC = () => {
     { name: "Sojitz", url: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sojitz_Logo.svg" },
     { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
     { name: "STH Group", url: "" }, 
-    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Morrison_%26_Foerster_logo.svg/512px-Morrison_%26_Foerster_logo.svg.png" }
+    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" }
   ];
 
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, name: string) => {

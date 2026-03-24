@@ -27,7 +27,8 @@ export const defaultContent: ContentData = {
     hero: {
       home: getPh(1920, 1080),
       teamBuilding: getPh(1920, 1080),
-      video: ""
+      video: "/media/artbar-home-video-desktop.mp4",
+      videoMobile: "/media/artbar-home-video-mobile-3.mp4"
     },
     concept: {
       main: getPh(1200, 800),
