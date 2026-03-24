@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS } from '../constants';
+import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS, PARTNER_LOGOS } from '../constants';
+import { PartnerLogo } from '../components/PartnerLogo';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const TeamBuilding: React.FC = () => {
@@ -29,35 +30,6 @@ export const TeamBuilding: React.FC = () => {
       } else {
         scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
-    }
-  };
-
-  const CLIENT_LOGOS = [
-    { name: "Adidas", url: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" },
-    { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-    { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
-    { name: "Apple", url: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" },
-    { name: "Nike", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" },
-    { name: "GE", url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/General_Electric_logo.svg" },
-    { name: "Toyota", url: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Toyota_EU.svg" },
-    { name: "L'Oreal", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/L%27Or%C3%A9al_logo.svg" },
-    { name: "Spotify", url: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
-    { name: "Takeda", url: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Takeda_Pharmaceutical_Company_Logo.svg" },
-    { name: "Sojitz", url: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Sojitz_Logo.svg" },
-    { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
-    { name: "STH Group", url: "" }, 
-    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" }
-  ];
-
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>, name: string) => {
-    const target = e.target as HTMLImageElement;
-    const parent = target.parentElement;
-    if (parent) {
-      target.style.display = 'none';
-      const textElement = document.createElement('span');
-      textElement.innerText = name;
-      textElement.className = "text-xs md:text-sm font-heading font-bold text-artbar-navy/40 uppercase tracking-widest text-center whitespace-nowrap group-hover:text-artbar-taupe transition-colors";
-      parent.appendChild(textElement);
     }
   };
 
@@ -116,23 +88,10 @@ export const TeamBuilding: React.FC = () => {
              <div className="h-px bg-artbar-navy/10 flex-grow"></div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-x-8 gap-y-12 items-center justify-items-center max-w-6xl mx-auto">
-             {CLIENT_LOGOS.map((logo, i) => (
-                <div key={i} className="w-full flex items-center justify-center h-10 md:h-12 px-4 group">
-                  {logo.url ? (
-                    <img 
-                      src={logo.url} 
-                      alt={logo.name} 
-                      onError={(e) => handleImageError(e, logo.name)}
-                      className="max-h-full max-w-full object-contain transition-all duration-500 filter grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100" 
-                    />
-                  ) : (
-                    <span className="text-xs md:text-sm font-heading font-bold text-artbar-navy/40 group-hover:text-artbar-taupe transition-colors cursor-default uppercase tracking-widest whitespace-nowrap">
-                      {logo.name}
-                    </span>
-                  )}
-                </div>
-             ))}
+          <div className="mx-auto grid max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-10 sm:gap-x-7 sm:gap-y-11 md:grid-cols-7 md:gap-x-8 md:gap-y-12 lg:gap-x-10 lg:gap-y-14">
+            {PARTNER_LOGOS.map((logo, i) => (
+              <PartnerLogo key={i} name={logo.name} url={logo.url} />
+            ))}
           </div>
         </div>
 

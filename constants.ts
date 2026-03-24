@@ -57,6 +57,24 @@ export const TEAM_BUILDING_ACTIVITY_IMAGES = [
   GI.teamBuildingActivities.actionPainting,
 ];
 
+/** Wikimedia Commons SVGs for partner marks. Home + team building. */
+export const PARTNER_LOGOS: { name: string; url: string }[] = [
+  { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
+  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
+  { name: "Adidas", url: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" },
+  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
+  { name: "L'Oreal", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/L%27Or%C3%A9al_logo.svg" },
+  { name: "Nike", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" },
+  { name: "Bloomberg", url: "https://upload.wikimedia.org/wikipedia/commons/5/56/Bloomberg_logo.svg" },
+  { name: "Spotify", url: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
+  { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
+  { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" },
+  { name: "GE", url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/General_Electric_logo.svg" },
+  { name: "LUMINE", url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Lumine_logo.svg" },
+  { name: "Apple", url: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" },
+  { name: "Toyota", url: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Toyota_EU.svg" },
+];
+
 export const POPULAR_THEMES = [
   { title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
   { title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },

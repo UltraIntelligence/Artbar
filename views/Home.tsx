@@ -8,30 +8,10 @@ import { Button } from '../components/ui/Button';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
-import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL } from '../constants';
+import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL, PARTNER_LOGOS } from '../constants';
+import { PartnerLogo } from '../components/PartnerLogo';
 import { formatGuestCountDisplay, formatGuestConceptLabel } from '../lib/guest-count';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-
-function LogoItem({ name, url }: { name: string; url: string }) {
-  const [failed, setFailed] = useState(false);
-  const scaleClass = name === 'Coca-Cola' || name === 'Netflix' ? 'scale-90' : '';
-  return (
-    <div className="w-full flex items-center justify-center h-12 md:h-20 max-w-[160px] md:max-w-[200px] px-2">
-      {failed ? (
-        <span className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-widest text-center leading-tight opacity-70">
-          {name}
-        </span>
-      ) : (
-        <img
-          src={url}
-          alt={name}
-          className={`max-h-[60%] max-w-[80%] object-contain transition-all duration-700 opacity-100 grayscale-0 filter drop-shadow-sm ${scaleClass}`}
-          onError={() => setFailed(true)}
-        />
-      )}
-    </div>
-  );
-}
 
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
@@ -95,21 +75,6 @@ export const Home: React.FC = () => {
     return icons[index] || Calendar;
   };
 
-
-  const REGULAR_LOGOS = [
-    { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
-    { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-    { name: "Adidas", url: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" },
-    { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-    { name: "L'Oreal", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/L%27Or%C3%A9al_logo.svg" },
-    { name: "Nike", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" },
-    { name: "Bloomberg", url: "https://upload.wikimedia.org/wikipedia/commons/5/56/Bloomberg_logo.svg" },
-    { name: "Spotify", url: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
-    { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
-    { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" },
-    { name: "GE", url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/General_Electric_logo.svg" },
-    { name: "LUMINE", url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Lumine_logo.svg" }
-  ];
 
   const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : 'ご利用企業様';
   const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
@@ -274,29 +239,32 @@ export const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* Standardized Corporate Logo Grid */}
-          <div className="bg-white rounded-[var(--radius-feature)] shadow-[0_20px_60px_rgba(0,0,0,0.04)] overflow-hidden">
-            <div className="bg-artbar-navy py-5 text-center">
-               <h3 className="font-heading font-heavy text-white text-[10px] md:text-xs tracking-[0.4em] uppercase">{meetRegularsHeading}</h3>
+          {/* Corporate logos — subtle strip (same visual language as team building social proof) */}
+          <div className="flex w-full flex-col items-center">
+            <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
+              <div className="h-px flex-grow bg-artbar-navy/10" />
+              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray md:text-xs">
+                {meetRegularsHeading}
+              </p>
+              <div className="h-px flex-grow bg-artbar-navy/10" />
             </div>
-            <div className="p-10 md:p-20 flex flex-col items-center">
-               <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 md:gap-x-12 gap-y-12 md:gap-y-16 items-center justify-items-center mb-16">
-                  {REGULAR_LOGOS.map((logo, i) => (
-                    <LogoItem key={i} name={logo.name} url={logo.url} />
-                  ))}
-               </div>
-               
-               <Button
-                  type="button"
-                  variant="taupe"
-                  size="cta"
-                  onClick={() => router.push('/team-building')}
-                  className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
-               >
-                  {bookTeamBuildingCta}
-                  <ArrowRight size={18} className="shrink-0" aria-hidden />
-               </Button>
+
+            <div className="mx-auto mb-10 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-10 sm:gap-x-7 sm:gap-y-11 md:mb-12 md:grid-cols-7 md:gap-x-8 md:gap-y-12 lg:gap-x-10 lg:gap-y-14">
+              {PARTNER_LOGOS.map((logo, i) => (
+                <PartnerLogo key={i} name={logo.name} url={logo.url} />
+              ))}
             </div>
+
+            <Button
+              type="button"
+              variant="taupe"
+              size="cta"
+              onClick={() => router.push('/team-building')}
+              className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
+            >
+              {bookTeamBuildingCta}
+              <ArrowRight size={18} className="shrink-0" aria-hidden />
+            </Button>
           </div>
 
         </div>
