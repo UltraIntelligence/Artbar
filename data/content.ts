@@ -1,5 +1,13 @@
 import { ContentData } from '../types';
-import { INSTRUCTORS, LOCATIONS, MEDIA_LIST, FAQS, TEAM_BUILDING_TESTIMONIALS, POPULAR_THEMES } from '../constants';
+import {
+  INSTRUCTORS,
+  LOCATIONS,
+  MEDIA_LIST,
+  FAQS,
+  TEAM_BUILDING_TESTIMONIALS,
+  POPULAR_THEMES,
+  SITE_IMAGES,
+} from '../constants';
 
 // Helper for the new placeholder format
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
@@ -25,7 +33,7 @@ export const defaultContent: ContentData = {
     logoDark: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_200.png", 
     logoLight: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_e.png", 
     hero: {
-      home: getPh(1920, 1080),
+      home: SITE_IMAGES.hero.home,
       teamBuilding: getPh(1920, 1080),
       video: "/media/artbar-home-video-desktop.mp4",
       videoMobile: "/media/artbar-home-video-mobile-3.mp4"

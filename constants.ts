@@ -3,9 +3,13 @@ import { Instructor, Location, Testimonial, MediaItem } from './types';
 // Helper for the new placeholder format
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
+/** Fallback still when hero video is disabled; also used for OG-style imagery — not the toolandtea placeholder. */
+const HERO_HOME_FALLBACK =
+  'https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-vogue-japan/main.jpg';
+
 export const SITE_IMAGES = {
   hero: {
-    home: getPh(1920, 1080),
+    home: HERO_HOME_FALLBACK,
     teamBuilding: getPh(1920, 1080),
     video: "/media/artbar-home-video-desktop.mp4",
     videoMobile: "/media/artbar-home-video-mobile-3.mp4"

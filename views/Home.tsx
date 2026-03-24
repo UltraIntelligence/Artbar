@@ -19,6 +19,9 @@ export const Home: React.FC = () => {
   const heroVideoDesktop = (heroImages.video ?? "").trim();
   const heroVideoMobile = (heroImages.videoMobile ?? "").trim() || heroVideoDesktop;
   const hasHeroVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
+
+  const [heroMobileVideoReady, setHeroMobileVideoReady] = useState(false);
+  const [heroDesktopVideoReady, setHeroDesktopVideoReady] = useState(false);
   
   // Testimonial cycling logic
   const [activeIndex, setActiveIndex] = useState(0);
@@ -133,8 +136,11 @@ export const Home: React.FC = () => {
                 muted
                 loop
                 playsInline
-                className="h-full w-full object-cover md:hidden"
-                poster={heroImages.home}
+                preload="auto"
+                onLoadedData={() => setHeroMobileVideoReady(true)}
+                className={`h-full w-full object-cover transition-opacity duration-500 md:hidden ${
+                  heroMobileVideoReady ? 'opacity-100' : 'opacity-0'
+                }`}
               >
                 <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
               </video>
@@ -143,8 +149,11 @@ export const Home: React.FC = () => {
                 muted
                 loop
                 playsInline
-                className="hidden h-full w-full object-cover md:block"
-                poster={heroImages.home}
+                preload="auto"
+                onLoadedData={() => setHeroDesktopVideoReady(true)}
+                className={`hidden h-full w-full object-cover transition-opacity duration-500 md:block ${
+                  heroDesktopVideoReady ? 'opacity-100' : 'opacity-0'
+                }`}
               >
                 <source src={heroVideoDesktop || heroVideoMobile} type="video/mp4" />
               </video>
