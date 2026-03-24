@@ -89,7 +89,12 @@ export const PaintYourPet: React.FC = () => {
                           </li>
                       ))}
                    </ul>
-                   <Button onClick={() => window.location.href = '/#schedule'} className="w-full bg-artbar-taupe text-white hover:bg-opacity-90 border-none rounded-2xl py-5 text-lg shadow-md mt-auto">
+                   <Button
+                     variant="taupe"
+                     size="cta"
+                     onClick={() => (window.location.href = '/#schedule')}
+                     className="mt-auto w-full rounded-2xl text-base shadow-md"
+                   >
                       {site.nav.book}
                    </Button>
                </div>

@@ -16,7 +16,7 @@ export const NotFound: React.FC = () => {
         The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
       </p>
       <Link href="/">
-        <Button className="bg-artbar-navy text-white hover:bg-artbar-taupe border-none rounded-full px-8 py-4 text-lg shadow-lg">
+        <Button variant="primary" size="cta" className="shadow-lg hover:bg-artbar-taupe">
           Back to Home
         </Button>
       </Link>

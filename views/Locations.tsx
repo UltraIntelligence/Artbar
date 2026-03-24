@@ -204,10 +204,18 @@ export const Locations: React.FC = () => {
                     <p className="text-xs md:text-sm opacity-70">{site.locationsPage.operating.ceo}</p>
                  </div>
                  <div className="flex flex-col gap-3 items-center md:items-end w-full md:w-auto">
-                    <Button variant="primary" className="w-full md:w-auto rounded-xl font-bold uppercase text-[10px] md:text-xs bg-artbar-taupe text-white border-none px-8 py-3">
+                    <Button
+                      variant="taupe"
+                      size="cta"
+                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
+                    >
                        {site.locationsPage.operating.btnHiring}
                     </Button>
-                    <Button variant="outline" className="w-full md:w-auto rounded-xl font-bold uppercase text-[10px] md:text-xs border-artbar-navy px-8 py-3">
+                    <Button
+                      variant="outline"
+                      size="cta"
+                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
+                    >
                        {site.locationsPage.operating.btnFranchise}
                     </Button>
                  </div>

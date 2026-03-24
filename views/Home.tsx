@@ -149,6 +149,28 @@ export const Home: React.FC = () => {
         .animate-float {
           animation: float 6s infinite ease-in-out;
         }
+
+        /* Very slow, subtle hero background drift — ease-in-out + alternate = seamless loop */
+        @keyframes hero-bg-drift {
+          0% {
+            transform: scale(1.045) translate(0%, 0%);
+          }
+          100% {
+            transform: scale(1.09) translate(-0.9%, -0.55%);
+          }
+        }
+        .hero-bg-motion {
+          transform-origin: center center;
+          animation: hero-bg-drift 48s ease-in-out infinite alternate;
+          will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-bg-motion {
+            animation: none;
+            transform: scale(1.05);
+            will-change: auto;
+          }
+        }
       `}</style>
       
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
@@ -157,7 +179,7 @@ export const Home: React.FC = () => {
           <img
             src={heroBgSrc}
             alt="Artbar Experience"
-            className="h-full w-full object-cover animate-in fade-in duration-1000 scale-105"
+            className="hero-bg-motion h-full w-full object-cover animate-in fade-in duration-1000"
           />
           <div className="absolute inset-0 bg-artbar-navy/80" />
           
@@ -235,9 +257,8 @@ export const Home: React.FC = () => {
                   onClick={() => {
                     window.location.hash = 'schedule';
                   }}
-                  size="lg"
-                  variant="primary"
-                  className={`${heroCtaFrame} !bg-artbar-taupe !text-white !shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:!bg-opacity-90 hover:!shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] border-none`}
+                  variant="taupe"
+                  className={`${heroCtaFrame} !shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:!shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)]`}
                 >
                   <span className="min-w-0 truncate">{site.home.hero.ctaSchedule}</span>
                   <ArrowRight size={18} className="ml-1 shrink-0" aria-hidden />
@@ -262,8 +283,9 @@ export const Home: React.FC = () => {
                 <Button
                   type="button"
                   onClick={scrollToPopularThemes}
-                  size="lg"
-                  className={`${heroCtaFrame} border-2 border-white/85 bg-white/10 text-white shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)] backdrop-blur-sm hover:bg-white/18`}
+                  variant="ghost"
+                  size="cta"
+                  className={`${heroCtaFrame} !border-2 !border-white/85 !bg-white/10 !text-white shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)] backdrop-blur-sm hover:!bg-white/18 hover:!text-white focus:!ring-white/40`}
                 >
                   <span className="min-w-0 truncate">{site.home.hero.ctaFindPainting}</span>
                   <ArrowRight size={18} className="ml-1 shrink-0 opacity-90" aria-hidden />
@@ -360,13 +382,15 @@ export const Home: React.FC = () => {
                   ))}
                </div>
                
-               <Button 
+               <Button
+                  type="button"
+                  variant="taupe"
+                  size="cta"
                   onClick={() => router.push('/team-building')}
-                  size="lg"
-                  className="bg-artbar-taupe hover:bg-opacity-90 text-white border-none rounded-full px-12 py-4 shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2"
+                  className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
                >
                   Book Team Building
-                  <ArrowRight size={18} />
+                  <ArrowRight size={18} className="shrink-0" aria-hidden />
                </Button>
             </div>
           </div>
@@ -511,9 +535,11 @@ export const Home: React.FC = () => {
                 {site.home.themes.subtitle}
               </p>
             </div>
-            <Button 
+            <Button
+                variant="taupe"
+                size="cta"
                 onClick={() => window.location.hash = 'schedule'}
-                className="rounded-full px-8 py-2 bg-artbar-taupe text-white hover:bg-opacity-90 border-none w-full md:w-auto text-[10px] md:text-xs font-heading font-bold uppercase tracking-widest h-11 pt-3 shadow-md transition-all hover:scale-105"
+                className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
             >
               {site.home.themes.cta}
             </Button>
@@ -682,17 +708,20 @@ export const Home: React.FC = () => {
                    {site.home.cta.subtitle}
                  </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                 <Button 
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full md:w-auto">
+                 <Button
+                   variant="taupe"
+                   size="cta"
                    onClick={() => window.location.hash = 'schedule'}
-                   className="bg-artbar-taupe text-white hover:bg-opacity-90 border-none px-10 py-4 md:py-5 text-base md:text-lg rounded-full shadow-xl w-full sm:w-auto min-w-[200px] pt-5 pb-4"
+                   className="w-full min-w-0 shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
                    {site.home.cta.btnBook}
                  </Button>
-                 <Button 
+                 <Button
                    onClick={() => router.push('/contact')}
-                   variant="outline"
-                   className="border-white text-white hover:bg-white hover:text-artbar-navy px-10 py-4 md:py-5 text-base md:text-lg rounded-full w-full sm:w-auto min-w-[200px] pt-5 pb-4"
+                   variant="outlineWhite"
+                   size="cta"
+                   className="w-full sm:w-auto sm:min-w-[12.5rem]"
                  >
                    {site.home.cta.btnContact}
                  </Button>

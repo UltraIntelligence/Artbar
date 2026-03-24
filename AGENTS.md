@@ -44,7 +44,7 @@ No test framework is configured.
 - `app/` — route files: `page.tsx` per route, `layout.tsx`, `globals.css`, `not-found.tsx`, `robots.ts`, `sitemap.ts`, and API routes under `app/api/`
 - `views/` — client-side page components (`'use client'`), one per route (e.g. `Home.tsx`, `BlogPost.tsx`)
 - `components/` — shared UI (`Navbar`, `Footer`, `SEO`, `PetSketcher`, `Logo`, etc.)
-- `components/ui/` — primitives (`Button`)
+- `components/ui/` — primitives (`Button` — marketing CTAs use `size="cta"` and `variant` `taupe` / `primary` / `outline` / `outlineWhite`; home hero row uses shared `heroCtaFrame` for three matching pills)
 - `context/` — `ContentContext.tsx` (`'use client'`)
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
@@ -100,3 +100,4 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 - The hero viewport uses a static image from `images.hero.home`; `images.hero.video` and `images.hero.videoMobile` feed the concept/lifestyle block, not the full-screen hero background.
 - `lib/gemini-image-config.ts` holds the default Gemini image model (`gemini-3.1-flash-image-preview`) and related generation options; override the model with `GEMINI_IMAGE_MODEL` when needed.
 - Export `viewport` with `viewportFit: 'cover'` from `app/layout.tsx` so `env(safe-area-inset-*)` works in CSS on notched devices.
+- Home hero background image uses a slow CSS keyframe drift (`hero-bg-drift` in `views/Home.tsx`); it is disabled when the user prefers reduced motion.

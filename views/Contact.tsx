@@ -143,7 +143,12 @@ export const Contact: React.FC = () => {
               </div>
 
               <div className="text-center pt-4">
-                <Button type="submit" size="lg" className="w-full md:w-auto min-w-[200px] bg-artbar-navy text-white hover:bg-opacity-90 shadow-xl shadow-navy-900/10">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="cta"
+                  className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem]"
+                >
                   <span className="flex items-center gap-2">
                     Send Message <Send size={18} />
                   </span>

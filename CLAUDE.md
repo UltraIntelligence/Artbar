@@ -78,6 +78,11 @@ The API key is read server-side in `app/api/generate-sketch/route.ts` via `proce
 
 These are defined in `app/globals.css` under `@theme`, referenced as `text-artbar-navy`, `bg-artbar-taupe`, etc.
 
+### UI components
+
+- **`Button`** (`components/ui/Button.tsx`): Marketing CTAs use `size="cta"` with `variant` (`taupe`, `primary`, `outline`, `outlineWhite`). Use `outlineWhite` on dark bands (e.g. home bottom CTA). The home hero row keeps three actions aligned with shared `heroCtaFrame` classes instead of default `cta` padding alone.
+- **Home hero background:** Full-bleed photo uses a slow CSS drift (`hero-bg-drift`, ~48s, `ease-in-out`, `alternate`); animation is off when `prefers-reduced-motion: reduce`.
+
 ## SEO & Migration
 
 The site was migrated from WordPress (see `migration.md`). The `SEO` component (`components/SEO.tsx`) handles meta tags, OG tags, and JSON-LD structured data. A `vercel.json` with 301 redirects from old WordPress URL patterns is in place.

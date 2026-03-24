@@ -497,13 +497,14 @@ export const ThemeDetail: React.FC = () => {
             {theme.heroSub}
           </p>
           <div className="flex justify-center items-center w-full px-4 sm:px-0 mb-8">
-            <Button 
+            <Button
+                variant="taupe"
+                size="cta"
                 onClick={() => window.location.hash = 'schedule'}
-                size="lg" 
-                className="animate-pulse-soft bg-artbar-taupe hover:bg-opacity-90 text-white border-none text-lg md:text-xl px-10 py-4 md:px-16 md:py-5 h-auto rounded-full shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] w-full sm:w-auto max-w-[320px] sm:max-w-none pt-5 pb-4 flex items-center justify-center transition-all duration-300 transform"
+                className="animate-pulse-soft w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
               View Schedule
-              <ArrowRight size={20} className="ml-2" />
+              <ArrowRight size={18} className="shrink-0" aria-hidden />
             </Button>
           </div>
         </div>
@@ -670,9 +671,11 @@ export const ThemeDetail: React.FC = () => {
               {theme.ctaSub}
             </p>
             <div className="flex justify-center items-center w-full px-4 sm:px-0">
-                <Button 
+                <Button
+                    variant="taupe"
+                    size="cta"
                     onClick={() => window.location.hash = 'schedule'}
-                    className="bg-artbar-taupe hover:bg-white hover:text-artbar-navy text-white border-none px-16 py-6 rounded-full text-xl font-heading font-bold pt-6 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] transition-all hover:scale-105 active:scale-95"
+                    className="shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all hover:scale-105 hover:bg-white hover:text-artbar-navy hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] active:scale-95"
                 >
                 View Upcoming Schedule
                 </Button>
@@ -691,10 +694,11 @@ export const ThemeDetail: React.FC = () => {
                 From fluid art to impressionist gardens, find your next creative escape at Artbar Tokyo.
               </p>
             </div>
-            <Button 
+            <Button
                 onClick={() => router.push('/')}
                 variant="outline"
-                className="rounded-full px-10 py-2 border-artbar-navy text-artbar-navy hover:bg-artbar-navy hover:text-white w-full md:w-auto text-xs font-heading font-bold uppercase tracking-widest h-12 pt-3"
+                size="cta"
+                className="w-full uppercase tracking-widest text-xs md:w-auto"
             >
               All Theme Categories
             </Button>

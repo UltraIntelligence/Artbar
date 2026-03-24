@@ -84,7 +84,11 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <Button className="w-full bg-artbar-navy text-white py-5 text-lg rounded-2xl hover:scale-[1.01] transition-transform shadow-lg shadow-artbar-navy/20">
+                  <Button
+                    variant="primary"
+                    size="cta"
+                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
+                  >
                     {privateParties.pricing.adult.cta}
                   </Button>
                 </div>
@@ -132,7 +136,11 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <Button variant="outline" className="w-full py-5 text-lg rounded-2xl border-2 border-artbar-navy bg-transparent hover:bg-artbar-navy hover:text-white">
+                  <Button
+                    variant="outline"
+                    size="cta"
+                    className="w-full rounded-2xl border-2 border-artbar-navy bg-transparent text-base hover:bg-artbar-navy hover:text-white"
+                  >
                     {privateParties.pricing.kids.cta}
                   </Button>
                 </div>
