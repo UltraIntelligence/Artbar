@@ -332,9 +332,17 @@ export const Home: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-heading font-heavy text-base md:text-lg mb-3 shadow-inner">
+                    {testimonial.userImage ? (
+                      <img
+                        src={testimonial.userImage}
+                        alt=""
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover mb-3 shadow-inner ring-2 ring-white"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-heading font-heavy text-base md:text-lg mb-3 shadow-inner">
                         {testimonial.author.charAt(0)}
-                    </div>
+                      </div>
+                    )}
                     <p className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-[0.15em]">{testimonial.author}</p>
                     {testimonial.role && <p className="text-[9px] md:text-[10px] text-artbar-taupe font-bold uppercase tracking-[0.1em] mt-0.5">{testimonial.role}</p>}
                 </div>
@@ -629,9 +637,17 @@ export const Home: React.FC = () => {
                    "{item.text}"
                  </p>
                  <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-bold text-sm md:text-lg">
+                    {item.userImage ? (
+                      <img
+                        src={item.userImage}
+                        alt=""
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shrink-0 ring-2 ring-artbar-bg"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-bold text-sm md:text-lg shrink-0">
                         {item.author.charAt(0)}
-                    </div>
+                      </div>
+                    )}
                     <div>
                         <p className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-wide">{item.author}</p>
                         {item.role && <p className="text-[9px] md:text-xs text-artbar-taupe font-bold uppercase tracking-wider">{item.role}</p>}

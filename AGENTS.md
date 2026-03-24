@@ -14,6 +14,8 @@ Artbar Tokyo (artbar.co.jp) — a bilingual (EN/JP) marketing site for a paint-a
 npm run dev      # Next.js dev server on http://localhost:3000
 npm run build    # Production build
 npm run start    # Start production server
+npm run generate:images      # Gemini marketing pack → public/media/generated/ (needs GEMINI_API_KEY)
+npm run generate:images:dry  # List slots without calling the API
 ```
 
 No test framework is configured.

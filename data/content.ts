@@ -134,7 +134,11 @@ export const defaultContent: ContentData = {
       testimonials: {
         title: "Hear from our creative community",
         items: [
-          { text: "Very fun and relaxing! It completely took my mind off my extremely busy days in Tokyo. Ami, our instructor, was easy to follow, and when I needed help she was right there for me.", author: "Ryan Stephen Alldridge" },
+          {
+            text: "Very fun and relaxing! It completely took my mind off my extremely busy days in Tokyo. Ami, our instructor, was easy to follow, and when I needed help she was right there for me.",
+            author: "Ryan Stephen Alldridge",
+            userImage: GI.testimonials.ryan
+          },
           { text: "At this friendly art studio, the wine is just liquid motivation to let your creative juice flow. You don’t need to be an artist to get stuck in!", author: "TimeOut Tokyo", role: "Media" },
           { text: "A wonderful experience! I went solo and made new friends. The atmosphere is so welcoming and the wine definitely helps with creativity!", author: "Sarah Jenkins" }
         ]
@@ -378,7 +382,7 @@ export const defaultContent: ContentData = {
         title: "東京で一番愛されている",
         titleHighlight: "ペイント＆シップスタジオ",
         subtitle:
-          "初心者歓迎。\nアクセス便利。\n忘れられない体験。",
+          "初心者歓迎。東京各地で開催中。\nやってみると、意外と簡単。楽しさは、想像以上。",
         ctaSchedule: "セッションを予約する",
         ctaPrivate: "プライベートイベント",
         ctaLineChat: "LINEで相談する",
@@ -424,7 +428,11 @@ export const defaultContent: ContentData = {
       testimonials: {
         title: "参加者の声",
         items: [
-          { text: "とても楽しくてリラックスできました！東京での多忙な日々を完全に忘れることができました。インストラクターのAmiさんは分かりやすく、助けが必要なときはすぐに来てくれました。", author: "Ryan Stephen Alldridge" },
+          {
+            text: "とても楽しくてリラックスできました！東京での多忙な日々を完全に忘れることができました。インストラクターのAmiさんは分かりやすく、助けが必要なときはすぐに来てくれました。",
+            author: "Ryan Stephen Alldridge",
+            userImage: GI.testimonials.ryan
+          },
           { text: "このフレンドリーなアートスタジオでは、ワインは創造力を溢れさせるための液体のようなモチベーションです。アーティストである必要はありません！", author: "TimeOut Tokyo", role: "Media" },
           { text: "素晴らしい体験でした！一人で参加して新しい友達ができました。雰囲気はとても歓迎的で、ワインは間違いなく創造性を助けてくれます！", author: "Sarah Jenkins" }
         ]
