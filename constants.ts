@@ -23,6 +23,9 @@ export const LINE_BRAND_ICON_SRC = '/media/LINE_Brand_icon.png';
 /** Tokyo studio inbox (footer mail, Paint Your Pet sketch “email for class”). */
 export const ARTBAR_TOKYO_EMAIL = 'tokyo@artbar.co.jp';
 
+/** Full promo / lifestyle video on YouTube — home concept block “play” opens this in a new tab. */
+export const CONCEPT_BLOCK_YOUTUBE_URL = 'https://www.youtube.com/watch?v=wLjhqJ8v_Bs';
+
 export const SITE_IMAGES = {
   hero: {
     home: HERO_HOME_FALLBACK,
@@ -65,7 +68,7 @@ export const POPULAR_THEMES = [
   { title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
   { title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
   { title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
-  { title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
+  { title: "Texture Painting", slug: "texture-art", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
   { title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
 ];
 

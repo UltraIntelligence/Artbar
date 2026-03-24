@@ -35,7 +35,7 @@ export const defaultContent: ContentData = {
       home: SITE_IMAGES.hero.home,
       teamBuilding: SITE_IMAGES.hero.teamBuilding,
       video: SITE_IMAGES.hero.video,
-      videoMobile: SITE_IMAGES.hero.videoMobile
+      videoMobile: SITE_IMAGES.hero.videoMobile,
     },
     concept: SITE_IMAGES.concept,
     features: SITE_IMAGES.features,
@@ -95,7 +95,7 @@ export const defaultContent: ContentData = {
         ctaFindPainting: "Find Your Painting",
         ratingScore: "4.8",
         ratingSource: "Average rating",
-        guestsNumber: "53,600",
+        guestsNumber: "100,457",
         guestsSuffix: "guests and counting"
       },
       concept: {
@@ -103,7 +103,7 @@ export const defaultContent: ContentData = {
         title: "Relax, Sip, Create, Connect.",
         p1: "Artbar is more than an art class—it's a social experience. Step into our lounge-style studio, grab a glass of wine, and let the stress melt away.",
         ratingLabel: "Average Rating",
-        guestsCount: "53,600",
+        guestsCount: "100,457",
         guestsLabel: "Happy guests across Tokyo studios"
       },
       howItWorks: {
@@ -389,7 +389,7 @@ export const defaultContent: ContentData = {
         ctaFindPainting: "描きたい絵を探す",
         ratingScore: "4.8",
         ratingSource: "平均評価",
-        guestsNumber: "53,600",
+        guestsNumber: "100,457",
         guestsSuffix: "名のゲスト（増加中）"
       },
       concept: {
@@ -397,8 +397,8 @@ export const defaultContent: ContentData = {
         title: "リラックス、ドリンク、クリエイト、コネクト。",
         p1: "Artbarは、単なる絵画教室ではありません。都会の喧騒から離れ、ワインやドリンクと共に感性を解き放つ「大人のための隠れ家」です。",
         ratingLabel: "平均評価",
-        guestsCount: "53,600",
-        guestsLabel: "累計53,600名以上のお客様に選ばれています"
+        guestsCount: "100,457",
+        guestsLabel: "累計{{count}}名以上のお客様に選ばれています"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",

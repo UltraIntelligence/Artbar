@@ -70,13 +70,13 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
       id: 'feature-all-inclusive',
       publicUrl: GI.featureAllInclusive,
       prompt:
-        'Square 1:1 editorial flat lay. Art supplies neatly arranged on a paint-splattered wooden studio table — stretched canvas, assorted paintbrushes, acrylic paint palette, folded black apron, red plastic paint cups. Warm overhead studio lighting, no people. Clean and premium, TimeOut Tokyo editorial style. No overlaid text, no watermarks, no brand logos in frame.',
+        'Square 1:1 editorial flat lay. Art supplies neatly arranged on a bright white studio table surface heavily flecked with colorful acrylic paint splatter — white tabletop clearly visible, not wood or plywood. Stretched canvas, assorted paintbrushes, acrylic paint palette, folded black apron, red plastic paint cups. Warm overhead studio lighting, no people. Clean and premium, TimeOut Tokyo editorial style. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'feature-free-flow-drinks',
       publicUrl: GI.featureFreeFlowDrinks,
       prompt:
-        'Square 1:1 editorial close-up. Two wine glasses, a sparkling water, and small plates of light snacks on a paint-splattered wooden studio table. Wooden tripod easels and canvases softly blurred in background, warm bokeh string fairy lights overhead. Relaxed and social Tokyo studio atmosphere, rich warm tones, shallow depth of field. No overlaid text, no watermarks, no brand logos in frame.',
+        'Square 1:1 editorial close-up. Tokyo paint-and-sip studio refreshment spread on a white paint-flecked table: coffee, Japanese green tea in cups or small teapot, glasses of white wine and red wine, sparkling water in bottle or glass; light finger snacks only — cookies, pretzels, potato chips, Japanese senbei rice crackers in small bowls. No cheese boards, no olives, no charcuterie. Wooden easels and canvases softly blurred in background, warm bokeh string fairy lights overhead. Relaxed social atmosphere, shallow depth of field. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'feature-bilingual',

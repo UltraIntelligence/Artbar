@@ -127,7 +127,7 @@ export interface SiteContent {
       title: string;
       subtitle: string;
       cta: string;
-      items: { title: string; desc: string; image: string }[];
+      items: { title: string; desc: string; image: string; slug?: string }[];
     };
     features: {
       title: string;

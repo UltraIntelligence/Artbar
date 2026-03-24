@@ -1,10 +1,11 @@
 'use client';
 
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
+import { PopularThemesGrid } from '../components/PopularThemesGrid';
+import { pickDiscoveryThemes } from '../lib/theme-slugs';
 import { Button } from '../components/ui/Button';
 import { 
   MapPin, Sparkles, Paintbrush, Wind, Wine, Heart, 
@@ -450,30 +451,27 @@ const THEME_CONFIG: Record<string, ThemeContent> = {
   }
 };
 
-const DISCOVERY_CATEGORIES = [
-  { title: "Paint Pouring", slug: "paint-pouring", desc: "Fluid art & mesmerizing cells" },
-  { title: "Van Gogh", slug: "van-gogh", desc: "Starry nights & sunflower fields" },
-  { title: "Monet", slug: "monet", desc: "Impressionist gardens & water lilies" },
-  { title: "Japan Inspired", slug: "japan-inspired", desc: "Traditional Japanese beauty" },
-  { title: "Paint Your Pet", slug: "paint-your-pet", desc: "Immortalize your furry friend" },
-  { title: "Texture Art", slug: "texture-art", desc: "Sculptural & 3D canvases" },
-  { title: "Alcohol Ink", slug: "alcohol-ink", desc: "Ethereal & dreamy abstract art" },
-  { title: "Picasso", slug: "picasso", desc: "Cubist portraits & bold expressions" },
-  { title: "Renoir", slug: "renoir", desc: "Soft light & romantic scenes" },
-  { title: "Matisse", slug: "matisse", desc: "Vibrant colors & expressive forms" },
-  { title: "Kids!", slug: "kids", desc: "Fun & simple designs for young artists" },
-  { title: "Paint Your Idol", slug: "paint-your-idol", desc: "Celebrate your favorite icon" }
-];
+/** Legacy or marketing URLs that should load the same theme as another slug. */
+const THEME_SLUG_ALIASES: Record<string, string> = {
+  'texture-painting': 'texture-art',
+};
+
+function resolveThemeContentSlug(urlSlug: string): string {
+  return THEME_SLUG_ALIASES[urlSlug] || urlSlug;
+}
 
 export const ThemeDetail: React.FC = () => {
   const params = useParams();
-  const slug = params.slug as string;
+  const rawSlug = (params.slug as string) || '';
+  const resolvedSlug = resolveThemeContentSlug(rawSlug);
   const router = useRouter();
-  const theme = THEME_CONFIG[slug || ''] || THEME_CONFIG['japan-inspired'];
+  const { site } = useContent();
+  const theme = THEME_CONFIG[resolvedSlug] || THEME_CONFIG['japan-inspired'];
 
-  const otherThemes = DISCOVERY_CATEGORIES
-    .filter(t => t.slug !== slug)
-    .slice(0, 4);
+  const discoveryThemes = useMemo(
+    () => pickDiscoveryThemes(resolvedSlug, site.home.themes.items, 4),
+    [resolvedSlug, site.home.themes.items]
+  );
 
   return (
     <div className="bg-artbar-bg min-h-screen">
@@ -501,7 +499,7 @@ export const ThemeDetail: React.FC = () => {
                 variant="taupe"
                 size="cta"
                 onClick={() => window.location.hash = 'schedule'}
-                className="animate-pulse-soft w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
+                className="animate-pulse w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
               View Schedule
               <ArrowRight size={18} className="shrink-0" aria-hidden />
@@ -695,7 +693,7 @@ export const ThemeDetail: React.FC = () => {
               </p>
             </div>
             <Button
-                onClick={() => router.push('/')}
+                onClick={() => router.push('/#popular-themes')}
                 variant="outline"
                 size="cta"
                 className="w-full uppercase tracking-widest text-xs md:w-auto"
@@ -704,24 +702,7 @@ export const ThemeDetail: React.FC = () => {
             </Button>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            {otherThemes.map((t, i) => (
-              <Link key={i} href={`/themes/${t.slug}`} className="group relative aspect-[4/5] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500">
-                <img 
-                  src={getPh(800, 1000, t.title)} 
-                  alt={t.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy via-artbar-navy/40 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full">
-                  <h3 className="text-xl md:text-3xl font-heading font-bold text-white mb-2 leading-tight tracking-tight">{t.title}</h3>
-                  <p className="text-white/80 text-[10px] md:text-sm font-light leading-relaxed mb-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
-                    {t.desc}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <PopularThemesGrid items={discoveryThemes} />
         </div>
       </section>
     </div>

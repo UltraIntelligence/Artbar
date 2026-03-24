@@ -14,6 +14,7 @@ const THEME_TITLES: Record<string, string> = {
   'matisse': 'Matisse Modern Art Class Tokyo | Paint and Sip Artbar',
   'kids': 'Kids Art Classes Tokyo | Children\'s Painting Workshops Artbar',
   'texture-art': 'Texture Painting Classes Tokyo | Sculptural Art Artbar',
+  'texture-painting': 'Texture Painting Classes Tokyo | Sculptural Art Artbar',
   'paint-your-pet': 'Paint Your Pet Tokyo | Pet Portrait Classes Artbar',
   'paint-your-idol': 'Paint Your Idol Tokyo | Celebrity Portrait Classes Artbar',
 };

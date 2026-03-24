@@ -678,6 +678,9 @@ export const Admin: React.FC = () => {
                 <BilingualInput localContent={localContent} updateField={updateField} label="Rating score (e.g. 4.8)" path={['home', 'hero', 'ratingScore']} />
                 <BilingualInput localContent={localContent} updateField={updateField} label="Rating label (e.g. Average rating / 平均評価)" path={['home', 'hero', 'ratingSource']} />
             </div>
+            <p className="text-xs text-artbar-gray mt-2 mb-1">
+              Guest totals on the home page are calculated automatically (100,457 on 2026-03-24 JST, then +45 per Tokyo calendar day). Suffix lines below still apply; the number fields are reference only.
+            </p>
             <div className="grid grid-cols-2 gap-4 mt-4">
                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests number" path={['home', 'hero', 'guestsNumber']} />
                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests label (e.g. guests and counting)" path={['home', 'hero', 'guestsSuffix']} />
@@ -698,6 +701,9 @@ export const Admin: React.FC = () => {
                  <BilingualInput localContent={localContent} updateField={updateField} label="Rating Label" path={['home', 'concept', 'ratingLabel']} />
                  <BilingualInput localContent={localContent} updateField={updateField} label="Guests count (badge)" path={['home', 'concept', 'guestsCount']} />
             </div>
+            <p className="text-xs text-artbar-gray mt-2 mb-1">
+              JP headline: use <code className="bg-gray-100 px-1 rounded">{'{{count}}'}</code> where the live total should appear (e.g. 累計{'{{count}}'}名以上…).
+            </p>
             <div className="grid grid-cols-2 gap-4 mt-4">
                  <BilingualInput localContent={localContent} updateField={updateField} label="Guests headline" path={['home', 'concept', 'guestsLabel']} />
             </div>

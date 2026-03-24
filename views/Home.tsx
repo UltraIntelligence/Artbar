@@ -20,9 +20,9 @@ export const Home: React.FC = () => {
     document.getElementById('popular-themes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  /** Hero primary actions: clean pill buttons, natural sizing. */
+  /** Hero primary actions: clean pill buttons, natural sizing. `py-0` overrides Button default padding so label + icon stay vertically centered in fixed height. */
   const heroCtaFrame =
-    'inline-flex items-center justify-center gap-2.5 rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
+    'inline-flex items-center justify-center gap-2.5 rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] py-0 text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide leading-tight transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -187,11 +187,9 @@ export const Home: React.FC = () => {
               className="hero-bg-motion h-full w-full min-h-full min-w-full object-cover object-[center_19%]"
             />
           </div>
-          {/* Neutral darkening — top-down for readability (no color cast on the photo) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/55 from-0% via-black/22 via-[45%] to-black/12 to-[100%] pointer-events-none" />
-          {/* Brand navy — top-down; clears toward the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-b from-artbar-navy from-0% via-artbar-navy/50 via-[58%] to-transparent to-[96%] opacity-75 pointer-events-none" />
-          
+          {/* Brand navy wash — matches site primary (e.g. artbar-navy) */}
+          <div className="absolute inset-0 bg-artbar-navy/82 pointer-events-none" />
+
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
 

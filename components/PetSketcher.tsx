@@ -10,12 +10,14 @@ export const PetSketcher: React.FC = () => {
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   /** Used in the “Email for class” subject line (optional). */
+  const [yourNameForEmail, setYourNameForEmail] = useState('');
   const [petNameForEmail, setPetNameForEmail] = useState('');
   const [classDateForEmail, setClassDateForEmail] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const buildSketchEmailSubject = () => {
-    const name = petNameForEmail.trim();
+    const owner = yourNameForEmail.trim();
+    const pet = petNameForEmail.trim();
     const dateRaw = classDateForEmail.trim();
     let datePart = dateRaw;
     if (/^\d{4}-\d{2}-\d{2}$/.test(dateRaw)) {
@@ -30,9 +32,10 @@ export const PetSketcher: React.FC = () => {
       }
     }
     let subject = '[My Pet!]';
-    if (name) subject += ` [${name}]`;
+    if (pet) subject += ` [${pet}]`;
     if (datePart) subject += ` {${datePart}}`;
-    if (!name && !dateRaw) subject += ' Paint Your Pet class';
+    if (owner) subject = `[${owner}] ${subject}`;
+    if (!owner && !pet && !dateRaw) subject += ' Paint Your Pet class';
     return subject;
   };
 
@@ -76,6 +79,7 @@ export const PetSketcher: React.FC = () => {
             const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.85);
             setImage(jpegDataUrl);
             setGeneratedImage(null);
+            setYourNameForEmail('');
             setPetNameForEmail('');
             setClassDateForEmail('');
           }
@@ -150,9 +154,35 @@ export const PetSketcher: React.FC = () => {
     link.click();
     link.remove();
 
+    const owner = yourNameForEmail.trim();
+    const pet = petNameForEmail.trim();
+    const dateRaw = classDateForEmail.trim();
+    let dateHuman = '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateRaw)) {
+      const d = new Date(`${dateRaw}T12:00:00`);
+      if (!Number.isNaN(d.getTime())) {
+        dateHuman = d.toLocaleDateString(undefined, {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+        });
+      }
+    }
+    const who = [
+      owner && `My name: ${owner}`,
+      pet && `Pet: ${pet}`,
+      dateHuman && `Class date: ${dateHuman}`,
+    ]
+      .filter(Boolean)
+      .join('\n');
     const body = `Hi Artbar team,
 
-I'm planning to join a Paint Your Pet session and I've attached my AI sketch reference.\n\nIf your mail app doesn’t let you attach automatically, please add the file "${fileName}" from your Downloads (or Files) folder — I just saved it.\n\nThank you!`;
+I'm planning to join a Paint Your Pet session and I've attached my AI sketch reference.${who ? `\n\n${who}` : ''}
+
+If your mail app doesn’t let you attach automatically, please add the file "${fileName}" from your Downloads (or Files) folder — I just saved it.
+
+Thank you!`;
 
     const mailto = `mailto:${ARTBAR_TOKYO_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.setTimeout(() => {
@@ -178,7 +208,7 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
           <div 
             onClick={() => fileInputRef.current?.click()}
             className={`
-              h-80 border-4 border-dashed rounded-[2rem] flex flex-col items-center justify-center cursor-pointer transition-all relative overflow-hidden group
+              min-h-[16rem] border-4 border-dashed rounded-[2rem] flex flex-col items-center justify-center cursor-pointer transition-all relative overflow-hidden group
               ${image ? 'border-artbar-taupe' : 'border-gray-200 hover:border-artbar-taupe/50 hover:bg-gray-50'}
             `}
           >
@@ -186,7 +216,7 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
               <img
                 src={image}
                 alt="Original Pet"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
               />
             ) : (
               <div className="text-center p-6 text-gray-400 group-hover:text-artbar-navy transition-colors">
@@ -220,15 +250,15 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
 
         {/* Result Side */}
         <div className="flex flex-col gap-6">
-           <div className="h-80 border border-gray-200 rounded-[2rem] bg-gray-50 flex items-center justify-center relative overflow-hidden shadow-inner">
+           <div className="min-h-[16rem] rounded-[2rem] border border-gray-200 bg-gray-50 shadow-inner overflow-hidden flex items-center justify-center">
               {generatedImage ? (
                  <img
                    src={generatedImage}
                    alt="AI Sketch"
-                   className="absolute inset-0 h-full w-full object-cover"
+                   className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
                  />
               ) : (
-                 <div className="text-center text-gray-300">
+                 <div className="text-center text-gray-300 px-6 py-12">
                     <ImageIcon size={48} className="mx-auto mb-4 opacity-50" />
                     <p className="font-heading font-bold uppercase tracking-widest text-xs">Sketch will appear here</p>
                  </div>
@@ -236,14 +266,47 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
            </div>
 
            {generatedImage && (
-             <div className="flex flex-col gap-4">
+             <div className="flex flex-col gap-5">
+                <a
+                  href={generatedImage}
+                  download="artbar-pet-sketch.png"
+                  className="inline-flex h-11 w-full min-w-0 items-center justify-center gap-2 rounded-full border-2 border-artbar-navy bg-white px-4 text-sm font-heading font-bold tracking-wide text-artbar-navy transition-all hover:bg-gray-50 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-artbar-navy focus:ring-offset-2"
+                >
+                  <Download size={16} className="shrink-0" aria-hidden />
+                  Save image
+                </a>
+
                  <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200 text-sm flex items-start gap-3">
                     <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
                     <div>
                     <strong>Look good?</strong> This is the style we aim for in class!
                     </div>
                 </div>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+
+                <div className="rounded-2xl border border-artbar-navy/10 bg-artbar-bg/80 p-5 md:p-6 space-y-4">
+                  <div>
+                    <h3 className="font-heading font-heavy text-artbar-navy text-lg mb-2">
+                      Use this sketch for your Paint Your Pet class
+                    </h3>
+                    <p className="text-sm text-artbar-gray leading-relaxed">
+                      When you email us, attach this sketch and include your name, your pet&apos;s name, and your class date so we can match your booking. Fill in the fields below—the subject line updates automatically.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div className="min-w-0">
+                    <label htmlFor="pet-sketch-email-your-name" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
+                      Your name <span className="font-normal normal-case">(optional)</span>
+                    </label>
+                    <input
+                      id="pet-sketch-email-your-name"
+                      type="text"
+                      value={yourNameForEmail}
+                      onChange={(e) => setYourNameForEmail(e.target.value)}
+                      placeholder="e.g. Alex Tanaka"
+                      className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
+                      autoComplete="name"
+                    />
+                  </div>
                   <div className="min-w-0">
                     <label htmlFor="pet-sketch-email-name" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
                       Pet name <span className="font-normal normal-case">(optional)</span>
@@ -272,29 +335,21 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
                   </div>
                 </div>
                 <p className="text-xs text-gray-500">
-                  Email subject: <span className="font-medium text-artbar-navy">{buildSketchEmailSubject()}</span>
+                  Email subject preview: <span className="font-medium text-artbar-navy">{buildSketchEmailSubject()}</span>
                 </p>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-3">
-                  <a
-                    href={generatedImage}
-                    download="artbar-pet-sketch.png"
-                    className="inline-flex h-10 w-full min-w-0 items-center justify-center gap-2 rounded-full border-2 border-artbar-navy bg-white px-4 text-sm font-heading font-bold tracking-wide text-artbar-navy transition-all hover:bg-gray-50 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-artbar-navy focus:ring-offset-2 whitespace-nowrap"
-                  >
-                    <Download size={16} className="shrink-0" aria-hidden />
-                    Save image
-                  </a>
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={() => void emailSketchForClass()}
-                    className="h-10 w-full min-w-0 gap-2 border-2 border-gray-300 px-4 py-0 text-sm text-artbar-gray hover:bg-gray-50"
+                    className="h-11 w-full gap-2 border-2 border-artbar-navy px-4 py-0 text-sm font-heading font-bold text-artbar-navy hover:bg-white"
                     title="Opens email to Artbar. On phones you can often attach the sketch automatically; on desktop you may need to attach the saved file."
                   >
                     <Mail size={16} className="shrink-0" aria-hidden />
                     Email for class
                   </Button>
                 </div>
+
                 <p className="text-center text-xs text-gray-500">
                   Sends to {ARTBAR_TOKYO_EMAIL}. On phones, share may attach the sketch; on computers, we save the file and open your mail — attach it if needed.
                 </p>
@@ -304,6 +359,7 @@ I'm planning to join a Paint Your Pet session and I've attached my AI sketch ref
                   onClick={() => {
                     setImage(null);
                     setGeneratedImage(null);
+                    setYourNameForEmail('');
                     setPetNameForEmail('');
                     setClassDateForEmail('');
                   }}

@@ -92,7 +92,7 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 - When testimonial or hero-adjacent controls overlap names or labels, adjust vertical padding, min-height, or control offset first; do not change horizontal section margins unless the user asks for it.
 - For hero CTAs and social-proof pills, use shared dimensions and centered content; when matching control size to siblings, constrain the pill or button frame (min-height, padding) first rather than shrinking prominent brand icons or key marks; keep sibling hero CTAs the same size and use the same animation on all of them when any one animates. Keep primary marketing buttons cohesive across pages so key CTAs are not awkwardly oversized or split across many lines on small screens.
 - For headline social proof (guest counts, ratings), prefer exact figures the user provides over rounded shorthand when credibility matters.
-- Full-bleed heroes under a fixed navbar need explicit top space (safe-area plus nav offset) or start-aligned content on small viewports; vertical centering alone can push the headline into the nav.
+- Full-bleed heroes under a fixed navbar need explicit top space (safe-area plus nav offset) or start-aligned content on small viewports; vertical centering alone can push the headline into the nav. On the home hero (and similar), keep the navbar transparent until the user scrolls; avoid a solid colored bar on first paint.
 - On touch viewports, show explanatory copy that desktop reveals on hover (for example theme card subtitles under titles).
 
 ## Learned Workspace Facts
@@ -108,3 +108,4 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 - Export `viewport` with `viewportFit: 'cover'` from `app/layout.tsx` so `env(safe-area-inset-*)` works in CSS on notched devices.
 - `scripts/image-manifest.ts` entries can set `needsRevision` / `reviewNotes`; `npm run generate:images:revision` regenerates only those slots after prompts are updated.
 - Theme detail pages use `THEME_CONFIG[slug]` in `views/ThemeDetail.tsx`; unknown slugs fall back to the Japan-Inspired entry, so slugs derived from home theme titles must match config keys (watch for mismatches such as title wording vs long-form keys).
+- Home hero and concept guest totals are computed in `lib/guest-count.ts` from a Tokyo (JST) anchor date, base count, and daily increment; `data/content.ts` guest number strings are reference and admin copy. Japanese concept headlines can use `{{count}}` for the live formatted total.
