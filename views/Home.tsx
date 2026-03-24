@@ -233,9 +233,9 @@ export const Home: React.FC = () => {
               <button
                 type="button"
                 onClick={scrollToPopularThemes}
-                className="animate-sheen inline-flex items-center gap-1.5 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
               >
-                {site.home.hero.ctaFindPainting}
+                <span className="animate-sheen">{site.home.hero.ctaFindPainting}</span>
                 <ArrowRight size={14} className="text-white/50" aria-hidden />
               </button>
             </div>
