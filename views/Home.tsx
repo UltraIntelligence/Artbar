@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
 
   /** Hero primary actions: clean pill buttons, natural sizing. */
   const heroCtaFrame =
-    'inline-flex items-center justify-center gap-2.5 rounded-full px-6 sm:px-8 md:px-10 h-[2.75rem] sm:h-[3rem] md:h-[3.5rem] text-sm sm:text-base md:text-lg font-heading font-bold tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
+    'inline-flex items-center justify-center gap-2.5 rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -185,26 +185,26 @@ export const Home: React.FC = () => {
               </h1>
 
               {/* Subtitle — larger */}
-              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-sm sm:text-base md:text-xl lg:text-[1.375rem] px-2">
+              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2">
                 {site.home.hero.subtitle}
               </h2>
 
               {/* Inline proof line */}
-              <div className="flex items-center justify-center gap-2 md:gap-3 pt-1 md:pt-2 text-white/70">
+              <div className="flex items-center justify-center gap-2.5 md:gap-3.5 pt-1 md:pt-2 text-white/70">
                 <div className="flex gap-0.5 text-yellow-400">
                   {[0, 1, 2, 3, 4].map((i) => (
                     <Star
                       key={i}
-                      className="animate-star h-3 w-3 md:h-3.5 md:w-3.5"
+                      className="animate-star h-4 w-4 md:h-5 md:w-5"
                       style={{ animationDelay: `${600 + i * 100}ms` }}
                       fill="currentColor"
                       aria-hidden
                     />
                   ))}
                 </div>
-                <span className="font-heading font-heavy text-white text-sm md:text-base tabular-nums">{site.home.hero.ratingScore}</span>
-                <span className="text-white/40">·</span>
-                <span className="font-heading text-sm md:text-base text-white/70 tracking-wide">{site.home.hero.guestsNumber}+ {site.home.hero.guestsSuffix}</span>
+                <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
+                <span className="text-white/40 text-lg">·</span>
+                <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{site.home.hero.guestsNumber}+ {site.home.hero.guestsSuffix}</span>
               </div>
 
               {/* Primary CTAs */}
@@ -233,7 +233,7 @@ export const Home: React.FC = () => {
               <button
                 type="button"
                 onClick={scrollToPopularThemes}
-                className="inline-flex items-center gap-1.5 font-heading text-sm md:text-base text-white/70 tracking-wide hover:text-white transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
               >
                 {site.home.hero.ctaFindPainting}
                 <ArrowRight size={14} className="text-white/50" aria-hidden />
