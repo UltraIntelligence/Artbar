@@ -178,19 +178,8 @@ export const Home: React.FC = () => {
                 {site.home.hero.badge}
               </span>
 
-              {/* H1 */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
-                <span className={`${theme.heroTitle} block text-white leading-[0.92] md:leading-[0.94]`}>{site.home.hero.title}</span>
-                <span className={`${theme.heroTitle} block text-artbar-taupe leading-[0.92] md:leading-[0.94]`}>{site.home.hero.titleHighlight}</span>
-              </h1>
-
-              {/* Subtitle — larger */}
-              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2">
-                {site.home.hero.subtitle}
-              </h2>
-
-              {/* Inline proof line */}
-              <div className="flex items-center justify-center gap-2.5 md:gap-3.5 pt-1 md:pt-2 text-white/70">
+              {/* Proof line — trust primer above headline */}
+              <div className="flex items-center justify-center gap-2.5 md:gap-3.5 text-white/70">
                 <div className="flex gap-0.5 text-yellow-400">
                   {[0, 1, 2, 3, 4].map((i) => (
                     <Star
@@ -206,6 +195,17 @@ export const Home: React.FC = () => {
                 <span className="text-white/40 text-lg">·</span>
                 <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{site.home.hero.guestsNumber}+ {site.home.hero.guestsSuffix}</span>
               </div>
+
+              {/* H1 */}
+              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
+                <span className={`${theme.heroTitle} block text-white leading-[0.92] md:leading-[0.94]`}>{site.home.hero.title}</span>
+                <span className={`${theme.heroTitle} block text-artbar-taupe leading-[0.92] md:leading-[0.94]`}>{site.home.hero.titleHighlight}</span>
+              </h1>
+
+              {/* Subtitle */}
+              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2">
+                {site.home.hero.subtitle}
+              </h2>
 
               {/* Primary CTAs */}
               <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-3 md:gap-4 pt-2 md:pt-4">
