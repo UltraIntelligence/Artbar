@@ -85,6 +85,7 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 ## Learned User Preferences
 
 - When testimonial or hero-adjacent controls overlap names or labels, adjust vertical padding, min-height, or control offset first; do not change horizontal section margins unless the user asks for it.
+- For hero CTAs and social-proof pills, use shared dimensions and centered content; when matching control size to siblings, constrain the pill (min-height, padding) first rather than shrinking prominent brand icons or key marks.
 
 ## Learned Workspace Facts
 
@@ -93,3 +94,5 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 - Theme or admin-injected font stacks must quote multi-word family names in CSS custom properties so the intended face applies.
 - Assets loaded by URL must live under `public/`; files only in a repo-root folder such as `media/` are not served by Next.js.
 - localStorage key `artbar_content_v5` can keep an empty `images.hero.video` from older saves and block new defaults; admin reset or clearing that key applies updated hero media URLs.
+- `next.config.ts` may set `outputFileTracingRoot` to this project root so Next does not pick a wrong workspace root when another lockfile exists on the machine (e.g. in the home directory).
+- The hero viewport uses a static image from `images.hero.home` (defaults under `public/media`); `images.hero.video` and `images.hero.videoMobile` are used for the concept/lifestyle media block, not as the full-screen hero background.

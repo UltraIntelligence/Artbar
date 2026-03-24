@@ -93,20 +93,26 @@ export const defaultContent: ContentData = {
     home: {
       hero: {
         badge: "CELEBRATING OUR 10TH ANNIVERSARY",
-        title: "Japan's First",
+        title: "Tokyo's Most Loved",
         titleHighlight: "Paint & Sip Studio",
-        subtitle: "Beginner friendly classes centrally located across Tokyo.",
-        ctaSchedule: "View Schedule",
+        subtitle:
+          "Beginner friendly classes across Tokyo.\nEasier than you think. More fun than you expect.",
+        ctaSchedule: "Book Your Session",
         ctaPrivate: "Private Events",
-        rating: "Google 4.8",
-        guests: "50k+ Guests"
+        ctaLineChat: "Chat With Us",
+        ctaFindPainting: "Find Your Painting",
+        ratingScore: "4.8",
+        ratingSource: "rating",
+        guestsNumber: "53,600",
+        guestsSuffix: "guests"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
         title: "Relax, Sip, Create, Connect.",
         p1: "Artbar is more than an art class—it's a social experience. Step into our lounge-style studio, grab a glass of wine, and let the stress melt away.",
         ratingLabel: "Average Rating",
-        guestsLabel: "Happy guests across studios"
+        guestsCount: "53,600",
+        guestsLabel: "Happy guests across Tokyo studios"
       },
       howItWorks: {
         title: "How Artbar works",
@@ -377,20 +383,26 @@ export const defaultContent: ContentData = {
     home: {
       hero: {
         badge: "CELEBRATING OUR 10TH ANNIVERSARY",
-        title: "日本初",
-        titleHighlight: "Paint & Sip Studio",
-        subtitle: "東京の主要エリアで楽しむ、初心者歓迎のアート体験。",
-        ctaSchedule: "セッションを探す",
+        title: "東京で一番愛されている",
+        titleHighlight: "ペイント＆シップスタジオ",
+        subtitle:
+          "初心者歓迎。東京各地で開催中。\nやってみると、意外と簡単。\n楽しさは、想像以上。",
+        ctaSchedule: "セッションを予約する",
         ctaPrivate: "プライベートイベント",
-        rating: "Google 4.8",
-        guests: "50k+ Guests"
+        ctaLineChat: "LINEで相談する",
+        ctaFindPainting: "描きたい絵を探す",
+        ratingScore: "4.8",
+        ratingSource: "評価",
+        guestsNumber: "53,600",
+        guestsSuffix: "名のお客様"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
         title: "リラックス、ドリンク、クリエイト、コネクト。",
         p1: "Artbarは、単なる絵画教室ではありません。都会の喧騒から離れ、ワインやドリンクと共に感性を解き放つ「大人のための隠れ家」です。",
         ratingLabel: "平均評価",
-        guestsLabel: "5万人以上が体験した体験"
+        guestsCount: "53,600",
+        guestsLabel: "累計53,600名以上のお客様に選ばれています"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",

@@ -3,9 +3,14 @@ import { Instructor, Location, Testimonial, MediaItem } from './types';
 // Helper for the new placeholder format
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
-/** Fallback still when hero video is disabled; also used for OG-style imagery — not the toolandtea placeholder. */
-const HERO_HOME_FALLBACK =
-  'https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-vogue-japan/main.jpg';
+/** Default hero background image (served from /public/media). */
+const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
+
+/** Replace @PLACEHOLDER_ID with your LINE official account ID when ready. */
+export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
+
+/** Official LINE app mark (squircle); sits on #06C755 so colors align. Served from /public/media. */
+export const LINE_BRAND_ICON_SRC = '/media/LINE_Brand_icon.png';
 
 export const SITE_IMAGES = {
   hero: {

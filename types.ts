@@ -100,14 +100,19 @@ export interface SiteContent {
       subtitle: string;
       ctaSchedule: string;
       ctaPrivate: string;
-      rating: string;
-      guests: string;
+      ctaLineChat: string;
+      ctaFindPainting: string;
+      ratingScore: string;
+      ratingSource: string;
+      guestsNumber: string;
+      guestsSuffix: string;
     };
     concept: {
       est: string;
       title: string;
       p1: string;
       ratingLabel: string;
+      guestsCount: string;
       guestsLabel: string;
     };
     howItWorks: {

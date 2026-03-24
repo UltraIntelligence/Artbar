@@ -667,12 +667,20 @@ export const Admin: React.FC = () => {
             <BilingualInput localContent={localContent} updateField={updateField} label="Title Highlight" path={['home', 'hero', 'titleHighlight']} />
             <BilingualInput localContent={localContent} updateField={updateField} label="Subtitle" path={['home', 'hero', 'subtitle']} multiline />
             <div className="grid grid-cols-2 gap-4">
-                <BilingualInput localContent={localContent} updateField={updateField} label="Schedule Button" path={['home', 'hero', 'ctaSchedule']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Book session CTA" path={['home', 'hero', 'ctaSchedule']} />
                 <BilingualInput localContent={localContent} updateField={updateField} label="Private Button" path={['home', 'hero', 'ctaPrivate']} />
             </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+                <BilingualInput localContent={localContent} updateField={updateField} label="LINE CTA (Chat With Us)" path={['home', 'hero', 'ctaLineChat']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Find themes CTA" path={['home', 'hero', 'ctaFindPainting']} />
+            </div>
              <div className="grid grid-cols-2 gap-4 mt-4">
-                <BilingualInput localContent={localContent} updateField={updateField} label="Rating Text" path={['home', 'hero', 'rating']} />
-                <BilingualInput localContent={localContent} updateField={updateField} label="Guests Text" path={['home', 'hero', 'guests']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Rating score (e.g. 4.8)" path={['home', 'hero', 'ratingScore']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Rating label (e.g. rating / 評価)" path={['home', 'hero', 'ratingSource']} />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+                <BilingualInput localContent={localContent} updateField={updateField} label="Guests number" path={['home', 'hero', 'guestsNumber']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Guests label (e.g. guests)" path={['home', 'hero', 'guestsSuffix']} />
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
                 <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-artbar-gray">Hero Media</h4>
@@ -688,7 +696,10 @@ export const Admin: React.FC = () => {
             <BilingualInput localContent={localContent} updateField={updateField} label="Paragraph 1" path={['home', 'concept', 'p1']} multiline />
             <div className="grid grid-cols-2 gap-4">
                  <BilingualInput localContent={localContent} updateField={updateField} label="Rating Label" path={['home', 'concept', 'ratingLabel']} />
-                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests Label" path={['home', 'concept', 'guestsLabel']} />
+                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests count (badge)" path={['home', 'concept', 'guestsCount']} />
+            </div>
+            <div className="grid grid-cols-2 gap-4 mt-4">
+                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests headline" path={['home', 'concept', 'guestsLabel']} />
             </div>
             <ImageInput localContent={localContent} updateField={updateField} label="Concept Image" path={['images', 'concept', 'main']} />
         </Section>
