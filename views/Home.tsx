@@ -189,11 +189,11 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 flex min-h-full flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-[100svh] md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
             <div className="max-w-5xl flex w-full flex-col items-center pt-0 md:pt-20">
               
-              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-10 md:mb-20 lg:mb-32 tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm">
+              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-6 md:mb-20 lg:mb-32 tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm max-md:translate-y-1">
                 {site.home.hero.badge}
               </span>
               
-              <h1 className="font-heading font-heavy text-white mb-6 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1 max-md:mt-1">
+              <h1 className="font-heading font-heavy text-white mb-6 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1">
                 <span className={`${theme.heroTitle} block`}>{site.home.hero.title}</span>
                 <span className={`${theme.heroTitle} block text-artbar-taupe mt-1 md:mt-0`}>{site.home.hero.titleHighlight}</span>
               </h1>

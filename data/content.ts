@@ -19,7 +19,7 @@ export const defaultContent: ContentData = {
     typography: {
       // Mobile-first scale: avoid collision with fixed nav; sm+ steps match desktop impact
       heroTitle:
-        'text-[clamp(1.65rem,5.2vw+0.6rem,2.25rem)] sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-tight',
+        'text-[clamp(1.9rem,5.65vw+0.68rem,2.7rem)] sm:text-[4.25rem] md:text-[5rem] lg:text-[6.5rem] xl:text-[8.75rem] tracking-tight',
       pageTitle: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
       sectionTitle: "text-3xl sm:text-4xl md:text-5xl",
       cardTitle: "text-2xl md:text-3xl",
@@ -86,9 +86,9 @@ export const defaultContent: ContentData = {
       hero: {
         badge: "CELEBRATING OUR 10TH ANNIVERSARY",
         title: "Tokyo's Most Loved",
-        titleHighlight: "Paint & Sip Studio",
+        titleHighlight: "Paint & Sip Studios",
         subtitle:
-          "Beginner friendly classes across Tokyo.\nEasier than you think. More fun than you expect.",
+          "Beginner friendly.\nCentrally located.\nUnforgettable.",
         ctaSchedule: "Book Your Session",
         ctaPrivate: "Private Events",
         ctaLineChat: "Chat With Us",
@@ -378,7 +378,7 @@ export const defaultContent: ContentData = {
         title: "東京で一番愛されている",
         titleHighlight: "ペイント＆シップスタジオ",
         subtitle:
-          "初心者歓迎。東京各地で開催中。\nやってみると、意外と簡単。\n楽しさは、想像以上。",
+          "初心者歓迎。\nアクセス便利。\n忘れられない体験。",
         ctaSchedule: "セッションを予約する",
         ctaPrivate: "プライベートイベント",
         ctaLineChat: "LINEで相談する",
