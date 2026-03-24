@@ -87,7 +87,7 @@ export const Navbar: React.FC = () => {
           isTransparent ? 'py-6 md:py-10' : 'py-4'
         }`}
       >
-        <Link href="/" onClick={handleLogoClick} className="z-50 group relative">
+        <Link href="/" onClick={handleLogoClick} className="z-50 group relative flex min-h-[44px] items-center py-1">
           <Logo variant={isTransparent ? 'light' : 'dark'} />
         </Link>
 
@@ -123,7 +123,7 @@ export const Navbar: React.FC = () => {
         <div className="xl:hidden z-50 flex items-center gap-3">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`p-2 ${isTransparent ? 'text-white' : 'text-artbar-navy'} transition-colors`}
+            className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 ${isTransparent ? 'text-white' : 'text-artbar-navy'} transition-colors`}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>

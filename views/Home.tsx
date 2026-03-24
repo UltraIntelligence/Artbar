@@ -161,7 +161,7 @@ export const Home: React.FC = () => {
               <button
                 type="button"
                 onClick={scrollToPopularThemes}
-                className="inline-flex items-center gap-1.5 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
+                className="inline-flex min-h-[44px] items-center gap-1.5 px-3 py-2 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
               >
                 <span className="animate-text-shimmer">{site.home.hero.ctaFindPainting}</span>
                 <ArrowRight size={14} className="animate-text-shimmer text-white/50" aria-hidden />
@@ -233,8 +233,12 @@ export const Home: React.FC = () => {
                      setPaused(true);
                    }}
                    aria-label={`Show testimonial ${i + 1}`}
-                   className={`h-1 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-6 bg-artbar-taupe' : 'w-1 bg-gray-200 hover:bg-gray-300'}`}
-                 />
+                   className="flex h-11 w-11 items-center justify-center"
+                 >
+                   <span
+                     className={`block h-1.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-7 bg-artbar-taupe' : 'w-2 bg-gray-200 hover:bg-gray-300'}`}
+                   />
+                 </button>
                ))}
             </div>
           </div>

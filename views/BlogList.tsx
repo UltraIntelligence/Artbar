@@ -69,7 +69,7 @@ export const BlogList: React.FC = () => {
 
                   <Link 
                     href={`/blog/${post.slug}`} 
-                    className="inline-flex items-center gap-2 font-heading font-bold text-artbar-navy hover:text-artbar-taupe transition-colors text-sm uppercase tracking-wider mt-auto"
+                    className="inline-flex min-h-[44px] items-center gap-2 py-2 font-heading font-bold text-artbar-navy hover:text-artbar-taupe transition-colors text-sm uppercase tracking-wider mt-auto"
                   >
                     {site.blogPage.readMore} <ArrowRight size={16} />
                   </Link>

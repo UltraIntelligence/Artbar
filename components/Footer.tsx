@@ -12,6 +12,9 @@ export const Footer: React.FC = () => {
   const { site, lang } = useContent();
   const currentYear = new Date().getFullYear();
   const router = useRouter();
+  const socialIconClass = 'flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white shadow-sm transition-all hover:bg-artbar-taupe';
+  const footerLinkClass = 'inline-flex min-h-[44px] min-w-[44px] items-center py-2 hover:text-white hover:translate-x-1 transition-all';
+  const footerMetaLinkClass = 'inline-flex min-h-[44px] min-w-[44px] items-center px-1 hover:text-white transition-colors';
 
   const openAdmin = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -32,13 +35,13 @@ export const Footer: React.FC = () => {
                 {site.footer.tagline}
               </p>
               <div className="flex space-x-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-artbar-taupe transition-all shadow-sm border border-white/10">
+                <a href="#" className={socialIconClass} aria-label="Instagram">
                   <Instagram size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-artbar-taupe transition-all shadow-sm border border-white/10">
+                <a href="#" className={socialIconClass} aria-label="Facebook">
                   <Facebook size={18} />
                 </a>
-                <a href="mailto:tokyo@artbar.co.jp" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-artbar-taupe transition-all shadow-sm border border-white/10">
+                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label="Email Artbar Tokyo">
                   <Mail size={18} />
                 </a>
               </div>
@@ -53,7 +56,7 @@ export const Footer: React.FC = () => {
                   <li key={loc.en}>
                     <Link
                       href="/locations"
-                      className="hover:text-white hover:translate-x-1 transition-all inline-block"
+                      className={footerLinkClass}
                     >
                       {loc[lang]}
                     </Link>
@@ -65,41 +68,41 @@ export const Footer: React.FC = () => {
             <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.explore}</h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><Link href="/" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.schedule}</Link></li>
-                <li><Link href="/paint-your-pet" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.paintYourPet}</Link></li>
-                <li><Link href="/team-building" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.teamBuilding}</Link></li>
-                <li><Link href="/private-parties" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.privateParties}</Link></li>
-                <li><Link href="/instructors" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.instructors}</Link></li>
-                <li><Link href="/blog" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.blog}</Link></li>
+                <li><Link href="/" className={footerLinkClass}>{site.nav.schedule}</Link></li>
+                <li><Link href="/paint-your-pet" className={footerLinkClass}>{site.nav.paintYourPet}</Link></li>
+                <li><Link href="/team-building" className={footerLinkClass}>{site.nav.teamBuilding}</Link></li>
+                <li><Link href="/private-parties" className={footerLinkClass}>{site.nav.privateParties}</Link></li>
+                <li><Link href="/instructors" className={footerLinkClass}>{site.nav.instructors}</Link></li>
+                <li><Link href="/blog" className={footerLinkClass}>{site.nav.blog}</Link></li>
               </ul>
             </div>
 
              <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.support}</h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all inline-block">{site.nav.contact}</Link></li>
-                <li><Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all inline-block">FAQ</Link></li>
-                <li><Link href="/contact" className="hover:text-white hover:translate-x-1 transition-all inline-block">Careers</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}>{site.nav.contact}</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}>FAQ</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}>Careers</Link></li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8 mt-8 flex flex-col md:flex-row justify-between items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">
-            <p className="cursor-default">
+          <div className="border-t border-white/10 pt-8 mt-8 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">
+            <p className="cursor-default text-center md:text-left">
               <span
                 onClick={openAdmin}
-                className="hover:text-white cursor-pointer transition-colors"
+                className="inline-flex min-h-[44px] items-center hover:text-white cursor-pointer transition-colors"
                 title="Admin Access"
               >
                 ©
               </span>
               {` ${currentYear} Artbar Tokyo · Paint and Wine Art Studio · All rights reserved`}
             </p>
-            <div className="flex gap-6 mt-4 md:mt-0">
-              <Link href="#" className="hover:text-white transition-colors">{site.footer.privacy}</Link>
-              <Link href="#" className="hover:text-white transition-colors">{site.footer.terms}</Link>
-              <Link href="#" className="hover:text-white transition-colors">{site.footer.commercial}</Link>
-              <span>{site.footer.company}</span>
+            <div className="flex flex-wrap justify-center gap-x-4 md:gap-x-5 md:justify-end">
+              <Link href="#" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
+              <Link href="#" className={footerMetaLinkClass}>{site.footer.terms}</Link>
+              <Link href="#" className={footerMetaLinkClass}>{site.footer.commercial}</Link>
+              <span className="inline-flex min-h-[44px] items-center px-1">{site.footer.company}</span>
             </div>
           </div>
         </div>

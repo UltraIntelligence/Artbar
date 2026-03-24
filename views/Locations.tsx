@@ -166,7 +166,7 @@ function LocationCard({
                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gray-100 text-artbar-navy font-bold text-[10px] md:text-xs uppercase tracking-wide hover:bg-gray-200 transition-colors"
+                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
                     >
                       <Navigation size={12} className="md:w-3.5 md:h-3.5" /> {lang === 'en' ? 'Directions' : 'ルート案内'}
                     </a>
@@ -174,7 +174,7 @@ function LocationCard({
                     <button
                       onClick={() => fetchLocationInsights(loc.id, loc.nameEn, loc.addressJp)}
                       disabled={loading[loc.id] || !!insights[loc.id]}
-                      className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-wide transition-colors border ${
+                      className={`inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 py-3 text-xs font-bold uppercase tracking-wide transition-colors border md:text-sm ${
                         insights[loc.id] 
                           ? 'bg-artbar-taupe/10 text-artbar-taupe border-artbar-taupe/20 cursor-default'
                           : 'bg-white border-artbar-taupe text-artbar-taupe hover:bg-artbar-taupe hover:text-white'

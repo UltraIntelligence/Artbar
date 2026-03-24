@@ -93,7 +93,7 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-artbar-taupe/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 

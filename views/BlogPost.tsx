@@ -41,7 +41,7 @@ export const BlogPost: React.FC = () => {
            <div className="max-w-[1000px] mx-auto">
              <Link 
               href="/blog" 
-              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full font-bold text-sm hover:bg-white/30 transition-colors"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md text-sm font-bold text-white transition-colors hover:bg-white/30"
              >
                <ArrowLeft size={16} /> {site.blogPage.back}
              </Link>
