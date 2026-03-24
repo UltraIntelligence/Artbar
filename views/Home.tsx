@@ -16,9 +16,9 @@ export const Home: React.FC = () => {
     document.getElementById('popular-themes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  /** Hero primary actions: fixed width/height so Book / LINE / Find match; icons stay within the box. */
+  /** Hero primary actions: clean pill buttons, natural sizing. */
   const heroCtaFrame =
-    'box-border inline-flex flex-nowrap items-center justify-center gap-2 rounded-full px-5 py-0 text-[0.9375rem] sm:text-base md:text-lg md:px-10 md:text-xl h-[2.95rem] sm:h-[3.35rem] md:h-[4.1rem] w-full max-w-[min(100%,17.5rem)] sm:w-[17.5rem] sm:max-w-[17.5rem] md:w-[19rem] md:max-w-[19rem] lg:w-[20rem] lg:max-w-[20rem] font-heading font-bold transition-all duration-300 transform animate-pulse-soft';
+    'inline-flex items-center justify-center gap-2.5 rounded-full px-6 sm:px-8 md:px-10 h-[2.75rem] sm:h-[3rem] md:h-[3.5rem] text-sm sm:text-base md:text-lg font-heading font-bold tracking-wide transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -51,17 +51,9 @@ export const Home: React.FC = () => {
     return icons[index] || Calendar;
   };
 
-  /** Hero social proof: equal-width pills; number left, stars/avatars + label right (fills width). */
+  /** Hero social proof: compact inline pill badges. */
   const heroProofPill =
-    'grid w-full min-h-[5.75rem] sm:min-h-[6.25rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-4 md:gap-6 rounded-[1.25rem] sm:rounded-3xl border border-white/18 bg-black/40 px-5 py-4 md:px-6 md:py-5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] transition-colors duration-300 hover:bg-black/50';
-  const heroProofDetail =
-    'flex min-w-0 w-full flex-col items-end justify-center gap-2.5 md:gap-3 text-right';
-  const heroProofStat =
-    'font-heading font-heavy tabular-nums leading-none text-white text-[1.45rem] sm:text-[1.75rem] md:text-[2.35rem] lg:text-[2.5rem] tracking-tight [font-feature-settings:"tnum"]';
-  const heroProofMeta =
-    'max-w-full font-heading text-[0.7rem] sm:text-[0.75rem] md:text-sm font-medium text-white/82 leading-snug tracking-wide';
-  const heroProofSuffix =
-    'max-w-full font-heading text-[0.7rem] sm:text-[0.75rem] md:text-sm font-medium text-white/82 leading-snug tracking-wide';
+    'inline-flex items-center gap-2 md:gap-3 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm px-4 py-2 md:px-5 md:py-2.5';
 
   const REGULAR_LOGOS = [
     { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
@@ -172,7 +164,7 @@ export const Home: React.FC = () => {
       `}</style>
       
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
-      <section className="relative z-[15] min-h-[calc(100svh+6rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-hidden">
+      <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
         <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
           {/* Wrapper holds fade-in; img alone runs hero-bg-drift (animate-in on same node overrides CSS animation) */}
           <div className="absolute inset-0 animate-in fade-in duration-1000">
@@ -184,111 +176,95 @@ export const Home: React.FC = () => {
           </div>
           <div className="absolute inset-0 bg-artbar-navy/80" />
           
-          <div className="absolute inset-0 flex min-h-full flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-[100svh] md:justify-center md:px-16 lg:px-20 md:pt-24 md:pb-32 lg:pt-28 lg:pb-40 max-w-[1400px] mx-auto">
-            <div className="max-w-5xl flex w-full flex-col items-center pt-0 gap-7 md:gap-12 lg:gap-16">
-              
-              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm max-md:translate-y-1">
+          <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
+            <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
+
+              {/* Badge */}
+              <span className="animate-sheen inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold tracking-widest uppercase text-[8px] sm:text-[9px] md:text-xs">
                 {site.home.hero.badge}
               </span>
-              
-              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-2 md:gap-4 lg:gap-5 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
+
+              {/* H1 */}
+              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
                 <span className={`${theme.heroTitle} block text-white leading-[0.92] md:leading-[0.94]`}>{site.home.hero.title}</span>
                 <span className={`${theme.heroTitle} block text-artbar-taupe leading-[0.92] md:leading-[0.94]`}>{site.home.hero.titleHighlight}</span>
               </h1>
-              
-              <div className="w-full max-w-2xl mx-auto px-1 sm:px-2">
-                <h2 className={`${theme.bodyLarge} text-white/90 font-light leading-snug sm:leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.875rem] sm:text-sm md:text-lg lg:text-xl`}>
-                  {site.home.hero.subtitle}
-                </h2>
-              </div>
 
-              {/* Proof + CTAs: extra desktop offset below subtitle; large gap before buttons */}
-              <div className="flex w-full max-w-[min(100%,72rem)] flex-col items-center gap-10 md:gap-16 lg:gap-20 md:pt-4 lg:pt-8">
-                <div className="grid w-full max-w-4xl grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+              {/* Subtitle — larger */}
+              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-sm sm:text-base md:text-xl lg:text-[1.375rem] px-2">
+                {site.home.hero.subtitle}
+              </h2>
+
+              {/* Compact proof pills */}
+              <div className="flex flex-wrap items-center justify-center gap-2.5 md:gap-3 pt-1 md:pt-3">
                 <div
-                  className={`${heroProofPill} cursor-default`}
+                  className={heroProofPill}
                   aria-label={`${site.home.hero.ratingScore} out of 5, ${site.home.hero.ratingSource}`}
                 >
-                  <span className={`${heroProofStat} shrink-0 justify-self-start`}>{site.home.hero.ratingScore}</span>
-                  <div className={heroProofDetail}>
-                    <div className="flex w-full justify-end gap-1 md:gap-1.5 text-yellow-400">
-                      {[0, 1, 2, 3, 4].map((i) => (
-                        <Star
-                          key={i}
-                          className="animate-star h-4 w-4 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6"
-                          style={{ animationDelay: `${600 + i * 100}ms` }}
-                          fill="currentColor"
-                          aria-hidden
-                        />
-                      ))}
-                    </div>
-                    <p className={heroProofMeta}>{site.home.hero.ratingSource}</p>
+                  <span className="font-heading font-heavy text-white text-base md:text-lg tabular-nums">{site.home.hero.ratingScore}</span>
+                  <div className="flex gap-0.5 text-yellow-400">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <Star
+                        key={i}
+                        className="animate-star h-3.5 w-3.5 md:h-4 md:w-4"
+                        style={{ animationDelay: `${600 + i * 100}ms` }}
+                        fill="currentColor"
+                        aria-hidden
+                      />
+                    ))}
                   </div>
+                  <span className="text-white/60 font-heading text-[10px] md:text-xs tracking-wide">{site.home.hero.ratingSource}</span>
                 </div>
 
                 <div
-                  className={`${heroProofPill} cursor-default`}
+                  className={heroProofPill}
                   aria-label={`${site.home.hero.guestsNumber} ${site.home.hero.guestsSuffix}`}
                 >
-                  <span className={`${heroProofStat} shrink-0 justify-self-start`}>{site.home.hero.guestsNumber}</span>
-                  <div className={heroProofDetail}>
-                    <div className="flex w-full justify-end -space-x-2 sm:-space-x-2.5 md:-space-x-3 pl-2">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <img
-                          key={i}
-                          className="animate-star relative z-[1] h-7 w-7 rounded-full border-2 border-white/35 object-cover ring-1 ring-black/20 sm:h-8 sm:w-8 md:h-9 md:w-9"
-                          style={{ animationDelay: `${900 + i * 80}ms` }}
-                          src={`https://picsum.photos/seed/guestface${i}/100`}
-                          alt=""
-                        />
-                      ))}
-                    </div>
-                    <p className={heroProofSuffix}>{site.home.hero.guestsSuffix}</p>
+                  <div className="flex -space-x-1.5">
+                    {[1, 2, 3, 4].map((i) => (
+                      <img
+                        key={i}
+                        className="animate-star h-6 w-6 rounded-full border-[1.5px] border-white/40 object-cover"
+                        style={{ animationDelay: `${900 + i * 80}ms` }}
+                        src={`https://picsum.photos/seed/guestface${i}/100`}
+                        alt=""
+                      />
+                    ))}
                   </div>
+                  <span className="font-heading font-heavy text-white text-base md:text-lg tabular-nums">{site.home.hero.guestsNumber}+</span>
+                  <span className="text-white/60 font-heading text-[10px] md:text-xs tracking-wide">{site.home.hero.guestsSuffix}</span>
                 </div>
               </div>
-              
-              <div className="relative z-[2] flex w-full flex-col items-center justify-center gap-3 sm:gap-4 md:gap-8 lg:gap-10 px-2 sm:flex-row sm:flex-wrap sm:px-0 max-md:mt-1">
+
+              {/* CTAs */}
+              <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-3 md:gap-4 pt-2 md:pt-4">
                 <Button
-                  onClick={() => {
-                    window.location.hash = 'schedule';
-                  }}
+                  onClick={() => { window.location.hash = 'schedule'; }}
                   variant="taupe"
-                  className={`${heroCtaFrame} !text-white !shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:!shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)]`}
+                  className={`${heroCtaFrame} !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)]`}
                 >
-                  <span className="min-w-0 flex-1 truncate text-white">{site.home.hero.ctaSchedule}</span>
-                  <ArrowRight size={18} className="ml-1 shrink-0 text-white" aria-hidden />
+                  {site.home.hero.ctaSchedule}
+                  <ArrowRight size={16} className="shrink-0 text-white" aria-hidden />
                 </Button>
 
                 <a
                   href={LINE_ADD_FRIEND_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${heroCtaFrame} border-none bg-[#06C755] text-white shadow-[0_10px_36px_-12px_rgba(6,199,85,0.45)] hover:bg-[#05b34c] hover:shadow-[0_14px_44px_-10px_rgba(6,199,85,0.5)]`}
+                  className={`${heroCtaFrame} bg-[#06C755] text-white shadow-[0_8px_30px_-8px_rgba(6,199,85,0.4)] hover:bg-[#05b34c]`}
                 >
-                  <span className="min-w-0 flex-1 truncate leading-tight text-white">{site.home.hero.ctaLineChat}</span>
-                  <img
-                    src={LINE_BRAND_ICON_SRC}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-6 w-6 shrink-0 object-contain sm:h-7 sm:w-7 md:h-8 md:w-8"
-                  />
+                  {site.home.hero.ctaLineChat}
+                  <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
                 </a>
 
-                <Button
+                <button
                   type="button"
                   onClick={scrollToPopularThemes}
-                  variant="ghost"
-                  size="cta"
-                  className={`${heroCtaFrame} !border-2 !border-white/85 !bg-white/10 !text-white shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)] backdrop-blur-sm hover:!bg-white/18 hover:!text-white focus:!ring-white/40`}
+                  className={`${heroCtaFrame} border border-white/40 bg-white/8 text-white backdrop-blur-sm hover:bg-white/15`}
                 >
-                  <span className="min-w-0 flex-1 truncate text-center leading-tight text-white">
-                    {site.home.hero.ctaFindPainting}
-                  </span>
-                  <ArrowRight size={18} className="ml-1 shrink-0 text-white opacity-90" aria-hidden />
-                </Button>
-              </div>
+                  {site.home.hero.ctaFindPainting}
+                  <ArrowRight size={16} className="shrink-0 text-white/80" aria-hidden />
+                </button>
               </div>
             </div>
           </div>
@@ -296,8 +272,8 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Trust & Social Proof Section */}
-      <section className="relative z-10 px-4 md:px-10">
-        <div className="max-w-5xl mx-auto -mt-10 md:-mt-8 lg:-mt-10 -translate-y-px">
+      <section className="relative z-[2] px-4 md:px-10">
+        <div className="max-w-5xl mx-auto -mt-14 md:-mt-12 lg:-mt-16">
           
           {/* Centered High-Impact Review Card (Horizontal Cycling Animation) */}
           <div className="bg-white rounded-[3rem] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[360px] md:min-h-[420px] justify-center">
@@ -348,9 +324,11 @@ export const Home: React.FC = () => {
             {/* Pagination dots */}
             <div className="absolute bottom-4 md:bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                {topTestimonials.map((_, i) => (
-                 <button 
-                   key={i} 
+                 <button
+                   key={i}
+                   type="button"
                    onClick={() => setActiveIndex(i)}
+                   aria-label={`Show testimonial ${i + 1}`}
                    className={`h-1 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-6 bg-artbar-taupe' : 'w-1 bg-gray-200 hover:bg-gray-300'}`}
                  />
                ))}
