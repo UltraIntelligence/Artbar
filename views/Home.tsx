@@ -18,7 +18,7 @@ export const Home: React.FC = () => {
 
   /** Hero primary actions: fixed width/height so Book / LINE / Find match; icons stay within the box. */
   const heroCtaFrame =
-    'box-border inline-flex flex-nowrap items-center justify-center gap-2 rounded-full px-5 py-0 text-base sm:text-lg md:px-10 md:text-xl h-[3.35rem] sm:h-[3.5rem] md:h-[4.1rem] w-full max-w-[min(100%,17.5rem)] sm:w-[17.5rem] sm:max-w-[17.5rem] font-heading font-bold transition-all duration-300 transform animate-pulse-soft';
+    'box-border inline-flex flex-nowrap items-center justify-center gap-2 rounded-full px-5 py-0 text-[0.9375rem] sm:text-base md:text-lg md:px-10 md:text-xl h-[2.95rem] sm:h-[3.35rem] md:h-[4.1rem] w-full max-w-[min(100%,17.5rem)] sm:w-[17.5rem] sm:max-w-[17.5rem] font-heading font-bold transition-all duration-300 transform animate-pulse-soft';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -51,16 +51,19 @@ export const Home: React.FC = () => {
     return icons[index] || Calendar;
   };
 
-  /** Hero social proof: matched pill geometry & type scale (rating ↔ guests). */
+  /** Hero social proof: matched pill geometry & type scale (rating ↔ guests); tighter on small phones so CTAs fit. */
   const heroProofPill =
-    'flex w-full max-w-[min(100%,22rem)] sm:max-w-none sm:w-[22rem] items-center justify-center gap-3 md:gap-4 rounded-[999px] border border-white/15 bg-black/35 px-4 py-3 md:px-6 md:py-3.5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition-colors duration-300 hover:bg-black/45';
-  const heroProofMedia = 'flex w-[5.25rem] shrink-0 items-center justify-center md:w-[5.75rem]';
+    'flex w-full max-w-[min(100%,22rem)] sm:max-w-none sm:w-[22rem] items-center justify-center gap-2 sm:gap-3 md:gap-4 rounded-[999px] border border-white/15 bg-black/35 px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3.5 backdrop-blur-md shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] transition-colors duration-300 hover:bg-black/45';
+  const heroProofMedia =
+    'flex w-[4rem] shrink-0 items-center justify-center sm:w-[5.25rem] md:w-[5.75rem]';
   const heroProofStat =
-    'font-heading font-heavy tabular-nums leading-none text-white text-[1.7rem] sm:text-[1.9rem] md:text-[2.55rem] lg:text-[2.7rem] tracking-tight';
-  const heroProofStarGlyph = 'text-yellow-400 leading-none text-[1.35rem] sm:text-[1.45rem] md:text-[2.1rem]';
+    'font-heading font-heavy tabular-nums leading-none text-white text-[1.35rem] sm:text-[1.65rem] md:text-[2.55rem] lg:text-[2.7rem] tracking-tight';
+  const heroProofStarGlyph =
+    'text-yellow-400 leading-none text-[1.1rem] sm:text-[1.3rem] md:text-[2.1rem]';
   const heroProofMeta =
-    'text-[0.68rem] md:text-[0.78rem] font-medium tracking-[0.14em] text-white/78';
-  const heroProofSuffix = 'text-[0.68rem] md:text-[0.82rem] font-medium tracking-wide text-white/82';
+    'text-[0.6rem] sm:text-[0.65rem] md:text-[0.78rem] font-medium tracking-[0.12em] sm:tracking-[0.14em] text-white/78';
+  const heroProofSuffix =
+    'text-[0.6rem] sm:text-[0.65rem] md:text-[0.82rem] font-medium tracking-wide text-white/82';
 
   const REGULAR_LOGOS = [
     { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
@@ -148,9 +151,9 @@ export const Home: React.FC = () => {
         }
       `}</style>
       
-      {/* Hero: mobile uses top offset below fixed nav + safe area; md+ stays vertically centered */}
-      <section className="relative min-h-[100svh] w-full overflow-x-hidden overflow-y-auto md:h-[100svh] md:overflow-hidden">
-        <div className="absolute inset-0 min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
+      {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
+      <section className="relative min-h-[calc(100svh+6rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-hidden">
+        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[2.5rem] overflow-hidden bg-artbar-navy">
           <img
             src={heroBgSrc}
             alt="Artbar Experience"
@@ -158,35 +161,35 @@ export const Home: React.FC = () => {
           />
           <div className="absolute inset-0 bg-artbar-navy/80" />
           
-          <div className="absolute inset-0 flex min-h-[100svh] flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.75rem)] pb-[max(1.25rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-0 md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
+          <div className="absolute inset-0 flex min-h-full flex-col justify-start items-center px-4 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-[max(1.5rem,env(safe-area-inset-bottom,0px))] text-center md:min-h-[100svh] md:justify-center md:px-20 md:pb-0 md:pt-0 max-w-[1400px] mx-auto">
             <div className="max-w-5xl flex w-full flex-col items-center pt-0 md:pt-20">
               
-              <span className="animate-sheen inline-flex items-center justify-center text-center pt-2 pb-1 px-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-6 md:mb-20 lg:mb-32 tracking-widest uppercase text-[9px] md:text-sm">
+              <span className="animate-sheen inline-flex items-center justify-center text-center pt-1.5 pb-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold mb-4 md:mb-20 lg:mb-32 tracking-widest uppercase text-[8px] sm:text-[9px] md:text-sm">
                 {site.home.hero.badge}
               </span>
               
-              <h1 className="font-heading font-heavy text-white mb-4 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1">
+              <h1 className="font-heading font-heavy text-white mb-3 md:mb-10 leading-[1.08] md:leading-tight tracking-tighter drop-shadow-lg flex flex-col items-center px-1">
                 <span className={`${theme.heroTitle} block`}>{site.home.hero.title}</span>
                 <span className={`${theme.heroTitle} block text-artbar-taupe mt-1 md:mt-0`}>{site.home.hero.titleHighlight}</span>
               </h1>
               
               <div className="w-full max-w-2xl mx-auto px-1 sm:px-2">
-                <h2 className={`${theme.bodyLarge} text-white/90 mb-6 md:mb-12 font-light leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.9375rem] sm:text-sm md:text-xl`}>
+                <h2 className={`${theme.bodyLarge} text-white/90 mb-4 md:mb-12 font-light leading-snug sm:leading-relaxed drop-shadow-md px-2 sm:px-4 whitespace-pre-line text-[0.875rem] sm:text-sm md:text-xl`}>
                   {site.home.hero.subtitle}
                 </h2>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 md:gap-4 mb-6 md:mb-12">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-2.5 md:gap-4 mb-4 md:mb-12">
                 <div
                   className={`${heroProofPill} cursor-default`}
                   aria-label={`${site.home.hero.ratingScore} out of 5 · ${site.home.hero.ratingSource}`}
                 >
                   <div className={heroProofMedia}>
-                    <div className="flex max-w-[4.75rem] flex-wrap justify-center gap-x-0.5 gap-y-0.5 text-yellow-400">
+                    <div className="flex max-w-[3.75rem] sm:max-w-[4.75rem] flex-wrap justify-center gap-x-0.5 gap-y-0.5 text-yellow-400">
                       {[0, 1, 2, 3, 4].map((i) => (
                         <Star
                           key={i}
-                          className="animate-star h-2.5 w-2.5 md:h-3 md:w-3"
+                          className="animate-star h-2 w-2 sm:h-2.5 sm:w-2.5 md:h-3 md:w-3"
                           style={{ animationDelay: `${600 + i * 100}ms` }}
                           fill="currentColor"
                           aria-hidden
@@ -208,11 +211,11 @@ export const Home: React.FC = () => {
                   aria-label={`${site.home.hero.guestsNumber} ${site.home.hero.guestsSuffix}`}
                 >
                   <div className={heroProofMedia}>
-                    <div className="flex items-center justify-center -space-x-2.5">
+                    <div className="flex items-center justify-center -space-x-2 sm:-space-x-2.5">
                       {[1, 2, 3].map((i) => (
                         <img
                           key={i}
-                          className="animate-star h-8 w-8 rounded-full border-2 border-white/55 object-cover ring-1 ring-black/20 md:h-9 md:w-9"
+                          className="animate-star h-6 w-6 rounded-full border border-white/55 object-cover ring-1 ring-black/20 sm:h-8 sm:w-8 md:h-9 md:w-9"
                           style={{ animationDelay: `${1100 + i * 100}ms` }}
                           src={`https://picsum.photos/seed/avatar${i}/100`}
                           alt=""
@@ -227,7 +230,7 @@ export const Home: React.FC = () => {
                 </div>
               </div>
               
-              <div className="mb-8 flex w-full flex-col items-center justify-center gap-3 px-4 sm:flex-row sm:flex-wrap sm:px-0">
+              <div className="mb-4 flex w-full flex-col items-center justify-center gap-2 sm:gap-3 px-4 sm:flex-row sm:flex-wrap sm:px-0 md:mb-8">
                 <Button
                   onClick={() => {
                     window.location.hash = 'schedule';
@@ -237,7 +240,7 @@ export const Home: React.FC = () => {
                   className={`${heroCtaFrame} !bg-artbar-taupe !text-white !shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] hover:!bg-opacity-90 hover:!shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] border-none`}
                 >
                   <span className="min-w-0 truncate">{site.home.hero.ctaSchedule}</span>
-                  <ArrowRight size={20} className="ml-1 shrink-0" aria-hidden />
+                  <ArrowRight size={18} className="ml-1 shrink-0" aria-hidden />
                 </Button>
 
                 <a
@@ -252,7 +255,7 @@ export const Home: React.FC = () => {
                     alt=""
                     width={32}
                     height={32}
-                    className="h-7 w-7 shrink-0 object-contain md:h-8 md:w-8"
+                    className="h-6 w-6 shrink-0 object-contain sm:h-7 sm:w-7 md:h-8 md:w-8"
                   />
                 </a>
 
@@ -263,7 +266,7 @@ export const Home: React.FC = () => {
                   className={`${heroCtaFrame} border-2 border-white/85 bg-white/10 text-white shadow-[0_8px_32px_-12px_rgba(0,0,0,0.35)] backdrop-blur-sm hover:bg-white/18`}
                 >
                   <span className="min-w-0 truncate">{site.home.hero.ctaFindPainting}</span>
-                  <ArrowRight size={20} className="ml-1 shrink-0 opacity-90" aria-hidden />
+                  <ArrowRight size={18} className="ml-1 shrink-0 opacity-90" aria-hidden />
                 </Button>
               </div>
             </div>
