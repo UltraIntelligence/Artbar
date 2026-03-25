@@ -3,11 +3,9 @@
 import React from 'react';
 import Image from 'next/image';
 import { useContent } from '../context/ContentContext';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const Instructors: React.FC = () => {
   const { content, site, lang } = useContent();
-  const gridReveal = useScrollReveal();
 
   return (
     <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
@@ -19,10 +17,7 @@ export const Instructors: React.FC = () => {
           </p>
         </div>
 
-        <div
-          ref={gridReveal.ref}
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 reveal-stagger ${gridReveal.isVisible ? 'visible' : ''}`}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {content.instructors.map((instructor) => (
             <div key={instructor.id} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
               <div className="h-56 relative overflow-hidden bg-artbar-bg">

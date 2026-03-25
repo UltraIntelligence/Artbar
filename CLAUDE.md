@@ -77,6 +77,8 @@ The API key is read server-side in `app/api/generate-sketch/route.ts` via `proce
 
 Batch image generation (`npm run generate:images`, `npm run generate:images:theme-pages`) uses the same key. Theme detail **example** images (`theme-*-example-[1–4]`) use explicit **1K / 1:1** in `lib/gemini-image-config.ts`; optional **`GEMINI_THEME_EXAMPLE_IMAGE_SIZE`** overrides size.
 
+`useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
+
 ## Design Tokens
 
 - **Navy:** `#053761` (primary brand color)

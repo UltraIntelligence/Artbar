@@ -46,6 +46,10 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [content, setContent] = useState<ContentData>(defaultContent);
 
   useEffect(() => {
+    document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
+  }, [lang]);
+
+  useEffect(() => {
     const savedContent = localStorage.getItem(STORAGE_KEY);
     if (savedContent) {
       try {

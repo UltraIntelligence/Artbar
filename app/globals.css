@@ -312,6 +312,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html:lang(ja) h1,
+html:lang(ja) h2,
+html:lang(ja) h3,
+html:lang(ja) p {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
 /* ─── Utility Classes ───────────────────────────────────── */
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

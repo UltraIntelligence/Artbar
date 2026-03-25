@@ -101,16 +101,16 @@ export const defaultContent: ContentData = {
         ctaFindPainting: "Find Your Painting",
         ratingScore: "4.8",
         ratingSource: "Average rating",
-        guestsNumber: "100,457",
-        guestsSuffix: "guests and counting"
+        guestsNumber: "101,000",
+        guestsSuffix: "guests across Tokyo — and counting"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "Beginner friendly classes\ncentrally located\nacross Tokyo.",
-        p1: "Artbar is more than an art class—it's a social experience. Step into our lounge-style studio, grab a glass of wine, and let the stress melt away.",
+        title: "It's not an art class. It's just a really good time.",
+        p1: "Pick a painting, pour a glass, and follow along at your own pace. No experience needed — just show up and see what happens.",
         ratingLabel: "Average Rating",
-        guestsCount: "100,457",
-        guestsLabel: "Happy guests across Tokyo studios"
+        guestsCount: "101,000",
+        guestsLabel: "101,000+ guests across Tokyo — and counting"
       },
       howItWorks: {
         title: "How Artbar works",
@@ -119,7 +119,7 @@ export const defaultContent: ContentData = {
           { title: "Book", desc: "Choose a session from our calendar that sparks your interest. We update our schedule monthly." },
           { title: "Sip", desc: "Enjoy bottomless wine, tea, or coffee while you settle in. Arrive 15 minutes early to grab a drink." },
           { title: "Create", desc: "Follow our artist's step-by-step guidance. No experience is needed to get great results." },
-          { title: "Enjoy", desc: "Take your unique masterpiece home with you. It's ready to hang on your wall immediately." }
+          { title: "Enjoy", desc: "Your painting ships to your door within 10–15 days — ready to hang." }
         ]
       },
       themes: {
@@ -138,20 +138,20 @@ export const defaultContent: ContentData = {
         ]
       },
       testimonials: {
-        title: "Hear from our creative community",
+        title: "What our guests say",
         featured: HOME_TESTIMONIALS_FEATURED_EN,
         carousel: HOME_TESTIMONIALS_CAROUSEL_EN,
       },
       cta: {
         badge: "Ready to Create?",
-        title: "Unleash your inner artist",
-        subtitle: "Book a session today and experience the magic of paint and sip.",
+        title: "Your next favourite session starts here.",
+        subtitle: "Pick a date, pick a painting, show up. We handle the rest.",
         btnBook: "View Schedule",
         btnContact: "Contact Us"
       }
     },
     footer: {
-      tagline: "Japan's First Paint & Sip Studio. Relax, Sip, Create, Connect.",
+      tagline: "Japan's first paint & sip studio — est. 2016.",
       locations: "Our Studios",
       explore: "Explore",
       support: "Support",
@@ -381,23 +381,23 @@ export const defaultContent: ContentData = {
         title: "東京で一番愛されている",
         titleHighlight: "ペイント＆シップスタジオ",
         subtitle:
-          "初心者歓迎。東京各地で開催中。\nやってみると、意外と簡単。楽しさは、想像以上。",
+          "初心者歓迎。東京各地で開催中。<wbr>やってみると、意外と簡単。<wbr>楽しさは、想像以上。",
         ctaSchedule: "セッションを予約する",
         ctaPrivate: "プライベートイベント",
         ctaLineChat: "LINEで相談する",
         ctaFindPainting: "描きたい絵を探す",
         ratingScore: "4.8",
         ratingSource: "平均評価",
-        guestsNumber: "100,457",
-        guestsSuffix: "名のゲスト（増加中）"
+        guestsNumber: "101,000",
+        guestsSuffix: "人以上の東京のスタジオに来てくれたゲスト、まだまだ増えてます。"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "初心者歓迎のクラス\n都心からアクセス良好\n東京各地で。",
-        p1: "Artbarは、単なる絵画教室ではありません。都会の喧騒から離れ、ワインやドリンクと共に感性を解き放つ「大人のための隠れ家」です。",
+        title: "アートクラスじゃない。ただ、最高に楽しい時間。",
+        p1: "好きな絵を選んで、グラスを傾けて、自分のペースで描くだけ。\n経験不要。あとは来てみれば、わかります。",
         ratingLabel: "平均評価",
-        guestsCount: "100,457",
-        guestsLabel: "累計{{count}}名以上のお客様に選ばれています"
+        guestsCount: "101,000",
+        guestsLabel: "{{count}}人以上の東京のスタジオに来てくれたゲスト、まだまだ増えてます。"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",
@@ -406,7 +406,7 @@ export const defaultContent: ContentData = {
           { title: "予約", desc: "カレンダーから、心惹かれるテーマのセッションをお選びください。" },
           { title: "乾杯", desc: "スタジオではフリーフローのワインやコーヒーをご用意。エプロンをつけて、リラックスしたひとときを。" },
           { title: "制作", desc: "インストラクターが丁寧にガイドします。初心者の方でも、驚くような作品に仕上がります。" },
-          { title: "完成", desc: "描き上げた作品は、その日のうちにお持ち帰りいただけます。ご自宅のインテリアに彩りを。" }
+          { title: "完成", desc: "作品は10〜15日以内にご自宅へ配送。届いたらすぐ飾れます。" }
         ]
       },
       themes: {
@@ -431,14 +431,14 @@ export const defaultContent: ContentData = {
       },
       cta: {
         badge: "さあ、始めましょう",
-        title: "内なるアーティストを目覚めさせる",
-        subtitle: "今すぐセッションを予約して、日常を彩るアート体験を。",
+        title: "次の特別な時間、ここから始めよう。",
+        subtitle: "日程を選んで、絵を選んで、あとは来るだけ。準備はすべてこちらで。",
         btnBook: "スケジュールを見る",
         btnContact: "お問い合わせ"
       }
     },
     footer: {
-      tagline: "日本初のPaint & Sipスタジオ。リラックス、ドリンク、クリエイト、コネクト。",
+      tagline: "日本初のペイント＆シップスタジオ — 2016年創業",
       locations: "スタジオ一覧",
       explore: "探す",
       support: "サポート",

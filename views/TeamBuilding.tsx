@@ -82,13 +82,15 @@ export const TeamBuilding: React.FC = () => {
           ref={socialReveal.ref}
           className={`reveal mb-24 md:mb-32 ${socialReveal.isVisible ? 'visible' : ''}`}
         >
-          <div className="flex items-center gap-4 mb-16">
-             <div className="h-px bg-artbar-navy/10 flex-grow"></div>
-             <p className="text-[10px] md:text-xs font-heading font-bold text-artbar-gray uppercase tracking-[0.4em] px-4">{site.teamBuilding.socialProof.title}</p>
-             <div className="h-px bg-artbar-navy/10 flex-grow"></div>
+          <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
+            <div className="h-px flex-grow bg-artbar-navy/10" />
+            <p className="shrink-0 px-6 text-center font-heading text-[10px] font-bold uppercase tracking-[0.4em] text-artbar-gray md:px-8 md:text-xs">
+              {site.teamBuilding.socialProof.title}
+            </p>
+            <div className="h-px flex-grow bg-artbar-navy/10" />
           </div>
-          
-          <div className="mx-auto grid max-w-7xl grid-cols-2 items-center justify-items-center gap-x-3 gap-y-6 sm:gap-x-7 sm:gap-y-11 md:grid-cols-7 md:gap-x-8 md:gap-y-12 lg:gap-x-10 lg:gap-y-14">
+
+          <div className="mx-auto grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:gap-x-10 sm:gap-y-16 md:grid-cols-7 md:gap-x-12 md:gap-y-20 lg:gap-x-16 lg:gap-y-24">
             {PARTNER_LOGOS.map((logo, i) => (
               <PartnerLogo key={i} name={logo.name} url={logo.url} />
             ))}

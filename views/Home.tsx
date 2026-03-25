@@ -52,6 +52,11 @@ export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
   const router = useRouter();
   const theme = content.theme.typography;
+  /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. */
+  const heroTitleScale =
+    lang === 'jp'
+      ? 'text-[clamp(1.5rem,7.4vw,1.9rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight'
+      : theme.heroTitle;
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
 
@@ -186,13 +191,28 @@ export const Home: React.FC = () => {
 
               {/* H1 */}
               <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
-                <span className={`${theme.heroTitle} block text-white leading-[0.92] md:leading-[0.94]`}>{site.home.hero.title}</span>
-                <span className={`${theme.heroTitle} block text-artbar-taupe leading-[0.92] md:leading-[0.94]`}>{site.home.hero.titleHighlight}</span>
+                <span
+                  className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                >
+                  {site.home.hero.title}
+                </span>
+                <span
+                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                >
+                  {site.home.hero.titleHighlight}
+                </span>
               </h1>
 
-              {/* Subtitle */}
-              <h2 className="text-white/85 font-light leading-relaxed drop-shadow-md whitespace-pre-line max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2">
-                {site.home.hero.subtitle}
+              <h2
+                className={`text-white/85 font-light leading-relaxed drop-shadow-md max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 ${
+                  lang === 'jp' ? '' : 'whitespace-pre-line'
+                }`}
+              >
+                {lang === 'jp' ? (
+                  <span dangerouslySetInnerHTML={{ __html: site.home.hero.subtitle }} />
+                ) : (
+                  site.home.hero.subtitle
+                )}
               </h2>
 
               {/* Primary CTAs */}
