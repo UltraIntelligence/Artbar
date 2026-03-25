@@ -59,6 +59,19 @@
   from { transform: scale(0.95); opacity: 0; }
   to   { transform: scale(1);    opacity: 1; }
 }
+@keyframes testimonial-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-testimonial-slide-in {
+  animation: testimonial-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
 
 /* Home / marketing — extracted from views/Home.tsx */
 @keyframes star-pop {

@@ -9,11 +9,18 @@
  *   npm run generate:images -- --theme-pages     # only /themes/[slug] hero + 4 examples + experience (72 items)
  *
  * Requires GEMINI_API_KEY in .env.local (or env).
+ *
+ * Theme detail example paintings (`theme-*-example-[1-4]`) use explicit 1K + 1:1 via
+ * `geminiImageConfigForManifestId` (override with GEMINI_THEME_EXAMPLE_IMAGE_SIZE=2K|4K if needed).
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'fs';
 import { dirname, join } from 'path';
 import { GoogleGenAI } from '@google/genai';
-import { geminiImageGenerationConfig, resolveGeminiImageModel } from '../lib/gemini-image-config';
+import {
+  geminiImageGenerationConfig,
+  geminiImageConfigForManifestId,
+  resolveGeminiImageModel,
+} from '../lib/gemini-image-config';
 import { IMAGE_MANIFEST, type ManifestItem } from './image-manifest';
 
 function loadEnvLocal() {
@@ -95,6 +102,7 @@ async function generateOne(
     contents: { parts },
     config: {
       ...geminiImageGenerationConfig,
+      ...geminiImageConfigForManifestId(item.id),
     },
   });
 

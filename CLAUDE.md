@@ -75,6 +75,8 @@ GEMINI_API_KEY=your_key_here
 
 The API key is read server-side in `app/api/generate-sketch/route.ts` via `process.env.GEMINI_API_KEY`.
 
+Batch image generation (`npm run generate:images`, `npm run generate:images:theme-pages`) uses the same key. Theme detail **example** images (`theme-*-example-[1–4]`) use explicit **1K / 1:1** in `lib/gemini-image-config.ts`; optional **`GEMINI_THEME_EXAMPLE_IMAGE_SIZE`** overrides size.
+
 ## Design Tokens
 
 - **Navy:** `#053761` (primary brand color)

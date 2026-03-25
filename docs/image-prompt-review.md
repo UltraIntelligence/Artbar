@@ -236,10 +236,11 @@ Each card needs a small **square-ish** image that matches the theme name (Japan,
 
 ## Theme detail `/themes/[slug]`
 
-### Hero and example images
+### Hero, “Example paintings” grid, and experience strip
 
-- **What:** Large hero and smaller “example” images for the selected theme. **Right now** some of these use **placeholder generators** until you attach real assets per theme.
-- **Why:** Sells a specific class type.
+- **What:** For each theme slug, Gemini-generated assets under `/public/media/generated/`: `theme-{slug}-hero.jpg`, `theme-{slug}-example-{1–4}.jpg`, `theme-{slug}-experience.jpg` (see `THEME_PAGE_IMAGES` in `data/generated-image-paths.ts`). Example paintings are shown as finished work in a **minimal home-style setting** (bright wall, painting as hero)—not easel-heavy studio shots. Master-themed classes (Van Gogh, Monet, Picasso, etc.) use prompts that reference **well-known works in spirit** (composition and palette), not verbatim copies.
+- **Why:** Sells a specific class type with credible sample art.
+- **Prompts live in** `data/theme-page-image-prompts.ts` (merged into the image manifest via `scripts/theme-page-manifest-items.ts`). The generator applies **1K, 1:1** output for `theme-*-example-[1–4]` slots (`lib/gemini-image-config.ts`); override with `GEMINI_THEME_EXAMPLE_IMAGE_SIZE` if you need 2K/4K.
 - **Your prompt adjustment:**
 
 
@@ -277,8 +278,8 @@ Each card needs a small **square-ish** image that matches the theme name (Japan,
 
 ## After you fill in “Your prompt adjustment”
 
-1. You can paste your notes into `scripts/image-manifest.ts` (each slot has a **prompt** string), or tell whoever runs generation what to change.
-2. Run **`npm run generate:images`** when ready (see project README / scripts). That fills **`/public/media/generated/`** with files the site already points at.
+1. You can paste your notes into `scripts/image-manifest.ts` (each slot has a **prompt** string). Theme detail page imagery is maintained in **`data/theme-page-image-prompts.ts`** (do not duplicate those rows in the manifest).
+2. Run **`npm run generate:images`** when ready, or **`npm run generate:images:theme-pages`** for only `/themes/[slug]` assets (72 files). That fills **`/public/media/generated/`** with files the site already points at.
 
 ---
 

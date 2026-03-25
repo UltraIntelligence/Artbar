@@ -36,3 +36,14 @@ export function formatGuestConceptLabel(
   if (label.includes('{{count}}')) return label.replace(/\{\{count\}\}/g, countFormatted);
   return label.replace(/累計[\d,]+名/, `累計${countFormatted}名`);
 }
+
+/** Compact total for small circular badge (e.g. "100k+"; JP uses 万). */
+export function formatGuestCountCompactK(lang: 'en' | 'jp', now: Date = new Date()): string {
+  const n = getGuestCountTotal(now);
+  if (lang === 'jp') {
+    const man = Math.floor(n / 10_000);
+    return `${man}万+`;
+  }
+  const k = Math.floor(n / 1000);
+  return `${k}k+`;
+}

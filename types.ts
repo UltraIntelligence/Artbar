@@ -4,6 +4,8 @@ export interface Testimonial {
   author: string;
   role?: string;
   userImage?: string;
+  /** Optional display line (e.g. month/year) for carousels */
+  date?: string;
 }
 
 export interface Instructor {
@@ -136,7 +138,10 @@ export interface SiteContent {
     };
     testimonials: {
       title: string;
-      items: Testimonial[];
+      /** Three spotlight cards (e.g. above media coverage) */
+      featured: Testimonial[];
+      /** Full testimonial carousel */
+      carousel: Testimonial[];
     };
     cta: {
       badge: string;

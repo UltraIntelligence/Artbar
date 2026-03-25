@@ -11,22 +11,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-japan-inspired-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Mount Fuji at sunrise with cherry blossom branches in foreground, soft pink and blue gradient sky, impressionist brushwork, delicate and serene. Warm studio lighting, softly blurred studio background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Hokusai's Great Wave — bold graphic wave form in deep navy and white with Mount Fuji in the background, rendered in a vivid pop-art color treatment with flat bright tones. Original student work compositionally similar to The Great Wave. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-japan-inspired-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Sakura blossom branch against a deep indigo night sky, full moon behind petals, loose expressive brushwork, Japanese art mood. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting of Mount Fuji in autumn — rich red and gold maple foliage in the foreground, classic cone silhouette, moody overcast sky in soft grey and blue. Loose painterly brushwork, Japanese landscape mood. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-japan-inspired-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Traditional Japanese torii gate reflected in still water, warm orange and red tones, loose impressionist brushwork, peaceful atmosphere. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting of glowing paper lanterns floating into a deep indigo night sky, warm orange and gold light radiating from each lantern, loose expressive brushwork, festival atmosphere. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-japan-inspired-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Autumn Japanese maple leaves in red and gold, soft painterly background in muted teal, expressive loose brushwork. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting of a cherry blossom path — a tree-lined walkway in full bloom, soft pink petals falling, dappled spring light, loose impressionist brushwork, peaceful and romantic mood. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-japan-inspired-experience',
@@ -41,22 +41,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-van-gogh-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Swirling post-impressionist night sky with glowing crescent moon, deep cobalt blue and gold, bold expressive brushstrokes, Van Gogh inspired mood. Not a copy of a specific painting. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Van Gogh's The Starry Night — swirling deep cobalt blue night sky with glowing moon over a Tokyo-style cityscape below, bold expressive brushstrokes, gold and blue palette. Original student work compositionally similar to The Starry Night. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-van-gogh-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Sunflowers in a vase, bold yellow and ochre tones, thick expressive Van Gogh inspired brushwork, vibrant and textured. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Van Gogh's Sunflowers — bold yellow sunflower bouquet in a simple vase, thick expressive brushstrokes, warm ochre and gold palette. Original student work compositionally similar to Sunflowers. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-van-gogh-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Cypress trees under a swirling starry sky, deep green and cobalt blue, energetic post-impressionist brushstrokes. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Van Gogh's Café Terrace at Night — golden lit café exterior under a deep starry blue night sky, cobblestone street, warm amber glow, expressive brushwork. Original student work compositionally similar to Café Terrace at Night. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-van-gogh-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Blooming almond tree branches against a bright blue sky, white and pink blossoms, bold outlines, Van Gogh inspired. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Van Gogh's Bedroom in Arles — simple bedroom interior with bed, chairs, and window, bold flat colors in blue and orange, strong outlines, naive perspective. Original student work compositionally similar to Bedroom in Arles. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-van-gogh-experience',
@@ -71,22 +71,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-paint-pouring-example-1',
     prompt:
-      'Square 1:1 overhead editorial close-up. Finished fluid acrylic pour painting on canvas laid flat. Vivid cells of deep ocean blue, gold, and cream, organic flowing abstract texture, high detail. Clean studio surface beneath.',
+      'Square 1:1 editorial photo. A finished fluid acrylic pour painting — ocean wave composition in deep teal, navy, and white, organic flowing cells suggesting crashing water and sea foam. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-pouring-example-2',
     prompt:
-      'Square 1:1 overhead editorial close-up. Finished fluid acrylic pour painting on canvas. Swirling pink, coral, and white cells, lace-like organic pattern, soft and feminine palette. Clean studio surface.',
+      'Square 1:1 editorial photo. A finished fluid acrylic pour painting — deep space galaxy nebula swirl in rich purple, midnight blue, and soft pink, glowing abstract cosmic texture with fine lacing detail. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-pouring-example-3',
     prompt:
-      'Square 1:1 overhead editorial close-up. Finished fluid acrylic pour painting on canvas. Bold jewel tones — teal, purple, gold — flowing in large dramatic sweeps with fine lacing detail. High contrast, striking. Clean studio surface.',
+      'Square 1:1 editorial photo. A finished fluid acrylic pour painting — metallic marble effect in silver, gold, and cream, elegant flowing veins and smooth blended cells, luxury material mood. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-pouring-example-4',
     prompt:
-      'Square 1:1 overhead editorial close-up. Finished fluid acrylic pour painting on canvas. Earthy terracotta, rust, and cream tones flowing together, soft cell formation, minimal and warm palette. Clean studio surface.',
+      'Square 1:1 editorial photo. A finished fluid acrylic pour painting — vivid neon energy abstract in electric magenta, lime green, and cobalt blue, bold high-contrast cells with dynamic flowing movement. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-pouring-experience',
@@ -101,22 +101,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-alcohol-ink-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished alcohol ink artwork on white yupo paper. Flowing teal and coral ink blooms, organic marble-like texture, gold metallic accents, delicate and luminous. Clean studio surface, warm light.',
+      'Square 1:1 editorial photo. A finished alcohol ink artwork on white paper — ocean depths composition in deep teal, navy, and aquamarine, organic flowing ink suggesting underwater light and movement, luminous and ethereal. Framed and hung on a bright white wall in a calm minimal room, soft natural daylight, shallow depth of field, artwork is the hero.',
   },
   {
     id: 'theme-alcohol-ink-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished alcohol ink artwork on white paper. Deep indigo and violet ink spreading in organic cloud-like formations, soft edges, ethereal abstract mood. Clean studio surface, warm light.',
+      'Square 1:1 editorial photo. A finished alcohol ink artwork on white paper — soft sunset clouds in warm peach, coral, and rose gold, ink blooms layered to suggest atmospheric sky, dreamy and delicate. Framed and hung on a bright white wall in a calm minimal room, soft natural daylight, shallow depth of field, artwork is the hero.',
   },
   {
     id: 'theme-alcohol-ink-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished alcohol ink artwork on white paper. Warm sunset palette — amber, peach, and rose — flowing together in soft layered blooms, light and airy feel. Clean studio surface.',
+      'Square 1:1 editorial photo. A finished alcohol ink artwork on white paper — marble elegance in soft grey, white, and charcoal, fine flowing veins of ink across a clean surface, sophisticated and minimal. Framed and hung on a bright white wall in a calm minimal room, soft natural daylight, shallow depth of field, artwork is the hero.',
   },
   {
     id: 'theme-alcohol-ink-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished alcohol ink artwork on white paper. Bold emerald green and gold ink in large sweeping organic shapes, high contrast, jewel-like richness. Clean studio surface, warm light.',
+      'Square 1:1 editorial photo. A finished alcohol ink artwork on white paper — gilded blossom composition with soft blush pink ink bloom forms and gold metallic accents, delicate organic texture, warm and luminous. Framed and hung on a bright white wall in a calm minimal room, soft natural daylight, shallow depth of field, artwork is the hero.',
   },
   {
     id: 'theme-alcohol-ink-experience',
@@ -131,22 +131,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-monet-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Water lily pond with dappled light on the surface, soft greens and pinks, loose Monet-inspired brushwork, serene and luminous. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Monet's Water Lilies series — soft blue lily pond with floating pads and reflected sky, cool pastel blues and greens, loose impressionist brushwork. Original student work compositionally similar to Water Lilies in Blue. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-monet-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Wisteria hanging in soft violet clusters over a garden path, dappled light, loose painterly brushwork, pastel tones. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Monet's Woman with a Parasol — a soft impressionist female figure in a summer field holding a parasol, dappled light, loose airy brushwork, cream and sage green palette. Original student work compositionally similar to Woman with a Parasol. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-monet-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Poppy field in soft afternoon light, red and green tones loosely painted, impressionist haze, peaceful pastoral mood. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Monet's Japanese Footbridge — arched green bridge over a lily pond, weeping willow reflections, soft blue-green water, loose impressionist brushwork. Original student work compositionally similar to The Japanese Bridge. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-monet-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Japanese footbridge over a lily pond, soft blue-green water, weeping willows, Monet-inspired loose brushwork. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Monet's Poppy Field — rolling green field dotted with vivid red poppies, hazy summer sky, loose gestural impressionist brushwork, warm pastoral mood. Original student work compositionally similar to Poppy Field. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-monet-experience',
@@ -161,22 +161,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-picasso-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Cubist-inspired portrait with bold geometric shapes, fragmented face from multiple angles, primary red blue and yellow tones, strong black outlines. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Picasso's analytic cubist period — fragmented self-portrait with geometric angular planes, muted earth tones of ochre, grey, and brown, multiple viewpoints in one face. Original student work in the style of Picasso's cubist self-portrait period. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-picasso-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Cubist still life — guitar and fruit on a table — angular flat shapes, bold outlines, vivid Picasso-inspired palette. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Picasso's analytic cubist guitar still life — abstract guitarist figure with fragmented instrument, angular overlapping planes in ochre, brown, and dark green. Original student work compositionally similar to Picasso's guitar and figure studies. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-picasso-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Abstract cubist figure in bold geometric planes, earthy ochre and terracotta tones with black outlines, expressive and confident. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Picasso's Blue Period — melancholic solitary figure in soft muted blues and blue-green tones, loose painterly treatment, quiet emotional mood. Original student work in the spirit of Picasso's Blue Period. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-picasso-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Cubist-inspired two-faced portrait, symmetrical and bold, navy and cream tones with graphic black outlines, striking composition. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in Picasso's later expressive style — bold stylized female portrait with flattened features, vivid primary colors, strong black outlines, confident and graphic. Original student work in the spirit of Picasso's modern muse portraits. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-picasso-experience',
@@ -191,22 +191,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-renoir-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Soft romantic portrait of a young woman in warm golden afternoon light, blush and cream tones, loose Renoir-inspired brushwork, gentle and luminous. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Renoir's Girl with a Watering Can — a soft impressionist portrait of a young girl in a flower garden, warm dappled light, loose brushwork in blush, green, and ivory. Original student work compositionally similar to Girl with a Watering Can. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-renoir-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Two figures at an outdoor café table, dappled light, soft pink and ivory palette, loose painterly strokes, Renoir-inspired social scene. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Renoir's Young Girls at the Piano — two soft impressionist figures at an upright piano, warm interior light, loose brushwork in rose, cream, and soft brown. Original student work compositionally similar to Young Girls at the Piano. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-renoir-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Bouquet of roses in a glass vase, soft pink and cream petals, impressionist loose brushwork, delicate and feminine. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Renoir's Luncheon of the Boating Party — loose impressionist outdoor gathering mood, figures in dappled riverside light, warm rose and ivory palette, relaxed social energy. Original student work in the mood of Luncheon of the Boating Party. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-renoir-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished impressionist acrylic canvas painting on wooden easel. Young woman reading in dappled garden light, soft green and blush tones, romantic impressionist mood, Renoir-inspired. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in Renoir's impressionist style — a loose bouquet of summer flowers in a glass vase, soft pink, yellow, and white blooms, dappled warm light, delicate brushwork. Original student work in Renoir's flower painting style. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-renoir-experience',
@@ -221,22 +221,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-matisse-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Bright expressive flat-color flowers in a vase, bold black outlines, vivid red yellow and green palette, joyful Matisse-inspired composition. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Matisse's Blue Nude cut-out series — bold simplified female figure in flat cobalt blue, white negative space background, strong expressive silhouette. Original student work compositionally similar to Blue Nude. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-matisse-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Abstract interior scene with bold flat color shapes — patterned tablecloth, window, plant — vivid tones, decorative Matisse-inspired style. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Matisse's Goldfish — a glass bowl with bright orange goldfish on a patterned table, vivid flat colors, bold outlines, decorative interior mood. Original student work compositionally similar to Goldfish. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-matisse-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Dancing figures in bold simplified silhouette, warm terracotta and cobalt blue, energetic and expressive, Matisse cut-out inspired. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Matisse's The Dance — bold simplified dancing figures in a ring, flat terracotta and cobalt blue tones, energetic and joyful. Original student work compositionally similar to The Dance. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-matisse-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished acrylic canvas painting on wooden easel. Tropical fish and coral in bright flat colors, playful pattern-like composition, vivid turquoise and coral tones, Matisse-inspired joy. Warm studio bokeh background.',
+      "Square 1:1 editorial photo. A student's acrylic painting in the spirit of Matisse's Red Room — richly decorated interior in vivid red, flat patterned tablecloth and wall merging together, bold decorative objects, intense warm palette. Original student work compositionally similar to The Red Room. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.",
   },
   {
     id: 'theme-matisse-experience',
@@ -281,22 +281,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-texture-art-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished impasto texture painting on canvas. Thick palette knife tulips in vivid red, yellow, pink, and purple with bold green leaves, heavy dimensional paint, bright and expressive beginner style, tactile and joyful. Warm studio lighting.',
+      'Square 1:1 editorial photo. A finished impasto texture painting — ocean swells in thick palette knife strokes of deep teal, navy, and white, heavy dimensional paint suggesting rolling wave forms, highly tactile surface. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-texture-art-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished impasto texture painting on canvas. Thick layered abstract waves in cobalt blue and white, bold palette knife strokes, highly dimensional surface, powerful and energetic. Warm studio lighting.',
+      'Square 1:1 editorial photo. A finished impasto texture painting — a single minimalist flower bloom in soft blush and cream, thick palette knife petals standing off a clean white canvas, elegant and restrained. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-texture-art-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished impasto texture painting on canvas. Sunflower field in golden yellow and green, thick palette knife petals standing off the canvas surface, rich and tactile, warm tones. Warm studio lighting.',
+      'Square 1:1 editorial photo. A finished impasto texture painting — layered mountain ridges in thick palette knife strokes of earthy grey, terracotta, and cream, ridge-like dimensional texture suggesting landscape depth. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-texture-art-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished impasto texture painting on canvas. Abstract landscape in earthy terracotta, rust, and cream, thick gestural palette knife marks creating ridge-like texture, tactile and warm. Warm studio lighting.',
+      'Square 1:1 editorial photo. A finished impasto texture painting — bold abstract rhythm in thick gestural palette knife marks, vivid cobalt blue and gold, highly dimensional surface with strong directional energy. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-texture-art-experience',
@@ -311,22 +311,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-paint-your-pet-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished beginner-style acrylic pet portrait on small canvas. Shiba Inu face on bold solid orange background, simple expressive brushwork, dark warm tones, charming and naive style similar to a hand-painted keepsake. Warm studio lighting.',
+      'Square 1:1 editorial photo. A beginner-style acrylic pet portrait of a happy golden retriever, warm amber and cream tones, simple expressive brushwork, bold solid forest green background, charming naive keepsake style. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-pet-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished beginner-style acrylic pet portrait on small canvas. Fluffy white cat on bold solid cobalt blue background, simple confident outlines, expressive eyes, warm and charming beginner style. Warm studio lighting.',
+      'Square 1:1 editorial photo. A beginner-style acrylic pet portrait of a majestic calico cat with distinctive orange, black, and white markings, simple confident outlines, bold solid cobalt blue background, warm and charming. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-pet-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished beginner-style acrylic pet portrait on small canvas. Golden retriever on a bold solid forest green background, warm brown tones, simple expressive brushwork, keepsake quality. Warm studio lighting.',
+      'Square 1:1 editorial photo. A beginner-style acrylic pet portrait of a French bulldog with expressive eyes and bat ears, simple graphic style, bold solid mustard yellow background, strong outlines, charming and confident. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-pet-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished beginner-style acrylic pet portrait on small canvas. Black and white French bulldog on bold solid mustard yellow background, simple graphic style, strong outlines, charming and confident. Warm studio lighting.',
+      'Square 1:1 editorial photo. A beginner-style acrylic painting featuring two pets side by side — a dog and a cat — painted as a double portrait, simple expressive brushwork, bold solid deep teal background, charming naive style. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-pet-experience',
@@ -341,22 +341,22 @@ export const THEME_PAGE_IMAGE_PROMPT_ROWS: { id: string; prompt: string }[] = [
   {
     id: 'theme-paint-your-idol-example-1',
     prompt:
-      'Square 1:1 close-up editorial. Finished pop-art acrylic canvas painting on wooden easel. Bold stylized portrait of a woman with graphic flat colors, strong black outlines, vivid pink and yellow palette, no real celebrity likeness. Warm studio bokeh background.',
+      'Square 1:1 editorial photo. A bold acrylic portrait painting of an imagined 80s rock legend — wild hair, dramatic stage lighting, vivid electric colors, expressive graphic style, no real celebrity likeness. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-idol-example-2',
     prompt:
-      'Square 1:1 close-up editorial. Finished pop-art acrylic canvas painting on wooden easel. Graphic stylized portrait of a man in bold cobalt blue and white, Andy Warhol-inspired flat color treatment, strong outlines, no real celebrity likeness. Warm studio bokeh background.',
+      'Square 1:1 editorial photo. A bold acrylic portrait painting of an imagined modern pop star — stylized graphic face, vivid flat color blocking in pink and gold, strong black outlines, contemporary pop-art energy, no real celebrity likeness. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-idol-example-3',
     prompt:
-      'Square 1:1 close-up editorial. Finished pop-art acrylic canvas painting on wooden easel. Bold graphic portrait with halftone dot pattern background, vivid red and black tones, comic-inspired style, expressive and striking. No real celebrity likeness. Warm studio bokeh background.',
+      'Square 1:1 editorial photo. A bold acrylic painting of an anime-style hero portrait — large expressive eyes, vivid flat colors in blue and white, bold graphic outlines, energetic and dynamic composition, original character design. Hung on a bright white wall in a minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-idol-example-4',
     prompt:
-      'Square 1:1 close-up editorial. Finished pop-art acrylic canvas painting on wooden easel. Stylized portrait with bold neon color blocking — turquoise, magenta, yellow — flat graphic shapes, confident outlines, no real celebrity likeness. Warm studio bokeh background.',
+      'Square 1:1 editorial photo. A bold acrylic portrait painting in the mood of a classic golden-age movie star — soft dramatic lighting, elegant monochrome palette with warm sepia tones, painterly glamour, no real celebrity likeness. Hung on a bright white wall in a calm minimal living room, soft natural daylight, shallow depth of field, painting is the hero.',
   },
   {
     id: 'theme-paint-your-idol-experience',

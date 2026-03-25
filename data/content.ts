@@ -9,6 +9,12 @@ import {
   SITE_IMAGES,
 } from '../constants';
 import { GI } from './generated-image-paths';
+import {
+  HOME_TESTIMONIALS_CAROUSEL_EN,
+  HOME_TESTIMONIALS_CAROUSEL_JP,
+  HOME_TESTIMONIALS_FEATURED_EN,
+  HOME_TESTIMONIALS_FEATURED_JP,
+} from './home-testimonials';
 
 export const defaultContent: ContentData = {
   theme: {
@@ -100,7 +106,7 @@ export const defaultContent: ContentData = {
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "Relax, Sip, Create, Connect.",
+        title: "Beginner friendly classes\ncentrally located\nacross Tokyo.",
         p1: "Artbar is more than an art class—it's a social experience. Step into our lounge-style studio, grab a glass of wine, and let the stress melt away.",
         ratingLabel: "Average Rating",
         guestsCount: "100,457",
@@ -133,15 +139,8 @@ export const defaultContent: ContentData = {
       },
       testimonials: {
         title: "Hear from our creative community",
-        items: [
-          {
-            text: "Very fun and relaxing! It completely took my mind off my extremely busy days in Tokyo. Ami, our instructor, was easy to follow, and when I needed help she was right there for me.",
-            author: "Ryan Stephen Alldridge",
-            userImage: GI.testimonials.ryan
-          },
-          { text: "At this friendly art studio, the wine is just liquid motivation to let your creative juice flow. You don’t need to be an artist to get stuck in!", author: "TimeOut Tokyo", role: "Media" },
-          { text: "A wonderful experience! I went solo and made new friends. The atmosphere is so welcoming and the wine definitely helps with creativity!", author: "Sarah Jenkins" }
-        ]
+        featured: HOME_TESTIMONIALS_FEATURED_EN,
+        carousel: HOME_TESTIMONIALS_CAROUSEL_EN,
       },
       cta: {
         badge: "Ready to Create?",
@@ -394,7 +393,7 @@ export const defaultContent: ContentData = {
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "リラックス、ドリンク、クリエイト、コネクト。",
+        title: "初心者歓迎のクラス\n都心からアクセス良好\n東京各地で。",
         p1: "Artbarは、単なる絵画教室ではありません。都会の喧騒から離れ、ワインやドリンクと共に感性を解き放つ「大人のための隠れ家」です。",
         ratingLabel: "平均評価",
         guestsCount: "100,457",
@@ -427,15 +426,8 @@ export const defaultContent: ContentData = {
       },
       testimonials: {
         title: "参加者の声",
-        items: [
-          {
-            text: "とても楽しくてリラックスできました！東京での多忙な日々を完全に忘れることができました。インストラクターのAmiさんは分かりやすく、助けが必要なときはすぐに来てくれました。",
-            author: "Ryan Stephen Alldridge",
-            userImage: GI.testimonials.ryan
-          },
-          { text: "このフレンドリーなアートスタジオでは、ワインは創造力を溢れさせるための液体のようなモチベーションです。アーティストである必要はありません！", author: "TimeOut Tokyo", role: "Media" },
-          { text: "素晴らしい体験でした！一人で参加して新しい友達ができました。雰囲気はとても歓迎的で、ワインは間違いなく創造性を助けてくれます！", author: "Sarah Jenkins" }
-        ]
+        featured: HOME_TESTIMONIALS_FEATURED_JP,
+        carousel: HOME_TESTIMONIALS_CAROUSEL_JP,
       },
       cta: {
         badge: "さあ、始めましょう",

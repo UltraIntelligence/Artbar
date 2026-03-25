@@ -2,7 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Wine, Calendar, Palette, Heart, ArrowRight, Quote, ShieldCheck, Play } from 'lucide-react';
+import {
+  Wine,
+  Calendar,
+  Palette,
+  Heart,
+  ArrowRight,
+  Quote,
+  Languages,
+  Play,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
@@ -10,8 +21,32 @@ import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL, PARTNER_LOGOS } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
-import { formatGuestCountDisplay, formatGuestConceptLabel } from '../lib/guest-count';
+import {
+  formatGuestCountCompactK,
+  formatGuestCountDisplay,
+  formatGuestConceptLabel,
+} from '../lib/guest-count';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+
+/**
+ * Fixed carousel height (~Ida Don’s testimonial) so the page doesn’t jump between slides.
+ * Taller copy scrolls inside the quote area.
+ */
+const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
+  'h-[31rem] min-h-[31rem] sm:h-[33rem] sm:min-h-[33rem] md:h-[37rem] md:min-h-[37rem] lg:h-[39rem] lg:min-h-[39rem]';
+
+/**
+ * Square face crops for the concept social strip — Unsplash (hotlink OK per Unsplash license).
+ * Curated East Asian–presenting adults for a Tokyo audience (mixed genders).
+ */
+const CONCEPT_SOCIAL_AVATAR_URLS = [
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+] as const;
 
 export const Home: React.FC = () => {
   const { content, site, lang } = useContent();
@@ -20,12 +55,12 @@ export const Home: React.FC = () => {
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
 
-  const trustReveal = useScrollReveal();
   const conceptReveal = useScrollReveal();
   const howItWorksReveal = useScrollReveal();
   const themesReveal = useScrollReveal();
   const featuresReveal = useScrollReveal();
-  const testimonialsReveal = useScrollReveal();
+  const featuredTestimonialsReveal = useScrollReveal();
+  const carouselTestimonialsReveal = useScrollReveal();
   const asSeenInReveal = useScrollReveal();
   const bottomCtaReveal = useScrollReveal();
 
@@ -53,21 +88,39 @@ export const Home: React.FC = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const topTestimonials = site.home.testimonials.items.slice(0, 3);
+  const carouselTestimonials = site.home.testimonials.carousel;
+  const featuredTestimonials = site.home.testimonials.featured;
+  const activeCarouselTestimonial = carouselTestimonials[activeIndex];
 
   useEffect(() => {
-    if (paused) return;
+    setActiveIndex(0);
+  }, [lang]);
+
+  useEffect(() => {
+    if (paused || carouselTestimonials.length === 0) return;
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % topTestimonials.length);
+      setActiveIndex((prev) => (prev + 1) % carouselTestimonials.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [topTestimonials.length, paused]);
+  }, [carouselTestimonials.length, paused]);
 
   useEffect(() => {
     if (!paused) return;
     const resume = setTimeout(() => setPaused(false), 12000);
     return () => clearTimeout(resume);
   }, [paused]);
+
+  const goPrevTestimonial = () => {
+    if (carouselTestimonials.length === 0) return;
+    setActiveIndex((prev) => (prev - 1 + carouselTestimonials.length) % carouselTestimonials.length);
+    setPaused(true);
+  };
+
+  const goNextTestimonial = () => {
+    if (carouselTestimonials.length === 0) return;
+    setActiveIndex((prev) => (prev + 1) % carouselTestimonials.length);
+    setPaused(true);
+  };
 
   // Icon mapping helper
   const getStepIcon = (index: number) => {
@@ -78,8 +131,9 @@ export const Home: React.FC = () => {
 
   const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : 'ご利用企業様';
   const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
-  const bilingualInstructionLine =
-    lang === 'en' ? 'Professional Bilingual Instruction Provided' : 'プロのバイリンガルインストラクター';
+  const bilingualLine1 = 'Professional Bilingual';
+  const bilingualLine2 = 'Instruction Provided';
+  const bilingualInstructionJp = 'プロのバイリンガルインストラクター';
   const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : 'メディア掲載';
   const asSeenInHeading = lang === 'en' ? 'As Seen In' : 'メディア掲載実績';
 
@@ -112,16 +166,22 @@ export const Home: React.FC = () => {
               </span>
 
               {/* Proof line — trust primer above headline */}
-              <div className="flex items-center justify-center gap-2.5 md:gap-3.5 text-white/70">
-                <StarRating
-                  size={16}
-                  animated
-                  delayBase={600}
-                  className="md:[&>svg]:w-5 md:[&>svg]:h-5"
-                />
-                <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
-                <span className="text-white/40 text-lg">·</span>
-                <span className="font-heading text-base md:text-xl text-white/70 tracking-wide">{guestCountFormatted}+ {site.home.hero.guestsSuffix}</span>
+              <div className="flex flex-col items-center gap-1 text-white/70 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-2.5 sm:gap-y-0 md:gap-3.5">
+                <div className="flex items-center gap-2.5 md:gap-3.5">
+                  <StarRating
+                    size={16}
+                    animated
+                    delayBase={600}
+                    className="md:[&>svg]:w-5 md:[&>svg]:h-5"
+                  />
+                  <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
+                  <span className="hidden text-white/40 text-lg sm:inline" aria-hidden>
+                    ·
+                  </span>
+                </div>
+                <span className="font-heading whitespace-nowrap text-sm text-white/70 tracking-normal md:text-xl md:tracking-wide">
+                  {guestCountFormatted}+ {site.home.hero.guestsSuffix}
+                </span>
               </div>
 
               {/* H1 */}
@@ -171,106 +231,51 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust & Social Proof Section */}
-      <section className="relative z-[2] px-4 md:px-10">
+      {/* Featured testimonials — overlap hero bottom to bridge into next section */}
+      <section className="relative z-[3] bg-transparent px-4 pb-10 md:px-10 md:pb-16">
         <div
-          ref={trustReveal.ref}
-          className={`max-w-5xl mx-auto -mt-14 md:-mt-12 lg:-mt-16 reveal ${trustReveal.isVisible ? 'visible' : ''}`}
+          ref={featuredTestimonialsReveal.ref}
+          className={`mx-auto max-w-[1400px] -mt-24 sm:-mt-28 md:-mt-36 lg:-mt-44 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
         >
-          {/* Centered High-Impact Review Card (Horizontal Cycling Animation) */}
-          <div className="bg-white rounded-[var(--radius-feature)] p-8 md:p-14 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.18)] flex flex-col items-center text-center relative overflow-hidden group mb-12 min-h-[360px] md:min-h-[420px] justify-center">
-            {topTestimonials.map((testimonial, idx) => (
-              <div 
-                key={idx} 
-                className={`absolute inset-0 p-8 md:p-14 pb-16 md:pb-20 flex flex-col items-center justify-center transition-all duration-700 ease-in-out ${
-                  idx === activeIndex 
-                    ? 'opacity-100 translate-x-0 pointer-events-auto' 
-                    : idx < activeIndex 
-                      ? 'opacity-0 -translate-x-full pointer-events-none'
-                      : 'opacity-0 translate-x-full pointer-events-none'
-                }`}
+          <div
+            className={`grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 reveal-stagger ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
+          >
+            {featuredTestimonials.map((item, index) => (
+              <div
+                key={index}
+                className="relative flex h-full flex-col rounded-[var(--radius-card)] border border-white/60 bg-white p-8 shadow-[0_24px_70px_-28px_rgba(5,55,97,0.35)] transition-all duration-300 hover:shadow-[0_28px_80px_-24px_rgba(5,55,97,0.35)] md:rounded-[var(--radius-section)] md:p-10"
               >
-                <StarRating
-                  size={18}
-                  animated
-                  delayBase={100}
-                  className="mb-6 md:[&>svg]:w-5 md:[&>svg]:h-5"
-                />
-
-                <div className="relative mb-8">
-                    <Quote size={40} className="text-artbar-taupe/10 absolute -top-4 -left-4 md:-top-6 md:-left-10 md:w-16 md:h-16" />
-                    <p className="text-lg md:text-3xl font-heading font-normal text-artbar-navy leading-snug max-w-xl relative z-10 px-4">
-                      &ldquo;{testimonial.text}&rdquo;
-                    </p>
+                <div className="absolute right-6 top-6 text-artbar-taupe opacity-20 md:right-8 md:top-8">
+                  <Heart size={32} fill="currentColor" />
                 </div>
-
-                <div className="flex flex-col items-center">
-                    {testimonial.userImage ? (
-                      <img
-                        src={testimonial.userImage}
-                        alt=""
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover mb-3 shadow-inner ring-2 ring-white"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-heading font-heavy text-base md:text-lg mb-3 shadow-inner">
-                        {testimonial.author.charAt(0)}
-                      </div>
+                <StarRating size={14} className="mb-6" />
+                <p className="mb-8 flex-grow text-base font-light italic leading-relaxed text-artbar-navy md:text-lg">
+                  &ldquo;{item.text}&rdquo;
+                </p>
+                <div className="mt-auto flex items-center gap-4">
+                  {item.userImage ? (
+                    <img
+                      src={item.userImage}
+                      alt=""
+                      className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-artbar-bg md:h-12 md:w-12"
+                    />
+                  ) : (
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-artbar-bg text-sm font-bold text-artbar-navy md:h-12 md:w-12 md:text-lg">
+                      {item.author.charAt(0)}
+                    </div>
+                  )}
+                  <div>
+                    <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-artbar-navy md:text-sm">
+                      {item.author}
+                    </p>
+                    {item.role && (
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-artbar-taupe md:text-xs">{item.role}</p>
                     )}
-                    <p className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-[0.15em]">{testimonial.author}</p>
-                    {testimonial.role && <p className="text-[9px] md:text-[10px] text-artbar-taupe font-bold uppercase tracking-[0.1em] mt-0.5">{testimonial.role}</p>}
+                  </div>
                 </div>
               </div>
             ))}
-
-            {/* Pagination dots */}
-            <div className="absolute bottom-4 md:bottom-5 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
-               {topTestimonials.map((_, i) => (
-                 <button
-                   key={i}
-                   type="button"
-                   onClick={() => {
-                     setActiveIndex(i);
-                     setPaused(true);
-                   }}
-                   aria-label={`Show testimonial ${i + 1}`}
-                   className="flex h-11 w-11 items-center justify-center"
-                 >
-                   <span
-                     className={`block h-1.5 rounded-full transition-all duration-300 ${activeIndex === i ? 'w-7 bg-artbar-taupe' : 'w-2 bg-gray-200 hover:bg-gray-300'}`}
-                   />
-                 </button>
-               ))}
-            </div>
           </div>
-
-          {/* Corporate logos — subtle strip (same visual language as team building social proof) */}
-          <div className="flex w-full flex-col items-center">
-            <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
-              <div className="h-px flex-grow bg-artbar-navy/10" />
-              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray md:text-xs">
-                {meetRegularsHeading}
-              </p>
-              <div className="h-px flex-grow bg-artbar-navy/10" />
-            </div>
-
-            <div className="mx-auto mb-10 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-10 sm:gap-x-7 sm:gap-y-11 md:mb-12 md:grid-cols-7 md:gap-x-8 md:gap-y-12 lg:gap-x-10 lg:gap-y-14">
-              {PARTNER_LOGOS.map((logo, i) => (
-                <PartnerLogo key={i} name={logo.name} url={logo.url} />
-              ))}
-            </div>
-
-            <Button
-              type="button"
-              variant="taupe"
-              size="cta"
-              onClick={() => router.push('/team-building')}
-              className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
-            >
-              {bookTeamBuildingCta}
-              <ArrowRight size={18} className="shrink-0" aria-hidden />
-            </Button>
-          </div>
-
         </div>
       </section>
 
@@ -340,24 +345,71 @@ export const Home: React.FC = () => {
                {/* Social Proof centered stats */}
                <div className="flex flex-col items-center gap-8">
                   <div className="flex -space-x-5 md:-space-x-8">
-                      {[1,2,3,4,5,6].map(i => (
-                        <img key={i} className="w-14 h-14 md:w-24 md:h-24 rounded-full border-[3px] md:border-[6px] border-white shadow-xl object-cover" src={`https://picsum.photos/seed/trust${i}/150`} alt="Artbar Guest" />
+                      {CONCEPT_SOCIAL_AVATAR_URLS.map((src) => (
+                        <img
+                          key={src}
+                          src={src}
+                          alt=""
+                          className="h-14 w-14 shrink-0 rounded-full border-[3px] border-white object-cover shadow-xl md:h-24 md:w-24 md:border-[6px]"
+                        />
                       ))}
-                      <div className="w-[4.5rem] h-[4.5rem] md:w-36 md:h-36 rounded-full border-[3px] md:border-[6px] border-white bg-artbar-navy text-white flex items-center justify-center shadow-xl px-1">
-                        <span className="text-sm md:text-2xl font-heading font-heavy tabular-nums leading-none text-center">
-                          {guestCountFormatted}
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-artbar-navy px-0.5 text-white shadow-xl md:h-24 md:w-24 md:border-[6px]">
+                        <span className="text-center font-heading text-[0.65rem] font-heavy tabular-nums leading-none md:text-lg">
+                          {formatGuestCountCompactK(lang)}
                         </span>
                       </div>
                   </div>
                   <div className="text-center">
                      <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">{guestConceptLabel}</p>
-                     <p className="text-[10px] md:text-base font-bold text-artbar-taupe uppercase tracking-[0.2em] flex items-center justify-center gap-3">
-                        <ShieldCheck size={20} className="text-green-600" /> {bilingualInstructionLine}
+                     <p className="mx-auto flex max-w-xl flex-col items-center justify-center gap-2 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:max-w-none md:flex-row md:items-center md:gap-3 md:text-base">
+                        <Languages size={20} className="shrink-0 text-artbar-taupe" strokeWidth={2} aria-hidden />
+                        <span className="flex flex-col leading-snug md:leading-tight">
+                          {lang === 'en' ? (
+                            <>
+                              <span>{bilingualLine1}</span>
+                              <span>{bilingualLine2}</span>
+                            </>
+                          ) : (
+                            <span>{bilingualInstructionJp}</span>
+                          )}
+                        </span>
                      </p>
                   </div>
                </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Partner logos — white card containment (home only; team building page stays flush) */}
+      <section className="relative z-[2] px-4 pb-12 md:px-10 md:pb-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex w-full flex-col items-center rounded-[var(--radius-feature)] border border-gray-100 bg-white p-10 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.12)] md:p-14 md:shadow-[0_40px_120px_-30px_rgba(0,0,0,0.15)]">
+            <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
+              <div className="h-px flex-grow bg-artbar-navy/10" />
+              <p className="shrink-0 px-6 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray md:px-8 md:text-xs">
+                {meetRegularsHeading}
+              </p>
+              <div className="h-px flex-grow bg-artbar-navy/10" />
+            </div>
+
+            <div className="mx-auto mb-12 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:gap-x-10 sm:gap-y-16 md:mb-14 md:grid-cols-7 md:gap-x-12 md:gap-y-20 lg:gap-x-16 lg:gap-y-24">
+              {PARTNER_LOGOS.map((logo, i) => (
+                <PartnerLogo key={i} name={logo.name} url={logo.url} />
+              ))}
+            </div>
+
+            <Button
+              type="button"
+              variant="taupe"
+              size="cta"
+              onClick={() => router.push('/team-building')}
+              className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
+            >
+              {bookTeamBuildingCta}
+              <ArrowRight size={18} className="shrink-0" aria-hidden />
+            </Button>
           </div>
         </div>
       </section>
@@ -454,44 +506,118 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Bottom Testimonials Grid */}
-      <section className="py-16 md:py-32 bg-artbar-bg grain relative">
-        <div ref={testimonialsReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
-          <div className={`flex items-center gap-4 mb-12 md:mb-16 reveal ${testimonialsReveal.isVisible ? 'visible' : ''}`}>
-             <div className="h-px bg-artbar-navy/10 flex-grow"></div>
-             <h2 className="text-xl md:text-3xl font-heading font-heavy text-artbar-navy text-center px-4 uppercase tracking-widest">{site.home.testimonials.title}</h2>
-             <div className="h-px bg-artbar-navy/10 flex-grow"></div>
+      {/* Testimonial carousel — full guest quotes (below Artbar Experience) */}
+      <section className="relative z-[2] bg-artbar-bg px-4 pb-24 pt-16 md:px-8 md:pb-36 md:pt-24 lg:px-12 lg:pt-28">
+        <div
+          ref={carouselTestimonialsReveal.ref}
+          className={`mx-auto max-w-[min(100%,52rem)] xl:max-w-6xl reveal ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}
+        >
+          <div className="mb-12 flex items-center gap-4 md:mb-16">
+            <div className="h-px flex-grow bg-artbar-navy/10" />
+            <h2 className="px-4 text-center font-heading text-xl font-heavy uppercase tracking-widest text-artbar-navy md:text-3xl lg:text-4xl">
+              {site.home.testimonials.title}
+            </h2>
+            <div className="h-px flex-grow bg-artbar-navy/10" />
           </div>
 
-          <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 reveal-stagger ${testimonialsReveal.isVisible ? 'visible' : ''}`}>
-            {site.home.testimonials.items.map((item, index) => (
-              <div key={index} className="bg-white p-8 md:p-10 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] shadow-sm hover:shadow-lg transition-all duration-300 border border-white/50 relative flex flex-col h-full">
-                 <div className="absolute top-6 right-6 md:top-8 md:right-8 text-artbar-taupe opacity-20">
-                    <Heart size={32} fill="currentColor" />
-                 </div>
-                 <StarRating size={14} className="mb-6" />
-                 <p className="text-artbar-navy text-base md:text-lg leading-relaxed mb-8 font-light italic flex-grow">
-                   &ldquo;{item.text}&rdquo;
-                 </p>
-                 <div className="flex items-center gap-4 mt-auto">
-                    {item.userImage ? (
-                      <img
-                        src={item.userImage}
-                        alt=""
-                        className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover shrink-0 ring-2 ring-artbar-bg"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 md:w-12 md:h-12 bg-artbar-bg rounded-full flex items-center justify-center text-artbar-navy font-bold text-sm md:text-lg shrink-0">
-                        {item.author.charAt(0)}
-                      </div>
-                    )}
-                    <div>
-                        <p className="font-heading font-bold text-artbar-navy text-[10px] md:text-sm uppercase tracking-wide">{item.author}</p>
-                        {item.role && <p className="text-[9px] md:text-xs text-artbar-taupe font-bold uppercase tracking-wider">{item.role}</p>}
+          <div
+            className={`relative isolate w-full overflow-hidden rounded-[var(--radius-feature)] border border-white/60 bg-white shadow-[0_32px_100px_-28px_rgba(5,55,97,0.22),0_0_0_1px_rgba(5,55,97,0.04)] ${TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS}`}
+          >
+            {activeCarouselTestimonial ? (
+              <div
+                key={activeIndex}
+                className="animate-testimonial-slide-in motion-reduce:animate-none flex h-full min-h-0 flex-col items-center px-5 pb-28 pt-8 text-center sm:px-10 sm:pb-32 sm:pt-10 md:px-14 md:pb-36 md:pt-12 lg:px-16"
+              >
+                <div className="mb-4 shrink-0 pt-2 md:mb-5 md:pt-3">
+                  <StarRating
+                    size={22}
+                    animated
+                    delayBase={100}
+                    className="justify-center text-amber-400 md:[&>svg]:h-6 md:[&>svg]:w-6"
+                  />
+                </div>
+
+                <div className="relative mx-auto mb-4 flex min-h-0 w-full max-w-3xl flex-1 flex-col justify-center overflow-y-auto overflow-x-hidden px-1 [-webkit-overflow-scrolling:touch] md:mb-5 md:max-w-4xl lg:max-w-5xl">
+                  <Quote
+                    size={48}
+                    className="pointer-events-none absolute left-0 top-0 text-artbar-taupe/[0.12] md:left-2 md:h-20 md:w-20"
+                    aria-hidden
+                  />
+                  <p className="relative z-10 text-pretty text-lg font-heading font-normal leading-[1.55] text-artbar-navy md:text-2xl md:leading-[1.55] lg:text-[1.65rem] lg:leading-[1.6] xl:text-3xl xl:leading-[1.5]">
+                    &ldquo;{activeCarouselTestimonial.text}&rdquo;
+                  </p>
+                  {activeCarouselTestimonial.date ? (
+                    <p className="mt-6 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:mt-8 md:text-xs">
+                      {activeCarouselTestimonial.date}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="flex shrink-0 flex-col items-center pb-1">
+                  {activeCarouselTestimonial.userImage ? (
+                    <img
+                      src={activeCarouselTestimonial.userImage}
+                      alt=""
+                      className="mb-3 h-12 w-12 rounded-full object-cover shadow-md ring-2 ring-artbar-bg md:h-14 md:w-14"
+                    />
+                  ) : (
+                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-artbar-bg to-artbar-bg/70 font-heading text-lg font-heavy text-artbar-navy shadow-inner ring-2 ring-white md:h-14 md:w-14 md:text-xl">
+                      {activeCarouselTestimonial.author.charAt(0)}
                     </div>
-                 </div>
+                  )}
+                  <p className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-artbar-navy md:text-sm">
+                    {activeCarouselTestimonial.author}
+                  </p>
+                  {activeCarouselTestimonial.role ? (
+                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-artbar-taupe md:text-xs">
+                      {activeCarouselTestimonial.role}
+                    </p>
+                  ) : null}
+                </div>
               </div>
-            ))}
+            ) : null}
+
+            {/* Navigation: pill bar + elevated circular controls */}
+            <div className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-stretch gap-0 sm:bottom-7 md:bottom-8">
+              <div className="flex items-center gap-1 rounded-full border border-artbar-navy/10 bg-gradient-to-b from-white to-artbar-bg/40 p-1.5 pl-2 pr-2 shadow-[0_12px_40px_-12px_rgba(5,55,97,0.25)] backdrop-blur-md sm:gap-2 sm:p-2 sm:pl-3 sm:pr-3">
+                <button
+                  type="button"
+                  onClick={goPrevTestimonial}
+                  aria-label="Previous testimonial"
+                  className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
+                >
+                  <ChevronLeft
+                    className="h-5 w-5 transition-transform group-hover:-translate-x-0.5 md:h-6 md:w-6"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                </button>
+
+                <div className="flex min-w-[5.5rem] flex-col items-center justify-center px-2 sm:min-w-[6.5rem] sm:px-4">
+                  <span className="font-heading text-[9px] font-bold uppercase tracking-[0.25em] text-artbar-taupe/90">
+                    {lang === 'en' ? 'Stories' : 'ストーリー'}
+                  </span>
+                  <p className="font-heading text-lg font-heavy tabular-nums leading-none text-artbar-navy md:text-xl">
+                    <span className="text-artbar-navy">{activeIndex + 1}</span>
+                    <span className="mx-1.5 text-artbar-taupe/50 md:mx-2">/</span>
+                    <span className="font-normal text-artbar-gray">{carouselTestimonials.length || '—'}</span>
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={goNextTestimonial}
+                  aria-label="Next testimonial"
+                  className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
+                >
+                  <ChevronRight
+                    className="h-5 w-5 transition-transform group-hover:translate-x-0.5 md:h-6 md:w-6"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>

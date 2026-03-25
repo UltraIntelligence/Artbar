@@ -282,6 +282,8 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
       prompt:
         'Portrait 3:4 head and shoulders editorial photo. Friendly Japanese woman aged late 20s, warm natural smile, smart casual clothing. Neutral soft-focus Tokyo studio or café background. Clean professional portrait quality, warm tones. No overlaid text, no watermarks, no brand logos in frame.',
     }),
+    // Theme detail pages (`/themes/[slug]`): hero, 4× example paintings, experience — prompts in
+    // `data/theme-page-image-prompts.ts` (merged via `theme-page-manifest-items.ts`; do not duplicate ids here).
     ...THEME_PAGE_MANIFEST_ITEMS,
   ],
 };

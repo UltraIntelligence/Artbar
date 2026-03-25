@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'www.artbar.co.jp' },
       { protocol: 'https', hostname: 'upload.wikimedia.org' },
       { protocol: 'https', hostname: 'picsum.photos' },
+      { protocol: 'https', hostname: 'i.pravatar.cc' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
     // Avoid Sharp-based optimization in dev — reduces crashes on macOS (malloc / bad free) when
     // assets 404 or during heavy Fast Refresh; production builds still optimize images.
