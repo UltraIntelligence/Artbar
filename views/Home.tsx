@@ -239,21 +239,21 @@ export const Home: React.FC = () => {
               </div>
 
               {/* H1 — layered text-shadow for readability on busy hero photo */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_8px_rgba(0,0,0,0.65),0_4px_28px_rgba(0,0,0,0.45)]">
+              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_2px_rgba(0,0,0,0.65),0_2px_6px_rgba(0,0,0,0.48),0_3px_20px_rgba(0,0,0,0.32)]">
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.title}
                 </span>
                 <span
-                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_2px_10px_rgba(0,0,0,0.55),0_4px_24px_rgba(0,0,0,0.4)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_2px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4),0_3px_18px_rgba(0,0,0,0.28)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.titleHighlight}
                 </span>
               </h1>
 
               <h2
-                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_2px_12px_rgba(0,0,0,0.5),0_3px_20px_rgba(0,0,0,0.35)] ${
+                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6),0_2px_10px_rgba(0,0,0,0.38),0_3px_16px_rgba(0,0,0,0.26)] ${
                   lang === 'jp' ? '' : 'whitespace-pre-line'
                 }`}
               >
