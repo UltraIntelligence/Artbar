@@ -98,6 +98,8 @@ export const Home: React.FC = () => {
   const rawHeroHome = (heroImages.home ?? "").trim();
   const heroBgSrc =
     rawHeroHome && !rawHeroHome.includes("toolandtea.com") ? rawHeroHome : SITE_IMAGES.hero.home;
+  const heroBgIsVideo = /\.mp4(\?|$)/i.test(heroBgSrc);
+  const heroBgUrl = heroBgSrc.includes(' ') ? encodeURI(heroBgSrc) : heroBgSrc;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -155,27 +157,47 @@ export const Home: React.FC = () => {
     <div className="w-full bg-artbar-bg">
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
-        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy">
+        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-neutral-950">
           <div className="absolute inset-0 animate-in fade-in duration-1000">
             <div className="relative h-full w-full min-h-full min-w-full">
-              <Image
-                src={heroBgSrc}
-                alt="Artbar Experience"
-                fill
-                priority
-                sizes="100vw"
-                className="hero-bg-motion object-cover object-[center_19%]"
-              />
+              {heroBgIsVideo ? (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
+                  aria-hidden
+                >
+                  <source src={heroBgUrl} type="video/mp4" />
+                </video>
+              ) : (
+                <Image
+                  src={heroBgSrc}
+                  alt="Artbar Experience"
+                  fill
+                  priority
+                  sizes="100vw"
+                  unoptimized={heroBgSrc.toLowerCase().endsWith('.gif')}
+                  className={`object-cover object-[center_19%] ${
+                    heroBgSrc.toLowerCase().endsWith('.gif') ? '' : 'hero-bg-motion'
+                  }`}
+                />
+              )}
             </div>
           </div>
-          {/* Brand navy wash — matches site primary (e.g. artbar-navy) */}
-          <div className="absolute inset-0 bg-artbar-navy/82 pointer-events-none" />
+          {/* Lighter brand wash so the photo reads brighter (still artbar-navy tint) */}
+          <div className="absolute inset-0 bg-artbar-navy/45 pointer-events-none" />
 
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
 
               {/* Badge */}
-              <span className="animate-sheen inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold tracking-widest uppercase text-[8px] sm:text-[9px] md:text-xs">
+              <span
+                className={`animate-sheen inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-[8px] sm:text-[9px] md:text-xs ${
+                  lang === 'jp' ? 'normal-case tracking-wide' : 'uppercase tracking-widest'
+                }`}
+              >
                 {site.home.hero.badge}
               </span>
 
@@ -194,11 +216,15 @@ export const Home: React.FC = () => {
                   </span>
                 </div>
                 <span
-                  className={`font-heading min-w-0 w-full text-center text-sm leading-snug text-white/70 tracking-normal sm:w-auto sm:max-w-[min(100%,36rem)] md:text-xl md:tracking-wide ${
-                    lang === 'jp' ? 'break-keep px-2 [overflow-wrap:anywhere] sm:px-0' : ''
+                  className={`font-heading min-w-0 text-center text-white/70 sm:w-auto sm:max-w-[min(100%,36rem)] md:tracking-wide ${
+                    lang === 'jp'
+                      ? 'w-full max-w-full whitespace-nowrap text-[10px] tracking-tight sm:px-0 sm:text-xs md:text-xl'
+                      : 'w-full text-sm leading-snug tracking-normal md:text-xl'
                   }`}
                 >
-                  {guestCountFormatted}+ {site.home.hero.guestsSuffix}
+                  {lang === 'jp'
+                    ? site.home.hero.guestsSuffix.replace(/\{\{count\}\}/g, guestCountFormatted)
+                    : `${guestCountFormatted}+ ${site.home.hero.guestsSuffix}`}
                 </span>
               </div>
 

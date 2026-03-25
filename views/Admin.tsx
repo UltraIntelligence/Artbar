@@ -683,7 +683,7 @@ export const Admin: React.FC = () => {
             </p>
             <div className="grid grid-cols-2 gap-4 mt-4">
                 <BilingualInput localContent={localContent} updateField={updateField} label="Guests number" path={['home', 'hero', 'guestsNumber']} />
-                <BilingualInput localContent={localContent} updateField={updateField} label="Guests label (e.g. guests and counting)" path={['home', 'hero', 'guestsSuffix']} />
+                <BilingualInput localContent={localContent} updateField={updateField} label="Hero guest line (EN: suffix after the + count; JP: full line, use {{count}} for the formatted number)" path={['home', 'hero', 'guestsSuffix']} />
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
                 <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-artbar-gray">Hero Media</h4>

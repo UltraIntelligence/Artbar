@@ -377,7 +377,7 @@ export const defaultContent: ContentData = {
     },
     home: {
       hero: {
-        badge: "CELEBRATING OUR 10TH ANNIVERSARY",
+        badge: "「10周年記念」",
         title: "東京で一番愛されている",
         titleHighlight: "ペイント＆シップスタジオ",
         subtitle:
@@ -389,7 +389,7 @@ export const defaultContent: ContentData = {
         ratingScore: "4.8",
         ratingSource: "平均評価",
         guestsNumber: "101,000",
-        guestsSuffix: "人以上の東京のスタジオに来てくれたゲスト、まだまだ増えてます。"
+        guestsSuffix: "「{{count}}名が体験済み。まだまだ増えています。」"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
@@ -397,7 +397,7 @@ export const defaultContent: ContentData = {
         p1: "好きな絵を選んで、グラスを傾けて、自分のペースで描くだけ。\n経験不要。あとは来てみれば、わかります。",
         ratingLabel: "平均評価",
         guestsCount: "101,000",
-        guestsLabel: "{{count}}人以上の東京のスタジオに来てくれたゲスト、まだまだ増えてます。"
+        guestsLabel: "{{count}}名が体験済み。まだまだ増えています。"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",
