@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from 'next';
 import { Josefin_Sans } from 'next/font/google';
+import { cookies, headers } from 'next/headers';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { LANG_COOKIE_NAME, resolveInitialLanguage } from '@/lib/language';
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -36,11 +38,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const headersList = await headers();
+  const initialLang = resolveInitialLanguage(
+    cookieStore.get(LANG_COOKIE_NAME)?.value,
+    headersList.get('accept-language')
+  );
+  const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
+
   return (
-    <html lang="en" className={josefinSans.variable}>
-      <body>
-        <ContentProvider>
+    <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
+      {/* suppressHydrationWarning: extensions (e.g. ColorZilla) may inject attrs on body before hydrate */}
+      <body suppressHydrationWarning>
+        <ContentProvider initialLang={initialLang}>
           <ThemeInjector />
           <ScrollToTop />
           <div className="flex flex-col min-h-screen font-sans text-artbar-navy selection:bg-artbar-taupe selection:text-white">

@@ -39,6 +39,7 @@ No test framework is configured.
 `ContentContext` (`context/ContentContext.tsx`) provides bilingual content via React Context:
 - `useContent()` hook returns `{ lang, toggleLang, content, site, updateContent, resetContent }`
 - `site` is a shortcut for `content[lang]` (either `content.en` or `content.jp`)
+- **Initial language:** `app/layout.tsx` (Server Component) passes `initialLang` into `ContentProvider` from the `artbar_lang` cookie when set, otherwise from the `Accept-Language` header (`lib/language.ts`). `middleware.ts` sets `artbar_lang` on first visit when the cookie is missing. `toggleLang` updates state and the cookie so the choice persists across reloads.
 - Content schema is defined in `types.ts` — `ContentData` is the root type, `SiteContent` holds per-language strings
 - Shared data (instructors, locations, blog posts, FAQs, media) lives outside the language split on `ContentData`
 - Admin panel at `/admin` persists edits to localStorage with deep-merge on load
@@ -52,6 +53,7 @@ No test framework is configured.
 - `components/` — shared UI (`Navbar`, `Footer`, `SEO`, `PetSketcher`, `PartnerLogo`, `Logo`, etc.)
 - `components/ui/` — primitives (`Button`)
 - `context/` — `ContentContext.tsx` (`'use client'`)
+- `lib/language.ts` — `Accept-Language` / cookie resolution for `en` vs `jp`; `middleware.ts` mirrors cookie behavior for first-time visitors
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
 - `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`); `PARTNER_LOGOS` lists partner mark URLs (Wikimedia SVGs) used on home and `/team-building` — edit in one place to update both grids. Mark sizing (mobile vs desktop) is tuned in `PartnerLogo.tsx` via `max-sm`/`sm` scales.
@@ -78,6 +80,8 @@ The API key is read server-side in `app/api/generate-sketch/route.ts` via `proce
 Batch image generation (`npm run generate:images`, `npm run generate:images:theme-pages`) uses the same key. Theme detail **example** images (`theme-*-example-[1–4]`) use explicit **1K / 1:1** in `lib/gemini-image-config.ts`; optional **`GEMINI_THEME_EXAMPLE_IMAGE_SIZE`** overrides size.
 
 `useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
+
+**Hero media:** Key full-bleed heroes (home, theme detail, team building, blog post, private parties top image) fade in after the image or video has loaded so placeholders (`bg-artbar-navy` / `bg-artbar-bg`) avoid empty black or blue flashes.
 
 ## Design Tokens
 

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
@@ -35,6 +35,13 @@ export const ThemeDetail: React.FC = () => {
     () => pickDiscoveryThemes(resolvedSlug, site.home.themes.items, 4),
     [resolvedSlug, site.home.themes.items]
   );
+
+  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, theme.title);
+  const [heroBackdropReady, setHeroBackdropReady] = useState(false);
+
+  useEffect(() => {
+    setHeroBackdropReady(false);
+  }, [heroSrc]);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -78,12 +85,17 @@ export const ThemeDetail: React.FC = () => {
       {/* Hero Section */}
       <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-16 md:py-0">
         <Image
-          src={pageImages?.hero ?? getPh(1920, 1080, theme.title)}
+          key={heroSrc}
+          src={heroSrc}
           alt={theme.title}
           fill
           priority
-          className="object-cover opacity-50"
+          className={`object-cover transition-opacity duration-500 ${
+            heroBackdropReady ? 'opacity-50' : 'opacity-0'
+          }`}
           sizes="100vw"
+          onLoadingComplete={() => setHeroBackdropReady(true)}
+          onError={() => setHeroBackdropReady(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90" />
 

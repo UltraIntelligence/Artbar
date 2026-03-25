@@ -3,8 +3,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ContentData, SiteContent } from '../types';
 import { defaultContent } from '../data/content';
+import { type SiteLanguage, setLangCookieClient } from '../lib/language';
 
-type Language = 'en' | 'jp';
+type Language = SiteLanguage;
 
 interface ContentContextType {
   lang: Language;
@@ -41,8 +42,12 @@ const deepMerge = (base: any, source: any): any => {
   return output;
 };
 
-export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLang] = useState<Language>('en');
+export const ContentProvider: React.FC<{
+  children: React.ReactNode;
+  /** From server (cookie + Accept-Language) so first paint matches the browser. */
+  initialLang: Language;
+}> = ({ children, initialLang }) => {
+  const [lang, setLang] = useState<Language>(initialLang);
   const [content, setContent] = useState<ContentData>(defaultContent);
 
   useEffect(() => {
@@ -67,7 +72,11 @@ export const ContentProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const toggleLang = () => {
-    setLang(prev => prev === 'en' ? 'jp' : 'en');
+    setLang((prev) => {
+      const next: Language = prev === 'en' ? 'jp' : 'en';
+      setLangCookieClient(next);
+      return next;
+    });
   };
 
   const updateContent = (newContent: ContentData) => {

@@ -103,6 +103,7 @@ export const Home: React.FC = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [heroMediaReady, setHeroMediaReady] = useState(false);
   const carouselTestimonials = site.home.testimonials.carousel;
   const featuredTestimonials = site.home.testimonials.featured;
   const activeCarouselTestimonial = carouselTestimonials[activeIndex];
@@ -110,6 +111,10 @@ export const Home: React.FC = () => {
   useEffect(() => {
     setActiveIndex(0);
   }, [lang]);
+
+  useEffect(() => {
+    setHeroMediaReady(false);
+  }, [heroBgSrc, heroBgIsVideo]);
 
   useEffect(() => {
     if (paused || carouselTestimonials.length === 0) return;
@@ -157,8 +162,12 @@ export const Home: React.FC = () => {
     <div className="w-full bg-artbar-bg">
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
-        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-neutral-950">
-          <div className="absolute inset-0 animate-in fade-in duration-1000">
+        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy">
+          <div
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              heroMediaReady ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <div className="relative h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
                 <video
@@ -166,8 +175,11 @@ export const Home: React.FC = () => {
                   muted
                   loop
                   playsInline
+                  preload="auto"
                   className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
                   aria-hidden
+                  onLoadedData={() => setHeroMediaReady(true)}
+                  onError={() => setHeroMediaReady(true)}
                 >
                   <source src={heroBgUrl} type="video/mp4" />
                 </video>
@@ -182,6 +194,8 @@ export const Home: React.FC = () => {
                   className={`object-cover object-[center_19%] ${
                     heroBgSrc.toLowerCase().endsWith('.gif') ? '' : 'hero-bg-motion'
                   }`}
+                  onLoadingComplete={() => setHeroMediaReady(true)}
+                  onError={() => setHeroMediaReady(true)}
                 />
               )}
             </div>

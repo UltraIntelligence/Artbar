@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
@@ -35,16 +35,28 @@ export const TeamBuilding: React.FC = () => {
 
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
 
+  const teamHeroSrc = content.images.hero.teamBuilding;
+  const [heroBackdropReady, setHeroBackdropReady] = useState(false);
+
+  useEffect(() => {
+    setHeroBackdropReady(false);
+  }, [teamHeroSrc]);
+
   return (
     <div className="grain relative w-full bg-artbar-bg">
       <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-14 md:py-16 lg:py-20">
         <Image
-          src={content.images.hero.teamBuilding}
+          key={teamHeroSrc}
+          src={teamHeroSrc}
           alt="Team building"
           fill
           priority
-          className="object-cover opacity-50"
+          className={`object-cover transition-opacity duration-500 ${
+            heroBackdropReady ? 'opacity-50' : 'opacity-0'
+          }`}
           sizes="100vw"
+          onLoadingComplete={() => setHeroBackdropReady(true)}
+          onError={() => setHeroBackdropReady(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90"></div>
         

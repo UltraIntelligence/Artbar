@@ -60,7 +60,7 @@ Supporting **navigation** types (`NavLink`, etc.) exist in `types.ts` but are no
 
 ## Relationships
 
-- **ContentData ↔ SiteContent (1:2 languages):** `content.en` and `content.jp` are **parallel trees** of the same shape. No foreign keys—translators keep pairs in sync manually. `useContent().site` selects one branch via `lang` (`context/ContentContext.tsx`).
+- **ContentData ↔ SiteContent (1:2 languages):** `content.en` and `content.jp` are **parallel trees** of the same shape. No foreign keys—translators keep pairs in sync manually. `useContent().site` selects one branch via `lang` (`context/ContentContext.tsx`). Active `lang` is chosen from cookie `artbar_lang` or `Accept-Language` on first load (`lib/language.ts`, root `app/layout.tsx`); `toggleLang` updates the cookie.
 - **ContentData → shared arrays (1:many):** `instructors`, `locations`, `blog`, `media`, `faqs`, `teamBuildingTestimonials` belong to the **single** `ContentData` root, not to a language key. **Enforced by** TypeScript only.
 - **Instructor / Location identity:** `id` strings are **stable identifiers** for React keys and routing assumptions; duplicates are not prevented at runtime.
 - **BlogPost:** `slug` is the **route key** (`/blog/[slug]`). `id` is secondary. **Enforced by** convention + `find` in views; duplicate slugs would be ambiguous.
