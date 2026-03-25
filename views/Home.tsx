@@ -9,7 +9,6 @@ import {
   Heart,
   ArrowRight,
   Quote,
-  Languages,
   Play,
   ChevronLeft,
   ChevronRight,
@@ -181,8 +180,8 @@ export const Home: React.FC = () => {
               </span>
 
               {/* Proof line — trust primer above headline */}
-              <div className="flex flex-col items-center gap-1 text-white/70 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-2.5 sm:gap-y-0 md:gap-3.5">
-                <div className="flex items-center gap-2.5 md:gap-3.5">
+              <div className="flex w-full min-w-0 max-w-full flex-col items-center gap-1 text-white/70 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-2.5 sm:gap-y-0 md:gap-3.5">
+                <div className="flex shrink-0 items-center gap-2.5 md:gap-3.5">
                   <StarRating
                     size={16}
                     animated
@@ -194,7 +193,11 @@ export const Home: React.FC = () => {
                     ·
                   </span>
                 </div>
-                <span className="font-heading whitespace-nowrap text-sm text-white/70 tracking-normal md:text-xl md:tracking-wide">
+                <span
+                  className={`font-heading min-w-0 w-full text-center text-sm leading-snug text-white/70 tracking-normal sm:w-auto sm:max-w-[min(100%,36rem)] md:text-xl md:tracking-wide ${
+                    lang === 'jp' ? 'break-keep px-2 [overflow-wrap:anywhere] sm:px-0' : ''
+                  }`}
+                >
                   {guestCountFormatted}+ {site.home.hero.guestsSuffix}
                 </span>
               </div>
@@ -403,21 +406,18 @@ export const Home: React.FC = () => {
                          guestConceptLabel
                        )}
                      </p>
-                     <div className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:text-base">
-                        <Languages className="h-5 w-5 shrink-0 text-artbar-taupe md:h-6 md:w-6" strokeWidth={2} aria-hidden />
-                        <div className="flex flex-col items-center gap-1 leading-snug">
-                          {lang === 'en' ? (
-                            <>
-                              <span>{bilingualLine1}</span>
-                              <span>{bilingualLine2}</span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="normal-case tracking-normal">{bilingualJpLine1}</span>
-                              <span className="normal-case tracking-normal">{bilingualJpLine2}</span>
-                            </>
-                          )}
-                        </div>
+                     <div className="mx-auto flex max-w-xl flex-col items-center gap-1 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:text-base leading-snug">
+                        {lang === 'en' ? (
+                          <>
+                            <span>{bilingualLine1}</span>
+                            <span>{bilingualLine2}</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="normal-case tracking-normal">{bilingualJpLine1}</span>
+                            <span className="normal-case tracking-normal">{bilingualJpLine2}</span>
+                          </>
+                        )}
                      </div>
                   </div>
                </div>
