@@ -194,6 +194,8 @@ export const Home: React.FC = () => {
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(163,147,132,0.62)_0%,rgba(163,147,132,0.48)_9%,rgba(163,147,132,0.34)_20%,rgba(163,147,132,0.24)_32%,rgba(163,147,132,0.16)_44%,rgba(163,147,132,0.11)_54%,rgba(163,147,132,0.06)_58%,rgba(5,55,97,0.12)_66%,rgba(5,55,97,0.32)_76%,rgba(5,55,97,0.58)_88%,rgba(5,55,97,0.9)_100%)]"
             aria-hidden
           />
+          {/* ~15% overall luminance pull on image + wash; copy sits above this layer */}
+          <div className="pointer-events-none absolute inset-0 bg-black/15" aria-hidden />
 
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             {/* Mobile: shift stack down so H1 sits over darker vignette, not faces; desktop unchanged */}
