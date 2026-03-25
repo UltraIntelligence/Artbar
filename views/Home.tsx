@@ -189,15 +189,18 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Wash: strong taupe → fade to lower h2 → thin natural band → navy ramp → strong navy (no black overlay) */}
+          {/* Two-layer wash: (1) navy rises from bottom for legibility (2) strong taupe from top — single flat gradient was too subtle on photo */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(163,147,132,0.82)_0%,rgba(163,147,132,0.64)_6%,rgba(163,147,132,0.46)_16%,rgba(163,147,132,0.28)_30%,rgba(163,147,132,0.14)_42%,rgba(163,147,132,0.05)_49%,transparent_52%,transparent_58%,rgba(5,55,97,0.14)_64%,rgba(5,55,97,0.38)_76%,rgba(5,55,97,0.62)_86%,rgba(5,55,97,0.94)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[18%] via-artbar-navy/50 via-[55%] to-artbar-navy/90 to-100%"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[52%]"
             aria-hidden
           />
 
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
-            {/* Mobile: shift stack down so H1 sits over darker vignette, not faces; desktop unchanged */}
-            <div className="max-w-4xl flex w-full max-md:translate-y-8 flex-col items-center gap-5 md:gap-7 lg:gap-8">
+            <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
 
               {/* Badge */}
               <span
@@ -235,22 +238,22 @@ export const Home: React.FC = () => {
                 </span>
               </div>
 
-              {/* H1 — extra shadow on small screens where photo luminance competes with white type */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg max-md:[text-shadow:0_2px_20px_rgba(5,55,97,0.95),0_1px_4px_rgba(0,0,0,0.55)] flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
+              {/* H1 — layered text-shadow for readability on busy hero photo */}
+              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_2px_rgba(0,0,0,0.85),0_2px_8px_rgba(0,0,0,0.65),0_4px_28px_rgba(0,0,0,0.45)]">
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.title}
                 </span>
                 <span
-                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_2px_10px_rgba(0,0,0,0.55),0_4px_24px_rgba(0,0,0,0.4)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.titleHighlight}
                 </span>
               </h1>
 
               <h2
-                className={`text-white/85 font-light leading-relaxed drop-shadow-md max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 ${
+                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.8),0_2px_12px_rgba(0,0,0,0.5),0_3px_20px_rgba(0,0,0,0.35)] ${
                   lang === 'jp' ? '' : 'whitespace-pre-line'
                 }`}
               >
