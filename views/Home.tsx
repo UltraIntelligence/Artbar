@@ -189,8 +189,11 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Lighter brand wash so the photo reads brighter (still artbar-navy tint) */}
-          <div className="absolute inset-0 bg-artbar-navy/45 pointer-events-none" />
+          {/* Warm-to-navy gradient wash: taupe lifts the upper field; navy anchors contrast for white type */}
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-artbar-taupe/20 via-artbar-navy/40 to-artbar-navy/50 pointer-events-none"
+            aria-hidden
+          />
 
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
