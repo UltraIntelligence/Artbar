@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Wine,
@@ -103,12 +103,6 @@ export const Home: React.FC = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [heroMediaReady, setHeroMediaReady] = useState(false);
-  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
-
-  const markHeroReady = useCallback(() => {
-    setHeroMediaReady(true);
-  }, []);
 
   const carouselTestimonials = site.home.testimonials.carousel;
   const featuredTestimonials = site.home.testimonials.featured;
@@ -117,34 +111,6 @@ export const Home: React.FC = () => {
   useEffect(() => {
     setActiveIndex(0);
   }, [lang]);
-
-  useEffect(() => {
-    setHeroMediaReady(false);
-  }, [heroBgSrc, heroBgIsVideo]);
-
-  /** iOS Safari / slow mobile: load events sometimes never fire; do not leave hero stuck at opacity 0. */
-  useEffect(() => {
-    const id = window.setTimeout(markHeroReady, 2800);
-    return () => window.clearTimeout(id);
-  }, [heroBgSrc, heroBgIsVideo, markHeroReady]);
-
-  useEffect(() => {
-    if (!heroBgIsVideo) return;
-    const el = heroVideoRef.current;
-    if (!el) return;
-    const onReady = () => markHeroReady();
-    el.addEventListener('loadeddata', onReady);
-    el.addEventListener('canplay', onReady);
-    el.addEventListener('playing', onReady);
-    if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      markHeroReady();
-    }
-    return () => {
-      el.removeEventListener('loadeddata', onReady);
-      el.removeEventListener('canplay', onReady);
-      el.removeEventListener('playing', onReady);
-    };
-  }, [heroBgIsVideo, heroBgUrl, markHeroReady]);
 
   useEffect(() => {
     if (paused || carouselTestimonials.length === 0) return;
@@ -193,15 +159,11 @@ export const Home: React.FC = () => {
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
         <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy">
-          <div
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              heroMediaReady ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
+          {/* Do not gate hero media on load events: iOS Safari often omits them, leaving opacity-0 forever. */}
+          <div className="absolute inset-0">
             <div className="relative h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
                 <video
-                  ref={heroVideoRef}
                   autoPlay
                   muted
                   loop
@@ -209,10 +171,6 @@ export const Home: React.FC = () => {
                   preload="auto"
                   className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
                   aria-hidden
-                  onLoadedData={markHeroReady}
-                  onCanPlay={markHeroReady}
-                  onPlaying={markHeroReady}
-                  onError={markHeroReady}
                 >
                   <source src={heroBgUrl} type="video/mp4" />
                 </video>
@@ -227,9 +185,6 @@ export const Home: React.FC = () => {
                   className={`object-cover object-[center_19%] ${
                     heroBgSrc.toLowerCase().endsWith('.gif') ? '' : 'hero-bg-motion'
                   }`}
-                  onLoad={markHeroReady}
-                  onLoadingComplete={markHeroReady}
-                  onError={markHeroReady}
                 />
               )}
             </div>
