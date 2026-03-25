@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import {
   Wine,
@@ -104,6 +104,12 @@ export const Home: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [heroMediaReady, setHeroMediaReady] = useState(false);
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  const markHeroReady = useCallback(() => {
+    setHeroMediaReady(true);
+  }, []);
+
   const carouselTestimonials = site.home.testimonials.carousel;
   const featuredTestimonials = site.home.testimonials.featured;
   const activeCarouselTestimonial = carouselTestimonials[activeIndex];
@@ -115,6 +121,30 @@ export const Home: React.FC = () => {
   useEffect(() => {
     setHeroMediaReady(false);
   }, [heroBgSrc, heroBgIsVideo]);
+
+  /** iOS Safari / slow mobile: load events sometimes never fire; do not leave hero stuck at opacity 0. */
+  useEffect(() => {
+    const id = window.setTimeout(markHeroReady, 2800);
+    return () => window.clearTimeout(id);
+  }, [heroBgSrc, heroBgIsVideo, markHeroReady]);
+
+  useEffect(() => {
+    if (!heroBgIsVideo) return;
+    const el = heroVideoRef.current;
+    if (!el) return;
+    const onReady = () => markHeroReady();
+    el.addEventListener('loadeddata', onReady);
+    el.addEventListener('canplay', onReady);
+    el.addEventListener('playing', onReady);
+    if (el.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      markHeroReady();
+    }
+    return () => {
+      el.removeEventListener('loadeddata', onReady);
+      el.removeEventListener('canplay', onReady);
+      el.removeEventListener('playing', onReady);
+    };
+  }, [heroBgIsVideo, heroBgUrl, markHeroReady]);
 
   useEffect(() => {
     if (paused || carouselTestimonials.length === 0) return;
@@ -171,6 +201,7 @@ export const Home: React.FC = () => {
             <div className="relative h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
                 <video
+                  ref={heroVideoRef}
                   autoPlay
                   muted
                   loop
@@ -178,8 +209,10 @@ export const Home: React.FC = () => {
                   preload="auto"
                   className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
                   aria-hidden
-                  onLoadedData={() => setHeroMediaReady(true)}
-                  onError={() => setHeroMediaReady(true)}
+                  onLoadedData={markHeroReady}
+                  onCanPlay={markHeroReady}
+                  onPlaying={markHeroReady}
+                  onError={markHeroReady}
                 >
                   <source src={heroBgUrl} type="video/mp4" />
                 </video>
@@ -194,8 +227,9 @@ export const Home: React.FC = () => {
                   className={`object-cover object-[center_19%] ${
                     heroBgSrc.toLowerCase().endsWith('.gif') ? '' : 'hero-bg-motion'
                   }`}
-                  onLoadingComplete={() => setHeroMediaReady(true)}
-                  onError={() => setHeroMediaReady(true)}
+                  onLoad={markHeroReady}
+                  onLoadingComplete={markHeroReady}
+                  onError={markHeroReady}
                 />
               )}
             </div>

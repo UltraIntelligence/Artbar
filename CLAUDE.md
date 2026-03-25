@@ -81,7 +81,7 @@ Batch image generation (`npm run generate:images`, `npm run generate:images:them
 
 `useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
 
-**Hero media:** Key full-bleed heroes (home, theme detail, team building, blog post, private parties top image) fade in after the image or video has loaded so placeholders (`bg-artbar-navy` / `bg-artbar-bg`) avoid empty black or blue flashes.
+**Hero media:** Key full-bleed heroes (home, theme detail, team building, blog post, private parties top image) fade in after the image or video has loaded so placeholders (`bg-artbar-navy` / `bg-artbar-bg`) avoid empty black or blue flashes. The **home** hero also uses `onLoad` with `next/image`, extra `<video>` events + ref listeners, and a short **timeout fallback** so mobile Safari never leaves the hero stuck at `opacity: 0` if load callbacks never fire.
 
 ## Design Tokens
 
