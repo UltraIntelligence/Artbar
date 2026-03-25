@@ -189,9 +189,13 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Warm→navy wash: stronger taupe in upper band (visible vs old flat navy/45); navy deepens at bottom for type */}
+          {/* Two-layer wash: (1) navy rises from bottom for legibility (2) strong taupe from top — single flat gradient was too subtle on photo */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/45 from-0% via-artbar-navy/35 via-[42%] to-artbar-navy/65 to-100%"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[18%] via-artbar-navy/50 via-[55%] to-artbar-navy/90 to-100%"
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[52%]"
             aria-hidden
           />
 
