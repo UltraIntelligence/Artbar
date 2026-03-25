@@ -54,7 +54,7 @@ No test framework is configured.
 - `context/` — `ContentContext.tsx` (`'use client'`)
 - `data/content.ts` — all site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
-- `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`); `PARTNER_LOGOS` lists partner mark URLs (Wikimedia SVGs) used on home and `/team-building` — edit in one place to update both grids
+- `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`); `PARTNER_LOGOS` lists partner mark URLs (Wikimedia SVGs) used on home and `/team-building` — edit in one place to update both grids. Mark sizing (mobile vs desktop) is tuned in `PartnerLogo.tsx` via `max-sm`/`sm` scales.
 - `data/generated-image-paths.ts` — `GI` public URLs; `THEME_PAGE_IMAGES` maps each theme slug to hero / four examples / experience URLs under `public/media/generated/`; `INSTRUCTOR_IDS` lists instructor slugs (keep in sync with `INSTRUCTOR_ROWS`). Client instructor photos: `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`. Studio location photos on `/locations`: `GI.locations` → `public/media/generated/loc-*.jpg` (see `LOCATIONS` in `constants.ts`; image manifest slots for these are disabled—replace files in `public`, not Gemini). Optional local staging folder `media/locations/` is not served by Next.js.
 - `data/theme-page-image-prompts.ts` — Gemini prompts for theme detail imagery; merged into `scripts/image-manifest.ts` via `scripts/theme-page-manifest-items.ts`
 

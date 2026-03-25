@@ -90,7 +90,7 @@ export const TeamBuilding: React.FC = () => {
             <div className="h-px flex-grow bg-artbar-navy/10" />
           </div>
 
-          <div className="mx-auto grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:gap-x-10 sm:gap-y-16 md:grid-cols-7 md:gap-x-12 md:gap-y-20 lg:gap-x-16 lg:gap-y-24">
+          <div className="mx-auto grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-5 gap-y-9 sm:gap-x-10 sm:gap-y-16 md:grid-cols-7 md:gap-x-12 md:gap-y-20 lg:gap-x-16 lg:gap-y-24">
             {PARTNER_LOGOS.map((logo, i) => (
               <PartnerLogo key={i} name={logo.name} url={logo.url} />
             ))}

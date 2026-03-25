@@ -59,6 +59,15 @@ export const Home: React.FC = () => {
       : theme.heroTitle;
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
+  /** EN concept line: second line "— …" only from `md` (single line on small screens). */
+  const enGuestConceptSplit =
+    lang === 'en' && guestConceptLabel.includes(' — ')
+      ? (() => {
+          const parts = guestConceptLabel.split(' — ');
+          if (parts.length < 2) return null;
+          return { line1: parts[0], line2: `— ${parts.slice(1).join(' — ')}` };
+        })()
+      : null;
 
   const conceptReveal = useScrollReveal();
   const howItWorksReveal = useScrollReveal();
@@ -138,7 +147,8 @@ export const Home: React.FC = () => {
   const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
   const bilingualLine1 = 'Professional Bilingual';
   const bilingualLine2 = 'Instruction Provided';
-  const bilingualInstructionJp = 'プロのバイリンガルインストラクター';
+  const bilingualJpLine1 = 'プロのバイリンガル';
+  const bilingualJpLine2 = 'インストラクター';
   const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : 'メディア掲載';
   const asSeenInHeading = lang === 'en' ? 'As Seen In' : 'メディア掲載実績';
 
@@ -252,10 +262,10 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Featured testimonials — overlap hero bottom to bridge into next section */}
-      <section className="relative z-[3] bg-transparent px-4 pb-10 md:px-10 md:pb-16">
+      <section className="relative z-[3] bg-transparent px-4 pb-10 md:px-10 md:pb-14">
         <div
           ref={featuredTestimonialsReveal.ref}
-          className={`mx-auto max-w-[1400px] -mt-24 sm:-mt-28 md:-mt-36 lg:-mt-44 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
+          className={`mx-auto max-w-[1400px] -mt-16 sm:-mt-20 md:-mt-28 lg:-mt-32 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
         >
           <div
             className={`grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 reveal-stagger ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
@@ -300,7 +310,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Concept Section - Refined for better balance */}
-      <section className="py-24 md:py-64 bg-artbar-bg overflow-hidden relative grain">
+      <section className="pt-16 pb-24 md:pt-24 md:pb-64 bg-artbar-bg overflow-hidden relative grain">
         <div ref={conceptReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
           <div className={`flex flex-col items-center text-center reveal ${conceptReveal.isVisible ? 'visible' : ''}`}>
             
@@ -380,20 +390,35 @@ export const Home: React.FC = () => {
                       </div>
                   </div>
                   <div className="text-center">
-                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">{guestConceptLabel}</p>
-                     <p className="mx-auto flex max-w-xl flex-col items-center justify-center gap-2 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:max-w-none md:flex-row md:items-center md:gap-3 md:text-base">
-                        <Languages size={20} className="shrink-0 text-artbar-taupe" strokeWidth={2} aria-hidden />
-                        <span className="flex flex-col leading-snug md:leading-tight">
+                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">
+                       {enGuestConceptSplit ? (
+                         <>
+                           <span className="md:hidden">{guestConceptLabel}</span>
+                           <span className="hidden md:flex md:flex-col md:items-center md:gap-1">
+                             <span>{enGuestConceptSplit.line1}</span>
+                             <span>{enGuestConceptSplit.line2}</span>
+                           </span>
+                         </>
+                       ) : (
+                         guestConceptLabel
+                       )}
+                     </p>
+                     <div className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:text-base">
+                        <Languages className="h-5 w-5 shrink-0 text-artbar-taupe md:h-6 md:w-6" strokeWidth={2} aria-hidden />
+                        <div className="flex flex-col items-center gap-1 leading-snug">
                           {lang === 'en' ? (
                             <>
                               <span>{bilingualLine1}</span>
                               <span>{bilingualLine2}</span>
                             </>
                           ) : (
-                            <span>{bilingualInstructionJp}</span>
+                            <>
+                              <span className="normal-case tracking-normal">{bilingualJpLine1}</span>
+                              <span className="normal-case tracking-normal">{bilingualJpLine2}</span>
+                            </>
                           )}
-                        </span>
-                     </p>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
@@ -403,20 +428,20 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Partner logos — white card containment (home only; team building page stays flush) */}
-      <section className="relative z-[2] px-4 pb-12 md:px-10 md:pb-16">
+      <section className="relative z-[2] px-3 pb-10 sm:px-4 sm:pb-12 md:px-10 md:pb-20 lg:pb-24">
         <div className="mx-auto max-w-7xl">
-          <div className="flex w-full flex-col items-center rounded-[var(--radius-feature)] border border-gray-100 bg-white p-10 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.12)] md:p-14 md:shadow-[0_40px_120px_-30px_rgba(0,0,0,0.15)]">
-            <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
+          <div className="flex w-full flex-col items-center rounded-[var(--radius-feature)] border border-gray-100 bg-white p-6 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.12)] sm:p-10 md:p-14 md:shadow-[0_40px_120px_-30px_rgba(0,0,0,0.15)] lg:px-16 lg:py-20 xl:py-24">
+            <div className="mb-8 flex w-full items-center gap-3 sm:mb-12 sm:gap-4 md:mb-16 lg:mb-20">
               <div className="h-px flex-grow bg-artbar-navy/10" />
-              <p className="shrink-0 px-6 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray md:px-8 md:text-xs">
+              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray sm:px-6 md:px-8 md:text-xs">
                 {meetRegularsHeading}
               </p>
               <div className="h-px flex-grow bg-artbar-navy/10" />
             </div>
 
-            <div className="mx-auto mb-12 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:gap-x-10 sm:gap-y-16 md:mb-14 md:grid-cols-7 md:gap-x-12 md:gap-y-20 lg:gap-x-16 lg:gap-y-24">
+            <div className="mx-auto mb-8 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-5 gap-y-9 sm:mb-12 sm:gap-x-10 sm:gap-y-16 md:mb-16 md:grid-cols-7 md:gap-x-14 md:gap-y-24 lg:mb-20 lg:gap-x-16 lg:gap-y-28 xl:gap-x-20">
               {PARTNER_LOGOS.map((logo, i) => (
-                <PartnerLogo key={i} name={logo.name} url={logo.url} />
+                <PartnerLogo key={i} name={logo.name} url={logo.url} size="prominent" />
               ))}
             </div>
 

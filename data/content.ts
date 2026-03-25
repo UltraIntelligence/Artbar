@@ -106,7 +106,7 @@ export const defaultContent: ContentData = {
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "It's not an art class. It's just a really good time.",
+        title: "Paint, drink, and laugh with friends.\nNo art skills required.",
         p1: "Pick a painting, pour a glass, and follow along at your own pace. No experience needed — just show up and see what happens.",
         ratingLabel: "Average Rating",
         guestsCount: "101,000",
@@ -393,7 +393,7 @@ export const defaultContent: ContentData = {
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
-        title: "アートクラスじゃない。ただ、最高に楽しい時間。",
+        title: "友達と描いて、飲んで、笑おう。\nアートの経験は一切不要。",
         p1: "好きな絵を選んで、グラスを傾けて、自分のペースで描くだけ。\n経験不要。あとは来てみれば、わかります。",
         ratingLabel: "平均評価",
         guestsCount: "101,000",
