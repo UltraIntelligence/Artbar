@@ -189,9 +189,9 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Single smooth wash: taupe → natural (photo) → navy — avoids a hard seam between stacked overlays */}
+          {/* Smooth wash: strong taupe from top through ~subtitle (h2) band, then navy for CTAs / base */}
           <div
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(163,147,132,0.5)_0%,rgba(163,147,132,0.16)_11%,rgba(163,147,132,0.04)_16%,transparent_22%,transparent_38%,rgba(5,55,97,0.1)_45%,rgba(5,55,97,0.38)_58%,rgba(5,55,97,0.65)_76%,rgba(5,55,97,0.9)_100%)]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(163,147,132,0.62)_0%,rgba(163,147,132,0.48)_9%,rgba(163,147,132,0.34)_20%,rgba(163,147,132,0.24)_32%,rgba(163,147,132,0.16)_44%,rgba(163,147,132,0.11)_54%,rgba(163,147,132,0.06)_58%,rgba(5,55,97,0.12)_66%,rgba(5,55,97,0.32)_76%,rgba(5,55,97,0.58)_88%,rgba(5,55,97,0.9)_100%)]"
             aria-hidden
           />
 
