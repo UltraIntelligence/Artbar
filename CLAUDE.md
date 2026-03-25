@@ -81,7 +81,7 @@ Batch image generation (`npm run generate:images`, `npm run generate:images:them
 
 `useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
 
-**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, a **two-layer** wash: navy vignette from below (`transparent` → `artbar-navy/90`) plus a strong **taupe** gradient from the top (`from-artbar-taupe/80` fading by ~52% height) so warmth reads clearly on the photo.
+**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, a **two-layer** wash: navy vignette from below plus taupe in the **upper ~36%** only; navy ramps earlier so the mid-hero is darker. On **small screens** the hero copy block uses `translate-y-8` so the H1 sits lower over the vignette (not centered on bright faces); H1 gets a stronger `text-shadow` on `max-md` for contrast.
 
 ## Design Tokens
 
