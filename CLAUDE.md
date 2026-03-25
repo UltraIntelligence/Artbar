@@ -81,7 +81,7 @@ Batch image generation (`npm run generate:images`, `npm run generate:images:them
 
 `useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
 
-**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, one **smooth** `linear-gradient`: **stronger taupe** from the top through roughly the headline + subtitle band (~58%), then navy ramps for CTAs / bottom. A **`bg-black/15`** layer sits on top of the wash (under the copy) to lower overall brightness ~15%. On **small screens** the copy block uses `translate-y-8`; H1 uses a stronger `text-shadow` on `max-md` for contrast.
+**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, one **smooth** `linear-gradient`: **strong taupe** at the top, fading toward the **lower h2** band; a **thin natural** strip (transparent, ~52–58%); then **navy** ramping into **strong navy** at the bottom. No black darken overlay. On **small screens** the copy block uses `translate-y-8`; H1 uses a stronger `text-shadow` on `max-md` for contrast.
 
 ## Design Tokens
 
