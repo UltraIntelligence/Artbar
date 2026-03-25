@@ -189,13 +189,9 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Two-layer wash: taupe only in upper band; navy ramps earlier so mid/lower hero (where mobile H1 sits) is darker */}
+          {/* Single smooth wash: taupe → natural (photo) → navy — avoids a hard seam between stacked overlays */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[8%] via-artbar-navy/55 via-[42%] to-artbar-navy/90 to-100%"
-            aria-hidden
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[36%]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(163,147,132,0.5)_0%,rgba(163,147,132,0.16)_11%,rgba(163,147,132,0.04)_16%,transparent_22%,transparent_38%,rgba(5,55,97,0.1)_45%,rgba(5,55,97,0.38)_58%,rgba(5,55,97,0.65)_76%,rgba(5,55,97,0.9)_100%)]"
             aria-hidden
           />
 
