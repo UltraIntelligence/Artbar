@@ -189,9 +189,9 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Warm-to-navy gradient wash: taupe lifts the upper field; navy anchors contrast for white type */}
+          {/* Warm→navy wash: stronger taupe in upper band (visible vs old flat navy/45); navy deepens at bottom for type */}
           <div
-            className="absolute inset-0 bg-gradient-to-b from-artbar-taupe/20 via-artbar-navy/40 to-artbar-navy/50 pointer-events-none"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/45 from-0% via-artbar-navy/35 via-[42%] to-artbar-navy/65 to-100%"
             aria-hidden
           />
 
