@@ -189,18 +189,19 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Two-layer wash: (1) navy rises from bottom for legibility (2) strong taupe from top — single flat gradient was too subtle on photo */}
+          {/* Two-layer wash: taupe only in upper band; navy ramps earlier so mid/lower hero (where mobile H1 sits) is darker */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[18%] via-artbar-navy/50 via-[55%] to-artbar-navy/90 to-100%"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[8%] via-artbar-navy/55 via-[42%] to-artbar-navy/90 to-100%"
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[52%]"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[36%]"
             aria-hidden
           />
 
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
-            <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
+            {/* Mobile: shift stack down so H1 sits over darker vignette, not faces; desktop unchanged */}
+            <div className="max-w-4xl flex w-full max-md:translate-y-8 flex-col items-center gap-5 md:gap-7 lg:gap-8">
 
               {/* Badge */}
               <span
@@ -238,8 +239,8 @@ export const Home: React.FC = () => {
                 </span>
               </div>
 
-              {/* H1 */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
+              {/* H1 — extra shadow on small screens where photo luminance competes with white type */}
+              <h1 className="font-heading font-heavy text-white tracking-tighter drop-shadow-lg max-md:[text-shadow:0_2px_20px_rgba(5,55,97,0.95),0_1px_4px_rgba(0,0,0,0.55)] flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
