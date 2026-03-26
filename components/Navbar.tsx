@@ -27,7 +27,9 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const isHome = pathname === '/';
-  const isTransparent = isHome && !scrolled && !isOpen;
+  /** Hero/top-of-home bar height — must not depend on `isOpen` or the logo jumps when the mobile menu opens. */
+  const isHeroNavLayout = isHome && !scrolled;
+  const isTransparent = isHeroNavLayout && !isOpen;
 
   const navLinks = [
     { name: site.nav.schedule, path: '/', hash: '#schedule' },
@@ -46,7 +48,7 @@ export const Navbar: React.FC = () => {
     }
 
     if (isMobile) {
-        return `text-3xl font-heading font-bold ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe`;
+        return `text-xl font-heading font-bold leading-snug ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe sm:text-2xl`;
     }
 
     // Shrink JP text size slightly (13px vs 15px) to prevent wrapping
@@ -76,15 +78,17 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const mobileBarTransition = 'duration-300 ease-out';
+
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-in-out pt-[env(safe-area-inset-top,0px)] ${
+      className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-[background-color,box-shadow] ${mobileBarTransition} ${
         isTransparent ? 'bg-transparent shadow-none' : 'bg-artbar-bg/95 backdrop-blur-md shadow-sm'
       }`}
     >
       <div
         className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-24 flex justify-between items-center ${
-          isTransparent ? 'py-6 md:py-10' : 'py-4'
+          isHeroNavLayout ? 'py-6 md:py-10' : 'py-4'
         }`}
       >
         <Link href="/" onClick={handleLogoClick} className="z-50 group relative flex min-h-[44px] items-center py-1">
@@ -122,37 +126,47 @@ export const Navbar: React.FC = () => {
 
         <div className="xl:hidden z-50 flex items-center gap-3">
           <button
-            onClick={() => setIsOpen(!isOpen)}
+            type="button"
+            onClick={() => setIsOpen((o) => !o)}
             className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 ${isTransparent ? 'text-white' : 'text-artbar-navy'} transition-colors`}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        {isOpen && (
-          <div className="fixed inset-0 bg-artbar-bg z-40 flex flex-col pt-[calc(7.5rem+env(safe-area-inset-top,0px))] px-6 sm:px-8 pb-10 pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] overflow-y-auto min-h-[100dvh] animate-in slide-in-from-top-5 duration-200">
-            <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path + (link.hash || '')}
-                  href={link.path + (link.hash || '')}
-                  onClick={() => setIsOpen(false)}
-                  className={getLinkActiveClass(link, pathname === link.path && !link.hash, true)}
-                >
-                  {link.name}
-                </Link>
-              ))}
+        {/* No JS delays — open/close are one state; CSS `transition-opacity` only. */}
+        <div
+          className={`xl:hidden fixed inset-0 z-40 flex flex-col bg-artbar-bg pt-[calc(6.75rem+env(safe-area-inset-top,0px))] px-6 sm:px-8 pb-10 pb-[max(2.5rem,env(safe-area-inset-bottom,0px))] overflow-y-auto min-h-[100dvh] transition-opacity duration-300 ease-out ${
+            isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+          }`}
+          aria-hidden={!isOpen}
+          inert={!isOpen}
+        >
+          <div className="flex flex-col gap-3.5 sm:gap-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path + (link.hash || '')}
+                href={link.path + (link.hash || '')}
+                onClick={() => setIsOpen(false)}
+                className={getLinkActiveClass(link, pathname === link.path && !link.hash, true)}
+              >
+                {link.name}
+              </Link>
+            ))}
 
-              <div className="h-px w-full bg-artbar-light-taupe my-2"></div>
-               <button
-                 onClick={() => { toggleLang(); setIsOpen(false); }}
-                 className="text-xl font-heading font-bold text-artbar-navy text-left flex items-center gap-2"
-               >
-                 <Globe size={20} /> {lang === 'en' ? '日本語' : 'English'}
-              </button>
-            </div>
+            <div className="h-px w-full bg-artbar-light-taupe my-1"></div>
+            <button
+              type="button"
+              onClick={() => {
+                toggleLang();
+                setIsOpen(false);
+              }}
+              className="text-base font-heading font-bold text-artbar-navy text-left flex items-center gap-2 sm:text-lg"
+            >
+              <Globe size={18} className="shrink-0" /> {lang === 'en' ? '日本語' : 'English'}
+            </button>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );

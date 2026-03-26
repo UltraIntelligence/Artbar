@@ -11,8 +11,8 @@ function attachInstructorPhotos(row: InstructorRow): Instructor {
 // Helper for the new placeholder format (non-generated fallbacks only)
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
-/** Default hero background image (served from /public/media) when not using MP4. */
-const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
+/** Default hero background image (served from /public/media) when not using MP4; also used as video `poster`. */
+export const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
 
 /** Full-bleed home hero looping videos (`public/media/`). Spaces in filenames are OK — use encodeURI in components. */
 export const HERO_HOME_VIDEO_DESKTOP = '/media/artbar-home-video-desktop 1.mp4';

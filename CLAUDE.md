@@ -81,7 +81,7 @@ Batch image generation (`npm run generate:images`, `npm run generate:images:them
 
 `useScrollReveal` uses **`threshold: 0`** and a layout sync so `.reveal` / `.reveal-stagger` sections are not left invisible on mobile; avoid pairing reveal with content that must always mount visible unless you test thoroughly.
 
-**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, a **two-layer** wash: navy vignette from below (`transparent` → `artbar-navy/90`) plus a strong **taupe** gradient from the top (`from-artbar-taupe/80` fading by ~52% height). Home hero **h1** and **subtitle** use layered **`text-shadow`** (soft black, multiple radii) so type stays readable on busy photos.
+**Hero media:** Theme detail, team building, blog post, and private parties heroes fade in after load. The **home** hero is not gated on JS load events (iOS Safari can omit them); it uses `bg-artbar-navy` under the media. Over the image, a **two-layer** wash: navy vignette from below (`transparent` → `artbar-navy/90`) plus a strong **taupe** gradient from the top (`from-artbar-taupe/80` fading by ~52% height) for legibility—hero headline copy does not rely on `text-shadow`.
 
 ## Design Tokens
 
@@ -96,8 +96,9 @@ These are defined in `app/globals.css` under `@theme`, referenced as `text-artba
 
 ### UI components
 
-- **`Button`** (`components/ui/Button.tsx`): Marketing CTAs use `size="cta"` with `variant` (`taupe`, `primary`, `outline`, `outlineWhite`). Use `outlineWhite` on dark bands (e.g. home bottom CTA). The home hero row keeps three actions aligned with shared `heroCtaFrame` classes instead of default `cta` padding alone.
-- **Home hero background:** Defaults to looping MP4s (`HERO_HOME_VIDEO_DESKTOP` / `HERO_HOME_VIDEO_MOBILE` in `constants.ts`, under `public/media/`). The hero `<video>` uses two `<source>` elements with `media="(min-width: 768px)"` for desktop vs mobile. `images.hero.home` and `images.hero.homeMobile` override. For a still or GIF, set `home` to a non-`.mp4` URL (`HERO_HOME_FALLBACK` JPEG still works); MP4 uses a looping `<video>`; GIFs use `next/image` with `unoptimized` and skip the CSS drift; stills keep `hero-bg-motion`; `prefers-reduced-motion: reduce` disables the drift on still/GIF heroes.
+- **`Button`** (`components/ui/Button.tsx`): Marketing CTAs use `size="cta"` with `variant` (`taupe`, `primary`, `outline`, `outlineWhite`). Use `outlineWhite` on dark bands (e.g. home bottom CTA). The home hero row keeps three actions aligned with shared `heroCtaFrame` / inner row classes instead of default `cta` padding alone.
+- **Home hero background:** Defaults to looping MP4s (`HERO_HOME_VIDEO_DESKTOP` / `HERO_HOME_VIDEO_MOBILE` in `constants.ts`, under `public/media/`). Uses **two** `<video>` tags (desktop `hidden md:block`, mobile `md:hidden`) with direct `src`—not `<source media>` on one tag (Safari is unreliable). `encodeURI` for paths with spaces. Optional `poster={HERO_HOME_FALLBACK}`. `images.hero.home` / `images.hero.homeMobile` override. For a still or GIF, set `home` to a non-`.mp4` URL; GIFs use `next/image` with `unoptimized` and skip the CSS drift; stills keep `hero-bg-motion`; `prefers-reduced-motion: reduce` disables the drift on still/GIF heroes.
+- **`Navbar`** (mobile, below `xl`): One `isOpen` state; full-screen menu sheet stays mounted with **opacity-only** CSS transition (no JS stagger delays). Top bar padding on the home hero uses `isHome && !scrolled` independently of menu open so the logo does not shift when opening the menu.
 
 ## SEO & Migration
 

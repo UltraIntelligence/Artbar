@@ -18,7 +18,14 @@ import { Button } from '../components/ui/Button';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
-import { LINE_ADD_FRIEND_URL, LINE_BRAND_ICON_SRC, SITE_IMAGES, CONCEPT_BLOCK_YOUTUBE_URL, PARTNER_LOGOS } from '../constants';
+import {
+  LINE_ADD_FRIEND_URL,
+  LINE_BRAND_ICON_SRC,
+  SITE_IMAGES,
+  CONCEPT_BLOCK_YOUTUBE_URL,
+  PARTNER_LOGOS,
+  HERO_HOME_FALLBACK,
+} from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
 import {
   formatGuestCountCompactK,
@@ -81,9 +88,11 @@ export const Home: React.FC = () => {
     document.getElementById('popular-themes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  /** Hero primary actions: clean pill buttons, natural sizing. `py-0` overrides Button default padding so label + icon stay vertically centered in fixed height. */
+  /** Hero primary actions: fixed height + `leading-none` so the line box isn’t taller below the baseline (common JP/Latin mix). Inner row uses a tiny translate-y for optical center in the pill. */
   const heroCtaFrame =
-    'inline-flex items-center justify-center gap-2.5 rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] py-0 text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide leading-tight transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
+    'inline-flex items-center justify-center rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] py-0 text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide leading-none transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
+  const heroCtaInner =
+    'inline-flex items-center translate-y-px gap-2.5 sm:translate-y-0.5';
 
   const heroImages = content.images.hero as {
     home: string;
@@ -111,6 +120,9 @@ export const Home: React.FC = () => {
       : SITE_IMAGES.hero.homeMobile ?? heroBgSrc
     : heroBgSrc;
   const heroBgMobileUrl = encMediaSrc(heroBgMobileSrc);
+
+  const conceptVideoDesktopUrl = encMediaSrc(heroVideoDesktop || heroVideoMobile);
+  const conceptVideoMobileUrl = encMediaSrc(heroVideoMobile || heroVideoDesktop);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -174,18 +186,31 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0">
             <div className="relative h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
-                  aria-hidden
-                >
-                  <source src={heroBgUrl} type="video/mp4" media="(min-width: 768px)" />
-                  <source src={heroBgMobileUrl} type="video/mp4" />
-                </video>
+                <>
+                  {/* Two videos: `<source media>` on MP4 is ignored/unreliable in Safari; CSS breakpoint is reliable */}
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    poster={HERO_HOME_FALLBACK}
+                    src={heroBgUrl}
+                    className="absolute inset-0 hidden h-full w-full object-cover object-[center_19%] md:block"
+                    aria-hidden
+                  />
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    poster={HERO_HOME_FALLBACK}
+                    src={heroBgMobileUrl}
+                    className="absolute inset-0 h-full w-full object-cover object-[center_19%] md:hidden"
+                    aria-hidden
+                  />
+                </>
               ) : (
                 <Image
                   src={heroBgSrc}
@@ -214,13 +239,19 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
 
-              {/* Badge */}
+              {/* Badge — JP: `font-sans` inner; padding between earlier symmetric and the heavier top bias */}
               <span
-                className={`animate-sheen inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-[8px] sm:text-[9px] md:text-xs ${
-                  lang === 'jp' ? 'normal-case tracking-wide' : 'uppercase tracking-widest'
+                className={`animate-sheen inline-flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 px-4 text-center text-white ${
+                  lang === 'jp'
+                    ? 'pt-[0.38rem] pb-[0.32rem] text-xs sm:text-sm md:text-base normal-case leading-none tracking-wide'
+                    : 'py-1.5 font-heading font-bold text-[8px] sm:text-[9px] md:text-xs uppercase tracking-widest'
                 }`}
               >
-                {site.home.hero.badge}
+                {lang === 'jp' ? (
+                  <span className="font-sans font-bold leading-none">{site.home.hero.badge}</span>
+                ) : (
+                  site.home.hero.badge
+                )}
               </span>
 
               {/* Proof line — trust primer above headline */}
@@ -250,22 +281,21 @@ export const Home: React.FC = () => {
                 </span>
               </div>
 
-              {/* H1 — layered text-shadow for readability on busy hero photo */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_1px_rgba(0,0,0,0.33),0_1px_3px_rgba(0,0,0,0.24),0_2px_10px_rgba(0,0,0,0.16)]">
+              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.title}
                 </span>
                 <span
-                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_1px_rgba(0,0,0,0.28),0_1px_4px_rgba(0,0,0,0.2),0_2px_9px_rgba(0,0,0,0.14)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                  className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.titleHighlight}
                 </span>
               </h1>
 
               <h2
-                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 [text-shadow:0_1px_2px_rgba(0,0,0,0.6),0_2px_10px_rgba(0,0,0,0.38),0_3px_16px_rgba(0,0,0,0.26)] ${
+                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 ${
                   lang === 'jp' ? '' : 'whitespace-pre-line'
                 }`}
               >
@@ -283,8 +313,10 @@ export const Home: React.FC = () => {
                   variant="taupe"
                   className={`${heroCtaFrame} !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)]`}
                 >
-                  {site.home.hero.ctaSchedule}
-                  <ArrowRight size={16} className="shrink-0 text-white" aria-hidden />
+                  <span className={heroCtaInner}>
+                    {site.home.hero.ctaSchedule}
+                    <ArrowRight size={16} className="shrink-0 text-white" aria-hidden />
+                  </span>
                 </Button>
 
                 <a
@@ -293,8 +325,10 @@ export const Home: React.FC = () => {
                   rel="noopener noreferrer"
                   className={`${heroCtaFrame} bg-[#06C755] text-white shadow-[0_8px_30px_-8px_rgba(6,199,85,0.4)] hover:bg-[#05b34c]`}
                 >
-                  {site.home.hero.ctaLineChat}
-                  <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
+                  <span className={heroCtaInner}>
+                    {site.home.hero.ctaLineChat}
+                    <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
+                  </span>
                 </a>
               </div>
 
@@ -376,21 +410,28 @@ export const Home: React.FC = () => {
             {/* Video / lifestyle — self-hosted MP4 (loop) + glass play → full video on YouTube */}
             <div className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[var(--radius-feature)] shadow-2xl md:rounded-[var(--radius-feature)]">
               {hasConceptVideo ? (
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105"
-                >
-                  <source
-                    src={heroVideoDesktop || heroVideoMobile}
-                    type="video/mp4"
-                    media="(min-width: 768px)"
+                <>
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    poster={content.images.concept.main}
+                    src={conceptVideoDesktopUrl}
+                    className="hidden h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:block"
                   />
-                  <source src={heroVideoMobile || heroVideoDesktop} type="video/mp4" />
-                </video>
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                    poster={content.images.concept.main}
+                    src={conceptVideoMobileUrl}
+                    className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:hidden"
+                  />
+                </>
               ) : (
                 <Image
                   src={content.images.concept.main}
