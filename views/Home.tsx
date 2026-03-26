@@ -239,14 +239,14 @@ export const Home: React.FC = () => {
               </div>
 
               {/* H1 — layered text-shadow for readability on busy hero photo */}
-              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_2px_rgba(0,0,0,0.65),0_2px_6px_rgba(0,0,0,0.48),0_3px_20px_rgba(0,0,0,0.32)]">
+              <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem] [text-shadow:0_1px_1px_rgba(0,0,0,0.33),0_1px_3px_rgba(0,0,0,0.24),0_2px_10px_rgba(0,0,0,0.16)]">
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.title}
                 </span>
                 <span
-                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_2px_rgba(0,0,0,0.55),0_2px_8px_rgba(0,0,0,0.4),0_3px_18px_rgba(0,0,0,0.28)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
+                  className={`${heroTitleScale} block text-artbar-taupe leading-[0.92] md:leading-[0.94] [text-shadow:0_1px_1px_rgba(0,0,0,0.28),0_1px_4px_rgba(0,0,0,0.2),0_2px_9px_rgba(0,0,0,0.14)] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
                   {site.home.hero.titleHighlight}
                 </span>
