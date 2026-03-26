@@ -209,7 +209,7 @@ export const Home: React.FC = () => {
             <div className="relative isolate h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
                 <>
-                  {/* Two videos: `<source media>` on MP4 is ignored/unreliable in Safari; CSS breakpoint is reliable */}
+                  {/* Videos stay fully opaque; loading overlay covers them — `opacity-0` on video breaks autoplay/`playing` in Chrome. */}
                   <video
                     autoPlay
                     muted
@@ -218,12 +218,12 @@ export const Home: React.FC = () => {
                     preload="auto"
                     src={heroBgUrl}
                     onPlaying={markHeroVideoReady}
+                    onLoadedData={markHeroVideoReady}
                     onCanPlay={(e) => {
-                      if (e.currentTarget.readyState >= 3) markHeroVideoReady();
+                      if (e.currentTarget.readyState >= 2) markHeroVideoReady();
                     }}
-                    className={`absolute inset-0 z-[1] hidden h-full w-full object-cover object-[center_19%] transition-opacity duration-500 ease-out md:block ${
-                      heroVideoReady ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    onError={markHeroVideoReady}
+                    className="absolute inset-0 z-[1] hidden h-full w-full object-cover object-[center_19%] md:block"
                     aria-hidden
                   />
                   <video
@@ -234,12 +234,12 @@ export const Home: React.FC = () => {
                     preload="auto"
                     src={heroBgMobileUrl}
                     onPlaying={markHeroVideoReady}
+                    onLoadedData={markHeroVideoReady}
                     onCanPlay={(e) => {
-                      if (e.currentTarget.readyState >= 3) markHeroVideoReady();
+                      if (e.currentTarget.readyState >= 2) markHeroVideoReady();
                     }}
-                    className={`absolute inset-0 z-[1] h-full w-full object-cover object-[center_19%] transition-opacity duration-500 ease-out md:hidden ${
-                      heroVideoReady ? 'opacity-100' : 'opacity-0'
-                    }`}
+                    onError={markHeroVideoReady}
+                    className="absolute inset-0 z-[1] h-full w-full object-cover object-[center_19%] md:hidden"
                     aria-hidden
                   />
                 </>
