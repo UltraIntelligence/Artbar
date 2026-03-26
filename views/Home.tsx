@@ -348,8 +348,8 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Concept Section - Refined for better balance */}
-      <section className="pt-16 pb-24 md:pt-24 md:pb-64 bg-artbar-bg overflow-hidden relative grain">
+      {/* Concept — vertical rhythm aligned with other major bands (md:py-32 scale); slightly taller than default strip via py-24 / md:py-40 */}
+      <section className="py-24 md:py-40 bg-artbar-bg overflow-hidden relative grain">
         <div ref={conceptReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
           <div className={`flex flex-col items-center text-center reveal ${conceptReveal.isVisible ? 'visible' : ''}`}>
             
@@ -587,8 +587,8 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonial carousel — full guest quotes (below Artbar Experience) */}
-      <section className="relative z-[2] bg-artbar-bg px-4 pb-24 pt-16 md:px-8 md:pb-36 md:pt-24 lg:px-12 lg:pt-28">
+      {/* Testimonial carousel — full guest quotes (below Artbar Experience); symmetric section padding matches md:py-32 bands */}
+      <section className="relative z-[2] bg-artbar-bg px-4 py-24 md:px-8 md:py-32 lg:px-12">
         <div
           ref={carouselTestimonialsReveal.ref}
           className={`mx-auto max-w-[min(100%,52rem)] xl:max-w-6xl reveal ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}
@@ -703,8 +703,8 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* As Seen In Section - GALLERY STYLE */}
-      <section className="py-24 md:py-48 bg-white">
+      {/* As Seen In — same vertical scale as How it works / Features */}
+      <section className="py-16 md:py-32 bg-white">
         <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
              <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">{mediaCoverageLabel}</span>

@@ -130,13 +130,18 @@ const RawInput: React.FC<EditorProps> = ({ label, path, multiline = false, type 
 };
 
 const FontSelect: React.FC<{ label: string; path: string[]; localContent: ContentData; updateField: (path: string[], value: any) => void }> = ({ label, path, localContent, updateField }) => {
-  const val = getNested(localContent, path) || 'Josefin Sans';
+  const field = path[path.length - 1];
+  const defaultFont = field === 'heading' ? 'Poppins' : 'Noto Sans JP';
+  const val = getNested(localContent, path) || defaultFont;
   const FONT_OPTIONS = [
-    { label: 'Josefin Sans (Artbar Default)', value: 'Josefin Sans' },
-    { label: 'Hiragino Kaku Gothic (JP Default)', value: 'Hiragino Kaku Gothic ProN' },
-    { label: 'Noto Sans JP (Modern JP)', value: 'Noto Sans JP' },
+    { label: 'Poppins (heading default)', value: 'Poppins' },
+    { label: 'Noto Sans JP (body default)', value: 'Noto Sans JP' },
+    { label: 'Montserrat', value: 'Montserrat' },
+    { label: 'Raleway', value: 'Raleway' },
+    { label: 'Jost', value: 'Jost' },
+    { label: 'Josefin Sans', value: 'Josefin Sans' },
+    { label: 'Hiragino Kaku Gothic (JP system)', value: 'Hiragino Kaku Gothic ProN' },
     { label: 'Playfair Display (Elegant Serif)', value: 'Playfair Display' },
-    { label: 'Montserrat (Modern Sans)', value: 'Montserrat' },
     { label: 'Oswald (Strong/Tall)', value: 'Oswald' },
     { label: 'Bebas Neue (Bold Caps)', value: 'Bebas Neue' },
     { label: 'Lato (Friendly Sans)', value: 'Lato' },
