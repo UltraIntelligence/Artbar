@@ -24,7 +24,6 @@ import {
   SITE_IMAGES,
   CONCEPT_BLOCK_YOUTUBE_URL,
   PARTNER_LOGOS,
-  HERO_HOME_FALLBACK,
 } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
 import {
@@ -124,6 +123,26 @@ export const Home: React.FC = () => {
   const conceptVideoDesktopUrl = encMediaSrc(heroVideoDesktop || heroVideoMobile);
   const conceptVideoMobileUrl = encMediaSrc(heroVideoMobile || heroVideoDesktop);
 
+  /**
+   * MP4 hero: show only neutral page bg + progress until the active video can play — no still, no navy, no poster flash.
+   * Long timeout so iOS never stays blocked if events misfire.
+   */
+  const [heroVideoReady, setHeroVideoReady] = useState(!heroBgIsVideo);
+
+  useEffect(() => {
+    if (!heroBgIsVideo) {
+      setHeroVideoReady(true);
+      return;
+    }
+    setHeroVideoReady(false);
+    const id = window.setTimeout(() => setHeroVideoReady(true), 15000);
+    return () => window.clearTimeout(id);
+  }, [heroBgIsVideo, heroBgSrc, heroBgMobileSrc]);
+
+  const markHeroVideoReady = React.useCallback(() => {
+    setHeroVideoReady(true);
+  }, []);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -181,10 +200,13 @@ export const Home: React.FC = () => {
     <div className="w-full bg-artbar-bg">
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
-        <div className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy">
-          {/* Do not gate hero media on load events: iOS Safari often omits them, leaving opacity-0 forever. */}
-          <div className="absolute inset-0">
-            <div className="relative h-full w-full min-h-full min-w-full">
+        <div
+          className={`absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden ${
+            heroBgIsVideo && !heroVideoReady ? 'bg-artbar-bg' : 'bg-artbar-navy'
+          }`}
+        >
+          <div className="absolute inset-0 z-0">
+            <div className="relative isolate h-full w-full min-h-full min-w-full">
               {heroBgIsVideo ? (
                 <>
                   {/* Two videos: `<source media>` on MP4 is ignored/unreliable in Safari; CSS breakpoint is reliable */}
@@ -194,9 +216,14 @@ export const Home: React.FC = () => {
                     loop
                     playsInline
                     preload="auto"
-                    poster={HERO_HOME_FALLBACK}
                     src={heroBgUrl}
-                    className="absolute inset-0 hidden h-full w-full object-cover object-[center_19%] md:block"
+                    onPlaying={markHeroVideoReady}
+                    onCanPlay={(e) => {
+                      if (e.currentTarget.readyState >= 3) markHeroVideoReady();
+                    }}
+                    className={`absolute inset-0 z-[1] hidden h-full w-full object-cover object-[center_19%] transition-opacity duration-500 ease-out md:block ${
+                      heroVideoReady ? 'opacity-100' : 'opacity-0'
+                    }`}
                     aria-hidden
                   />
                   <video
@@ -205,9 +232,14 @@ export const Home: React.FC = () => {
                     loop
                     playsInline
                     preload="auto"
-                    poster={HERO_HOME_FALLBACK}
                     src={heroBgMobileUrl}
-                    className="absolute inset-0 h-full w-full object-cover object-[center_19%] md:hidden"
+                    onPlaying={markHeroVideoReady}
+                    onCanPlay={(e) => {
+                      if (e.currentTarget.readyState >= 3) markHeroVideoReady();
+                    }}
+                    className={`absolute inset-0 z-[1] h-full w-full object-cover object-[center_19%] transition-opacity duration-500 ease-out md:hidden ${
+                      heroVideoReady ? 'opacity-100' : 'opacity-0'
+                    }`}
                     aria-hidden
                   />
                 </>
@@ -226,17 +258,40 @@ export const Home: React.FC = () => {
               )}
             </div>
           </div>
-          {/* Two-layer wash: (1) navy rises from bottom for legibility (2) strong taupe from top — single flat gradient was too subtle on photo */}
+          {/* Two-layer wash — only after MP4 is ready (no gradients over loading plate) */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-[18%] via-artbar-navy/50 via-[55%] to-artbar-navy/90 to-100%"
+            className={`pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent from-[18%] via-artbar-navy/50 via-[55%] to-artbar-navy/90 to-100% transition-opacity duration-500 ${
+              heroBgIsVideo && !heroVideoReady ? 'opacity-0' : 'opacity-100'
+            }`}
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[52%]"
+            className={`pointer-events-none absolute inset-0 z-[2] bg-gradient-to-b from-artbar-taupe/80 from-0% to-transparent to-[52%] transition-opacity duration-500 ${
+              heroBgIsVideo && !heroVideoReady ? 'opacity-0' : 'opacity-100'
+            }`}
             aria-hidden
           />
 
-          <div className="absolute inset-0 flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto">
+          {heroBgIsVideo && !heroVideoReady && (
+            <div
+              className="absolute inset-0 z-[20] flex flex-col items-center justify-center gap-5 bg-artbar-bg"
+              aria-busy="true"
+              aria-live="polite"
+            >
+              <span className="sr-only">
+                {lang === 'jp' ? 'ヒーローを読み込み中' : 'Loading hero'}
+              </span>
+              <div className="h-1.5 w-56 max-w-[min(100%,14rem)] overflow-hidden rounded-full bg-artbar-navy/12">
+                <div className="h-full w-1/3 rounded-full bg-artbar-taupe animate-hero-indeterminate" />
+              </div>
+            </div>
+          )}
+
+          <div
+            className={`absolute inset-0 z-[3] flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto transition-opacity duration-500 ${
+              heroBgIsVideo && !heroVideoReady ? 'pointer-events-none opacity-0' : 'opacity-100'
+            }`}
+          >
             <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
 
               {/* Badge — JP: `font-sans` inner; padding between earlier symmetric and the heavier top bias */}

@@ -73,6 +73,19 @@
   animation: testimonial-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+/* Home hero — MP4 loading (indeterminate bar) */
+@keyframes hero-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+.animate-hero-indeterminate {
+  animation: hero-indeterminate 1.35s ease-in-out infinite;
+}
+
 /* Home / marketing — extracted from views/Home.tsx */
 @keyframes star-pop {
   0% { transform: scale(0) rotate(-15deg); opacity: 0; }
