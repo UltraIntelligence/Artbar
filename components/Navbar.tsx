@@ -46,12 +46,12 @@ export const Navbar: React.FC = () => {
     }
 
     if (isMobile) {
-        return `text-3xl font-heading font-medium ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe`;
+        return `text-3xl font-heading font-bold ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe`;
     }
 
     // Shrink JP text size slightly (13px vs 15px) to prevent wrapping
     const fontSizeClass = lang === 'jp' ? "text-[13px]" : "text-[15px]";
-    const base = `${fontSizeClass} font-heading font-medium transition-colors whitespace-nowrap `;
+    const base = `${fontSizeClass} font-heading font-bold transition-colors whitespace-nowrap `;
 
     if (isTransparent) {
       return base + "text-white hover:text-white/80";
@@ -107,14 +107,14 @@ export const Navbar: React.FC = () => {
 
           <button
              onClick={toggleLang}
-             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-medium text-sm flex items-center gap-1 uppercase w-8`}
+             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8`}
           >
              {lang === 'en' ? 'JP' : 'EN'}
           </button>
 
           <button
             onClick={handleBookClick}
-            className="px-6 py-2.5 rounded-full font-heading font-medium transition-all bg-artbar-taupe text-white hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-white hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
           >
             {site.nav.book}
           </button>
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
               <div className="h-px w-full bg-artbar-light-taupe my-2"></div>
                <button
                  onClick={() => { toggleLang(); setIsOpen(false); }}
-                 className="text-xl font-heading font-medium text-artbar-navy text-left flex items-center gap-2"
+                 className="text-xl font-heading font-bold text-artbar-navy text-left flex items-center gap-2"
                >
                  <Globe size={20} /> {lang === 'en' ? '日本語' : 'English'}
               </button>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Noto_Sans_JP, Poppins } from 'next/font/google';
+import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
@@ -9,20 +9,11 @@ import { Footer } from '@/components/Footer';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { LANG_COOKIE_NAME, resolveInitialLanguage } from '@/lib/language';
 
-/** [Poppins](https://fonts.google.com/specimen/Poppins) — headings (`font-heading`, h1–h3). */
-const poppins = Poppins({
+const josefinSans = Josefin_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['600', '700'],
   /** Must not be `--font-heading`: that name is the Tailwind v4 token for `font-heading`. */
-  variable: '--font-poppins',
-  display: 'swap',
-});
-
-/** [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP) — body / JP UI (`font-sans`). */
-const notoSansJp = Noto_Sans_JP({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-noto-sans-jp',
+  variable: '--font-josefin',
   display: 'swap',
 });
 
@@ -57,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 
   return (
-    <html lang={htmlLang} className={`${poppins.variable} ${notoSansJp.variable}`} suppressHydrationWarning>
+    <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
       {/* suppressHydrationWarning: extensions (e.g. ColorZilla) may inject attrs on body before hydrate */}
       <body suppressHydrationWarning>
         <ContentProvider initialLang={initialLang}>

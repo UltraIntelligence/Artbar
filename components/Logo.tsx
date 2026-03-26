@@ -28,7 +28,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
           className={imgClasses}
         />
       ) : (
-        <div className={`flex items-center gap-1 font-sans font-medium text-xl tracking-tight ${variant === 'light' ? 'text-white' : 'text-artbar-navy'}`}>
+        <div className={`flex items-center gap-1 font-sans font-bold text-xl tracking-tight ${variant === 'light' ? 'text-white' : 'text-artbar-navy'}`}>
           <span>ar<span className="text-artbar-taupe">+</span>bar</span>
         </div>
       )}

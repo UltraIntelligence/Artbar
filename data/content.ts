@@ -19,8 +19,8 @@ import {
 export const defaultContent: ContentData = {
   theme: {
     fonts: {
-      heading: "Poppins",
-      body: "Noto Sans JP"
+      heading: "Josefin Sans",
+      body: "Hiragino Kaku Gothic ProN"
     },
     typography: {
       // Mobile-first scale; cap xl so two headline rows fit in viewport with proof + CTAs (no clip/overlap)

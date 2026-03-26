@@ -89,8 +89,8 @@ Batch image generation (`npm run generate:images`, `npm run generate:images:them
 - **Taupe:** `#A39384` (accent)
 - **Background:** `#F1EFEC` (off-white)
 - **Gray:** `#797979` (body text)
-- **Heading font:** Poppins (400–700 via next/font, `--font-poppins`) — class `font-heading`, global `h1–h3`
-- **Body font:** Noto Sans JP (400/500/700 via next/font, `--font-noto-sans-jp`, `font-sans`), then system UI and Hiragino/Meiryo fallbacks in `globals.css`
+- **Heading font:** Josefin Sans (weights 600, 700) — class `font-heading`
+- **Body font:** system Japanese stack (Hiragino Kaku Gothic ProN, Meiryo)
 
 These are defined in `app/globals.css` under `@theme`, referenced as `text-artbar-navy`, `bg-artbar-taupe`, etc.
 

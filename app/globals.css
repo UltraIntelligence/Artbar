@@ -19,13 +19,9 @@
   --color-artbar-text: #053761;
 
   /* Font families — Tailwind v4 uses `--font-sans` / `--font-heading` (not `--font-family-*`). */
-  /* Body: Noto Sans JP + system UI; `--font-body` from ThemeInjector overrides first slot for admin. */
-  --font-sans: var(--font-body), var(--font-noto-sans-jp), "Noto Sans JP", system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
-    "游ゴシック", YuGothic, "メイリオ", Meiryo;
-  /* Headings: Poppins + system UI; ThemeInjector sets `--font-heading` to the admin heading family name. */
-  --font-heading: var(--font-poppins), "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  --font-sans: var(--font-body), "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN",
+    "游ゴシック", YuGothic, "メイリオ", Meiryo, sans-serif;
+  --font-heading: var(--font-josefin), "Josefin Sans", ui-sans-serif, sans-serif;
 
   /* Border radius */
   --radius-2xl: 1rem;
@@ -301,8 +297,8 @@
 
 /* ─── Base Styles ───────────────────────────────────────── */
 :root {
-  /* Default body name for ThemeInjector merge; next/font serves Noto via `--font-noto-sans-jp`. */
-  --font-body: 'Noto Sans JP';
+  /* Body stack token; heading face comes from `--font-josefin` (next/font) + `--font-heading` (@theme). */
+  --font-body: 'Hiragino Kaku Gothic ProN';
   /* Marketing radius tiers (Home, PopularThemesGrid, Footer) */
   --radius-card: 1.5rem;
   --radius-section: 2.5rem;
@@ -312,17 +308,8 @@
 body {
   background-color: #F1EFEC;
   color: #053761;
-  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* Match Google Fonts recipe: headings use Poppins unless a component sets `font-heading` differently */
-h1,
-h2,
-h3,
-.heading {
-  font-family: var(--font-heading);
 }
 
 html:lang(ja) h1,

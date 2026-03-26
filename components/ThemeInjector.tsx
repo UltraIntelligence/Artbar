@@ -9,17 +9,9 @@ function cssFontFamilyName(name: string): string {
   return `'${escaped}'`;
 }
 
-/** Bundled via `next/font` in `app/layout.tsx` — skip duplicate Google Fonts CSS. */
-const SELF_HOSTED_GOOGLE_FONTS = new Set(['Poppins', 'Noto Sans JP']);
-
-function googleWghtAxis(fontName: string): string {
-  if (fontName === 'Noto Sans JP') return '400;500;700';
-  return '400;500;600;700';
-}
-
 export const ThemeInjector: React.FC = () => {
   const { content } = useContent();
-  const { fonts } = content.theme || { fonts: { heading: 'Poppins', body: 'Noto Sans JP' } };
+  const { fonts } = content.theme || { fonts: { heading: 'Josefin Sans', body: 'Hiragino Kaku Gothic ProN' } };
 
   // Helper to identify if we need to load from Google (skip system fonts)
   const isSystemFont = (fontName: string) => {
@@ -29,16 +21,13 @@ export const ThemeInjector: React.FC = () => {
 
   let googleFontsUrl = '';
   const fontsToLoad = new Set<string>();
-  const maybeAddGoogle = (fontName: string) => {
-    if (isSystemFont(fontName) || SELF_HOSTED_GOOGLE_FONTS.has(fontName)) return;
-    fontsToLoad.add(fontName);
-  };
-  maybeAddGoogle(fonts.heading);
-  maybeAddGoogle(fonts.body);
+  if (!isSystemFont(fonts.heading)) fontsToLoad.add(fonts.heading);
+  if (!isSystemFont(fonts.body)) fontsToLoad.add(fonts.body);
 
   if (fontsToLoad.size > 0) {
+    // Construct Google Fonts URL: family=Name:wght@300;400;600;700&...
     const fontFamilies = Array.from(fontsToLoad)
-      .map(f => `family=${f.replace(/ /g, '+')}:wght@${googleWghtAxis(f)}`)
+      .map(f => `family=${f.replace(/ /g, '+')}:wght@300;400;600;700`)
       .join('&');
     googleFontsUrl = `https://fonts.googleapis.com/css2?${fontFamilies}&display=swap`;
   }
