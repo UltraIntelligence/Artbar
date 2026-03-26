@@ -689,9 +689,10 @@ export const Admin: React.FC = () => {
             </div>
             <div className="mt-8 pt-6 border-t border-gray-100">
                 <h4 className="font-bold text-sm mb-4 uppercase tracking-widest text-artbar-gray">Hero Media</h4>
-                <ImageInput localContent={localContent} updateField={updateField} label="Hero video — desktop (MP4)" path={['images', 'hero', 'video']} />
-                <ImageInput localContent={localContent} updateField={updateField} label="Hero video — mobile (MP4)" path={['images', 'hero', 'videoMobile']} />
-                <ImageInput localContent={localContent} updateField={updateField} label="Fallback Image" path={['images', 'hero', 'home']} />
+                <ImageInput localContent={localContent} updateField={updateField} label="Full-bleed hero — desktop (MP4 or still; default: desktop loop MP4)" path={['images', 'hero', 'home']} />
+                <ImageInput localContent={localContent} updateField={updateField} label="Full-bleed hero — mobile (MP4 when hero is video)" path={['images', 'hero', 'homeMobile']} />
+                <ImageInput localContent={localContent} updateField={updateField} label="Concept block — desktop video (MP4)" path={['images', 'hero', 'video']} />
+                <ImageInput localContent={localContent} updateField={updateField} label="Concept block — mobile video (MP4)" path={['images', 'hero', 'videoMobile']} />
             </div>
         </Section>
 

@@ -11,8 +11,12 @@ function attachInstructorPhotos(row: InstructorRow): Instructor {
 // Helper for the new placeholder format (non-generated fallbacks only)
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
-/** Default hero background image (served from /public/media). */
+/** Default hero background image (served from /public/media) when not using MP4. */
 const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
+
+/** Full-bleed home hero looping videos (`public/media/`). Spaces in filenames are OK — use encodeURI in components. */
+export const HERO_HOME_VIDEO_DESKTOP = '/media/artbar-home-video-desktop 1.mp4';
+export const HERO_HOME_VIDEO_MOBILE = '/media/artbar-home-video-mobile-3 2.mp4';
 
 /** Replace @PLACEHOLDER_ID with your LINE official account ID when ready. */
 export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
@@ -28,10 +32,12 @@ export const CONCEPT_BLOCK_YOUTUBE_URL = 'https://www.youtube.com/watch?v=wLjhqJ
 
 export const SITE_IMAGES = {
   hero: {
-    home: HERO_HOME_FALLBACK,
+    /** Default full-bleed hero: desktop MP4; pair with `homeMobile` for `<source media>`. */
+    home: HERO_HOME_VIDEO_DESKTOP,
+    homeMobile: HERO_HOME_VIDEO_MOBILE,
     teamBuilding: GI.heroTeamBuilding,
-    video: "/media/artbar-home-video-desktop.mp4",
-    videoMobile: "/media/artbar-home-video-mobile-3.mp4"
+    video: HERO_HOME_VIDEO_DESKTOP,
+    videoMobile: HERO_HOME_VIDEO_MOBILE,
   },
   concept: {
     main: GI.conceptMain,

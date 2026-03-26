@@ -87,6 +87,7 @@ export const Home: React.FC = () => {
 
   const heroImages = content.images.hero as {
     home: string;
+    homeMobile?: string;
     video?: string;
     videoMobile?: string;
   };
@@ -95,11 +96,21 @@ export const Home: React.FC = () => {
   /** MP4 sources for the concept block when no YouTube ID is set. */
   const hasConceptVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
 
+  const encMediaSrc = (path: string) => (path.includes(" ") ? encodeURI(path) : path);
+
   const rawHeroHome = (heroImages.home ?? "").trim();
   const heroBgSrc =
     rawHeroHome && !rawHeroHome.includes("toolandtea.com") ? rawHeroHome : SITE_IMAGES.hero.home;
   const heroBgIsVideo = /\.mp4(\?|$)/i.test(heroBgSrc);
-  const heroBgUrl = heroBgSrc.includes(' ') ? encodeURI(heroBgSrc) : heroBgSrc;
+  const heroBgUrl = encMediaSrc(heroBgSrc);
+
+  const rawHeroHomeMobile = (heroImages.homeMobile ?? "").trim();
+  const heroBgMobileSrc = heroBgIsVideo
+    ? rawHeroHomeMobile && !rawHeroHomeMobile.includes("toolandtea.com")
+      ? rawHeroHomeMobile
+      : SITE_IMAGES.hero.homeMobile ?? heroBgSrc
+    : heroBgSrc;
+  const heroBgMobileUrl = encMediaSrc(heroBgMobileSrc);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -172,7 +183,8 @@ export const Home: React.FC = () => {
                   className="absolute inset-0 h-full w-full object-cover object-[center_19%]"
                   aria-hidden
                 >
-                  <source src={heroBgUrl} type="video/mp4" />
+                  <source src={heroBgUrl} type="video/mp4" media="(min-width: 768px)" />
+                  <source src={heroBgMobileUrl} type="video/mp4" />
                 </video>
               ) : (
                 <Image

@@ -39,6 +39,7 @@ export const defaultContent: ContentData = {
     logoLight: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_e.png", 
     hero: {
       home: SITE_IMAGES.hero.home,
+      homeMobile: SITE_IMAGES.hero.homeMobile,
       teamBuilding: SITE_IMAGES.hero.teamBuilding,
       video: SITE_IMAGES.hero.video,
       videoMobile: SITE_IMAGES.hero.videoMobile,

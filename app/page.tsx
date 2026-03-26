@@ -11,14 +11,14 @@ export default function HomePage() {
     <>
       <link
         rel="preload"
-        href="/media/artbar-home-video-mobile-3.mp4"
+        href="/media/artbar-home-video-mobile-3%202.mp4"
         as="video"
         type="video/mp4"
         media="(max-width: 767px)"
       />
       <link
         rel="preload"
-        href="/media/artbar-home-video-desktop.mp4"
+        href="/media/artbar-home-video-desktop%201.mp4"
         as="video"
         type="video/mp4"
         media="(min-width: 768px)"

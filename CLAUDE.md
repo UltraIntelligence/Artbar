@@ -97,7 +97,7 @@ These are defined in `app/globals.css` under `@theme`, referenced as `text-artba
 ### UI components
 
 - **`Button`** (`components/ui/Button.tsx`): Marketing CTAs use `size="cta"` with `variant` (`taupe`, `primary`, `outline`, `outlineWhite`). Use `outlineWhite` on dark bands (e.g. home bottom CTA). The home hero row keeps three actions aligned with shared `heroCtaFrame` classes instead of default `cta` padding alone.
-- **Home hero background:** Default is a full-bleed still (`HERO_HOME_FALLBACK` in `constants.ts`, e.g. `gemini-hero-background.jpeg`). `images.hero.home` may also be GIF or MP4; MP4 uses a looping `<video>`; GIFs use `next/image` with `unoptimized` and skip the CSS drift; stills keep `hero-bg-motion`; `prefers-reduced-motion: reduce` disables the drift on still/GIF heroes.
+- **Home hero background:** Defaults to looping MP4s (`HERO_HOME_VIDEO_DESKTOP` / `HERO_HOME_VIDEO_MOBILE` in `constants.ts`, under `public/media/`). The hero `<video>` uses two `<source>` elements with `media="(min-width: 768px)"` for desktop vs mobile. `images.hero.home` and `images.hero.homeMobile` override. For a still or GIF, set `home` to a non-`.mp4` URL (`HERO_HOME_FALLBACK` JPEG still works); MP4 uses a looping `<video>`; GIFs use `next/image` with `unoptimized` and skip the CSS drift; stills keep `hero-bg-motion`; `prefers-reduced-motion: reduce` disables the drift on still/GIF heroes.
 
 ## SEO & Migration
 
