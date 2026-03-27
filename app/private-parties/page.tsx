@@ -16,7 +16,7 @@ export default function PrivatePartiesPage() {
         rel="preload"
         as="image"
         imageSrcSet={nextImageSrcSet(GI.privateOccasions.birthday)}
-        imageSizes="100vw"
+        imageSizes="(max-width: 1200px) 100vw, 80vw"
         fetchPriority="high"
       />
       <PrivateParties />

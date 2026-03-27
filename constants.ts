@@ -1,5 +1,5 @@
 import { Instructor, Location, Testimonial, MediaItem } from './types';
-import { GI, type InstructorId } from './data/generated-image-paths';
+import { GI, INSTRUCTOR_IDS, type InstructorId } from './data/generated-image-paths';
 
 type InstructorRow = Omit<Instructor, 'profileImage' | 'artworkImage'> & { id: InstructorId };
 
@@ -297,6 +297,20 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
 ];
 
 export const INSTRUCTORS: Instructor[] = INSTRUCTOR_ROWS.map(attachInstructorPhotos);
+
+if (process.env.NODE_ENV === 'development') {
+  const rowIds = INSTRUCTOR_ROWS.map(r => r.id);
+  if (
+    rowIds.length !== INSTRUCTOR_IDS.length ||
+    INSTRUCTOR_IDS.some((id, i) => id !== rowIds[i])
+  ) {
+    console.error(
+      '[Artbar] INSTRUCTOR_ROWS order does not match INSTRUCTOR_IDS — preload/priority hints will be misaligned.\n' +
+      'INSTRUCTOR_IDS: ' + INSTRUCTOR_IDS.join(', ') + '\n' +
+      'INSTRUCTOR_ROWS: ' + rowIds.join(', ')
+    );
+  }
+}
 
 /** Short area names for footer / capacity grids (`row[lang]`). Distinct from full `LOCATIONS` entries. */
 export const LOCATION_SHORT_LABELS = [

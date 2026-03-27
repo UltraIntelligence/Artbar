@@ -40,7 +40,7 @@ export default function LocationsPage() {
           rel="preload"
           as="image"
           imageSrcSet={nextImageSrcSet(src)}
-          imageSizes="(max-width: 768px) 100vw, 50vw"
+          imageSizes="(max-width: 1024px) 100vw, 40vw"
           fetchPriority="high"
         />
       ))}

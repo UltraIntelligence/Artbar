@@ -5,9 +5,13 @@ import { nextImageSrcSet } from '@/lib/image-preload';
 
 type Props = { params: Promise<{ slug: string }> };
 
+function getPostBySlug(slug: string) {
+  return defaultContent.blog.find(p => p.slug === slug);
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = defaultContent.blog.find(p => p.slug === slug);
+  const post = getPostBySlug(slug);
   if (!post) return { title: 'Blog | Artbar Tokyo' };
   return {
     title: post.titleEn,
@@ -23,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = defaultContent.blog.find(p => p.slug === slug);
+  const post = getPostBySlug(slug);
   return (
     <>
       {post?.image && (
