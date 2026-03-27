@@ -29,6 +29,7 @@ export function PopularThemesGrid({
               src={themeItem.image}
               alt={themeItem.title}
               fill
+              loading="eager"
               sizes="(max-width: 768px) 50vw, 25vw"
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
             />

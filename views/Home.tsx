@@ -34,6 +34,7 @@ import {
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useMediaMinMd } from '../hooks/useMediaMinMd';
 import { useNearViewport } from '../hooks/useNearViewport';
+import { PrefetchHeroes } from '../components/PrefetchHeroes';
 
 /**
  * Fixed carousel height (~Ida Don’s testimonial) so the page doesn’t jump between slides.
@@ -917,6 +918,14 @@ export const Home: React.FC = () => {
         </div>
         </div>
       </section>
+
+      {/* Prefetch hero images for key pages so navigation feels instant */}
+      <PrefetchHeroes
+        srcs={[
+          content.images.hero.teamBuilding,
+          ...(site.privateParties?.occasions?.[0]?.image ? [site.privateParties.occasions[0].image] : []),
+        ].filter(Boolean) as string[]}
+      />
     </div>
   );
 };
