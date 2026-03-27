@@ -34,10 +34,11 @@ export const BlogList: React.FC = () => {
             return (
               <article key={post.id} className="bg-white rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-gray-100">
                 <Link href={`/blog/${post.slug}`} className="block relative overflow-hidden aspect-[4/3]">
-                  <Image 
-                    src={post.image} 
+                  <Image
+                    src={post.image}
                     alt={title}
                     fill
+                    priority={idx === 0}
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />

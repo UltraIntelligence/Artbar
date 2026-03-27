@@ -18,14 +18,15 @@ export const Instructors: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {content.instructors.map((instructor) => (
+          {content.instructors.map((instructor, idx) => (
             <div key={instructor.id} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
               <div className="h-56 relative overflow-hidden bg-artbar-bg">
                  <div className="absolute inset-0 bg-artbar-navy/10 z-[1]"></div>
-                 <Image 
-                   src={instructor.artworkImage} 
+                 <Image
+                   src={instructor.artworkImage}
                    alt={`${instructor.name}'s Art`}
                    fill
+                   priority={idx < 3}
                    className="object-cover group-hover:scale-105 transition-transform duration-700"
                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                  />

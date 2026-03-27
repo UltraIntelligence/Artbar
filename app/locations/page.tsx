@@ -1,5 +1,6 @@
 import { Locations } from '@/views/Locations';
 import { LOCATIONS } from '@/constants';
+import { nextImageSrcSet } from '@/lib/image-preload';
 
 export const metadata = {
   title: 'Our Locations',
@@ -22,6 +23,9 @@ const jsonLd = {
   })),
 };
 
+// Preload the first two location images (above the fold on most viewports)
+const PRELOAD_LOCATION_IMAGES = LOCATIONS.slice(0, 2).map((loc) => loc.image);
+
 export default function LocationsPage() {
   return (
     <>
@@ -30,6 +34,16 @@ export default function LocationsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {PRELOAD_LOCATION_IMAGES.map((src) => (
+        <link
+          key={src}
+          rel="preload"
+          as="image"
+          imageSrcSet={nextImageSrcSet(src)}
+          imageSizes="(max-width: 768px) 100vw, 50vw"
+          fetchPriority="high"
+        />
+      ))}
       <Locations />
     </>
   );

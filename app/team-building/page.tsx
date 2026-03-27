@@ -1,5 +1,7 @@
 import { defaultContent } from '@/data/content';
 import { TeamBuilding } from '@/views/TeamBuilding';
+import { GI } from '@/data/generated-image-paths';
+import { nextImageSrcSet } from '@/lib/image-preload';
 
 export const metadata = {
   title: defaultContent.en.teamBuilding.hero.title,
@@ -8,5 +10,16 @@ export const metadata = {
 };
 
 export default function TeamBuildingPage() {
-  return <TeamBuilding />;
+  return (
+    <>
+      <link
+        rel="preload"
+        as="image"
+        imageSrcSet={nextImageSrcSet(GI.heroTeamBuilding)}
+        imageSizes="100vw"
+        fetchPriority="high"
+      />
+      <TeamBuilding />
+    </>
+  );
 }
