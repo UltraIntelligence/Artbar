@@ -1,9 +1,11 @@
 import { defaultContent } from '@/data/content';
 import { Home } from '@/views/Home';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'Artbar Tokyo | Paint & Sip Studio',
   description: defaultContent.en.home.hero.subtitle,
+  alternates: { canonical: '/' },
 };
 
 export default function HomePage() {

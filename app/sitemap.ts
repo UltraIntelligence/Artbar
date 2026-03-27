@@ -25,5 +25,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(post.date),
     }));
 
-  return [...staticRoutes, ...blogRoutes];
+  const themeRoutes: MetadataRoute.Sitemap = [
+    'japan-inspired', 'van-gogh', 'paint-pouring', 'alcohol-ink',
+    'monet', 'picasso', 'renoir', 'matisse', 'kids',
+    'texture-art', 'texture-painting', 'paint-your-pet', 'paint-your-idol',
+  ].map(slug => ({
+    url: `${BASE_URL}/themes/${slug}`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  }));
+
+  return [...staticRoutes, ...blogRoutes, ...themeRoutes];
 }

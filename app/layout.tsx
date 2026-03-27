@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     alternateLocale: 'ja_JP',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
