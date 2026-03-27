@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS, PARTNER_LOGOS } from '../constants';
+import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS, PARTNER_LOGOS, HERO_BLUR_DATA_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
@@ -36,11 +36,6 @@ export const TeamBuilding: React.FC = () => {
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
 
   const teamHeroSrc = content.images.hero.teamBuilding;
-  const [heroBackdropReady, setHeroBackdropReady] = useState(false);
-
-  useEffect(() => {
-    setHeroBackdropReady(false);
-  }, [teamHeroSrc]);
 
   return (
     <div className="grain relative w-full bg-artbar-bg">
@@ -48,15 +43,13 @@ export const TeamBuilding: React.FC = () => {
         <Image
           key={teamHeroSrc}
           src={teamHeroSrc}
-          alt="Team building"
+          alt="Team building art session at Artbar Tokyo"
           fill
           priority
-          className={`object-cover transition-opacity duration-500 ${
-            heroBackdropReady ? 'opacity-50' : 'opacity-0'
-          }`}
+          placeholder="blur"
+          blurDataURL={HERO_BLUR_DATA_URL}
+          className="object-cover opacity-50"
           sizes="100vw"
-          onLoadingComplete={() => setHeroBackdropReady(true)}
-          onError={() => setHeroBackdropReady(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90"></div>
         

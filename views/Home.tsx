@@ -32,6 +32,8 @@ import {
   formatGuestConceptLabel,
 } from '../lib/guest-count';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { useMediaMinMd } from '../hooks/useMediaMinMd';
+import { useNearViewport } from '../hooks/useNearViewport';
 
 /**
  * Fixed carousel height (~Ida Don’s testimonial) so the page doesn’t jump between slides.
@@ -73,6 +75,10 @@ export const Home: React.FC = () => {
           return { line1: parts[0], line2: `— ${parts.slice(1).join(' — ')}` };
         })()
       : null;
+
+  const mdUp = useMediaMinMd();
+  /** Below-fold concept block: avoid loading the same MP4s as the hero until near viewport. */
+  const conceptVideoLazy = useNearViewport<HTMLDivElement>({ rootMargin: '520px' });
 
   const conceptReveal = useScrollReveal();
   const howItWorksReveal = useScrollReveal();
@@ -142,6 +148,12 @@ export const Home: React.FC = () => {
   const markHeroVideoReady = React.useCallback(() => {
     setHeroVideoReady(true);
   }, []);
+
+  /** Only the visible breakpoint should buffer (`auto`); the other stays `none` to avoid ~2× bandwidth. */
+  const heroDesktopPreload = mdUp ? 'auto' : 'none';
+  const heroMobilePreload = mdUp ? 'none' : 'auto';
+  const conceptDesktopPreload = conceptVideoLazy.near && mdUp ? 'auto' : 'none';
+  const conceptMobilePreload = conceptVideoLazy.near && !mdUp ? 'auto' : 'none';
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -215,7 +227,7 @@ export const Home: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload={heroDesktopPreload}
                     src={heroBgUrl}
                     onPlaying={markHeroVideoReady}
                     onLoadedData={markHeroVideoReady}
@@ -231,7 +243,7 @@ export const Home: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload={heroMobilePreload}
                     src={heroBgMobileUrl}
                     onPlaying={markHeroVideoReady}
                     onLoadedData={markHeroVideoReady}
@@ -281,8 +293,8 @@ export const Home: React.FC = () => {
               <span className="sr-only">
                 {lang === 'jp' ? 'ヒーローを読み込み中' : 'Loading hero'}
               </span>
-              <div className="h-1.5 w-56 max-w-[min(100%,14rem)] overflow-hidden rounded-full bg-artbar-navy/12">
-                <div className="h-full w-1/3 rounded-full bg-artbar-taupe animate-hero-indeterminate" />
+              <div className="h-1.5 w-56 max-w-[min(100%,14rem)] overflow-hidden rounded-full bg-artbar-navy/10">
+                <div className="h-full w-full rounded-full animate-hero-shimmer" />
               </div>
             </div>
           )}
@@ -463,7 +475,10 @@ export const Home: React.FC = () => {
             </h2>
 
             {/* Video / lifestyle — self-hosted MP4 (loop) + glass play → full video on YouTube */}
-            <div className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[var(--radius-feature)] shadow-2xl md:rounded-[var(--radius-feature)]">
+            <div
+              ref={conceptVideoLazy.ref}
+              className="group relative mb-16 md:mb-24 aspect-square md:aspect-video w-full max-w-[min(100%,42rem)] md:max-w-[min(100%,56rem)] overflow-hidden rounded-[var(--radius-feature)] shadow-2xl md:rounded-[var(--radius-feature)]"
+            >
               {hasConceptVideo ? (
                 <>
                   <video
@@ -471,7 +486,7 @@ export const Home: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload={conceptDesktopPreload}
                     poster={content.images.concept.main}
                     src={conceptVideoDesktopUrl}
                     className="hidden h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:block"
@@ -481,7 +496,7 @@ export const Home: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    preload="auto"
+                    preload={conceptMobilePreload}
                     poster={content.images.concept.main}
                     src={conceptVideoMobileUrl}
                     className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:hidden"

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { HERO_BLUR_DATA_URL } from '../constants';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
 export const BlogPost: React.FC = () => {
   const params = useParams();
@@ -32,32 +33,20 @@ export const BlogPost: React.FC = () => {
   const shareTitle = encodeURIComponent(title);
   const shareLabel = lang === 'en' ? 'Share this story' : 'この記事をシェア';
 
-  const [heroImageReady, setHeroImageReady] = useState(false);
-
-  useEffect(() => {
-    setHeroImageReady(false);
-  }, [post.image]);
-
   return (
     <div className="grain relative bg-artbar-bg min-h-screen pb-20">
       <div className="relative h-[50vh] md:h-[60vh] w-full overflow-hidden bg-artbar-bg">
-        <div
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            heroImageReady ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <Image
-            key={post.image}
-            src={post.image}
-            alt={title}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-            onLoadingComplete={() => setHeroImageReady(true)}
-            onError={() => setHeroImageReady(true)}
-          />
-        </div>
+        <Image
+          key={post.image}
+          src={post.image}
+          alt={title}
+          fill
+          priority
+          placeholder="blur"
+          blurDataURL={HERO_BLUR_DATA_URL}
+          className="object-cover"
+          sizes="100vw"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-artbar-navy/30 via-transparent to-artbar-bg"></div>
         <div className="absolute top-32 left-0 w-full px-6">
            <div className="max-w-[1000px] mx-auto">

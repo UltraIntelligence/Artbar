@@ -11,6 +11,13 @@ function attachInstructorPhotos(row: InstructorRow): Instructor {
 // Helper for the new placeholder format (non-generated fallbacks only)
 const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
 
+/**
+ * Tiny base64 placeholder for hero images — shows a dark blurred hint instantly while the real
+ * image loads, removing the "blank → pop-in" flash.  Use with `<Image placeholder="blur" blurDataURL={HERO_BLUR_DATA_URL} …/>`.
+ */
+export const HERO_BLUR_DATA_URL =
+  'data:image/jpeg;base64,/9j/2wBDABQODxIPDRQSEBIXFRQYHjIhHhwcHj0sLiQySUBMS0dARkVQWnNiUFVtVkVGZIhlbXd7gYKBTmCNl4x9lnN+gXz/2wBDARUXFx4aHjshITt8U0ZTfHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHz/wAARCAAJABADASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwEE/8QAHBAAAQMFAAAAAAAAAAAAAAAAAAECMQMEBRFB/8QAFAEBAAAAAAAAAAAAAAAAAAAAA//EABcRAQEBAQAAAAAAAAAAAAAAAAEAESH/2gAMAwEAAhEDEQA/AIuQ2gbrxy8MTpGpQCPZU0v/2Q==';
+
 /** Default hero background image (served from /public/media) when not using MP4; also used as video `poster`. */
 export const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
 

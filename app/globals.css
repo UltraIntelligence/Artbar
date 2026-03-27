@@ -73,17 +73,24 @@
   animation: testimonial-slide-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-/* Home hero — MP4 loading (indeterminate bar) */
-@keyframes hero-indeterminate {
+/* Home hero — MP4 loading (shimmer bar) */
+@keyframes hero-shimmer {
   0% {
-    transform: translateX(-100%);
+    background-position: -200% 0;
   }
   100% {
-    transform: translateX(400%);
+    background-position: 200% 0;
   }
 }
-.animate-hero-indeterminate {
-  animation: hero-indeterminate 1.35s ease-in-out infinite;
+.animate-hero-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 25%,
+    var(--color-artbar-taupe) 50%,
+    transparent 75%
+  );
+  background-size: 200% 100%;
+  animation: hero-shimmer 2s ease-in-out infinite;
 }
 
 /* Home / marketing — extracted from views/Home.tsx */

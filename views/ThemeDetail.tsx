@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
@@ -14,6 +14,7 @@ import {
 } from '../data/theme-details';
 import { Button } from '../components/ui/Button';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { HERO_BLUR_DATA_URL } from '../constants';
 import { Heart, Lightbulb, Star, Users, Gift, ArrowRight } from 'lucide-react';
 
 export const ThemeDetail: React.FC = () => {
@@ -37,11 +38,6 @@ export const ThemeDetail: React.FC = () => {
   );
 
   const heroSrc = pageImages?.hero ?? getPh(1920, 1080, theme.title);
-  const [heroBackdropReady, setHeroBackdropReady] = useState(false);
-
-  useEffect(() => {
-    setHeroBackdropReady(false);
-  }, [heroSrc]);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -87,15 +83,13 @@ export const ThemeDetail: React.FC = () => {
         <Image
           key={heroSrc}
           src={heroSrc}
-          alt={theme.title}
+          alt={`${theme.title} paint and sip class at Artbar Tokyo`}
           fill
           priority
-          className={`object-cover transition-opacity duration-500 ${
-            heroBackdropReady ? 'opacity-50' : 'opacity-0'
-          }`}
+          placeholder="blur"
+          blurDataURL={HERO_BLUR_DATA_URL}
+          className="object-cover opacity-50"
           sizes="100vw"
-          onLoadingComplete={() => setHeroBackdropReady(true)}
-          onError={() => setHeroBackdropReady(true)}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-artbar-navy/20 to-artbar-navy/90" />
 

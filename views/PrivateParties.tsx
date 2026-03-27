@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { PRIVATE_PARTY_CAPACITY_ROWS } from '../constants';
+import { PRIVATE_PARTY_CAPACITY_ROWS, HERO_BLUR_DATA_URL } from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { Check, Clock, Users, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
 
@@ -19,33 +19,22 @@ export const PrivateParties: React.FC = () => {
   const maxGuestsLabel = lang === 'en' ? 'Max Guests' : '最大収容';
 
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
-  const [topHeroReady, setTopHeroReady] = useState(false);
-
-  useEffect(() => {
-    setTopHeroReady(false);
-  }, [topHeroSrc]);
 
   return (
     <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="relative w-full max-w-5xl mx-auto mb-12 h-[40vh] min-h-[220px] rounded-[2.5rem] overflow-hidden md:mb-16 bg-artbar-bg">
-          <div
-            className={`absolute inset-0 transition-opacity duration-500 ${
-              topHeroReady ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            <Image
-              key={topHeroSrc || 'private-parties-hero'}
-              src={topHeroSrc}
-              alt=""
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 1200px) 100vw, 80vw"
-              onLoadingComplete={() => setTopHeroReady(true)}
-              onError={() => setTopHeroReady(true)}
-            />
-          </div>
+          <Image
+            key={topHeroSrc || 'private-parties-hero'}
+            src={topHeroSrc}
+            alt="Private party at Artbar Tokyo"
+            fill
+            priority
+            placeholder="blur"
+            blurDataURL={HERO_BLUR_DATA_URL}
+            className="object-cover"
+            sizes="(max-width: 1200px) 100vw, 80vw"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-artbar-bg via-artbar-bg/40 to-transparent" />
         </div>
 

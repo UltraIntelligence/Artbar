@@ -5,6 +5,7 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname),
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'toolandtea.com' },
       { protocol: 'https', hostname: '**.supabase.co' },
