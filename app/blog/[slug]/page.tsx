@@ -1,6 +1,7 @@
 import { defaultContent } from '@/data/content';
 import { BlogPost } from '@/views/BlogPost';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { nextImageSrcSet } from '@/lib/image-preload';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -28,9 +29,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
+  if (!post) notFound();
   return (
     <>
-      {post?.image && (
+      {post.image && (
         <link
           rel="preload"
           as="image"
