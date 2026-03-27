@@ -1,5 +1,8 @@
 import { ThemeDetail } from '@/views/ThemeDetail';
 import type { Metadata } from 'next';
+import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-paths';
+import { resolveThemeContentSlug } from '@/data/theme-details';
+import { nextImageSrcSet } from '@/lib/image-preload';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -46,6 +49,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ThemeDetailPage() {
-  return <ThemeDetail />;
+export default async function ThemeDetailPage({ params }: Props) {
+  const { slug } = await params;
+  const resolvedSlug = resolveThemeContentSlug(slug);
+  const heroImage = THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero;
+  return (
+    <>
+      {heroImage && (
+        <link
+          rel="preload"
+          as="image"
+          imageSrcSet={nextImageSrcSet(heroImage)}
+          imageSizes="100vw"
+          fetchPriority="high"
+        />
+      )}
+      <ThemeDetail />
+    </>
+  );
 }
