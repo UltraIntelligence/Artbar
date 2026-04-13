@@ -350,7 +350,8 @@ export const defaultContent: ContentData = {
             { title: "Paint & Sip", desc: "Come in, grab a drink, and enjoy painting your furry friend!" }
         ],
         pricing: {
-            price: "¥6,050",
+            price: "¥6,600",
+            priceNote: "tax included",
             includes: ["Wine & Snacks", "Canvas & Paints", "Instruction"]
         },
         aiTool: {
@@ -637,7 +638,8 @@ export const defaultContent: ContentData = {
             { title: "ペイント＆シップ", desc: "ワインを飲みながら、リラックスして色を塗っていきましょう。" }
         ],
         pricing: {
-            price: "¥6,050",
+            price: "¥6,600",
+            priceNote: "税込",
             includes: ["ワイン・スナック", "キャンバス・画材", "丁寧な指導"]
         },
         aiTool: {

@@ -316,6 +316,7 @@ export interface SiteContent {
     }[];
     pricing: {
         price: string;
+        priceNote: string;
         includes: string[];
     };
     aiTool: {

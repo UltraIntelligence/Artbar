@@ -95,7 +95,10 @@ export const PaintYourPet: React.FC = () => {
            <div className="h-full">
                <div className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-lg h-full flex flex-col">
                    <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-2 block">Price</span>
-                   <div className="text-5xl font-heading font-heavy text-artbar-navy mb-8">{content.pricing.price}</div>
+                   <div className="mb-8">
+                     <div className="text-5xl font-heading font-heavy text-artbar-navy">{content.pricing.price}</div>
+                     <p className="mt-2 text-sm text-artbar-gray">{content.pricing.priceNote}</p>
+                   </div>
                    <ul className="space-y-6 mb-10 flex-grow">
                       {content.pricing.includes.map((item, i) => (
                           <li key={i} className="flex items-center gap-3 text-artbar-navy font-medium text-lg">
