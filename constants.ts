@@ -428,16 +428,6 @@ export const LOCATIONS: Location[] = [
     image: GI.locations.osaka_namba
   },
   {
-    id: "osaka_caso",
-    nameEn: "Artbar Osaka CASO",
-    nameJp: "Artbar 大阪 CASO",
-    addressEn: "Seaside Studio CASO, 2-7-23 Kaigan-dori, Minato-ku, Osaka-shi, Osaka 552-0022",
-    addressJp: "〒552-0022 大阪府大阪市港区海岸通2-7-23 シーサイドスタジオCASO",
-    accessEn: "Seaside Studio CASO",
-    accessJp: "シーサイドスタジオCASO内",
-    image: GI.locations.osaka_caso
-  },
-  {
     id: "osaka_umeda",
     nameEn: "Artbar Osaka Umeda",
     nameJp: "Artbar 大阪梅田",
@@ -456,16 +446,6 @@ export const LOCATIONS: Location[] = [
     accessEn: "Inside TULLY'S COFFEE",
     accessJp: "タリーズコーヒー併設",
     image: GI.locations.osaka_hirakata
-  },
-  {
-    id: "okinawa",
-    nameEn: "Artbar Okinawa (Franchise)",
-    nameJp: "Artbar 沖縄 (フランチャイズ)",
-    addressEn: "137-3 Yamazato, Chinen, Nanjo City, Okinawa 901-1515. MSY Building 3F",
-    addressJp: "〒901-1515 沖縄県南城市知念字山里137-3 MSYビル3F",
-    accessEn: "Tel: 050-1808-2882",
-    accessJp: "Tel: 050-1808-2882",
-    image: GI.locations.okinawa
   }
 ];
 
