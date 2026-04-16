@@ -57,7 +57,7 @@ const CONCEPT_SOCIAL_AVATAR_URLS = [
 ] as const;
 
 export const Home: React.FC = () => {
-  const { content, site, lang } = useContent();
+  const { content, site, lang, jpCopy } = useContent();
   const router = useRouter();
   const theme = content.theme.typography;
   /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. */
@@ -200,14 +200,14 @@ export const Home: React.FC = () => {
   };
 
 
-  const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : 'ご利用企業様';
-  const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
+  const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : jpCopy.ui.home.meetRegularsHeading;
+  const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const bilingualLine1 = 'Professional Bilingual';
   const bilingualLine2 = 'Instruction Provided';
-  const bilingualJpLine1 = 'プロのバイリンガル';
-  const bilingualJpLine2 = 'インストラクター';
-  const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : 'メディア掲載';
-  const asSeenInHeading = lang === 'en' ? 'As Seen In' : 'メディア掲載実績';
+  const bilingualJpLine1 = jpCopy.ui.home.bilingualLine1;
+  const bilingualJpLine2 = jpCopy.ui.home.bilingualLine2;
+  const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : jpCopy.ui.home.mediaCoverageLabel;
+  const asSeenInHeading = lang === 'en' ? 'As Seen In' : jpCopy.ui.home.asSeenInHeading;
 
   return (
     <div className="w-full bg-artbar-bg">
@@ -292,7 +292,7 @@ export const Home: React.FC = () => {
               aria-live="polite"
             >
               <span className="sr-only">
-                {lang === 'jp' ? 'ヒーローを読み込み中' : 'Loading hero'}
+                {lang === 'jp' ? jpCopy.ui.home.heroLoading : 'Loading hero'}
               </span>
               <div className="h-1.5 w-56 max-w-[min(100%,14rem)] overflow-hidden rounded-full bg-artbar-navy/10">
                 <div className="h-full w-full rounded-full animate-hero-shimmer" />
@@ -800,7 +800,7 @@ export const Home: React.FC = () => {
 
                 <div className="flex min-w-[5.5rem] flex-col items-center justify-center px-2 sm:min-w-[6.5rem] sm:px-4">
                   <span className="font-heading text-[9px] font-bold uppercase tracking-[0.25em] text-artbar-taupe/90">
-                    {lang === 'en' ? 'Stories' : 'ストーリー'}
+                    {lang === 'en' ? 'Stories' : jpCopy.ui.home.storiesLabel}
                   </span>
                   <p className="font-heading text-lg font-heavy tabular-nums leading-none text-artbar-navy md:text-xl">
                     <span className="text-artbar-navy">{activeIndex + 1}</span>

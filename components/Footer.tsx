@@ -3,23 +3,15 @@
 import React from 'react';
 import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
-import { LOCATION_SHORT_LABELS } from '../constants';
 
 export const Footer: React.FC = () => {
-  const { site, lang } = useContent();
+  const { site, lang, jpCopy } = useContent();
   const currentYear = new Date().getFullYear();
-  const router = useRouter();
   const socialIconClass = 'flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white shadow-sm transition-all hover:bg-artbar-taupe';
   const footerLinkClass = 'inline-flex min-h-[44px] min-w-[44px] items-center py-2 hover:text-white hover:translate-x-1 transition-all';
   const footerMetaLinkClass = 'inline-flex min-h-[44px] min-w-[44px] items-center px-1 hover:text-white transition-colors';
-
-  const openAdmin = (e: React.MouseEvent) => {
-    e.preventDefault();
-    router.push('/admin');
-  };
 
   return (
     <>
@@ -52,7 +44,7 @@ export const Footer: React.FC = () => {
                 <MapPin size={18} className="text-artbar-taupe" /> {site.footer.locations}
               </h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                {LOCATION_SHORT_LABELS.map((loc) => (
+                {jpCopy.locationShortLabels.map((loc) => (
                   <li key={loc.en}>
                     <Link
                       href="/locations"
@@ -88,16 +80,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <div className="border-t border-white/10 pt-8 mt-8 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">
-            <p className="cursor-default text-center md:text-left">
-              <span
-                onClick={openAdmin}
-                className="inline-flex min-h-[44px] items-center hover:text-white cursor-pointer transition-colors"
-                title="Admin Access"
-              >
-                ©
-              </span>
-              {` ${currentYear} Artbar Tokyo · Paint and Wine Art Studio · All rights reserved`}
-            </p>
+            <p className="cursor-default text-center md:text-left">{`© ${currentYear} Artbar Tokyo · Paint and Wine Art Studio · All rights reserved`}</p>
             <div className="flex flex-wrap justify-center gap-x-4 md:gap-x-5 md:justify-end">
               <Link href="#" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
               <Link href="#" className={footerMetaLinkClass}>{site.footer.terms}</Link>

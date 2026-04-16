@@ -1,12 +1,35 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { LANG_COOKIE_NAME, languageFromAcceptLanguage, type SiteLanguage } from '@/lib/language';
+import { COPY_ADMIN_COOKIE, COPY_ADMIN_PATH } from '@/lib/copy/defaults';
+import { getCopyAdminLoginUrl, hasValidAdminSession } from '@/lib/copy/session';
 
 function isValidLang(v: string | undefined): v is SiteLanguage {
   return v === 'en' || v === 'jp';
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  if (request.nextUrl.pathname === '/admin') {
+    return NextResponse.rewrite(new URL('/404', request.url));
+  }
+
+  if (request.nextUrl.pathname.startsWith(COPY_ADMIN_PATH)) {
+    const isLoginPage = request.nextUrl.pathname === `${COPY_ADMIN_PATH}/login`;
+    const sessionToken = request.cookies.get(COPY_ADMIN_COOKIE)?.value;
+    const hasSession = await hasValidAdminSession(sessionToken);
+
+    if (!hasSession && !isLoginPage) {
+      return NextResponse.redirect(getCopyAdminLoginUrl(request));
+    }
+
+    if (hasSession && isLoginPage) {
+      const url = request.nextUrl.clone();
+      url.pathname = COPY_ADMIN_PATH;
+      url.search = '';
+      return NextResponse.redirect(url);
+    }
+  }
+
   const existing = request.cookies.get(LANG_COOKIE_NAME)?.value;
   if (isValidLang(existing)) {
     return NextResponse.next();

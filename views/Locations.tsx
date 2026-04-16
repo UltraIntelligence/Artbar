@@ -8,9 +8,10 @@ import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import type { Location } from '../types';
+import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
 export const Locations: React.FC = () => {
-  const { lang, content, site } = useContent();
+  const { lang, content, site, jpCopy } = useContent();
   const operatingReveal = useScrollReveal();
   
   // State for AI Insights
@@ -50,7 +51,10 @@ export const Locations: React.FC = () => {
       if (isMounted.current) {
         setInsights((prev) => ({
             ...prev,
-            [id]: { text: "Unable to load Google Maps data.", chunks: [] }
+            [id]: {
+              text: lang === 'en' ? "Unable to load Google Maps data." : jpCopy.ui.locations.aiError,
+              chunks: [],
+            }
         }));
       }
     } finally {
@@ -70,7 +74,7 @@ export const Locations: React.FC = () => {
           <p className="text-artbar-gray text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
             {lang === 'en' 
               ? "Find your nearest studio. Each location offers a unique atmosphere for your creative journey."
-              : "お近くのスタジオを探す。各ロケーションでユニークな雰囲気とクリエイティブな体験をお楽しみください。"
+              : jpCopy.ui.locations.intro
             }
           </p>
         </div>
@@ -81,6 +85,7 @@ export const Locations: React.FC = () => {
               key={loc.id}
               loc={loc}
               lang={lang}
+              jpCopy={jpCopy}
               insights={insights}
               loading={loading}
               fetchLocationInsights={fetchLocationInsights}
@@ -125,12 +130,14 @@ export const Locations: React.FC = () => {
 function LocationCard({
   loc,
   lang,
+  jpCopy,
   insights,
   loading,
   fetchLocationInsights,
 }: {
   loc: Location;
   lang: 'en' | 'jp';
+  jpCopy: ResolvedJapaneseCopy;
   insights: Record<string, { text: string; chunks: { web?: { uri?: string }; maps?: { uri?: string } }[] }>;
   loading: Record<string, boolean>;
   fetchLocationInsights: (id: string, name: string, address: string) => Promise<void>;
@@ -168,7 +175,7 @@ function LocationCard({
                       rel="noreferrer"
                       className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
                     >
-                      <Navigation size={12} className="md:w-3.5 md:h-3.5" /> {lang === 'en' ? 'Directions' : 'ルート案内'}
+                      <Navigation size={12} className="md:w-3.5 md:h-3.5" /> {lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}
                     </a>
 
                     <button
@@ -185,7 +192,7 @@ function LocationCard({
                        ) : (
                           <Sparkles size={12} className="md:w-3.5 md:h-3.5" />
                        )}
-                       {insights[loc.id] ? (lang === 'en' ? 'AI Loaded' : 'AI情報表示中') : (lang === 'en' ? 'AI Summary' : 'AI サマリー')}
+                       {insights[loc.id] ? (lang === 'en' ? 'AI Loaded' : jpCopy.ui.locations.aiLoaded) : (lang === 'en' ? 'AI Summary' : jpCopy.ui.locations.aiSummary)}
                     </button>
                  </div>
 
@@ -197,7 +204,7 @@ function LocationCard({
                              <Star size={14} fill="currentColor" />
                           </div>
                           <div>
-                            <h4 className="font-heading font-bold text-artbar-navy text-xs md:text-sm mb-1 uppercase tracking-widest">Maps Insights</h4>
+                            <h4 className="font-heading font-bold text-artbar-navy text-xs md:text-sm mb-1 uppercase tracking-widest">{lang === 'en' ? 'Maps Insights' : jpCopy.ui.locations.mapsInsightsTitle}</h4>
                             <p className="text-artbar-navy/80 text-sm leading-relaxed italic">
                               "{insights[loc.id].text}"
                             </p>
@@ -210,7 +217,7 @@ function LocationCard({
                                         if (!uri) return null;
                                         return (
                                             <a key={i} href={uri} target="_blank" rel="noopener noreferrer" className="text-[9px] text-artbar-taupe hover:underline flex items-center gap-1 bg-white px-2 py-1 rounded border border-gray-100 font-bold uppercase">
-                                                <Info size={10} /> Source {i + 1}
+                                                <Info size={10} /> {lang === 'en' ? `Source ${i + 1}` : `${jpCopy.ui.locations.sourcePrefix} ${i + 1}`}
                                             </a>
                                         );
                                     })}
@@ -224,13 +231,13 @@ function LocationCard({
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">Location Address</span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">{lang === 'en' ? 'Location Address' : jpCopy.ui.locations.locationAddressLabel}</span>
                         <p className="font-medium text-artbar-navy leading-relaxed text-sm">
                            {lang === 'en' ? loc.addressEn : loc.addressJp}
                         </p>
                     </div>
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">Transit Access</span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">{lang === 'en' ? 'Transit Access' : jpCopy.ui.locations.transitAccessLabel}</span>
                         <p className="font-medium text-artbar-gray leading-relaxed text-sm whitespace-pre-line">
                            {lang === 'en' ? loc.accessEn : loc.accessJp}
                         </p>

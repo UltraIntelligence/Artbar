@@ -6,14 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { TEAM_BUILDING_ACTIVITY_IMAGES, TEAM_BUILDING_LOGISTICS_ROWS, PARTNER_LOGOS, HERO_BLUR_DATA_URL } from '../constants';
+import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const { site, content, lang } = useContent();
+  const { site, content, lang, jpCopy } = useContent();
   const socialReveal = useScrollReveal();
   const valueReveal = useScrollReveal();
   const activitiesReveal = useScrollReveal();
@@ -33,9 +33,10 @@ export const TeamBuilding: React.FC = () => {
     }
   };
 
-  const bookTeamCta = lang === 'en' ? 'Book Team Building' : 'チームビルディングを予約';
-
   const teamHeroSrc = content.images.hero.teamBuilding;
+  const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
+  const logisticsRows = jpCopy.teamBuildingLogisticsRows;
+  const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
 
   return (
     <div className="grain relative w-full bg-artbar-bg">
@@ -225,7 +226,7 @@ export const TeamBuilding: React.FC = () => {
             
             <div className="relative z-10">
                <div ref={scrollRef} className="flex overflow-x-auto gap-8 pb-4 hide-scrollbar snap-x snap-mandatory touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
-                  {content.teamBuildingTestimonials.map((t, i) => (
+                  {teamTestimonials.map((t, i) => (
                     <div key={i} className="flex-shrink-0 w-[300px] md:w-[500px] snap-start">
                        <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed mb-8 font-light italic">"{t.text}"</p>
                        <div className="flex items-center gap-4">
@@ -261,13 +262,13 @@ export const TeamBuilding: React.FC = () => {
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-6">{site.teamBuilding.logistics.locations.title}</h3>
               <p className="text-artbar-gray mb-8 text-base md:text-lg">{site.teamBuilding.logistics.locations.desc}</p>
               <div className="space-y-4">
-                 {TEAM_BUILDING_LOGISTICS_ROWS.map((row, i) => (
+                 {logisticsRows.map((row, i) => (
                    <div
                      key={i}
-                     className={`bg-white p-4 rounded-xl flex justify-between items-center ${i === TEAM_BUILDING_LOGISTICS_ROWS.length - 1 ? 'border border-artbar-taupe/30' : ''}`}
+                     className={`bg-white p-4 rounded-xl flex justify-between items-center ${i === logisticsRows.length - 1 ? 'border border-artbar-taupe/30' : ''}`}
                    >
                      <span className="font-heading font-bold text-artbar-navy text-sm md:text-base">{row.name[lang]}</span>
-                     <span className={`text-xs md:text-sm px-3 py-1 rounded-full ${i === TEAM_BUILDING_LOGISTICS_ROWS.length - 1 ? 'bg-artbar-taupe text-white' : 'bg-artbar-bg text-artbar-navy'}`}>
+                     <span className={`text-xs md:text-sm px-3 py-1 rounded-full ${i === logisticsRows.length - 1 ? 'bg-artbar-taupe text-white' : 'bg-artbar-bg text-artbar-navy'}`}>
                        {row.cap[lang]}
                      </span>
                    </div>
