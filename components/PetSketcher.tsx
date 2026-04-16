@@ -40,8 +40,10 @@ export const PetSketcher: React.FC = () => {
   const sanitizeForFileName = (value: string) =>
     value
       .trim()
+      .normalize('NFKC')
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/[^\p{L}\p{N}]+/gu, '-')
+      .replace(/-+/g, '-')
       .replace(/^-+|-+$/g, '') || 'guest';
 
   const formatClassDateForDisplay = (value: string) => {
@@ -138,12 +140,13 @@ Destination inbox: ${ARTBAR_TOKYO_EMAIL}`;
   };
 
   const copyReference = async () => {
+    const code = buildReferenceCode();
     try {
-      await navigator.clipboard.writeText(buildReferenceCode());
-      setHandoffMessage(`Reference copied: ${buildReferenceCode()}`);
+      await navigator.clipboard.writeText(code);
+      setHandoffMessage(`Reference copied: ${code}`);
     } catch (error) {
       console.error('Reference copy failed', error);
-      setHandoffMessage(`Reference: ${buildReferenceCode()}`);
+      setHandoffMessage(`Reference: ${code}`);
     }
   };
 
@@ -267,7 +270,8 @@ Thank you!`;
     try {
       const base64Data = image.split(',')[1];
       const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), 45000);
+      // Keep the browser timeout slightly longer than the server timeout so the friendlier server message can win.
+      const timeout = window.setTimeout(() => controller.abort(), 50000);
 
       const res = await fetch('/api/generate-sketch', {
         method: 'POST',
@@ -312,6 +316,17 @@ Thank you!`;
     setErrorMessage(null);
     setHandoffState('packaging');
     setHandoffMessage('Preparing your sketch package...');
+    await prepareEmailPackage();
+  };
+
+  const prepareValidatedEmailPackage = async () => {
+    const validationError = validateHandoffFields();
+    if (validationError) {
+      setErrorMessage(validationError);
+      return;
+    }
+
+    setErrorMessage(null);
     await prepareEmailPackage();
   };
 
@@ -582,7 +597,7 @@ Thank you!`;
                   <button
                     type="button"
                     className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-artbar-navy/15 bg-white px-4 text-sm font-semibold text-artbar-navy hover:bg-gray-50"
-                    onClick={() => void prepareEmailPackage()}
+                    onClick={() => void prepareValidatedEmailPackage()}
                   >
                     <Download size={16} className="shrink-0" aria-hidden />
                     Prepare email package

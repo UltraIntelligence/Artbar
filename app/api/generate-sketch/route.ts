@@ -38,6 +38,7 @@ export async function POST(req: NextRequest) {
       Keep only the pet from the uploaded photo and remove extra background clutter.
     `;
 
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
     const response = await Promise.race([
       ai.models.generateContent({
         model: resolveGeminiImageModel(),
@@ -50,9 +51,11 @@ export async function POST(req: NextRequest) {
         config: {
           ...geminiImageGenerationConfig,
         },
+      }).finally(() => {
+        if (timeoutId) clearTimeout(timeoutId);
       }),
       new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Sketch generation timed out.')), REQUEST_TIMEOUT_MS);
+        timeoutId = setTimeout(() => reject(new Error('Sketch generation timed out.')), REQUEST_TIMEOUT_MS);
       }),
     ]);
 
@@ -77,10 +80,11 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Sketch route failed', error);
     const message = error instanceof Error ? error.message : '';
+    const errorStatus = typeof error === 'object' && error !== null ? (error as { status?: number }).status : undefined;
     const status =
       message === 'Sketch generation timed out.'
         ? 504
-        : message.includes('429')
+        : errorStatus === 429
           ? 429
           : 502;
     const customerMessage =
