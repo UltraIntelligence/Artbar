@@ -22,8 +22,42 @@ export const ThemeDetail: React.FC = () => {
   const rawSlug = (params.slug as string) || '';
   const resolvedSlug = resolveThemeContentSlug(rawSlug);
   const router = useRouter();
-  const { site, lang } = useContent();
+  const { site, lang, jpCopy } = useContent();
   const theme = getThemeContent(resolvedSlug, lang);
+  const themePageCopy = jpCopy.themePages[resolvedSlug];
+  const localizedTheme =
+    lang === 'jp' && themePageCopy
+      ? {
+          ...theme,
+          title: themePageCopy.title,
+          heroBadge: themePageCopy.heroBadge,
+          heroSub: themePageCopy.heroSub,
+          introTitle: themePageCopy.introTitle,
+          introDesc: themePageCopy.introDesc,
+          quickFeatures: theme.quickFeatures.map((item, index) => ({
+            ...item,
+            title: themePageCopy.quickFeatures[index]?.title ?? item.title,
+            desc: themePageCopy.quickFeatures[index]?.desc ?? item.desc,
+          })),
+          examples: theme.examples.map((item, index) => ({
+            ...item,
+            title: themePageCopy.examples[index]?.title ?? item.title,
+          })),
+          expectTitle: themePageCopy.expectTitle,
+          expectDesc: themePageCopy.expectDesc,
+          perfectTitle: themePageCopy.perfectTitle,
+          perfectFor: themePageCopy.perfectFor,
+          whatYouGet: theme.whatYouGet.map((item, index) => ({
+            ...item,
+            text: themePageCopy.whatYouGet[index]?.text ?? item.text,
+            sub: themePageCopy.whatYouGet[index]?.sub ?? item.sub,
+          })),
+          ctaTitle: themePageCopy.ctaTitle,
+          ctaSub: themePageCopy.ctaSub,
+          seoTitle: themePageCopy.seoTitle,
+          seoDesc: themePageCopy.seoDesc,
+        }
+      : theme;
   const pageImages = THEME_PAGE_IMAGES[resolvedSlug as keyof typeof THEME_PAGE_IMAGES];
 
   const intro = useScrollReveal();
@@ -37,7 +71,7 @@ export const ThemeDetail: React.FC = () => {
     [resolvedSlug, site.home.themes.items]
   );
 
-  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, theme.title);
+  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, localizedTheme.title);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -48,32 +82,32 @@ export const ThemeDetail: React.FC = () => {
       .replace(' Classes', '');
 
   const ui = {
-    viewSchedule: lang === 'en' ? 'View Schedule' : 'スケジュールを見る',
-    inspiration: lang === 'en' ? 'Inspiration' : 'インスピレーション',
-    examplePaintings: lang === 'en' ? 'Example Paintings' : '作品例',
+    viewSchedule: lang === 'en' ? 'View Schedule' : jpCopy.ui.themeDetail.viewSchedule,
+    inspiration: lang === 'en' ? 'Inspiration' : jpCopy.ui.themeDetail.inspiration,
+    examplePaintings: lang === 'en' ? 'Example Paintings' : jpCopy.ui.themeDetail.examplePaintings,
     exampleBlurb: (name: string) =>
       lang === 'en'
         ? `A glimpse into our ${name} paint and sip art classes`
-        : `${name}のペイント＆シップクラスの一例です`,
-    theExperience: lang === 'en' ? 'THE EXPERIENCE' : '体験について',
-    guestFavorite: lang === 'en' ? 'Guest Favorite' : 'ゲスト人気',
-    bilingualSessions: lang === 'en' ? 'Bilingual Social Sessions' : 'バイリンガル・ソーシャル枠',
-    expertGuidance: lang === 'en' ? 'Expert Step-by-Step Guidance' : '丁寧なステップ指導',
-    community: lang === 'en' ? 'The Community' : 'コミュニティ',
-    whatToExpect: lang === 'en' ? 'What to Expect' : '体験に含まれるもの',
+        : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name),
+    theExperience: lang === 'en' ? 'THE EXPERIENCE' : jpCopy.ui.themeDetail.theExperience,
+    guestFavorite: lang === 'en' ? 'Guest Favorite' : jpCopy.ui.themeDetail.guestFavorite,
+    bilingualSessions: lang === 'en' ? 'Bilingual Social Sessions' : jpCopy.ui.themeDetail.bilingualSessions,
+    expertGuidance: lang === 'en' ? 'Expert Step-by-Step Guidance' : jpCopy.ui.themeDetail.expertGuidance,
+    community: lang === 'en' ? 'The Community' : jpCopy.ui.themeDetail.community,
+    whatToExpect: lang === 'en' ? 'What to Expect' : jpCopy.ui.themeDetail.whatToExpect,
     whatToExpectSub:
       lang === 'en'
         ? 'Everything you need to create your masterpiece in Tokyo is provided. No extra fees, no hidden costs.'
-        : '東京で作品を完成させるために必要なものはすべて込み。追加料金や隠れた費用はありません。',
-    bilingualArtClass: lang === 'en' ? 'Bilingual Art Class' : 'バイリンガル・アートクラス',
-    perfectForGifting: lang === 'en' ? 'Perfect for Gifting' : 'ギフトにも最適',
-    viewUpcoming: lang === 'en' ? 'View Upcoming Schedule' : '開催予定を見る',
-    discoverMore: lang === 'en' ? 'Discover More Styles' : 'ほかのスタイルを見る',
+        : jpCopy.ui.themeDetail.whatToExpectSub,
+    bilingualArtClass: lang === 'en' ? 'Bilingual Art Class' : jpCopy.ui.themeDetail.bilingualArtClass,
+    perfectForGifting: lang === 'en' ? 'Perfect for Gifting' : jpCopy.ui.themeDetail.perfectForGifting,
+    viewUpcoming: lang === 'en' ? 'View Upcoming Schedule' : jpCopy.ui.themeDetail.viewUpcoming,
+    discoverMore: lang === 'en' ? 'Discover More Styles' : jpCopy.ui.themeDetail.discoverMore,
     discoverSub:
       lang === 'en'
         ? 'From fluid art to impressionist gardens, find your next creative escape at Artbar Tokyo.'
-        : 'フルイドアートから印象派の庭まで、次の創作体験をArtbar Tokyoで。',
-    allCategories: lang === 'en' ? 'All Theme Categories' : 'すべてのテーマ',
+        : jpCopy.ui.themeDetail.discoverSub,
+    allCategories: lang === 'en' ? 'All Theme Categories' : jpCopy.ui.themeDetail.allCategories,
   };
 
   return (
@@ -83,7 +117,7 @@ export const ThemeDetail: React.FC = () => {
         <Image
           key={heroSrc}
           src={heroSrc}
-          alt={`${theme.title} paint and sip class at Artbar Tokyo`}
+          alt={`${localizedTheme.title} paint and sip class at Artbar Tokyo`}
           fill
           priority
           placeholder="blur"
@@ -95,13 +129,13 @@ export const ThemeDetail: React.FC = () => {
 
         <div className="relative z-10 text-center px-6 max-w-5xl w-full">
           <span className="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-xs md:text-sm mb-6 md:mb-8 uppercase tracking-widest">
-            {theme.heroBadge}
+            {localizedTheme.heroBadge}
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-heavy mb-6 md:mb-8 leading-tight tracking-tight">
-            {theme.title}
+            {localizedTheme.title}
           </h1>
           <p className="text-base sm:text-lg md:text-2xl opacity-90 mb-8 md:mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-            {theme.heroSub}
+            {localizedTheme.heroSub}
           </p>
           <div className="flex justify-center items-center w-full px-4 sm:px-0 mb-8">
             <Button
@@ -125,17 +159,17 @@ export const ThemeDetail: React.FC = () => {
         >
           <div className="max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-8 leading-tight">
-              {theme.introTitle}
+              {localizedTheme.introTitle}
             </h2>
             <p className="text-artbar-gray text-lg md:text-2xl leading-relaxed font-light">
-              {theme.introDesc}
+              {localizedTheme.introDesc}
             </p>
           </div>
 
           <div
             className={`grid sm:grid-cols-3 gap-12 max-w-5xl mx-auto reveal-stagger ${intro.isVisible ? 'visible' : ''}`}
           >
-            {theme.quickFeatures.map((feat, i) => (
+            {localizedTheme.quickFeatures.map((feat, i) => (
               <div key={i} className="flex flex-col items-center gap-4 group">
                 <div className="w-16 h-16 bg-artbar-bg rounded-2xl flex items-center justify-center text-artbar-taupe shrink-0 shadow-sm transition-transform group-hover:scale-110">
                   <feat.icon size={28} />
@@ -168,14 +202,14 @@ export const ThemeDetail: React.FC = () => {
               {ui.examplePaintings}
             </h2>
             <p className="text-artbar-gray text-lg md:text-xl font-light">
-              {ui.exampleBlurb(stripTitleForGallery(theme.title))}
+              {ui.exampleBlurb(stripTitleForGallery(localizedTheme.title))}
             </p>
           </div>
 
           <div
             className={`grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 reveal-stagger ${gallery.isVisible ? 'visible' : ''}`}
           >
-            {theme.examples.map((ex, i) => (
+            {localizedTheme.examples.map((ex, i) => (
               <div key={i} className="group flex flex-col items-center">
                 <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
                   <Image
@@ -233,11 +267,11 @@ export const ThemeDetail: React.FC = () => {
                   {ui.theExperience}
                 </span>
                 <h3 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy leading-tight">
-                  {theme.expectTitle}
+                  {localizedTheme.expectTitle}
                 </h3>
               </div>
               <p className="text-artbar-gray text-lg md:text-xl leading-relaxed font-light">
-                {theme.expectDesc}
+                {localizedTheme.expectDesc}
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div className="flex items-center gap-3 text-artbar-navy font-bold text-sm">
@@ -265,7 +299,7 @@ export const ThemeDetail: React.FC = () => {
               {ui.community}
             </span>
             <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-4">
-              {theme.perfectTitle}
+              {localizedTheme.perfectTitle}
             </h2>
             <div className="h-1 w-24 bg-artbar-taupe mx-auto rounded-full" />
           </div>
@@ -273,7 +307,7 @@ export const ThemeDetail: React.FC = () => {
           <div
             className={`grid sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal-stagger ${perfect.isVisible ? 'visible' : ''}`}
           >
-            {theme.perfectFor.map((item, i) => (
+            {localizedTheme.perfectFor.map((item, i) => (
               <div
                 key={i}
                 className="p-10 rounded-[3rem] bg-white shadow-sm flex flex-col items-center text-center group hover:bg-artbar-navy hover:scale-105 transition-all duration-500 border border-white"
@@ -308,7 +342,7 @@ export const ThemeDetail: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-y-16 gap-x-24">
-              {theme.whatYouGet.map((item, i) => (
+              {localizedTheme.whatYouGet.map((item, i) => (
                 <div key={i} className="flex items-start gap-8 group">
                   <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-artbar-taupe shrink-0 group-hover:bg-artbar-navy group-hover:text-white transition-all duration-300 shadow-sm border border-gray-100">
                     <item.icon size={28} />
@@ -338,10 +372,10 @@ export const ThemeDetail: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-artbar-taupe/20 to-transparent" />
           <div className="relative z-10">
             <h2 className="text-3xl md:text-7xl font-heading font-bold text-white mb-6 tracking-tighter">
-              {theme.ctaTitle}
+              {localizedTheme.ctaTitle}
             </h2>
             <p className="text-white/80 text-lg md:text-2xl mb-12 font-light max-w-xl mx-auto leading-relaxed">
-              {theme.ctaSub}
+              {localizedTheme.ctaSub}
             </p>
             <div className="flex justify-center items-center w-full px-4 sm:px-0">
               <Button

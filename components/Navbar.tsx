@@ -12,7 +12,7 @@ export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { site, lang, toggleLang } = useContent();
+  const { site, lang, toggleLang, jpCopy } = useContent();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -163,7 +163,7 @@ export const Navbar: React.FC = () => {
               }}
               className="text-base font-heading font-bold text-artbar-navy text-left flex items-center gap-2 sm:text-lg"
             >
-              <Globe size={18} className="shrink-0" /> {lang === 'en' ? '日本語' : 'English'}
+              <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : 'English'}
             </button>
           </div>
         </div>

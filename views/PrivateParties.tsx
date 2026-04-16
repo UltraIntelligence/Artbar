@@ -4,19 +4,19 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { PRIVATE_PARTY_CAPACITY_ROWS, HERO_BLUR_DATA_URL } from '../constants';
+import { HERO_BLUR_DATA_URL } from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { Check, Clock, Users, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
 
 export const PrivateParties: React.FC = () => {
-  const { site, lang } = useContent();
+  const { site, lang, jpCopy } = useContent();
   const { privateParties } = site;
   const occasionsReveal = useScrollReveal();
   const pricingReveal = useScrollReveal();
   const capacityReveal = useScrollReveal();
   const timelineReveal = useScrollReveal();
 
-  const maxGuestsLabel = lang === 'en' ? 'Max Guests' : '最大収容';
+  const maxGuestsLabel = lang === 'en' ? 'Max Guests' : jpCopy.ui.privateParties.maxGuestsLabel;
 
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
 
@@ -186,7 +186,7 @@ export const PrivateParties: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-             {PRIVATE_PARTY_CAPACITY_ROWS.map((loc, i) => (
+             {jpCopy.privatePartyCapacityRows.map((loc, i) => (
                <div key={i} className={`p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
                   <span className="text-3xl md:text-4xl font-heading font-bold mb-2">{loc.cap}</span>
                   <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4">{maxGuestsLabel}</span>

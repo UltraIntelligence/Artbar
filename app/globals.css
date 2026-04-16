@@ -335,9 +335,16 @@ body {
 html:lang(ja) h1,
 html:lang(ja) h2,
 html:lang(ja) h3,
-html:lang(ja) p {
+html:lang(ja) h4,
+html:lang(ja) p,
+html:lang(ja) span,
+html:lang(ja) a,
+html:lang(ja) button,
+html:lang(ja) label,
+html:lang(ja) li {
   word-break: keep-all;
   overflow-wrap: anywhere;
+  white-space: pre-line;
 }
 
 /* ─── Utility Classes ───────────────────────────────────── */

@@ -9,33 +9,39 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [status, setStatus] = useState<'idle' | 'ok' | 'err'>('idle');
-  const { content, site, lang } = useContent();
+  const { content, site, lang, jpCopy } = useContent();
   const mainReveal = useScrollReveal();
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const subjects: { value: string; en: string; jp: string }[] = [
-    { value: '', en: 'Select a subject...', jp: '件名を選択…' },
-    { value: 'general', en: 'General Inquiry', jp: '一般的なお問い合わせ' },
-    { value: 'booking', en: 'Booking', jp: '予約について' },
-    { value: 'private', en: 'Private Party', jp: '貸切・パーティー' },
-    { value: 'instructor', en: 'Instructor Inquiry', jp: 'インストラクターについて' },
-    { value: 'cancellation', en: 'Cancellation', jp: 'キャンセル' },
-    { value: 'other', en: 'Other', jp: 'その他' },
-  ];
+  const subjectLabelsEn = {
+    '': 'Select a subject...',
+    general: 'General Inquiry',
+    booking: 'Booking',
+    private: 'Private Party',
+    instructor: 'Instructor Inquiry',
+    cancellation: 'Cancellation',
+    other: 'Other',
+  } as const;
+  const subjects = jpCopy.ui.contact.subjectOptions.map((item) => ({
+    value: item.value,
+    en: subjectLabelsEn[item.value as keyof typeof subjectLabelsEn] ?? 'Other',
+    jp: item.label,
+  }));
+  const faqs = lang === 'jp' ? jpCopy.faqs : content.faqs;
 
   const copy = {
-    subjectLabel: lang === 'en' ? 'Subject (required)' : '件名（必須）',
-    nameLabel: lang === 'en' ? 'Name (required)' : 'お名前（必須）',
-    emailLabel: lang === 'en' ? 'Email (required)' : 'メールアドレス（必須）',
-    phoneLabel: lang === 'en' ? 'Phone (required)' : '電話番号（必須）',
-    messageLabel: lang === 'en' ? 'Message' : '内容',
-    messagePh: lang === 'en' ? 'How can we help you?' : 'お問い合わせ内容をご記入ください',
-    send: lang === 'en' ? 'Send Message' : '送信する',
-    sent: lang === 'en' ? 'Message sent! We will get back to you soon.' : '送信しました。追ってご連絡いたします。',
-    failed: lang === 'en' ? 'Failed to send. Please try again or email us directly.' : '送信に失敗しました。恐れ入りますが、再度お試しいただくかメールでご連絡ください。',
+    subjectLabel: lang === 'en' ? 'Subject (required)' : jpCopy.ui.contact.subjectLabel,
+    nameLabel: lang === 'en' ? 'Name (required)' : jpCopy.ui.contact.nameLabel,
+    emailLabel: lang === 'en' ? 'Email (required)' : jpCopy.ui.contact.emailLabel,
+    phoneLabel: lang === 'en' ? 'Phone (required)' : jpCopy.ui.contact.phoneLabel,
+    messageLabel: lang === 'en' ? 'Message' : jpCopy.ui.contact.messageLabel,
+    messagePh: lang === 'en' ? 'How can we help you?' : jpCopy.ui.contact.messagePlaceholder,
+    send: lang === 'en' ? 'Send Message' : jpCopy.ui.contact.send,
+    sent: lang === 'en' ? 'Message sent! We will get back to you soon.' : jpCopy.ui.contact.sent,
+    failed: lang === 'en' ? 'Failed to send. Please try again or email us directly.' : jpCopy.ui.contact.failed,
   };
 
   return (
@@ -63,7 +69,7 @@ export const Contact: React.FC = () => {
         <div className="mb-32">
           <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-10 px-4 border-l-4 border-artbar-taupe">{site.contactPage.faqTitle}</h2>
           <div className="space-y-4">
-            {content.faqs.map((faq, index) => (
+            {faqs.map((faq, index) => (
               <div 
                 key={index} 
                 className={`border border-white rounded-3xl overflow-hidden transition-all duration-300 ${openIndex === index ? 'bg-white shadow-md border-transparent' : 'bg-white/60 hover:bg-white'}`}

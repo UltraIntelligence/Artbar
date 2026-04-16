@@ -11,7 +11,7 @@ import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-r
 export const BlogPost: React.FC = () => {
   const params = useParams();
   const slug = params.slug as string;
-  const { content, lang, site } = useContent();
+  const { content, lang, site, jpCopy } = useContent();
   const proseReveal = useScrollReveal();
   const moreReveal = useScrollReveal();
 
@@ -20,8 +20,8 @@ export const BlogPost: React.FC = () => {
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg">
-        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4">Article Not Found</h1>
-        <Link href="/blog" className="text-artbar-taupe hover:underline">Back to Journal</Link>
+        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4">{lang === 'en' ? 'Article Not Found' : jpCopy.ui.blogPost.articleNotFoundTitle}</h1>
+        <Link href="/blog" className="text-artbar-taupe hover:underline">{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</Link>
       </div>
     );
   }
@@ -31,7 +31,7 @@ export const BlogPost: React.FC = () => {
   const author = lang === 'en' ? post.authorEn : post.authorJp;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareTitle = encodeURIComponent(title);
-  const shareLabel = lang === 'en' ? 'Share this story' : 'この記事をシェア';
+  const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
 
   return (
     <div className="grain relative bg-artbar-bg min-h-screen pb-20">
@@ -133,7 +133,7 @@ export const BlogPost: React.FC = () => {
 
       <section className="max-w-[1000px] mx-auto px-6 mt-20">
         <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">
-          {lang === 'en' ? 'More from the Journal' : 'ジャーナルのほかの記事'}
+          {lang === 'en' ? 'More from the Journal' : jpCopy.ui.blogPost.moreFromJournal}
         </h3>
         <div
           ref={moreReveal.ref}
@@ -162,7 +162,7 @@ export const BlogPost: React.FC = () => {
                     {lang === 'en' ? p.titleEn : p.titleJp}
                   </h4>
                   <span className="text-sm text-artbar-taupe font-bold uppercase tracking-wider">
-                    {lang === 'en' ? 'Read Story' : '記事を読む'}
+                    {lang === 'en' ? 'Read Story' : jpCopy.ui.blogPost.readStory}
                   </span>
                 </div>
               </Link>

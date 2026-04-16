@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
 
 export const NotFound: React.FC = () => {
-  const { lang } = useContent();
+  const { lang, jpCopy } = useContent();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -15,12 +15,12 @@ export const NotFound: React.FC = () => {
   }, []);
 
   const copy = {
-    title: lang === 'en' ? 'Page Not Found' : 'ページが見つかりません',
+    title: lang === 'en' ? 'Page Not Found' : jpCopy.ui.notFound.title,
     body:
       lang === 'en'
         ? 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.'
-        : 'お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。',
-    cta: lang === 'en' ? 'Back to Home' : 'ホームへ戻る',
+        : jpCopy.ui.notFound.body,
+    cta: lang === 'en' ? 'Back to Home' : jpCopy.ui.notFound.cta,
   };
 
   return (
