@@ -4,6 +4,19 @@ import { createAdminSessionToken, setAdminSessionCookie } from '@/lib/copy/sessi
 import { COPY_ADMIN_PATH } from '@/lib/copy/defaults';
 import { isCopyBackendConfigured } from '@/lib/copy/store';
 
+function timingSafeEqual(a: string, b: string) {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  let result = 0;
+  for (let index = 0; index < a.length; index += 1) {
+    result |= a.charCodeAt(index) ^ b.charCodeAt(index);
+  }
+
+  return result === 0;
+}
+
 export async function POST(request: NextRequest) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const { allowed } = rateLimit(ip, { limit: 8, windowMs: 60_000 });
@@ -17,7 +30,7 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData();
   const password = String(formData.get('password') || '');
-  if (password !== process.env.COPY_ADMIN_PASSWORD) {
+  if (!timingSafeEqual(password, process.env.COPY_ADMIN_PASSWORD)) {
     return NextResponse.redirect(new URL(`${COPY_ADMIN_PATH}/login?error=invalid`, request.url), 303);
   }
 

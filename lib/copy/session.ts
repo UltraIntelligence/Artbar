@@ -8,6 +8,19 @@ import {
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
 
+function timingSafeEqual(a: string, b: string) {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  let result = 0;
+  for (let index = 0; index < a.length; index += 1) {
+    result |= a.charCodeAt(index) ^ b.charCodeAt(index);
+  }
+
+  return result === 0;
+}
+
 function getSessionSecret() {
   return process.env.COPY_ADMIN_SESSION_SECRET || '';
 }
@@ -62,7 +75,7 @@ export async function hasValidAdminSession(token: string | undefined | null) {
   }
 
   const expected = await signValue(raw);
-  if (!expected || signature !== expected) {
+  if (!expected || !timingSafeEqual(signature, expected)) {
     return false;
   }
 
