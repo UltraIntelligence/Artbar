@@ -95,7 +95,7 @@ export const GI = {
   teamBuildingActivities: {
     paintSip: g('team-building-paint-sip.jpg'),
     collaborativeMural: g('team-building-collaborative-mural.jpg'),
-    actionPainting: g('team-building-action-painting.jpg'),
+    customWorkshop: g('team-building-custom-workshop.jpg'),
   },
   conceptMain: g('concept-main.jpg'),
   conceptDetail: g('concept-detail.jpg'),

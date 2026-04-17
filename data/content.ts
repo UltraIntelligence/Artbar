@@ -195,7 +195,7 @@ export const defaultContent: ContentData = {
         items: [
           { title: "Paint & Sip", desc: "Our classic session. Everyone paints their own canvas with step-by-step guidance.", link: "Most Popular" },
           { title: "Collaborative Mural", desc: "Work together on separate canvases that combine to form one giant image.", link: "Best for Unity" },
-          { title: "Action Painting", desc: "Get messy and loose with Jackson Pollock-style splatter art.", link: "Best for Energy" }
+          { title: "Custom Workshop", desc: "A tailored creative session designed around your team's goals, pace, and event style.", link: "Tailored for Teams" }
         ]
       },
       specialty: {
@@ -483,7 +483,7 @@ export const defaultContent: ContentData = {
         items: [
           { title: "ペイント＆シップ", desc: "Artbarの定番スタイル。同じテーマを描きながら、それぞれの個性の違いを楽しみます。", link: "一番人気" },
           { title: "コラボレーション・ミューラル", desc: "全員で分割されたキャンバスを描き、最後に一つの巨大な壁画を完成させます。", link: "結束力向上" },
-          { title: "アクション・ペインティング", desc: "絵具を豪快に飛び散らせるアート。エネルギーの発散と開放感をチームで共有。", link: "リフレッシュ" }
+          { title: "カスタム・ワークショップ", desc: "チームの目的や雰囲気に合わせて内容を組み立てる、オーダーメイド型のクリエイティブ体験です。", link: "企業向けに最適化" }
         ]
       },
       specialty: {

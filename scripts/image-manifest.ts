@@ -50,10 +50,10 @@ export const IMAGE_MANIFEST: { items: ManifestItem[] } = {
         'Vertical 3:4 editorial photo. Same tier of modern Tokyo corporate HQ: colleagues in black aprons stand at multiple easels along a long wall, aligning separate painted canvases that slot together into one giant collaborative mural, coordinating and gesturing. International Japanese office team, engaged and unified. Neutral executive interior, soft daylight, editorial photography. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
-      id: 'team-building-action-painting',
-      publicUrl: GI.teamBuildingActivities.actionPainting,
+      id: 'team-building-custom-workshop',
+      publicUrl: GI.teamBuildingActivities.customWorkshop,
       prompt:
-        'Vertical 3:4 editorial photo. Corporate event space inside a large Tokyo office: floors and walls protected with drop cloths; diverse Japanese and international professionals in black aprons doing high-energy Jackson Pollock-style splatter and drip painting on wide floor canvases, motion and flying paint. Daylight from tall windows, bold but professional editorial mood. No overlaid text, no watermarks, no brand logos in frame.',
+        'Vertical 3:4 editorial photo. Premium custom Artbar workshop in a bright Tokyo studio or executive office lounge: small mixed team of Japanese and international professionals in smart casual attire and black aprons gathered around a clean creative table with elegant art materials, mini canvases, alcohol ink sample pieces, candles, color swatches, and an instructor guiding choices. Organized, polished, collaborative, and tailored-to-the-client feeling. Clearly a creative workshop, not leathercraft, not sewing, not woodworking. No paint splatter, no messy floors, no chaotic motion. Soft daylight, elevated B2B team-building atmosphere, Vogue Japan editorial quality. No overlaid text, no watermarks, no brand logos in frame.',
     }),
     item({
       id: 'concept-main',

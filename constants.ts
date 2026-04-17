@@ -67,7 +67,7 @@ export const SITE_IMAGES = {
 export const TEAM_BUILDING_ACTIVITY_IMAGES = [
   GI.teamBuildingActivities.paintSip,
   GI.teamBuildingActivities.collaborativeMural,
-  GI.teamBuildingActivities.actionPainting,
+  GI.teamBuildingActivities.customWorkshop,
 ];
 
 /** Wikimedia Commons SVGs for partner marks. Home + team building. */
