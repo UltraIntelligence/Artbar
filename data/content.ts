@@ -35,8 +35,8 @@ export const defaultContent: ContentData = {
     }
   },
   images: {
-    logoDark: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_200.png", 
-    logoLight: "https://artbar.co.jp/wp-content/uploads/ArtBar-Logo_new_e.png", 
+    logoDark: "/brand/artbar-logo-dark.png",
+    logoLight: "/brand/artbar-logo-light.png",
     hero: {
       home: SITE_IMAGES.hero.home,
       homeMobile: SITE_IMAGES.hero.homeMobile,
