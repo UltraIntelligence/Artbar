@@ -440,6 +440,8 @@ export const Home: React.FC = () => {
                     <img
                       src={item.userImage}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-artbar-bg md:h-12 md:w-12"
                     />
                   ) : (
@@ -543,6 +545,8 @@ export const Home: React.FC = () => {
                           key={src}
                           src={src}
                           alt=""
+                          loading="lazy"
+                          decoding="async"
                           className="h-14 w-14 shrink-0 rounded-full border-[3px] border-white object-cover shadow-xl md:h-24 md:w-24 md:border-[6px]"
                         />
                       ))}
@@ -763,6 +767,8 @@ export const Home: React.FC = () => {
                     <img
                       src={activeCarouselTestimonial.userImage}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       className="mb-3 h-12 w-12 rounded-full object-cover shadow-md ring-2 ring-artbar-bg md:h-14 md:w-14"
                     />
                   ) : (
@@ -842,6 +848,8 @@ export const Home: React.FC = () => {
                    <img 
                       src={item.image} 
                       alt={item.outlet}
+                      loading="lazy"
+                      decoding="async"
                       className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100" 
                       onError={(e) => (e.target as HTMLImageElement).src = `https://picsum.photos/seed/media${i}/600/800`}
                    />
@@ -857,6 +865,8 @@ export const Home: React.FC = () => {
                                <img 
                                  src={item.logo} 
                                  alt={item.outlet} 
+                                 loading="lazy"
+                                 decoding="async"
                                  className="max-h-full max-w-full object-contain"
                                  onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
                                />
@@ -882,6 +892,8 @@ export const Home: React.FC = () => {
            <img 
               src={content.images.cta || "https://picsum.photos/seed/artbarcta/1920/600"} 
               alt="Artbar Studio" 
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover opacity-30"
            />
            <div className="absolute inset-0 bg-gradient-to-r from-artbar-navy/95 via-artbar-navy/80 to-artbar-navy/40"></div>

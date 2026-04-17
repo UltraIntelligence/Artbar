@@ -52,6 +52,8 @@ export function PartnerLogo({ name, url, size = 'default' }: PartnerLogoEntry) {
         <img
           src={url}
           alt={name}
+          loading="lazy"
+          decoding="async"
           className={prominentImg}
           onError={() => setFailed(true)}
         />
@@ -74,6 +76,8 @@ export function PartnerLogo({ name, url, size = 'default' }: PartnerLogoEntry) {
       <img
         src={url}
         alt={name}
+        loading="lazy"
+        decoding="async"
         className={`max-h-7 origin-center w-auto max-w-full object-contain transition-all duration-500 filter grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 sm:max-h-full ${brandScale} ${compactBrand}`}
         onError={() => setFailed(true)}
       />

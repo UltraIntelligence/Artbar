@@ -7,7 +7,7 @@ import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { LANG_COOKIE_NAME, resolveInitialLanguage } from '@/lib/language';
-import { getResolvedCopyBundle } from '@/lib/copy/store';
+import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -44,11 +44,14 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const headersList = await headers();
-  const copyBundle = await getResolvedCopyBundle();
   const initialLang = resolveInitialLanguage(
     cookieStore.get(LANG_COOKIE_NAME)?.value,
     headersList.get('accept-language')
   );
+  const initialPublishedJpPayload =
+    initialLang === 'jp'
+      ? await getPublishedJapaneseCopyPayload({ timeoutMs: 700 })
+      : null;
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 
   return (
@@ -57,8 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body suppressHydrationWarning>
         <ContentProvider
           initialLang={initialLang}
-          initialContent={copyBundle.content}
-          initialJpCopy={copyBundle.jpCopy}
+          initialPublishedJpPayload={initialPublishedJpPayload}
         >
           <ThemeInjector />
           <ScrollToTop />

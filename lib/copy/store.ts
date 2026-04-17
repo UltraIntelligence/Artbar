@@ -3,21 +3,18 @@ import {
   COPY_LOCALE,
   COPY_TABLE,
   DEFAULT_JAPANESE_COPY_PAYLOAD,
-  deepMergeTemplate,
 } from '@/lib/copy/defaults';
 import type {
   CopyEditorState,
   CopyRecord,
   JapaneseCopyPayload,
   ResolvedCopyBundle,
-  ResolvedJapaneseCopy,
 } from '@/lib/copy/types';
 import {
-  LOCATION_SHORT_LABELS,
-  PRIVATE_PARTY_CAPACITY_ROWS,
-  TEAM_BUILDING_LOGISTICS_ROWS,
-} from '@/constants';
-import { defaultContent } from '@/data/content';
+  buildResolvedJapaneseCopy,
+  mergePublishedIntoContent,
+  normalizeJapaneseCopyPayload,
+} from '@/lib/copy/resolve';
 
 function getSupabaseUrl() {
   return process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -42,89 +39,18 @@ function getSupabaseAdmin() {
   });
 }
 
-function normalizePayload(payload: unknown): JapaneseCopyPayload {
-  return deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
-}
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T | null> {
+  if (timeoutMs <= 0) {
+    return promise.then((value) => value);
+  }
 
-function mergePublishedIntoContent(payload: JapaneseCopyPayload) {
-  const content = structuredClone(defaultContent);
-  content.jp = deepMergeTemplate(defaultContent.jp, payload.site);
-
-  const instructorsById = new Map(payload.instructors.map((item) => [item.id, item]));
-  content.instructors = content.instructors.map((item) => {
-    const copy = instructorsById.get(item.id);
-    return copy
-      ? {
-          ...item,
-          roleJp: copy.roleJp,
-          descJp: copy.descJp,
-        }
-      : item;
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => resolve(null), timeoutMs);
+    promise
+      .then((value) => resolve(value))
+      .catch(() => resolve(null))
+      .finally(() => clearTimeout(timer));
   });
-
-  const locationsById = new Map(payload.locations.map((item) => [item.id, item]));
-  content.locations = content.locations.map((item) => {
-    const copy = locationsById.get(item.id);
-    return copy
-      ? {
-          ...item,
-          nameJp: copy.nameJp,
-          addressJp: copy.addressJp,
-          accessJp: copy.accessJp,
-        }
-      : item;
-  });
-
-  const blogById = new Map(payload.blog.map((item) => [item.id, item]));
-  content.blog = content.blog.map((item) => {
-    const copy = blogById.get(item.id);
-    return copy
-      ? {
-          ...item,
-          titleJp: copy.titleJp,
-          excerptJp: copy.excerptJp,
-          contentJp: copy.contentJp,
-          authorJp: copy.authorJp,
-        }
-      : item;
-  });
-
-  return content;
-}
-
-function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): ResolvedJapaneseCopy {
-  return {
-    faqs: payload.faqs,
-    teamBuildingTestimonials: payload.teamBuildingTestimonials,
-    themePages: payload.themePages,
-    locationShortLabels: LOCATION_SHORT_LABELS.map((item, index) => ({
-      ...item,
-      jp: payload.locationShortLabels[index] ?? item.jp,
-    })),
-    teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item, index) => ({
-      ...item,
-      name: {
-        ...item.name,
-        jp: payload.teamBuildingLogisticsRows[index]?.name ?? item.name.jp,
-      },
-      cap: {
-        ...item.cap,
-        jp: payload.teamBuildingLogisticsRows[index]?.cap ?? item.cap.jp,
-      },
-    })),
-    privatePartyCapacityRows: PRIVATE_PARTY_CAPACITY_ROWS.map((item, index) => ({
-      ...item,
-      name: {
-        ...item.name,
-        jp: payload.privatePartyCapacityRows[index]?.name ?? item.name.jp,
-      },
-      desc: {
-        ...item.desc,
-        jp: payload.privatePartyCapacityRows[index]?.desc ?? item.desc.jp,
-      },
-    })),
-    ui: payload.ui,
-  };
 }
 
 async function readCopyRecord(): Promise<CopyRecord | null> {
@@ -150,10 +76,10 @@ async function readCopyRecord(): Promise<CopyRecord | null> {
 
   return {
     ...data,
-    draft_payload: normalizePayload(data.draft_payload),
-    published_payload: normalizePayload(data.published_payload),
+    draft_payload: normalizeJapaneseCopyPayload(data.draft_payload),
+    published_payload: normalizeJapaneseCopyPayload(data.published_payload),
     previous_published_payload: data.previous_published_payload
-      ? normalizePayload(data.previous_published_payload)
+      ? normalizeJapaneseCopyPayload(data.previous_published_payload)
       : null,
   };
 }
@@ -162,9 +88,17 @@ export function isCopyBackendConfigured() {
   return Boolean(getSupabaseUrl() && getServiceRoleKey());
 }
 
+export async function getPublishedJapaneseCopyPayload(options?: { timeoutMs?: number }) {
+  const record = options?.timeoutMs
+    ? await withTimeout(readCopyRecord(), options.timeoutMs)
+    : await readCopyRecord();
+
+  return record?.published_payload ?? null;
+}
+
 export async function getResolvedCopyBundle(): Promise<ResolvedCopyBundle> {
-  const record = await readCopyRecord();
-  const published = record?.published_payload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
+  const published =
+    (await getPublishedJapaneseCopyPayload()) ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
 
   return {
     content: mergePublishedIntoContent(published),
@@ -191,7 +125,7 @@ export async function saveDraftPayload(payload: JapaneseCopyPayload) {
 
   const existing = await readCopyRecord();
   const now = new Date().toISOString();
-  const normalizedPayload = normalizePayload(payload);
+  const normalizedPayload = normalizeJapaneseCopyPayload(payload);
   const published = existing?.published_payload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
 
   const { error } = await supabase.from(COPY_TABLE).upsert(
