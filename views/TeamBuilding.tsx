@@ -37,6 +37,13 @@ export const TeamBuilding: React.FC = () => {
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const logisticsRows = jpCopy.teamBuildingLogisticsRows;
   const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
+  const formatEnglishActivityTitle = (title: string) => {
+    if (lang !== 'en') return title;
+
+    const [firstWord, ...rest] = title.trim().split(/\s+/);
+    if (!firstWord || rest.length === 0) return title;
+    return `${firstWord}\n${rest.join(' ')}`;
+  };
 
   return (
     <div className="grain relative w-full bg-artbar-bg">
@@ -165,7 +172,9 @@ export const TeamBuilding: React.FC = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/40 to-transparent"></div>
                         <div className="absolute bottom-0 left-0 p-8 md:p-10 text-white">
                             <Icon size={40} className="mb-6 text-artbar-taupe" />
-                            <h3 className="text-2xl md:text-3xl font-heading font-bold mb-3">{act.title}</h3>
+                            <h3 className="text-2xl md:text-3xl font-heading font-bold mb-3 whitespace-pre-line">
+                                {formatEnglishActivityTitle(act.title)}
+                            </h3>
                             <p className="text-white/80 leading-relaxed mb-6 text-base md:text-lg opacity-100 max-h-40 md:opacity-0 md:max-h-0 md:mb-6 md:group-hover:opacity-100 md:group-hover:max-h-40 transition-all duration-500">
                                 {act.desc}
                             </p>
