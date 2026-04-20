@@ -89,18 +89,33 @@ export const PARTNER_LOGOS: { name: string; url: string }[] = [
 ];
 
 export const POPULAR_THEMES = [
-  { title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
-  { title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
-  { title: "Paint Your Pet", desc: "Immortalize your furry friend", image: GI.themes.paintYourPet },
-  { title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk },
-  { title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh },
-  { title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet },
-  { title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso },
-  { title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
-  { title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
-  { title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
-  { title: "Texture Painting", slug: "texture-art", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
-  { title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
+  { slug: "japan-inspired", title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
+  { slug: "paint-pouring", title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
+  { slug: "paint-your-pet", title: "Paint Your Pet", desc: "Immortalize your furry friend", image: GI.themes.paintYourPet },
+  { slug: "alcohol-ink", title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk },
+  { slug: "van-gogh", title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh },
+  { slug: "monet", title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet },
+  { slug: "picasso", title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso },
+  { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
+  { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
+  { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
+  { slug: "texture-art", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
+  { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
+];
+
+export const POPULAR_THEMES_JP = [
+  { slug: "japan-inspired", title: "ジャパンインスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired },
+  { slug: "paint-pouring", title: "ポーリングアート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring },
+  { slug: "paint-your-pet", title: "ペットを描こう", desc: "大切な家族をキャンバスに残す", image: GI.themes.paintYourPet },
+  { slug: "alcohol-ink", title: "アルコールインク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk },
+  { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh },
+  { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet },
+  { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso },
+  { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir },
+  { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse },
+  { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids },
+  { slug: "texture-art", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting },
+  { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol },
 ];
 
 /** Bios only; image URLs come from `INSTRUCTOR_IDS` + `GI.instructors` (see `data/generated-image-paths.ts`). */

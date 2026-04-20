@@ -1,5 +1,7 @@
 import {
   LOCATION_SHORT_LABELS,
+  POPULAR_THEMES,
+  POPULAR_THEMES_JP,
   PRIVATE_PARTY_CAPACITY_ROWS,
   TEAM_BUILDING_LOGISTICS_ROWS,
 } from '@/constants';
@@ -14,8 +16,29 @@ import type {
 } from '@/lib/copy/types';
 import type { ContentData } from '@/types';
 
+function shouldMigrateJapaneseThemeItems(
+  items: JapaneseCopyPayload['site']['home']['themes']['items'],
+): boolean {
+  if (items.length !== POPULAR_THEMES.length) {
+    return false;
+  }
+
+  return items.every((item, index) => {
+    const legacy = POPULAR_THEMES[index];
+    return item.title === legacy.title && item.desc === legacy.desc;
+  });
+}
+
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
-  return deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
+  const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
+
+  // Older Japanese payloads stored the home theme cards from the English shared list.
+  // Upgrade those exact legacy cards so the live site and copy admin both show JP text.
+  if (shouldMigrateJapaneseThemeItems(normalized.site.home.themes.items)) {
+    normalized.site.home.themes.items = structuredClone(POPULAR_THEMES_JP);
+  }
+
+  return normalized;
 }
 
 export function mergePublishedIntoContent(payload: JapaneseCopyPayload): ContentData {
@@ -98,4 +121,3 @@ export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): Resolve
     ui: payload.ui,
   };
 }
-

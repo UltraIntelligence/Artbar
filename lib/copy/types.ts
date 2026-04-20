@@ -46,6 +46,12 @@ export interface JapaneseUiCopy {
     asSeenInHeading: string;
     heroLoading: string;
     storiesLabel: string;
+    heroImageAlt: string;
+    conceptImageAlt: string;
+    ctaImageAlt: string;
+    conceptVideoCta: string;
+    previousTestimonial: string;
+    nextTestimonial: string;
   };
   contact: {
     subjectOptions: { value: string; label: string }[];

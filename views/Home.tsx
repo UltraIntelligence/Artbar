@@ -208,6 +208,12 @@ export const Home: React.FC = () => {
   const bilingualJpLine2 = jpCopy.ui.home.bilingualLine2;
   const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : jpCopy.ui.home.mediaCoverageLabel;
   const asSeenInHeading = lang === 'en' ? 'As Seen In' : jpCopy.ui.home.asSeenInHeading;
+  const heroImageAlt = lang === 'en' ? 'Artbar Experience' : jpCopy.ui.home.heroImageAlt;
+  const conceptImageAlt = lang === 'en' ? 'Artbar Lifestyle' : jpCopy.ui.home.conceptImageAlt;
+  const ctaImageAlt = lang === 'en' ? 'Artbar Studio' : jpCopy.ui.home.ctaImageAlt;
+  const conceptVideoCta = lang === 'en' ? 'Watch the full video on YouTube' : jpCopy.ui.home.conceptVideoCta;
+  const previousTestimonialLabel = lang === 'en' ? 'Previous testimonial' : jpCopy.ui.home.previousTestimonial;
+  const nextTestimonialLabel = lang === 'en' ? 'Next testimonial' : jpCopy.ui.home.nextTestimonial;
 
   return (
     <div className="w-full bg-artbar-bg">
@@ -259,7 +265,7 @@ export const Home: React.FC = () => {
               ) : (
                 <Image
                   src={heroBgSrc}
-                  alt="Artbar Experience"
+                  alt={heroImageAlt}
                   fill
                   priority
                   sizes="100vw"
@@ -508,7 +514,7 @@ export const Home: React.FC = () => {
               ) : (
                 <Image
                   src={content.images.concept.main}
-                  alt="Artbar Lifestyle"
+                  alt={conceptImageAlt}
                   fill
                   sizes="(max-width: 768px) 100vw, min(56rem, 100vw)"
                   className="object-cover transition-transform duration-[4s] ease-out group-hover:scale-105"
@@ -520,7 +526,7 @@ export const Home: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute left-1/2 top-1/2 z-20 flex h-[4.25rem] w-[4.25rem] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/45 bg-white/18 shadow-[0_8px_32px_-4px_rgba(5,55,97,0.35)] backdrop-blur-md transition-transform duration-200 hover:scale-105 hover:bg-white/28 hover:border-white/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:h-[5.5rem] md:w-[5.5rem]"
-                aria-label="Watch the full video on YouTube"
+                aria-label={conceptVideoCta}
               >
                 <Play
                   className="ml-1 h-9 w-9 text-white drop-shadow-md md:h-12 md:w-12"
@@ -794,7 +800,7 @@ export const Home: React.FC = () => {
                 <button
                   type="button"
                   onClick={goPrevTestimonial}
-                  aria-label="Previous testimonial"
+                  aria-label={previousTestimonialLabel}
                   className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
                 >
                   <ChevronLeft
@@ -818,7 +824,7 @@ export const Home: React.FC = () => {
                 <button
                   type="button"
                   onClick={goNextTestimonial}
-                  aria-label="Next testimonial"
+                  aria-label={nextTestimonialLabel}
                   className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
                 >
                   <ChevronRight
@@ -891,7 +897,7 @@ export const Home: React.FC = () => {
         <div className={`bg-artbar-navy rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)] overflow-hidden relative shadow-2xl reveal ${bottomCtaReveal.isVisible ? 'visible' : ''}`}>
            <img 
               src={content.images.cta || "https://picsum.photos/seed/artbarcta/1920/600"} 
-              alt="Artbar Studio" 
+              alt={ctaImageAlt} 
               loading="lazy"
               decoding="async"
               className="absolute inset-0 w-full h-full object-cover opacity-30"

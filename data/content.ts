@@ -6,6 +6,7 @@ import {
   FAQS,
   TEAM_BUILDING_TESTIMONIALS,
   POPULAR_THEMES,
+  POPULAR_THEMES_JP,
   SITE_IMAGES,
 } from '../constants';
 import { GI } from './generated-image-paths';
@@ -415,7 +416,7 @@ export const defaultContent: ContentData = {
         title: "人気のテーマ",
         subtitle: "古典的な名画の模写から、モダンなテクスチャーアートまで。多彩なプログラムをご用意しています。",
         cta: "スケジュールを見る",
-        items: POPULAR_THEMES
+        items: POPULAR_THEMES_JP
       },
       features: {
         title: "Artbarの体験",
