@@ -27,6 +27,12 @@ export const DEFAULT_JAPANESE_UI_COPY = {
     asSeenInHeading: 'メディア掲載実績',
     heroLoading: 'ヒーローを読み込み中',
     storiesLabel: 'ストーリー',
+    heroImageAlt: 'Artbarのメインビジュアル',
+    conceptImageAlt: 'Artbarの体験イメージ',
+    ctaImageAlt: 'Artbarスタジオ',
+    conceptVideoCta: 'YouTubeでフル動画を見る',
+    previousTestimonial: '前のレビュー',
+    nextTestimonial: '次のレビュー',
   },
   contact: {
     subjectOptions: [
