@@ -25,7 +25,7 @@ function shouldMigrateJapaneseThemeItems(
 
   return items.every((item, index) => {
     const legacy = POPULAR_THEMES[index];
-    return item.slug === undefined && item.title === legacy.title && item.desc === legacy.desc;
+    return item.title === legacy.title && item.desc === legacy.desc;
   });
 }
 
