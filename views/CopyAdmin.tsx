@@ -110,6 +110,12 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
   );
 
   const hasUnsavedChanges = !jsonEqual(draft, savedDraft);
+  const hasUnpublishedChanges = !jsonEqual(savedDraft, published);
+  const copyStateMessage = hasUnsavedChanges
+    ? 'You have edits on this screen that are not saved yet. Save draft first.'
+    : hasUnpublishedChanges
+      ? 'Saved draft is ready. Customers will not see it until you publish.'
+      : 'Everything saved is already live for customers.';
 
   const sectionHasUnsavedChanges = (sectionId: string) => {
     const section = COPY_ADMIN_SECTIONS.find((item) => item.id === sectionId);
@@ -123,7 +129,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
         const data = await postJson<{ draft: JapaneseCopyPayload }>('/api/copy-admin/draft', { draft });
         setDraft(data.draft);
         setSavedDraft(data.draft);
-        setStatus(message);
+        setStatus(`${message} Customers will not see this until you publish.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Draft save failed.');
       }
@@ -132,7 +138,12 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
 
   const handlePublish = () => {
     if (hasUnsavedChanges) {
-      setStatus('Save the draft first, then publish it live.');
+      setStatus('Save the draft first. Then publish it to make it visible to customers.');
+      return;
+    }
+
+    if (!hasUnpublishedChanges) {
+      setStatus('Nothing new to publish. The saved draft already matches the live website.');
       return;
     }
 
@@ -147,7 +158,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
         setSavedDraft(data.draft);
         setPublished(data.published);
         setPreviousLive(data.previousPublished);
-        setStatus('Published the latest Japanese draft to the live site.');
+        setStatus('Published to the website. Customers can now see these Japanese copy changes.');
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Publish failed.');
       }
@@ -303,7 +314,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">{selectedSection.title}</p>
                 <h2 className="mt-2 font-heading text-3xl font-bold text-artbar-navy">Live vs draft</h2>
                 <p className="mt-2 text-sm text-artbar-gray">
-                  Left side is what customers see now. Right side is your saved draft.
+                  Left side is what customers see now. Right side is the draft you are editing.
                 </p>
                 {!isConfigured ? (
                   <p className="mt-3 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
@@ -319,7 +330,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                   onClick={() => handleSaveDraft(`${selectedSection.title} draft saved.`)}
                   disabled={isPending || !isConfigured}
                 >
-                  Save Page Draft
+                  Save Draft
                 </Button>
                 <Button
                   type="button"
@@ -327,15 +338,15 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                   onClick={() => handleSaveDraft('Saved the full Japanese draft.')}
                   disabled={isPending || !isConfigured}
                 >
-                  Save All Draft
+                  Save All Drafts
                 </Button>
                 <Button
                   type="button"
                   variant="taupe"
                   onClick={handlePublish}
-                  disabled={isPending || !isConfigured}
+                  disabled={isPending || !isConfigured || hasUnsavedChanges || !hasUnpublishedChanges}
                 >
-                  Publish All Draft Changes
+                  Publish to Website
                 </Button>
                 <Button
                   type="button"
@@ -350,12 +361,15 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                     Log Out
                   </Button>
                 </form>
+                <p className="basis-full text-xs leading-5 text-artbar-gray">
+                  Publish once after saving. When there is nothing new to publish, this button turns off.
+                </p>
               </div>
             </div>
 
             <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <p className={`text-sm ${hasUnsavedChanges ? 'text-artbar-taupe' : 'text-artbar-gray'}`}>
-                {hasUnsavedChanges ? 'You have unsaved local edits. Save the draft before publishing.' : 'All visible edits are already saved as draft.'}
+              <p className={`text-sm ${hasUnsavedChanges || hasUnpublishedChanges ? 'text-artbar-taupe' : 'text-artbar-gray'}`}>
+                {copyStateMessage}
               </p>
               {status ? <p className="text-sm text-artbar-navy">{status}</p> : null}
             </div>

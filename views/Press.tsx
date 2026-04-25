@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Press: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { content, site } = useContent();
+  const { content, site, lang, jpCopy } = useContent();
   const carouselReveal = useScrollReveal();
   const timelineReveal = useScrollReveal();
 
@@ -37,7 +37,7 @@ export const Press: React.FC = () => {
               type="button"
               onClick={() => scroll('left')} 
               className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 z-20 bg-white shadow-lg min-w-[44px] min-h-[44px] w-12 h-12 rounded-full flex items-center justify-center text-artbar-navy hover:scale-110 transition-all opacity-0 group-hover:opacity-100 disabled:opacity-0"
-              aria-label="Scroll left"
+              aria-label={lang === 'en' ? 'Scroll left' : jpCopy.ui.press.scrollLeft}
             >
               <ChevronLeft size={24} />
             </button>
@@ -46,7 +46,7 @@ export const Press: React.FC = () => {
               type="button"
               onClick={() => scroll('right')} 
               className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 z-20 bg-white shadow-lg min-w-[44px] min-h-[44px] w-12 h-12 rounded-full flex items-center justify-center text-artbar-navy hover:scale-110 transition-all opacity-0 group-hover:opacity-100"
-              aria-label="Scroll right"
+              aria-label={lang === 'en' ? 'Scroll right' : jpCopy.ui.press.scrollRight}
             >
               <ChevronRight size={24} />
             </button>

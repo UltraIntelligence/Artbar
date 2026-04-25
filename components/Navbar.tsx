@@ -113,7 +113,7 @@ export const Navbar: React.FC = () => {
              onClick={toggleLang}
              className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8`}
           >
-             {lang === 'en' ? 'JP' : 'EN'}
+             {lang === 'en' ? jpCopy.ui.navbar.compactJapanese : jpCopy.ui.navbar.compactEnglish}
           </button>
 
           <button
@@ -163,7 +163,7 @@ export const Navbar: React.FC = () => {
               }}
               className="text-base font-heading font-bold text-artbar-navy text-left flex items-center gap-2 sm:text-lg"
             >
-              <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : 'English'}
+              <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
             </button>
           </div>
         </div>

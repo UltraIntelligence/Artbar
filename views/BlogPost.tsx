@@ -103,7 +103,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#3b5998] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label="Facebook"
+                aria-label={lang === 'en' ? 'Facebook' : jpCopy.ui.blogPost.facebookShareLabel}
               >
                 <Facebook size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -112,7 +112,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#1DA1F2] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label="X"
+                aria-label={lang === 'en' ? 'X' : jpCopy.ui.blogPost.xShareLabel}
               >
                 <Twitter size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -121,7 +121,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#0077B5] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label="LinkedIn"
+                aria-label={lang === 'en' ? 'LinkedIn' : jpCopy.ui.blogPost.linkedinShareLabel}
               >
                 <Linkedin size={20} className="text-current" strokeWidth={2} />
               </a>

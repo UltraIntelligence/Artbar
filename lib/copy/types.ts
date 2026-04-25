@@ -36,6 +36,17 @@ export interface JapanesePrivatePartyCapacityRowCopy {
 export interface JapaneseUiCopy {
   navbar: {
     switchToJapanese: string;
+    switchToEnglish: string;
+    compactJapanese: string;
+    compactEnglish: string;
+  };
+  footer: {
+    faq: string;
+    careers: string;
+    emailLabel: string;
+    instagramLabel: string;
+    facebookLabel: string;
+    logoAlt: string;
   };
   home: {
     meetRegularsHeading: string;
@@ -57,13 +68,19 @@ export interface JapaneseUiCopy {
     subjectOptions: { value: string; label: string }[];
     subjectLabel: string;
     nameLabel: string;
+    namePlaceholder: string;
     emailLabel: string;
+    emailPlaceholder: string;
     phoneLabel: string;
     messageLabel: string;
     messagePlaceholder: string;
     send: string;
     sent: string;
     failed: string;
+  };
+  press: {
+    scrollLeft: string;
+    scrollRight: string;
   };
   locations: {
     intro: string;
@@ -78,11 +95,25 @@ export interface JapaneseUiCopy {
   };
   privateParties: {
     maxGuestsLabel: string;
+    priceSuffix: string;
+    heroImageAlt: string;
+  };
+  teamBuilding: {
+    heroImageAlt: string;
+    specialtyChips: string[];
+    previousTestimonial: string;
+    nextTestimonial: string;
+  };
+  blogList: {
+    comingSoon: string;
   };
   blogPost: {
     articleNotFoundTitle: string;
     articleNotFoundCta: string;
     shareLabel: string;
+    facebookShareLabel: string;
+    xShareLabel: string;
+    linkedinShareLabel: string;
     moreFromJournal: string;
     readStory: string;
   };
@@ -92,6 +123,7 @@ export interface JapaneseUiCopy {
     cta: string;
   };
   themeDetail: {
+    atmosphereImageAlt: string;
     viewSchedule: string;
     inspiration: string;
     examplePaintings: string;
@@ -117,6 +149,85 @@ export interface JapaneseUiCopy {
     professionalSketchNote: string;
     howItWorks: string;
     priceLabel: string;
+    sketchTitle: string;
+    sketchIntro: string;
+    uploadCta: string;
+    uploadFormats: string;
+    uploadAriaLabel: string;
+    originalPetAlt: string;
+    aiSketchAlt: string;
+    sketching: string;
+    generateLineArt: string;
+    sketchPlaceholder: string;
+    saveSketch: string;
+    likeThisVersionTitle: string;
+    likeThisVersionBody: string;
+    classUseTitle: string;
+    classUseBody: string;
+    studentNameLabel: string;
+    studentNamePlaceholder: string;
+    studentEmailLabel: string;
+    studentEmailPlaceholder: string;
+    petNameLabel: string;
+    petNamePlaceholder: string;
+    classDateLabel: string;
+    locationLabel: string;
+    locationPlaceholder: string;
+    notesLabel: string;
+    notesPlaceholder: string;
+    optionalLabel: string;
+    referenceLabel: string;
+    copyReference: string;
+    referenceHelp: string;
+    preparingPackage: string;
+    useForClass: string;
+    prepareEmailPackage: string;
+    saveClassDetails: string;
+    packageFooter: string;
+    clearAndStartOver: string;
+    defaultStudentName: string;
+    defaultPetName: string;
+    dateTbd: string;
+    notProvided: string;
+    none: string;
+    classSummaryTitle: string;
+    classSummaryReference: string;
+    classSummaryStudentName: string;
+    classSummaryStudentEmail: string;
+    classSummaryPetName: string;
+    classSummaryClassDate: string;
+    classSummaryLocation: string;
+    classSummaryNotes: string;
+    classSummarySketchFile: string;
+    classSummaryDestinationInbox: string;
+    emailGreeting: string;
+    emailIntro: string;
+    emailAttached: string;
+    emailThanks: string;
+    packageReady: string;
+    invalidNeedSketch: string;
+    invalidStudentName: string;
+    invalidStudentEmail: string;
+    invalidStudentEmailFormat: string;
+    invalidPetName: string;
+    invalidClassDate: string;
+    uploadInvalidType: string;
+    uploadTooLarge: string;
+    uploadReadError: string;
+    uploadDifferentImage: string;
+    uploadDecodeError: string;
+    uploadInvalidImage: string;
+    browserPrepareError: string;
+    photoReady: string;
+    photoConverted: string;
+    sketchCreateError: string;
+    sketchIncomplete: string;
+    sketchTimeout: string;
+    genericError: string;
+    preparingMessage: string;
+    referenceCopiedPrefix: string;
+    referencePrefix: string;
+    classDetailsSaved: string;
   };
 }
 

@@ -163,7 +163,7 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
     roleJp: "インストラクター",
     descEn: "Nanako's specialty is Japanese painting and acrylic painting. She is very helpful if you have questions about your painting process. She will happily give you great advice so you can feel confident in your masterpiece!",
     descJp: "日本画とアクリル画を中心に制作活動を行っています。「その瞬間の感情」を大切に、自由に表現することを重視したセッションです。繊細な色使いを得意とし、皆様が思いのままに個性を発揮できるよう技術面でもサポートします。",
-    languages: "Japanese, English"
+    languages: "Japanese"
   },
   {
     id: "kiyoe",
@@ -190,7 +190,7 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
     roleJp: "インストラクター",
     descEn: "A graduate of Bunka Fashion College, Mineko has worked for many years in apparel fashion and the accessories industry, and has published a recipe book for bead accessories she designed herself. Her accessories feature cheerful, colorful tones that also come through in her paintings. Mineko loves animals and fantasy worlds, and creates illustrations that feel like scenes from a storybook. In kids classes she supports everyone so you can enjoy painting together.",
     descJp: "文化服装学院卒。長年アパレルファッション業界、アクセサリーパーツ業界を経て自らデザインしたビーズアクセサリーのレシピ本も発売しています。アクセサリーは元気が出るようなカラフルな色が特徴で、それは絵にも表れています。Minekoは動物とファンタジーの世界感が大好きで、物語に登場するようなイラストを描きます。キッズクラスでは皆で楽しく描けるようサポートいたします！",
-    languages: "Japanese, English"
+    languages: "Japanese"
   },
   {
     id: "sakura",
@@ -217,7 +217,7 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
     roleJp: "キャンドルアーティスト",
     descEn: "Yuko is a candle artist and will gently teach you how to make your own aroma and art candles during our Craft Morning workshops!",
     descJp: "クラフトモーニングのワークショップでは、キャンドルアーティストであるユウコさんが、アロマキャンドルやアートキャンドルの作り方を優しく教えてくれます！",
-    languages: "Japanese, English"
+    languages: "Japanese"
   },
   {
     id: "rie",
@@ -244,7 +244,7 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
     roleJp: "インストラクター",
     descEn: "Naoko hopes you can enjoy expressing yourself freely through your work. She also hopes that after experiencing making art, you will feel interested in visiting museums and exploring art further.",
     descJp: "武蔵野美術大学短期大学部卒業。Naoko先生は生徒の皆さんに作品を通して自由に表現する事を楽しんでいただける時間にしたいと考えています。アートを体験する事をきっかけに美術館に行くことや、芸術に興味を持ってもらえたら嬉しいです。",
-    languages: "Japanese, English"
+    languages: "Japanese"
   },
   {
     id: "helen",
@@ -307,7 +307,7 @@ const INSTRUCTOR_ROWS: InstructorRow[] = [
     roleJp: "クラフトパートナー",
     descEn: "Glicina Peony is a craft partner that specializes in dried flower arrangements and wreaths.",
     descJp: "グリシーナ・ピオニーは、ドライフラワーのアレンジメントやリースを専門に扱うクラフトパートナーです。",
-    languages: "Japanese, English"
+    languages: "Japanese"
   }
 ];
 

@@ -13,10 +13,14 @@ import {
 } from 'lucide-react';
 import { Button } from './ui/Button';
 import { ARTBAR_TOKYO_EMAIL } from '../constants';
+import { useContent } from '../context/ContentContext';
 
 type HandoffState = 'idle' | 'packaging' | 'ready';
 
 export const PetSketcher: React.FC = () => {
+  const { lang, jpCopy } = useContent();
+  const copy = jpCopy.ui.paintYourPet;
+  const text = (en: string, jp: string) => (lang === 'en' ? en : jp);
   const [image, setImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -44,7 +48,7 @@ export const PetSketcher: React.FC = () => {
       .toLowerCase()
       .replace(/[^\p{L}\p{N}]+/gu, '-')
       .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, '') || 'guest';
+      .replace(/^-+|-+$/g, '') || text('guest', copy.defaultStudentName);
 
   const formatClassDateForDisplay = (value: string) => {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
@@ -59,7 +63,7 @@ export const PetSketcher: React.FC = () => {
   };
 
   const buildReferenceCode = () => {
-    const datePart = classDate || 'date-tbd';
+    const datePart = classDate || text('date-tbd', copy.dateTbd);
     const studentPart = sanitizeForFileName(studentName);
     const petPart = sanitizeForFileName(petName);
     return `PYP-${datePart}-${studentPart}-${petPart}`.toUpperCase();
@@ -80,37 +84,37 @@ export const PetSketcher: React.FC = () => {
   };
 
   const buildEmailSubject = () => {
-    const dateLabel = classDate || 'DATE-TBD';
-    return `[PaintYourPet][${dateLabel}][${studentName.trim() || 'Guest'}][${petName.trim() || 'Pet'}][${buildReferenceCode()}]`;
+    const dateLabel = classDate || text('DATE-TBD', copy.dateTbd);
+    return `[PaintYourPet][${dateLabel}][${studentName.trim() || text('Guest', copy.defaultStudentName)}][${petName.trim() || text('Pet', copy.defaultPetName)}][${buildReferenceCode()}]`;
   };
 
   const buildClassSummary = () => {
-    const dateLabel = formatClassDateForDisplay(classDate) || 'Not provided';
-    const locationLabel = classLocation.trim() || 'Not provided';
-    const notesLabel = bookingNotes.trim() || 'None';
+    const dateLabel = formatClassDateForDisplay(classDate) || text('Not provided', copy.notProvided);
+    const locationLabel = classLocation.trim() || text('Not provided', copy.notProvided);
+    const notesLabel = bookingNotes.trim() || text('None', copy.none);
     const { referenceCode, fileName } = getDownloadDetails();
 
-    return `Paint Your Pet class handoff
-Reference: ${referenceCode}
-Student name: ${studentName.trim()}
-Student email: ${studentEmail.trim()}
-Pet name: ${petName.trim()}
-Class date: ${dateLabel}
-Studio/location: ${locationLabel}
-Notes: ${notesLabel}
-Sketch file: ${fileName}
-Destination inbox: ${ARTBAR_TOKYO_EMAIL}`;
+    return `${text('Paint Your Pet class handoff', copy.classSummaryTitle)}
+${text('Reference', copy.classSummaryReference)}: ${referenceCode}
+${text('Student name', copy.classSummaryStudentName)}: ${studentName.trim()}
+${text('Student email', copy.classSummaryStudentEmail)}: ${studentEmail.trim()}
+${text('Pet name', copy.classSummaryPetName)}: ${petName.trim()}
+${text('Class date', copy.classSummaryClassDate)}: ${dateLabel}
+${text('Studio/location', copy.classSummaryLocation)}: ${locationLabel}
+${text('Notes', copy.classSummaryNotes)}: ${notesLabel}
+${text('Sketch file', copy.classSummarySketchFile)}: ${fileName}
+${text('Destination inbox', copy.classSummaryDestinationInbox)}: ${ARTBAR_TOKYO_EMAIL}`;
   };
 
   const validateHandoffFields = () => {
-    if (!generatedImage) return 'Please generate a sketch first.';
-    if (!studentName.trim()) return 'Please add the student name.';
-    if (!studentEmail.trim()) return 'Please add the student email.';
+    if (!generatedImage) return text('Please generate a sketch first.', copy.invalidNeedSketch);
+    if (!studentName.trim()) return text('Please add the student name.', copy.invalidStudentName);
+    if (!studentEmail.trim()) return text('Please add the student email.', copy.invalidStudentEmail);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(studentEmail.trim())) {
-      return 'Please add a valid student email.';
+      return text('Please add a valid student email.', copy.invalidStudentEmailFormat);
     }
-    if (!petName.trim()) return 'Please add the pet name.';
-    if (!classDate.trim()) return 'Please add the class date.';
+    if (!petName.trim()) return text('Please add the pet name.', copy.invalidPetName);
+    if (!classDate.trim()) return text('Please add the class date.', copy.invalidClassDate);
     return null;
   };
 
@@ -143,23 +147,23 @@ Destination inbox: ${ARTBAR_TOKYO_EMAIL}`;
     const code = buildReferenceCode();
     try {
       await navigator.clipboard.writeText(code);
-      setHandoffMessage(`Reference copied: ${code}`);
+      setHandoffMessage(`${text('Reference copied', copy.referenceCopiedPrefix)}: ${code}`);
     } catch (error) {
       console.error('Reference copy failed', error);
-      setHandoffMessage(`Reference: ${code}`);
+      setHandoffMessage(`${text('Reference', copy.referencePrefix)}: ${code}`);
     }
   };
 
   const openPrefilledEmail = () => {
-    const body = `Hi Artbar team,
+    const body = `${text('Hi Artbar team,', copy.emailGreeting)}
 
-I'd like to use this sketch for my Paint Your Pet class.
+${text("I'd like to use this sketch for my Paint Your Pet class.", copy.emailIntro)}
 
 ${buildClassSummary()}
 
-I have attached the sketch file.
+${text('I have attached the sketch file.', copy.emailAttached)}
 
-Thank you!`;
+${text('Thank you!', copy.emailThanks)}`;
 
     const mailto = `mailto:${ARTBAR_TOKYO_EMAIL}?subject=${encodeURIComponent(buildEmailSubject())}&body=${encodeURIComponent(body)}`;
     window.location.href = mailto;
@@ -176,7 +180,7 @@ Thank you!`;
     setHandoffState('ready');
     setHandoffMessage(
       message ||
-        'Your sketch package is ready. We saved the sketch, saved the class details file, and opened a ready-to-send email to Artbar Tokyo.'
+        text('Your sketch package is ready. We saved the sketch, saved the class details file, and opened a ready-to-send email to Artbar Tokyo.', copy.packageReady)
     );
   };
 
@@ -190,29 +194,29 @@ Thank you!`;
     resetHandoffState();
 
     if (!file.type.startsWith('image/')) {
-      setErrorMessage('Please upload a photo file such as JPG or PNG.');
+      setErrorMessage(text('Please upload a photo file such as JPG or PNG.', copy.uploadInvalidType));
       return;
     }
 
     if (file.size > 15 * 1024 * 1024) {
-      setErrorMessage('That photo is too large. Please choose one under 15MB.');
+      setErrorMessage(text('That photo is too large. Please choose one under 15MB.', copy.uploadTooLarge));
       return;
     }
 
     const reader = new FileReader();
     reader.onerror = () => {
-      setErrorMessage('We could not read that photo. Please try a JPG or PNG image.');
+      setErrorMessage(text('We could not read that photo. Please try a JPG or PNG image.', copy.uploadReadError));
     };
     reader.onload = (event) => {
       const result = event.target?.result;
       if (typeof result !== 'string') {
-        setErrorMessage('We could not read that photo. Please try a different image.');
+        setErrorMessage(text('We could not read that photo. Please try a different image.', copy.uploadDifferentImage));
         return;
       }
 
       const img = new Image();
       img.onerror = () => {
-        setErrorMessage('This photo format is not decoding cleanly here. Please try a JPG or PNG version.');
+        setErrorMessage(text('This photo format is not decoding cleanly here. Please try a JPG or PNG version.', copy.uploadDecodeError));
       };
       img.onload = () => {
         const MAX_SIZE = 1536;
@@ -220,7 +224,7 @@ Thank you!`;
         let height = img.height;
 
         if (!width || !height) {
-          setErrorMessage('That photo looks invalid. Please try a different image.');
+          setErrorMessage(text('That photo looks invalid. Please try a different image.', copy.uploadInvalidImage));
           return;
         }
 
@@ -240,7 +244,7 @@ Thank you!`;
         const ctx = canvas.getContext('2d');
 
         if (!ctx) {
-          setErrorMessage('Your browser could not prepare this image. Please try again.');
+          setErrorMessage(text('Your browser could not prepare this image. Please try again.', copy.browserPrepareError));
           return;
         }
 
@@ -253,8 +257,8 @@ Thank you!`;
         setGeneratedImage(null);
         setUploadNote(
           file.type === 'image/jpeg'
-            ? 'Photo ready.'
-            : 'Photo converted for smoother sketch generation.'
+            ? text('Photo ready.', copy.photoReady)
+            : text('Photo converted for smoother sketch generation.', copy.photoConverted)
         );
       };
       img.src = result;
@@ -283,10 +287,14 @@ Thank you!`;
       window.clearTimeout(timeout);
       const payload = await res.json();
       if (!res.ok) {
-        throw new Error(payload?.error || 'We could not create the sketch right now.');
+        throw new Error(
+          lang === 'en'
+            ? payload?.error || 'We could not create the sketch right now.'
+            : copy.sketchCreateError
+        );
       }
       if (!payload?.imageBase64 || !payload?.mimeType) {
-        throw new Error('The sketch came back incomplete. Please try again.');
+        throw new Error(text('The sketch came back incomplete. Please try again.', copy.sketchIncomplete));
       }
 
       setGeneratedImage(`data:${payload.mimeType};base64,${payload.imageBase64}`);
@@ -294,10 +302,10 @@ Thank you!`;
       console.error('Sketch generation failed', error);
       const message =
         error instanceof Error && error.name === 'AbortError'
-          ? 'The sketch took too long. Please try again with a simpler or smaller photo.'
+          ? text('The sketch took too long. Please try again with a simpler or smaller photo.', copy.sketchTimeout)
           : error instanceof Error
             ? error.message
-            : 'Something went wrong. Please try again.';
+            : text('Something went wrong. Please try again.', copy.genericError);
       setErrorMessage(message);
     } finally {
       setLoading(false);
@@ -315,7 +323,7 @@ Thank you!`;
 
     setErrorMessage(null);
     setHandoffState('packaging');
-    setHandoffMessage('Preparing your sketch package...');
+    setHandoffMessage(text('Preparing your sketch package...', copy.preparingMessage));
     await prepareEmailPackage();
   };
 
@@ -334,10 +342,10 @@ Thank you!`;
     <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-gray-100 max-w-5xl mx-auto">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-heading font-heavy text-artbar-navy mb-4 flex items-center justify-center gap-3">
-          <Sparkles className="text-artbar-taupe" size={32} /> Magic Sketch Preview
+          <Sparkles className="text-artbar-taupe" size={32} /> {text('Magic Sketch Preview', copy.sketchTitle)}
         </h2>
         <p className="text-artbar-gray max-w-lg mx-auto">
-          Upload a photo of your pet to see how our AI envisions a simple canvas sketch.
+          {text('Upload a photo of your pet to see how our AI envisions a simple canvas sketch.', copy.sketchIntro)}
         </p>
       </div>
 
@@ -351,24 +359,24 @@ Thank you!`;
             `}
           >
             {image ? (
-              <img
-                src={image}
-                alt="Original Pet"
-                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
-              />
+	              <img
+	                src={image}
+	                alt={text('Original Pet', copy.originalPetAlt)}
+	                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
+	              />
             ) : (
               <div className="text-center p-6 text-gray-400 group-hover:text-artbar-navy transition-colors">
-                <Upload size={48} className="mx-auto mb-4" />
-                <p className="font-heading font-bold uppercase tracking-wider text-sm">Click to Upload Photo</p>
-                <p className="text-xs mt-2 opacity-60">JPG, PNG, HEIC, AVIF</p>
-              </div>
+	                <Upload size={48} className="mx-auto mb-4" />
+	                <p className="font-heading font-bold uppercase tracking-wider text-sm">{text('Click to Upload Photo', copy.uploadCta)}</p>
+	                <p className="text-xs mt-2 opacity-60">{text('JPG, PNG, HEIC, AVIF', copy.uploadFormats)}</p>
+	              </div>
             )}
             <input
               type="file"
               ref={fileInputRef}
               className="hidden"
               accept="image/*"
-              aria-label="Upload pet photo"
+	              aria-label={text('Upload pet photo', copy.uploadAriaLabel)}
               onChange={handleFileUpload}
             />
           </div>
@@ -378,11 +386,11 @@ Thank you!`;
             disabled={!image || loading}
             className="w-full bg-artbar-navy text-white hover:bg-artbar-taupe border-none py-4 rounded-xl shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? (
-              <span className="flex items-center gap-2"><Loader2 className="animate-spin" /> Sketching...</span>
-            ) : (
-              <span className="flex items-center gap-2"><Sparkles size={18} /> Generate Line Art</span>
-            )}
+	            {loading ? (
+	              <span className="flex items-center gap-2"><Loader2 className="animate-spin" /> {text('Sketching...', copy.sketching)}</span>
+	            ) : (
+	              <span className="flex items-center gap-2"><Sparkles size={18} /> {text('Generate Line Art', copy.generateLineArt)}</span>
+	            )}
           </Button>
 
           {uploadNote && (
@@ -400,16 +408,16 @@ Thank you!`;
         <div className="flex flex-col gap-6">
           <div className="min-h-[16rem] rounded-[2rem] border border-gray-200 bg-gray-50 shadow-inner overflow-hidden flex items-center justify-center">
             {generatedImage ? (
-              <img
-                src={generatedImage}
-                alt="AI Sketch"
-                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
-              />
+	              <img
+	                src={generatedImage}
+	                alt={text('AI Sketch', copy.aiSketchAlt)}
+	                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
+	              />
             ) : (
               <div className="text-center text-gray-300 px-6 py-12">
-                <ImageIcon size={48} className="mx-auto mb-4 opacity-50" />
-                <p className="font-heading font-bold uppercase tracking-widest text-xs">Sketch will appear here</p>
-              </div>
+	                <ImageIcon size={48} className="mx-auto mb-4 opacity-50" />
+	                <p className="font-heading font-bold uppercase tracking-widest text-xs">{text('Sketch will appear here', copy.sketchPlaceholder)}</p>
+	              </div>
             )}
           </div>
 
@@ -420,31 +428,31 @@ Thank you!`;
                 download={getDownloadDetails().fileName}
                 className="inline-flex h-11 w-full min-w-0 items-center justify-center gap-2 rounded-full border-2 border-artbar-navy bg-white px-4 text-sm font-heading font-bold tracking-wide text-artbar-navy transition-all hover:bg-gray-50 active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-artbar-navy focus:ring-offset-2"
               >
-                <Download size={16} className="shrink-0" aria-hidden />
-                Save sketch
-              </a>
+	                <Download size={16} className="shrink-0" aria-hidden />
+	                {text('Save sketch', copy.saveSketch)}
+	              </a>
 
               <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200 text-sm flex items-start gap-3">
-                <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
-                <div>
-                  <strong>Like this version?</strong> Send it to Artbar with your class details so the team can match it to the right student and class day.
-                </div>
+	                <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
+	                <div>
+	                  <strong>{text('Like this version?', copy.likeThisVersionTitle)}</strong> {text('Send it to Artbar with your class details so the team can match it to the right student and class day.', copy.likeThisVersionBody)}
+	                </div>
               </div>
 
               <div className="rounded-2xl border border-artbar-navy/10 bg-artbar-bg/80 p-5 md:p-6 space-y-4">
                 <div>
-                  <h3 className="font-heading font-heavy text-artbar-navy text-lg mb-2">
-                    Use this sketch for your Paint Your Pet class
-                  </h3>
-                  <p className="text-sm text-artbar-gray leading-relaxed">
-                  Fill in the class details below, then press the main button. We will package the sketch with a clear reference, save the files, and open an email to Artbar so it is easy for you to send.
-                  </p>
+	                  <h3 className="font-heading font-heavy text-artbar-navy text-lg mb-2">
+	                    {text('Use this sketch for your Paint Your Pet class', copy.classUseTitle)}
+	                  </h3>
+	                  <p className="text-sm text-artbar-gray leading-relaxed">
+	                    {text('Fill in the class details below, then press the main button. We will package the sketch with a clear reference, save the files, and open an email to Artbar so it is easy for you to send.', copy.classUseBody)}
+	                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div className="min-w-0">
                     <label htmlFor="pet-sketch-student-name" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Student name
+	                      {text('Student name', copy.studentNameLabel)}
                     </label>
                     <input
                       id="pet-sketch-student-name"
@@ -454,7 +462,7 @@ Thank you!`;
                         setStudentName(e.target.value);
                         resetHandoffState();
                       }}
-                      placeholder="e.g. Alex Tanaka"
+	                      placeholder={text('e.g. Alex Tanaka', copy.studentNamePlaceholder)}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="name"
                     />
@@ -462,7 +470,7 @@ Thank you!`;
 
                   <div className="min-w-0">
                     <label htmlFor="pet-sketch-student-email" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Student email
+	                      {text('Student email', copy.studentEmailLabel)}
                     </label>
                     <input
                       id="pet-sketch-student-email"
@@ -472,7 +480,7 @@ Thank you!`;
                         setStudentEmail(e.target.value);
                         resetHandoffState();
                       }}
-                      placeholder="e.g. alex@example.com"
+	                      placeholder={text('e.g. alex@example.com', copy.studentEmailPlaceholder)}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="email"
                     />
@@ -480,7 +488,7 @@ Thank you!`;
 
                   <div className="min-w-0">
                     <label htmlFor="pet-sketch-pet-name" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Pet name
+	                      {text('Pet name', copy.petNameLabel)}
                     </label>
                     <input
                       id="pet-sketch-pet-name"
@@ -490,7 +498,7 @@ Thank you!`;
                         setPetName(e.target.value);
                         resetHandoffState();
                       }}
-                      placeholder="e.g. Luna"
+	                      placeholder={text('e.g. Luna', copy.petNamePlaceholder)}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="off"
                     />
@@ -498,7 +506,7 @@ Thank you!`;
 
                   <div className="min-w-0">
                     <label htmlFor="pet-sketch-class-date" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Class date
+	                      {text('Class date', copy.classDateLabel)}
                     </label>
                     <input
                       id="pet-sketch-class-date"
@@ -514,7 +522,7 @@ Thank you!`;
 
                   <div className="min-w-0 sm:col-span-2">
                     <label htmlFor="pet-sketch-location" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Studio or location <span className="font-normal normal-case">(optional)</span>
+	                      {text('Studio or location', copy.locationLabel)} <span className="font-normal normal-case">({text('optional', copy.optionalLabel)})</span>
                     </label>
                     <input
                       id="pet-sketch-location"
@@ -524,7 +532,7 @@ Thank you!`;
                         setClassLocation(e.target.value);
                         resetHandoffState();
                       }}
-                      placeholder="e.g. Ginza"
+	                      placeholder={text('e.g. Ginza', copy.locationPlaceholder)}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="off"
                     />
@@ -532,7 +540,7 @@ Thank you!`;
 
                   <div className="min-w-0 sm:col-span-2">
                     <label htmlFor="pet-sketch-notes" className="mb-1 block text-xs font-bold uppercase tracking-wide text-artbar-gray">
-                      Notes for Artbar <span className="font-normal normal-case">(optional)</span>
+	                      {text('Notes for Artbar', copy.notesLabel)} <span className="font-normal normal-case">({text('optional', copy.optionalLabel)})</span>
                     </label>
                     <textarea
                       id="pet-sketch-notes"
@@ -541,7 +549,7 @@ Thank you!`;
                         setBookingNotes(e.target.value);
                         resetHandoffState();
                       }}
-                      placeholder="e.g. Booking under a different name, two pets, special note"
+	                      placeholder={text('e.g. Booking under a different name, two pets, special note', copy.notesPlaceholder)}
                       rows={3}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe resize-none"
                     />
@@ -552,7 +560,7 @@ Thank you!`;
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="text-xs font-bold uppercase tracking-[0.2em] text-artbar-taupe">
-                        Searchable reference
+	                        {text('Searchable reference', copy.referenceLabel)}
                       </p>
                       <p className="mt-1 text-sm font-heading font-bold text-artbar-navy break-all">
                         {buildReferenceCode()}
@@ -563,12 +571,12 @@ Thank you!`;
                       onClick={() => void copyReference()}
                       className="inline-flex items-center gap-2 rounded-full border border-artbar-navy/15 px-3 py-1.5 text-xs font-semibold text-artbar-navy hover:bg-artbar-bg"
                     >
-                      <Copy size={14} />
-                      Copy
-                    </button>
+	                      <Copy size={14} />
+	                      {text('Copy', copy.copyReference)}
+	                    </button>
                   </div>
                   <p className="mt-2 text-xs text-artbar-gray leading-relaxed">
-                    This same reference is used in the file name, the email subject, and the handoff notes so the team can find the right student fast.
+	                    {text('This same reference is used in the file name, the email subject, and the handoff notes so the team can find the right student fast.', copy.referenceHelp)}
                   </p>
                 </div>
 
@@ -582,13 +590,13 @@ Thank you!`;
                 >
                   {handoffState === 'packaging' ? (
                     <>
-                      <Loader2 size={16} className="animate-spin shrink-0" aria-hidden />
-                      Preparing your package...
+	                      <Loader2 size={16} className="animate-spin shrink-0" aria-hidden />
+	                      {text('Preparing your package...', copy.preparingPackage)}
                     </>
                   ) : (
                     <>
-                      <Mail size={16} className="shrink-0" aria-hidden />
-                      Yes, use this for my class
+	                      <Mail size={16} className="shrink-0" aria-hidden />
+	                      {text('Yes, use this for my class', copy.useForClass)}
                     </>
                   )}
                 </Button>
@@ -599,19 +607,19 @@ Thank you!`;
                     className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-artbar-navy/15 bg-white px-4 text-sm font-semibold text-artbar-navy hover:bg-gray-50"
                     onClick={() => void prepareValidatedEmailPackage()}
                   >
-                    <Download size={16} className="shrink-0" aria-hidden />
-                    Prepare email package
+	                    <Download size={16} className="shrink-0" aria-hidden />
+	                    {text('Prepare email package', copy.prepareEmailPackage)}
                   </button>
                   <button
                     type="button"
                     className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-artbar-navy/15 bg-white px-4 text-sm font-semibold text-artbar-navy hover:bg-gray-50"
                     onClick={() => {
-                      downloadTextFile(buildClassSummary(), getDownloadDetails().summaryFileName);
-                      setHandoffMessage('Class details saved as a text file for backup.');
+	                      downloadTextFile(buildClassSummary(), getDownloadDetails().summaryFileName);
+	                      setHandoffMessage(text('Class details saved as a text file for backup.', copy.classDetailsSaved));
                     }}
                   >
-                    <CheckCircle2 size={16} className="shrink-0" aria-hidden />
-                    Save class details
+	                    <CheckCircle2 size={16} className="shrink-0" aria-hidden />
+	                    {text('Save class details', copy.saveClassDetails)}
                   </button>
                 </div>
 
@@ -629,7 +637,7 @@ Thank you!`;
               </div>
 
               <p className="text-center text-xs text-gray-500">
-                This package is prepared for you to send from your own email. We save the sketch, save the class details, and open a ready-made email to {ARTBAR_TOKYO_EMAIL}.
+	                {text('This package is prepared for you to send from your own email. We save the sketch, save the class details, and open a ready-made email to {email}.', copy.packageFooter).replace('{email}', ARTBAR_TOKYO_EMAIL)}
               </p>
 
               <button
@@ -649,7 +657,7 @@ Thank you!`;
                   resetHandoffState();
                 }}
               >
-                Clear and start over
+	                {text('Clear and start over', copy.clearAndStartOver)}
               </button>
             </div>
           )}

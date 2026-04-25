@@ -27,13 +27,13 @@ export const Footer: React.FC = () => {
                 {site.footer.tagline}
               </p>
               <div className="flex space-x-4">
-                <a href="#" className={socialIconClass} aria-label="Instagram">
+                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Instagram' : jpCopy.ui.footer.instagramLabel}>
                   <Instagram size={18} />
                 </a>
-                <a href="#" className={socialIconClass} aria-label="Facebook">
+                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Facebook' : jpCopy.ui.footer.facebookLabel}>
                   <Facebook size={18} />
                 </a>
-                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label="Email Artbar Tokyo">
+                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label={lang === 'en' ? 'Email Artbar Tokyo' : jpCopy.ui.footer.emailLabel}>
                   <Mail size={18} />
                 </a>
               </div>
@@ -73,8 +73,8 @@ export const Footer: React.FC = () => {
               <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.support}</h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 <li><Link href="/contact" className={footerLinkClass}>{site.nav.contact}</Link></li>
-                <li><Link href="/contact" className={footerLinkClass}>FAQ</Link></li>
-                <li><Link href="/contact" className={footerLinkClass}>Careers</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}>{lang === 'en' ? 'FAQ' : jpCopy.ui.footer.faq}</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}>{lang === 'en' ? 'Careers' : jpCopy.ui.footer.careers}</Link></li>
               </ul>
             </div>
           </div>

@@ -50,7 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   );
   const initialPublishedJpPayload =
     initialLang === 'jp'
-      ? await getPublishedJapaneseCopyPayload({ timeoutMs: 700 })
+      ? await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 })
       : null;
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 

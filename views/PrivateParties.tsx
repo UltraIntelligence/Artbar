@@ -17,6 +17,7 @@ export const PrivateParties: React.FC = () => {
   const timelineReveal = useScrollReveal();
 
   const maxGuestsLabel = lang === 'en' ? 'Max Guests' : jpCopy.ui.privateParties.maxGuestsLabel;
+  const priceSuffix = lang === 'en' ? '/ person (tax inc)' : jpCopy.ui.privateParties.priceSuffix;
 
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
 
@@ -27,7 +28,7 @@ export const PrivateParties: React.FC = () => {
           <Image
             key={topHeroSrc || 'private-parties-hero'}
             src={topHeroSrc}
-            alt="Private party at Artbar Tokyo"
+            alt={lang === 'en' ? 'Private party at Artbar Tokyo' : jpCopy.ui.privateParties.heroImageAlt}
             fill
             priority
             placeholder="blur"
@@ -89,7 +90,7 @@ export const PrivateParties: React.FC = () => {
                   
                   <div className="flex items-baseline gap-2 mb-10">
                       <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.adult.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg">/ person (tax inc)</span>
+                      <span className="text-artbar-gray text-base md:text-lg">{priceSuffix}</span>
                   </div>
 
                   <div className="space-y-6 mb-12">
@@ -141,7 +142,7 @@ export const PrivateParties: React.FC = () => {
                   
                   <div className="flex items-baseline gap-2 mb-10">
                       <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.kids.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg">/ person (tax inc)</span>
+                      <span className="text-artbar-gray text-base md:text-lg">{priceSuffix}</span>
                   </div>
 
                   <div className="space-y-6 mb-12">

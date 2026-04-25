@@ -35,7 +35,9 @@ export const Contact: React.FC = () => {
   const copy = {
     subjectLabel: lang === 'en' ? 'Subject (required)' : jpCopy.ui.contact.subjectLabel,
     nameLabel: lang === 'en' ? 'Name (required)' : jpCopy.ui.contact.nameLabel,
+    namePlaceholder: lang === 'en' ? 'Artbar Taro' : jpCopy.ui.contact.namePlaceholder,
     emailLabel: lang === 'en' ? 'Email (required)' : jpCopy.ui.contact.emailLabel,
+    emailPlaceholder: lang === 'en' ? 'hello@example.com' : jpCopy.ui.contact.emailPlaceholder,
     phoneLabel: lang === 'en' ? 'Phone (required)' : jpCopy.ui.contact.phoneLabel,
     messageLabel: lang === 'en' ? 'Message' : jpCopy.ui.contact.messageLabel,
     messagePh: lang === 'en' ? 'How can we help you?' : jpCopy.ui.contact.messagePlaceholder,
@@ -144,7 +146,7 @@ export const Contact: React.FC = () => {
                     type="text" 
                     id="name" 
                     className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none"
-                    placeholder="Artbar Taro"
+                    placeholder={copy.namePlaceholder}
                     required
                   />
                 </div>
@@ -156,7 +158,7 @@ export const Contact: React.FC = () => {
                     type="email" 
                     id="email" 
                     className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none"
-                    placeholder="hello@example.com"
+                    placeholder={copy.emailPlaceholder}
                     required
                   />
                 </div>

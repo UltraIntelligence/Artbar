@@ -7,7 +7,7 @@ import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
-  const { content, site, lang } = useContent();
+  const { content, site, lang, jpCopy } = useContent();
   const posts = content.blog.filter(p => p.published);
   const gridReveal = useScrollReveal();
 
@@ -82,7 +82,7 @@ export const BlogList: React.FC = () => {
 
         {posts.length === 0 && (
           <div className="text-center py-20 opacity-50">
-            <p className="text-xl font-heading font-bold text-artbar-navy">Coming Soon...</p>
+            <p className="text-xl font-heading font-bold text-artbar-navy">{lang === 'en' ? 'Coming Soon...' : jpCopy.ui.blogList.comingSoon}</p>
           </div>
         )}
 

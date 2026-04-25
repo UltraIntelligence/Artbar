@@ -37,6 +37,9 @@ export const TeamBuilding: React.FC = () => {
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const logisticsRows = jpCopy.teamBuildingLogisticsRows;
   const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
+  const specialtyChips = lang === 'en'
+    ? ['Candle Making', 'Resin Art', 'Alcohol Ink']
+    : jpCopy.ui.teamBuilding.specialtyChips;
   const formatEnglishActivityTitle = (title: string) => {
     if (lang !== 'en') return title;
 
@@ -51,7 +54,7 @@ export const TeamBuilding: React.FC = () => {
         <Image
           key={teamHeroSrc}
           src={teamHeroSrc}
-          alt="Team building art session at Artbar Tokyo"
+          alt={lang === 'en' ? 'Team building art session at Artbar Tokyo' : jpCopy.ui.teamBuilding.heroImageAlt}
           fill
           priority
           placeholder="blur"
@@ -202,9 +205,9 @@ export const TeamBuilding: React.FC = () => {
                     {site.teamBuilding.specialty.desc}
                  </p>
                  <div className="flex flex-wrap gap-3">
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Flame size={14} className="text-orange-400" /> Candle Making</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Droplets size={14} className="text-blue-400" /> Resin Art</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Palette size={14} className="text-purple-400" /> Alcohol Ink</span>
+                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Flame size={14} className="text-orange-400" /> {specialtyChips[0]}</span>
+                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Droplets size={14} className="text-blue-400" /> {specialtyChips[1]}</span>
+                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Palette size={14} className="text-purple-400" /> {specialtyChips[2]}</span>
                  </div>
               </div>
               <div className="md:w-1/2 flex justify-end w-full">
@@ -228,8 +231,8 @@ export const TeamBuilding: React.FC = () => {
             <div className="flex justify-between items-end mb-12 relative z-10">
                <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy">{site.teamBuilding.testimonials.title}</h2>
                <div className="hidden md:flex gap-2">
-                  <button type="button" onClick={() => scroll('left')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors" aria-label="Previous"><ChevronLeft size={20} /></button>
-                  <button type="button" onClick={() => scroll('right')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors" aria-label="Next"><ChevronRight size={20} /></button>
+                  <button type="button" onClick={() => scroll('left')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors" aria-label={lang === 'en' ? 'Previous' : jpCopy.ui.teamBuilding.previousTestimonial}><ChevronLeft size={20} /></button>
+                  <button type="button" onClick={() => scroll('right')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors" aria-label={lang === 'en' ? 'Next' : jpCopy.ui.teamBuilding.nextTestimonial}><ChevronRight size={20} /></button>
                </div>
             </div>
             
