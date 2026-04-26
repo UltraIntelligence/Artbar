@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
-import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
+import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
@@ -37,9 +37,6 @@ export const TeamBuilding: React.FC = () => {
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const logisticsRows = jpCopy.teamBuildingLogisticsRows;
   const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
-  const specialtyChips = lang === 'en'
-    ? ['Candle Making', 'Resin Art', 'Alcohol Ink']
-    : jpCopy.ui.teamBuilding.specialtyChips;
   const formatEnglishActivityTitle = (title: string) => {
     if (lang !== 'en') return title;
 
@@ -204,11 +201,6 @@ export const TeamBuilding: React.FC = () => {
                  <p className="text-artbar-gray mb-8 max-w-md">
                     {site.teamBuilding.specialty.desc}
                  </p>
-                 <div className="flex flex-wrap gap-3">
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Flame size={14} className="text-orange-400" /> {specialtyChips[0]}</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Droplets size={14} className="text-blue-400" /> {specialtyChips[1]}</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Palette size={14} className="text-purple-400" /> {specialtyChips[2]}</span>
-                 </div>
               </div>
               <div className="md:w-1/2 flex justify-end w-full">
                  <Button
