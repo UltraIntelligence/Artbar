@@ -344,14 +344,15 @@ export const TEAM_BUILDING_LOGISTICS_ROWS: {
   name: { en: string; jp: string };
   cap: { en: string; jp: string };
 }[] = [
-  { name: { en: 'Artbar Ginza', jp: 'Artbar 銀座' }, cap: { en: 'Max 30', jp: '最大30名' } },
+  { name: { en: 'Artbar Daikanyama', jp: 'Artbar Daikanyama' }, cap: { en: 'Max 12', jp: '最大12名' } },
+  { name: { en: 'Artbar Ginza', jp: 'Artbar Ginza' }, cap: { en: 'Max 30', jp: '最大30名' } },
   {
-    name: { en: 'Artbar Cat Street Harajuku', jp: 'Artbar キャットストリート原宿' },
+    name: { en: 'Artbar Cat Street Harajuku', jp: 'Artbar Cat Street Harajuku' },
     cap: { en: 'Max 20', jp: '最大20名' },
   },
-  { name: { en: 'Artbar Yokohama', jp: 'Artbar 横浜' }, cap: { en: 'Max 40', jp: '最大40名' } },
+  { name: { en: 'Artbar Yokohama', jp: 'Artbar Yokohama' }, cap: { en: 'Max 40', jp: '最大40名' } },
   {
-    name: { en: 'Your Office / Offsite', jp: '貴社オフィス／出張' },
+    name: { en: 'Your Office / Offsite', jp: 'Your Office / Offsite' },
     cap: { en: '15 - 100+ Guests', jp: '15〜100名以上' },
   },
 ];

@@ -201,9 +201,9 @@ export const defaultContent: ContentData = {
       },
       specialty: {
         badge: "Something Different",
-        title: "Specialty Craft Workshops",
-        desc: "Looking for something beyond canvas? We offer a variety of craft-based workshops perfect for teams who want to make something unique.",
-        cta: "Inquire About Crafts"
+        title: "Custom Creative Workshops",
+        desc: "Need a team event that feels more tailored? We can shape a custom creative workshop around your goals, group size, and event format.",
+        cta: "Ask About Custom Workshops"
       },
       testimonials: {
         title: "What Teams Are Saying"
@@ -489,9 +489,9 @@ export const defaultContent: ContentData = {
       },
       specialty: {
         badge: "その他のワークショップ",
-        title: "クラフト・ワークショップ",
-        desc: "絵画以外にも、レジンアートやキャンドル作りなど、ものづくりの楽しさを共有できる多彩なプログラムをご用意しています。",
-        cta: "クラフトについて問い合わせる"
+        title: "カスタム・ワークショップ",
+        desc: "チームの目的や人数、イベントの形式に合わせて、内容を調整したクリエイティブ体験をご提案できます。",
+        cta: "カスタム内容を問い合わせる"
       },
       testimonials: {
         title: "参加企業様の声"
