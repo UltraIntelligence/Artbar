@@ -1,4 +1,5 @@
 import {
+  FAQS_JP,
   LOCATION_SHORT_LABELS,
   POPULAR_THEMES,
   POPULAR_THEMES_JP,
@@ -29,6 +30,17 @@ function shouldMigrateJapaneseThemeItems(
   });
 }
 
+function shouldMigrateJapaneseFaqs(faqs: JapaneseCopyPayload['faqs']): boolean {
+  if (faqs.length !== defaultContent.faqs.length) {
+    return false;
+  }
+
+  return faqs.every((faq, index) => {
+    const legacy = defaultContent.faqs[index];
+    return faq.question === legacy.question && faq.answer === legacy.answer;
+  });
+}
+
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
   const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
 
@@ -36,6 +48,20 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
   // Upgrade those exact legacy cards so the live site and copy admin both show JP text.
   if (shouldMigrateJapaneseThemeItems(normalized.site.home.themes.items)) {
     normalized.site.home.themes.items = structuredClone(POPULAR_THEMES_JP);
+  }
+
+  // Theme card slugs are hidden routing IDs. Keep Momo's visible copy, but prevent
+  // edited or older payloads from sending customers to the wrong theme page.
+  if (normalized.site.home.themes.items.length === POPULAR_THEMES_JP.length) {
+    normalized.site.home.themes.items = normalized.site.home.themes.items.map((item, index) => ({
+      ...item,
+      slug: POPULAR_THEMES_JP[index].slug,
+    }));
+  }
+
+  // Older Japanese payloads seeded FAQ entries from the English shared FAQ list.
+  if (shouldMigrateJapaneseFaqs(normalized.faqs)) {
+    normalized.faqs = structuredClone(FAQS_JP);
   }
 
   return normalized;

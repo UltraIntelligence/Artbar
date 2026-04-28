@@ -196,6 +196,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
   const renderNode = (draftNode: unknown, publishedNode: unknown, path: ReadonlyArray<string>, depth = 0): React.ReactNode => {
     if (typeof draftNode === 'string') {
       const label = humanizeKey(path[path.length - 1] || 'Value');
+      const isLockedRoutingId = path[path.length - 1] === 'slug';
       return (
         <div key={path.join('.')} className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="space-y-2">
@@ -208,13 +209,23 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
           <div className="space-y-2">
             <textarea
               value={draftNode}
+              readOnly={isLockedRoutingId}
               rows={getTextareaRows(draftNode)}
               onChange={(event) => {
+                if (isLockedRoutingId) {
+                  return;
+                }
                 setDraft((current) => setAtPath(current, path, event.target.value) as JapaneseCopyPayload);
               }}
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm leading-6 text-artbar-navy outline-none transition focus:border-artbar-taupe focus:ring-2 focus:ring-artbar-taupe/15"
+              className={`w-full rounded-xl border border-gray-200 px-4 py-3 text-sm leading-6 text-artbar-navy outline-none transition focus:border-artbar-taupe focus:ring-2 focus:ring-artbar-taupe/15 ${
+                isLockedRoutingId ? 'bg-artbar-bg/70 text-artbar-gray' : ''
+              }`}
             />
-            <p className="text-xs text-artbar-gray">Draft. Press Enter anywhere you want a real line break.</p>
+            <p className="text-xs text-artbar-gray">
+              {isLockedRoutingId
+                ? 'Locked routing ID. This is not shown to customers.'
+                : 'Draft. Press Enter anywhere you want a real line break.'}
+            </p>
           </div>
         </div>
       );

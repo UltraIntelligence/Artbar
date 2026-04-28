@@ -58,10 +58,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       "Art enthusiasts looking for a bilingual social painting event"
     ],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red, white, and seasonal refreshments" },
-      { icon: GlassWater, text: "Premium Japanese Tea & Coffee", sub: "Locally sourced refreshments to fuel your focus" },
-      { icon: CheckCircle, text: "Bilingual Step-by-Step Guide", sub: "Patient instruction in English and Japanese" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
+      { icon: GlassWater, text: "Assorted Teas & Coffee", sub: "Tea, coffee, and soft drinks to fuel your focus" },
+      { icon: CheckCircle, text: "Step-by-Step Guide", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Explore Japan-Inspired Sessions",
     ctaSub: "Browse our upcoming bilingual art classes and reserve your spot today.",
@@ -95,10 +95,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       "Anyone wanting to learn bold acrylic painting techniques"
     ],
     whatYouGet: [
-      { icon: Wine, text: "Unlimited Wine & Refreshments", sub: "Free-flow bar featuring quality red and white wines" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "Professional Art Materials", sub: "High-grade canvases, acrylics, and aprons provided" },
       { icon: Coffee, text: "Japanese Snacks & Tea", sub: "Delicious light bites to keep your creativity flowing" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Paint Like Van Gogh",
     ctaSub: "Check our bilingual calendar for upcoming Starry Night and Sunflower sessions.",
@@ -132,10 +132,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       "Anyone looking for a therapeutic and satisfying creative release"
     ],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red, white, and seasonal refreshments" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "Professional Fluid Mediums", sub: "High-quality acrylics and pouring mediums provided" },
-      { icon: CheckCircle, text: "Bilingual Technique Coaching", sub: "Step-by-Step guidance in English and Japanese" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: CheckCircle, text: "Step-by-Step Technique Coaching", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Unleash Your Inner Fluid Artist",
     ctaSub: "Browse our upcoming paint pouring sessions and reserve your spot today.",
@@ -169,10 +169,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       "Anyone wanting to try a non-traditional painting medium"
     ],
      whatYouGet: [
-      { icon: Wine, text: "Free-flow Premium Drinks", sub: "Wine, tea, and juice to inspire your flow" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Wine, tea, and juice for most classes" },
       { icon: Droplets, text: "Vibrant Copic & Piñata Inks", sub: "The highest quality professional inks provided" },
       { icon: CheckCircle, text: "Expert Airflow Instruction", sub: "Master the use of blowers and blending tools" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Flow with Alcohol Ink",
     ctaSub: "Book your ethereal art experience in Shibuya or Ginza today.",
@@ -201,10 +201,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "For Lovers of Light",
     perfectFor: ["Beginner painters", "Garden and nature enthusiasts", "Couples", "Art history buffs"],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow French & World Wines", sub: "Raise a glass to the master of impressionism" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "Impressionist Palette Setup", sub: "Colors curated to match Monet's iconic style" },
-      { icon: CheckCircle, text: "Gentle Bilingual Guidance", sub: "Learn the secrets of broken brushstrokes" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: CheckCircle, text: "Gentle Step-by-Step Guidance", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Capture the Impression",
     ctaSub: "Reserve your spot for our next Monet garden session.",
@@ -233,10 +233,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "For the Bold & Brave",
     perfectFor: ["People who find realism boring", "Fans of modern art", "High-energy social groups", "Experienced doodlers"],
      whatYouGet: [
-      { icon: Wine, text: "Free-flow Wine & Spirits", sub: "Liquid inspiration for your boldest ideas" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Paintbrush, text: "Professional Grade Acrylics", sub: "Vibrant pigments for that high-contrast look" },
-      { icon: CheckCircle, text: "Bilingual Creative Coaching", sub: "Guidance on abstraction and composition" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: CheckCircle, text: "Step-by-Step Creative Coaching", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Be a Modern Master",
     ctaSub: "Browse our Picasso-inspired sessions and book now.",
@@ -265,10 +265,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "Perfect for Dreamers",
     perfectFor: ["Fans of classical beauty", "Couples", "Anyone seeking a relaxing art session", "Portrait lovers"],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Premium Wine", sub: "Elegance in a glass to match the canvas" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "Curated Pastel Palettes", sub: "Soft tones chosen for romantic compositions" },
-      { icon: CheckCircle, text: "Bilingual Blending Coaching", sub: "Learn how to achieve the 'Renoir Glow'" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: CheckCircle, text: "Step-by-Step Blending Coaching", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Paint Romance",
     ctaSub: "Book your soft-light Renoir session in Tokyo today.",
@@ -297,10 +297,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "For Lovers of Color",
     perfectFor: ["Minimalist design fans", "Beginners", "Those needing a mood boost", "Modernists"],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Vibrant Refreshments", sub: "Wines that complement the fauvist palette" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "High-Pigment Colors", sub: "Professional paints that stay bright and bold" },
-      { icon: CheckCircle, text: "Bilingual Composition Tips", sub: "Learn about balance and negative space" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: CheckCircle, text: "Step-by-Step Composition Tips", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Find Your Joy",
     ctaSub: "Check our bilingual schedule for upcoming Matisse workshops.",
@@ -332,7 +332,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: GlassWater, text: "Juice, Tea & Water", sub: "Healthy refreshments for young creators" },
       { icon: Coffee, text: "Snacks for Energy", sub: "Light, kid-friendly treats included" },
       { icon: CheckCircle, text: "Step-by-Step Guidance", sub: "Easy instructions in English and Japanese" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Start Their Art Journey",
     ctaSub: "View our weekend kids' sessions and book today.",
@@ -361,10 +361,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "For the Hands-on Artist",
     perfectFor: ["Minimalist interior fans", "People who love tactile processes", "Beginners", "Abstract lovers"],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Premium Wine", sub: "Sip and sculpt in a relaxed atmosphere" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Droplets, text: "Modeling Paste & Gels", sub: "Professional grade structural mediums" },
       { icon: CheckCircle, text: "Palette Knife Instruction", sub: "Master the tools of textural art" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Feel the Art",
     ctaSub: "Book your texture session in Shibuya or Ginza today.",
@@ -393,10 +393,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     perfectTitle: "For Pet Lovers",
     perfectFor: ["Pet owners", "Gifting", "Memorials", "Animal enthusiasts"],
      whatYouGet: [
-      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Fuel your creativity with quality refreshments" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Paintbrush, text: "Hand-Sketched Canvas", sub: "A custom professional outline of your pet" },
       { icon: CheckCircle, text: "One-on-One Guidance", sub: "Detailed help with fur and features" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Paint Your Best Friend",
     ctaSub: "Check our calendar for the next limited Paint Your Pet session.",
@@ -430,10 +430,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       "Anyone who wants to paint someone they admire"
     ],
     whatYouGet: [
-      { icon: Wine, text: "Free-flow Party Drinks", sub: "Wine and refreshments to keep the energy high" },
+      { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: Palette, text: "Vibrant Acrylic Palettes", sub: "Colors chosen to match the energy of pop icons" },
       { icon: CheckCircle, text: "Portrait Style Guidance", sub: "Learn to capture likeness with modern techniques" },
-      { icon: Truck, text: "Take Home & Delivery", sub: "Take some paintings home, or have it delivered" }
+      { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "immortalize Your Idol",
     ctaSub: "View our upcoming pop-culture and icon sessions.",

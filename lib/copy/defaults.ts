@@ -1,4 +1,5 @@
 import {
+  FAQS_JP,
   LOCATION_SHORT_LABELS,
   LOCATIONS,
   PRIVATE_PARTY_CAPACITY_ROWS,
@@ -233,7 +234,7 @@ export const DEFAULT_JAPANESE_COPY_PAYLOAD: JapaneseCopyPayload = {
     addressJp: item.addressJp,
     accessJp: item.accessJp,
   })),
-  faqs: structuredClone(defaultContent.faqs),
+  faqs: structuredClone(FAQS_JP),
   teamBuildingTestimonials: structuredClone(defaultContent.teamBuildingTestimonials),
   blog: defaultContent.blog.map((item) => ({
     id: item.id,
