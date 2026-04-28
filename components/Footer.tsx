@@ -82,9 +82,9 @@ export const Footer: React.FC = () => {
           <div className="border-t border-white/10 pt-8 mt-8 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">
             <p className="cursor-default text-center md:text-left">{`© ${currentYear} Artbar Tokyo · Paint and Wine Art Studio · All rights reserved`}</p>
             <div className="flex flex-wrap justify-center gap-x-4 md:gap-x-5 md:justify-end">
-              <Link href="#" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
-              <Link href="#" className={footerMetaLinkClass}>{site.footer.terms}</Link>
-              <Link href="#" className={footerMetaLinkClass}>{site.footer.commercial}</Link>
+              <Link href="/privacy-policy" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
+              <Link href="/terms-of-service" className={footerMetaLinkClass}>{site.footer.terms}</Link>
+              <Link href="/specified-commercial-transactions" className={footerMetaLinkClass}>{site.footer.commercial}</Link>
               <span className="inline-flex min-h-[44px] items-center px-1">{site.footer.company}</span>
             </div>
           </div>
