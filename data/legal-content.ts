@@ -223,6 +223,7 @@ export const legalPages = {
             heading: 'Refund & Cancellation',
             body: [
               'Cancellations made 72 hours or more before the start of the session are eligible for a 100% refund. Cancellations made within 24 to 72 hours before the start of the session are eligible for a 75% refund. Cancellations made within 24 hours before the start of the session are not eligible for a refund.',
+              'Purchases made with gift codes or gift certificates are non-refundable. If a ticket is paid partly with a gift code or gift certificate and the booking is canceled during a refundable window, only the credit card or cash portion will be refunded.',
               'Please use our self-cancellation system on our website contact page by selecting “cancel or change my ticket” on the drop down menu. If the drop down menu does not show, please try from another browser or device.',
               'Please note these exceptions to the refund policy: Some classes are non-refundable as they require special orders or printing. Those classes include Alcohol Art Portrait classes, and any others that state they are Non-refundable in the event description.',
             ],
@@ -260,6 +261,7 @@ export const legalPages = {
               'Parents and guardians cannot stay inside the studio during the session.',
               'If you arrive more than 30 minutes late, your child may not be able to complete the artwork.',
               'Cancellations made 72 hours or more before the start of the session are eligible for a 100% refund. Cancellations made within 24 to 72 hours before the start of the session are eligible for a 75% refund. Cancellations made within 24 hours before the start of the session are not eligible for a refund.',
+              'Purchases made with gift codes or gift certificates are non-refundable. If a ticket is paid partly with a gift code or gift certificate and the booking is canceled during a refundable window, only the credit card or cash portion will be refunded.',
             ],
           },
         ],
@@ -292,6 +294,7 @@ export const legalPages = {
             heading: 'キャンセル',
             body: [
               'ご予約セッション開始時間の72時間前までのキャンセルは、100%返金の対象となります。開始時間の24時間前から72時間前までのキャンセルは、75%返金の対象となります。開始時間の24時間前を過ぎてからのキャンセルは、返金の対象外となります。',
+              'ギフト券や割引ギフトコードを使用したご予約は返金できません。チケット代金の一部をギフト券やギフトコードで支払い、返金対象期間内にキャンセルされた場合は実際にお支払いになった金額のみが返金されます。',
               'お問合せフォームの「キャンセル・変更」からお手続き下さい。',
             ],
           },
@@ -322,6 +325,7 @@ export const legalPages = {
               '開始時間に遅れる場合、特にご連絡は必要ございませんが30分以上遅れて参加されますと作品が完成しない可能性がございます。',
               'アクリル絵の具を使用します。お洋服に付着しますとお洗濯では洗い落とす事が難しいのでご注意ください。絵の具汚れに関して当社は一切の責任を負いかねます。',
               'ご予約セッション開始時間の72時間前までのキャンセルは、100%返金の対象となります。開始時間の24時間前から72時間前までのキャンセルは、75%返金の対象となります。開始時間の24時間前を過ぎてからのキャンセルは、返金の対象外となります。お問合せフォームのキャンセル・変更の項目からお手続き下さい。',
+              'ギフト券や割引ギフトコードを使用したご予約は返金できません。チケット代金の一部をギフト券やギフトコードで支払い、返金対象期間内にキャンセルされた場合は実際にお支払いになった金額のみが返金されます。',
               '著作権について：Artbar Tokyoのセッションに参加される方は、セッションのプロセス、アートワーク、写真、画像、テキスト説明、内容、提供された資料を商業目的で複製、複写、再配布しないことに同意したものとします。',
               'Artbar Tokyoでのセッション中、安全に関するすべての注意事項を遵守して下さい。Artbar Tokyoのスタッフやセッションの他の参加者は、セッション中に発生しうる個人の所有物の損害、損失、盗難、または身体的な怪我に対して一切の責任、義務を負いません。',
             ],
