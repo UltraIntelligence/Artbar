@@ -29,6 +29,7 @@ export interface Location {
   accessEn: string;
   accessJp: string;
   image: string;
+  isFranchise?: boolean;
 }
 
 export interface MediaItem {
@@ -129,7 +130,7 @@ export interface SiteContent {
       title: string;
       subtitle: string;
       cta: string;
-      items: { title: string; desc: string; image: string; slug?: string }[];
+      items: { title: string; desc: string; image: string; slug?: string; bookingUrl?: string }[];
     };
     features: {
       title: string;
@@ -266,12 +267,20 @@ export interface SiteContent {
     };
     timeline: {
       title: string;
+      note: string;
       steps: { time: string; title: string; desc: string }[];
     };
     catering: {
       title: string;
       desc: string;
       items: string[];
+      notes: string[];
+      cta: string;
+    };
+    specialtyInquiry: {
+      title: string;
+      items: string[];
+      note: string;
       cta: string;
     };
   };

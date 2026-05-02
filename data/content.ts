@@ -121,7 +121,7 @@ export const defaultContent: ContentData = {
           { title: "Book", desc: "Choose a session from our calendar that sparks your interest. We update our schedule monthly." },
           { title: "Sip", desc: "Enjoy bottomless wine, tea, or coffee while you settle in. Arrive 15 minutes early to grab a drink." },
           { title: "Create", desc: "Follow our artist's step-by-step guidance. No experience is needed to get great results." },
-          { title: "Enjoy", desc: "Your painting ships to your door within 10–15 days — ready to hang." }
+          { title: "Enjoy", desc: "Most paintings can be taken home the same day. Some require drying time and will be shipped to you COD. See event details." }
         ]
       },
       themes: {
@@ -136,7 +136,7 @@ export const defaultContent: ContentData = {
         items: [
           { title: "All-Inclusive", desc: "We provide all art materials, aprons, and guidance. Just bring yourself.", image: GI.featureAllInclusive },
           { title: "Free-Flow Drinks", desc: "Enjoy wine, tea, coffee, and light snacks throughout your session.", image: GI.featureFreeFlowDrinks },
-          { title: "Bilingual Instruction", desc: "All sessions are taught in English and Japanese by our friendly instructors.", image: GI.featureBilingual }
+          { title: "Bilingual Instruction Available", desc: "Many sessions are instructed in English and Japanese. Please check individual class information.", image: GI.featureBilingual }
         ]
       },
       testimonials: {
@@ -169,7 +169,7 @@ export const defaultContent: ContentData = {
     },
     teamBuilding: {
       hero: {
-        badge: "Corporate Events & Offsites",
+        badge: "9+ years providing creative team building experiences throughout Japan",
         title: "Unleash Your Team's",
         titleHighlight: "Creative Potential",
         subtitle: "Forget standard icebreakers. We offer immersive art experiences that foster genuine connection, strategic thinking, and stress relief.",
@@ -246,31 +246,31 @@ export const defaultContent: ContentData = {
         badge: "Private Events",
         title: "Celebrate in",
         titleHighlight: "Style",
-        subtitle: "Birthdays, bachelorette parties, or just a night out with friends. Make it memorable with Artbar."
+        subtitle: "Celebrations, birthdays, or just a night out with friends. Make it memorable with Artbar."
       },
       occasions: [
-        { title: "Birthday Parties", image: GI.privateOccasions.birthday },
-        { title: "Bachelorette", image: GI.privateOccasions.bachelorette },
+        { title: "Adult Parties", image: GI.privateOccasions.birthday },
+        { title: "Girls Nite Out", image: GI.privateOccasions.bachelorette },
         { title: "Kids Parties", image: GI.privateOccasions.kidsParty },
-        { title: "Anniversaries", image: GI.privateOccasions.anniversary }
+        { title: "Family Gatherings", image: GI.privateOccasions.anniversary }
       ],
       pricing: {
         adult: {
           title: "Adult Party",
           subtitle: "2 Hour Paint & Sip",
-          price: "¥5,500",
+          price: "¥6,600",
           items: [
             { title: "Private Studio Use", desc: "Exclusive use of the space for your group" },
             { title: "All Materials", desc: "Canvas, paints, brushes, aprons" },
-            { title: "Free-Flow Drinks", desc: "Red/White wine, tea, coffee, juice" },
-            { title: "Instruction", desc: "Step-by-step guidance in English/Japanese" }
+            { title: "Free-Flow Drinks", desc: "Red/White wine, tea, coffee, juice and light snacks" },
+            { title: "Instruction", desc: "Step-by-step guidance" }
           ],
           cta: "Book Adult Party"
         },
         kids: {
           title: "Kids Party",
           subtitle: "2 Hour Creative Fun",
-          price: "¥4,400",
+          price: "¥4,620",
           items: [
             { title: "Private Studio Use", desc: "Safe and fun environment" },
             { title: "Art Materials", desc: "Kid-friendly paints and supplies" },
@@ -280,10 +280,10 @@ export const defaultContent: ContentData = {
           cta: "Book Kids Party"
         },
         common: {
-          venueFeeLabel: "Venue Fee",
-          venueFeePrice: "¥16,500",
+          venueFeeLabel: "Private Event Fee",
+          venueFeePrice: "¥5,500",
           minGuestsLabel: "Minimum Guests",
-          minGuests: "Adults: 10 / Kids: 15"
+          minGuests: "10"
         }
       },
       capacity: {
@@ -291,18 +291,40 @@ export const defaultContent: ContentData = {
       },
       timeline: {
         title: "Sample Timeline",
+        note: "Guests can arrive up to 5 minutes before the start time.",
         steps: [
           { time: "0:00", title: "Arrival & Drinks", desc: "Guests arrive, grab an apron and a glass of wine." },
           { time: "0:15", title: "Painting Begins", desc: "Instructor starts the step-by-step guidance." },
           { time: "1:00", title: "Break & Socialize", desc: "Refill drinks and take photos." },
-          { time: "1:45", title: "Finishing Touches", desc: "Add final details and sign your masterpiece." }
+          { time: "1:40", title: "Finishing Touches", desc: "Add final details and sign your masterpiece." },
+          { time: "1:45", title: "Cake and Photos", desc: "Sing, blow out candles and have some cake." }
         ]
       },
       catering: {
-        title: "Food & Cake",
-        desc: "You are welcome to bring your own food or birthday cake! We can also arrange catering.",
-        items: ["BYO Food allowed (No strong odors please)", "BYO Cake allowed", "Catering menu available"],
-        cta: "View Catering Menu"
+        title: "Food, Cake & Decorations",
+        desc: "Celebrate with us! We will make the event special and relaxing for you and your guests.",
+        items: [
+          "Bring your own cake, food, or additional alcohol",
+          "Decorate for the occasion 15 minutes before the event",
+          "We will take care of cleanup and garbage"
+        ],
+        notes: [
+          "Please bring your own plates and utensils.",
+          "A ¥1,000 garbage fee applies if food is catered."
+        ],
+        cta: "Cake and catering contacts near our studios"
+      },
+      specialtyInquiry: {
+        title: "Looking for something different?",
+        items: [
+          "Mixed Adult & Child Family Events",
+          "Crafts",
+          "Private Pouring",
+          "Large Canvas",
+          "Specialty Events"
+        ],
+        note: "Contact us for custom pricing",
+        cta: "Inquire"
       }
     },
     locationsPage: {
@@ -457,7 +479,7 @@ export const defaultContent: ContentData = {
     },
     teamBuilding: {
       hero: {
-        badge: "企業イベント・オフサイト",
+        badge: "日本全国で9年以上、創造的なチームビルディング体験を提供",
         title: "チームの結束を深める",
         titleHighlight: "クリエイティブな体験",
         subtitle: "ありきたりな研修とは違う、記憶に残る体験を。\nアート制作を通じた共同作業が、チームの絆を自然と深め、新たなイノベーションを生み出す土壌を作ります。",
@@ -534,31 +556,31 @@ export const defaultContent: ContentData = {
         badge: "プライベートイベント",
         title: "特別な日を、",
         titleHighlight: "アートと共に彩る",
-        subtitle: "誕生日、バチェロレッテ、あるいは友人との特別な集まりに。\nArtbarでしか味わえない、洗練されたパーティーを。"
+        subtitle: "お祝い、誕生日、友人との特別な夜に。\nArtbarでしか味わえない、洗練されたパーティーを。"
       },
       occasions: [
-        { title: "バースデー・パーティー", image: GI.privateOccasions.birthday },
-        { title: "バチェロレッテ", image: GI.privateOccasions.bachelorette },
+        { title: "大人向けパーティー", image: GI.privateOccasions.birthday },
+        { title: "女子会", image: GI.privateOccasions.bachelorette },
         { title: "キッズ・パーティー", image: GI.privateOccasions.kidsParty },
-        { title: "記念日のお祝い", image: GI.privateOccasions.anniversary }
+        { title: "ファミリーイベント", image: GI.privateOccasions.anniversary }
       ],
       pricing: {
         adult: {
           title: "大人向け貸切プラン",
           subtitle: "2時間 ペイント＆シップ",
-          price: "¥5,500",
+          price: "¥6,600",
           items: [
             { title: "スタジオ完全貸切", desc: "プライベートな空間で気兼ねなく" },
             { title: "全ての画材一式", desc: "キャンバス、絵具、エプロン等" },
-            { title: "フリーフロードリンク", desc: "赤白ワイン、ソフトドリンク飲み放題" },
-            { title: "専属インストラクター", desc: "英語・日本語で丁寧にサポート" }
+            { title: "フリーフロードリンク", desc: "赤白ワイン、ソフトドリンク、軽食付き" },
+            { title: "専属インストラクター", desc: "ステップごとに丁寧にサポート" }
           ],
           cta: "予約・お問い合わせ"
         },
         kids: {
           title: "キッズ・バースデー",
           subtitle: "2時間 クリエイティブ・ファン",
-          price: "¥4,400",
+          price: "¥4,620",
           items: [
             { title: "スタジオ完全貸切", desc: "お子様も安心の安全な環境" },
             { title: "キッズ用画材", desc: "衣服についても落ちやすい絵具を使用" },
@@ -568,10 +590,10 @@ export const defaultContent: ContentData = {
           cta: "予約・お問い合わせ"
         },
         common: {
-          venueFeeLabel: "会場費",
-          venueFeePrice: "¥16,500",
+          venueFeeLabel: "プライベートイベント費",
+          venueFeePrice: "¥5,500",
           minGuestsLabel: "最低保証人数",
-          minGuests: "大人: 10名〜 / 子供: 15名〜"
+          minGuests: "10名〜"
         }
       },
       capacity: {
@@ -579,18 +601,40 @@ export const defaultContent: ContentData = {
       },
       timeline: {
         title: "当日の流れ（例）",
+        note: "開始時間の5分前からご入店いただけます。",
         steps: [
           { time: "0:00", title: "ドアオープン＆乾杯", desc: "ゲストをお迎えし、エプロンを選んでワインで乾杯。" },
           { time: "0:15", title: "セッション開始", desc: "インストラクターのデモンストレーションと共にペイント開始。" },
           { time: "1:00", title: "ブレイクタイム", desc: "おしゃべりを楽しんだり、写真撮影をしたり。ドリンクのおかわりも。" },
-          { time: "1:45", title: "仕上げ・サイン", desc: "作品に最後の仕上げをし、サインを入れて完成です。" }
+          { time: "1:40", title: "仕上げ・サイン", desc: "作品に最後の仕上げをし、サインを入れて完成です。" },
+          { time: "1:45", title: "ケーキと写真撮影", desc: "歌って、キャンドルを吹き消して、ケーキをお楽しみください。" }
         ]
       },
       catering: {
-        title: "お食事・ケーキについて",
-        desc: "お食事やバースデーケーキのお持ち込みは自由です（無料）。また、ご予算に応じたケータリングの手配も承ります。",
-        items: ["フード持ち込み可 (匂いの強いものはご遠慮ください)", "ケーキ持ち込み可（ナイフ等はご用意します）", "ケータリング手配可能"],
-        cta: "ケータリングメニューを見る"
+        title: "フード・ケーキ・装飾",
+        desc: "大切なイベントを、ゲストの皆さまがリラックスして楽しめる特別な時間にします。",
+        items: [
+          "ケーキ、フード、追加のアルコールをお持ち込みいただけます",
+          "イベント開始15分前から装飾できます",
+          "片付けとゴミの対応はお任せください"
+        ],
+        notes: [
+          "お皿とカトラリーはご持参ください。",
+          "ケータリングをご利用の場合、ゴミ処理費として1,000円を頂戴します。"
+        ],
+        cta: "スタジオ近隣のケーキ・ケータリング情報"
+      },
+      specialtyInquiry: {
+        title: "別の内容をご希望ですか？",
+        items: [
+          "大人と子どもの合同ファミリーイベント",
+          "クラフト",
+          "プライベートポーリング",
+          "大きなキャンバス",
+          "特別イベント"
+        ],
+        note: "カスタム料金についてお問い合わせください",
+        cta: "問い合わせる"
       }
     },
     locationsPage: {

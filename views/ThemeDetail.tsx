@@ -14,7 +14,7 @@ import {
 } from '../data/theme-details';
 import { Button } from '../components/ui/Button';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { HERO_BLUR_DATA_URL } from '../constants';
+import { ARTBAR_BOOKING_URL, HERO_BLUR_DATA_URL } from '../constants';
 import { Heart, Lightbulb, Star, Users, Gift, ArrowRight } from 'lucide-react';
 
 export const ThemeDetail: React.FC = () => {
@@ -141,7 +141,7 @@ export const ThemeDetail: React.FC = () => {
             <Button
               variant="taupe"
               size="cta"
-              onClick={() => (window.location.hash = 'schedule')}
+              onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
               className="animate-pulse w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
               {ui.viewSchedule}
@@ -381,7 +381,7 @@ export const ThemeDetail: React.FC = () => {
               <Button
                 variant="taupe"
                 size="cta"
-                onClick={() => (window.location.hash = 'schedule')}
+                onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                 className="shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all hover:scale-105 hover:bg-white hover:text-artbar-navy hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] active:scale-95"
               >
                 {ui.viewUpcoming}

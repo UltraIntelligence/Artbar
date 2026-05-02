@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/terms-of-service`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/specified-commercial-transactions`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/blog`, priority: 0.8, changeFrequency: 'weekly' },
-    { url: `${BASE_URL}/paint-your-pet`, priority: 0.8, changeFrequency: 'monthly' },
   ];
 
   const blogRoutes: MetadataRoute.Sitemap = defaultContent.blog
@@ -31,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const themeRoutes: MetadataRoute.Sitemap = [
     'japan-inspired', 'van-gogh', 'paint-pouring', 'alcohol-ink',
     'monet', 'picasso', 'renoir', 'matisse', 'kids',
-    'texture-art', 'texture-painting', 'paint-your-pet', 'paint-your-idol',
+    'texture-art', 'texture-painting', 'paint-your-idol',
   ].map(slug => ({
     url: `${BASE_URL}/themes/${slug}`,
     priority: 0.7,

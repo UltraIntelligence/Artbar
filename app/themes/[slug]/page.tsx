@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-paths';
 import { resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { notFound } from 'next/navigation';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -40,6 +41,15 @@ const THEME_DESCRIPTIONS: Record<string, string> = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === 'paint-your-pet') {
+    return {
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
   const title = THEME_TITLES[slug] ?? 'Theme | Artbar Tokyo';
   const description = THEME_DESCRIPTIONS[slug];
   return {
@@ -51,6 +61,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ThemeDetailPage({ params }: Props) {
   const { slug } = await params;
+  if (slug === 'paint-your-pet') {
+    notFound();
+  }
+
   const resolvedSlug = resolveThemeContentSlug(slug);
   const heroImage = THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero;
   return (

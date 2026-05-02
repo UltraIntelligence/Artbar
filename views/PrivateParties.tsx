@@ -4,9 +4,9 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
-import { HERO_BLUR_DATA_URL } from '../constants';
+import { HERO_BLUR_DATA_URL, PRIVATE_PARTY_INQUIRY_URL } from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { Check, Clock, Users, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
+import { Check, Clock, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
 
 export const PrivateParties: React.FC = () => {
   const { site, lang, jpCopy } = useContent();
@@ -18,6 +18,8 @@ export const PrivateParties: React.FC = () => {
 
   const maxGuestsLabel = lang === 'en' ? 'Max Guests' : jpCopy.ui.privateParties.maxGuestsLabel;
   const priceSuffix = lang === 'en' ? '/ person (tax inc)' : jpCopy.ui.privateParties.priceSuffix;
+  const standardLabel = lang === 'en' ? 'Standard' : 'スタンダード';
+  const specialtyInquiry = privateParties.specialtyInquiry;
 
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
 
@@ -73,7 +75,7 @@ export const PrivateParties: React.FC = () => {
           ))}
         </div>
 
-        <div ref={pricingReveal.ref} className={`reveal grid md:grid-cols-2 gap-8 mb-32 ${pricingReveal.isVisible ? 'visible' : ''}`}>
+        <div ref={pricingReveal.ref} className={`reveal grid md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,0.7fr)] gap-8 mb-32 ${pricingReveal.isVisible ? 'visible' : ''}`}>
             {/* Adult Pricing */}
             <div className="bg-white p-8 md:p-14 rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-300 border border-white relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 md:p-10 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -83,6 +85,7 @@ export const PrivateParties: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                       <div>
+                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block">{standardLabel}</span>
                           <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2">{privateParties.pricing.adult.title}</h3>
                           <p className="text-artbar-gray font-medium">{privateParties.pricing.adult.subtitle}</p>
                       </div>
@@ -116,10 +119,11 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <Button
-                    variant="primary"
-                    size="cta"
-                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
+	                  <Button
+	                    variant="primary"
+	                    size="cta"
+	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
                   >
                     {privateParties.pricing.adult.cta}
                   </Button>
@@ -135,6 +139,7 @@ export const PrivateParties: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                        <div>
+                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block">{standardLabel}</span>
                           <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2">{privateParties.pricing.kids.title}</h3>
                           <p className="text-artbar-gray font-medium">{privateParties.pricing.kids.subtitle}</p>
                       </div>
@@ -168,14 +173,39 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <Button
-                    variant="outline"
-                    size="cta"
-                    className="w-full rounded-2xl border-2 border-artbar-navy bg-transparent text-base hover:bg-artbar-navy hover:text-white"
+	                  <Button
+	                    variant="outline"
+	                    size="cta"
+	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                    className="w-full rounded-2xl border-2 border-artbar-navy bg-transparent text-base hover:bg-artbar-navy hover:text-white"
                   >
                     {privateParties.pricing.kids.cta}
                   </Button>
                 </div>
+            </div>
+
+            <div className="bg-white/70 border-2 border-artbar-taupe p-8 md:p-10 rounded-[2.5rem] shadow-sm md:col-span-2 xl:col-span-1 xl:self-start">
+              <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-8 leading-tight">
+                {specialtyInquiry.title}
+              </h3>
+              <ul className="space-y-3 mb-10">
+                {specialtyInquiry.items.map((item) => (
+                  <li key={item} className="text-lg font-heading font-bold text-artbar-navy leading-snug">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-base md:text-lg text-artbar-gray leading-relaxed mb-8">
+                {specialtyInquiry.note}
+              </p>
+              <Button
+	                variant="taupe"
+	                size="cta"
+	                onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                className="w-full rounded-2xl text-base"
+              >
+                {specialtyInquiry.cta}
+              </Button>
             </div>
         </div>
 
@@ -203,10 +233,13 @@ export const PrivateParties: React.FC = () => {
               
               {/* Timeline */}
               <div>
-                 <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-8 flex items-center gap-3">
-                    <Clock className="text-artbar-taupe" /> {privateParties.timeline.title}
-                 </h3>
-                 <div className="space-y-8 relative pl-4">
+	                 <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-8 flex items-center gap-3">
+	                    <Clock className="text-artbar-taupe" /> {privateParties.timeline.title}
+	                 </h3>
+                   <p className="mb-5 text-sm md:text-base font-bold text-artbar-taupe">
+                     {privateParties.timeline.note}
+                   </p>
+	                 <div className="space-y-8 relative pl-4">
                     <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-artbar-bg"></div>
                     {privateParties.timeline.steps.map((step, i) => (
                        <div key={i} className="relative flex gap-6 items-start">
@@ -237,10 +270,23 @@ export const PrivateParties: React.FC = () => {
                         </li>
                      ))}
                   </ul>
-                  <Button size="sm" variant="outline" className="w-full bg-white border-transparent text-artbar-navy hover:bg-artbar-taupe hover:text-white">
-                     {privateParties.catering.cta}
-                  </Button>
-              </div>
+	                  <Button
+	                      size="sm"
+	                      variant="outline"
+	                      onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                      className="w-full bg-white border-transparent text-artbar-navy hover:bg-artbar-taupe hover:text-white"
+                    >
+	                     {privateParties.catering.cta}
+	                  </Button>
+                    <ul className="mt-8 space-y-3">
+                      {privateParties.catering.notes.map((note) => (
+                        <li key={note} className="flex items-start gap-3 text-sm md:text-base font-bold text-artbar-taupe">
+                          <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-artbar-taupe flex-shrink-0" />
+                          <span>{note}</span>
+                        </li>
+                      ))}
+                    </ul>
+	              </div>
 
            </div>
         </div>

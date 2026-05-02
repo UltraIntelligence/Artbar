@@ -19,6 +19,7 @@ import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import {
+  ARTBAR_BOOKING_URL,
   LINE_ADD_FRIEND_URL,
   LINE_BRAND_ICON_SRC,
   SITE_IMAGES,
@@ -42,6 +43,8 @@ import { PrefetchHeroes } from '../components/PrefetchHeroes';
  */
 const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
   'h-[31rem] min-h-[31rem] sm:h-[33rem] sm:min-h-[33rem] md:h-[37rem] md:min-h-[37rem] lg:h-[39rem] lg:min-h-[39rem]';
+
+const SHOW_HERO_LINE_CTA = false;
 
 /**
  * Square face crops for the concept social strip — Unsplash (hotlink OK per Unsplash license).
@@ -381,11 +384,11 @@ export const Home: React.FC = () => {
               </h2>
 
               {/* Primary CTAs */}
-              <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-3 md:gap-4 pt-2 md:pt-4">
+              <div className="flex w-full justify-center px-4 pt-4 pb-1 sm:pt-5 md:pt-6">
                 <Button
-                  onClick={() => { window.location.hash = 'schedule'; }}
+                  onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                   variant="taupe"
-                  className={`${heroCtaFrame} !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)]`}
+                  className={`${heroCtaFrame} w-full max-w-[20rem] !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
                 >
                   <span className={heroCtaInner}>
                     {site.home.hero.ctaSchedule}
@@ -393,17 +396,19 @@ export const Home: React.FC = () => {
                   </span>
                 </Button>
 
-                <a
-                  href={LINE_ADD_FRIEND_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${heroCtaFrame} bg-[#06C755] text-white shadow-[0_8px_30px_-8px_rgba(6,199,85,0.4)] hover:bg-[#05b34c]`}
-                >
-                  <span className={heroCtaInner}>
-                    {site.home.hero.ctaLineChat}
-                    <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
-                  </span>
-                </a>
+                {SHOW_HERO_LINE_CTA && (
+                  <a
+                    href={LINE_ADD_FRIEND_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${heroCtaFrame} bg-[#06C755] text-white shadow-[0_8px_30px_-8px_rgba(6,199,85,0.4)] hover:bg-[#05b34c]`}
+                  >
+                    <span className={heroCtaInner}>
+                      {site.home.hero.ctaLineChat}
+                      <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
+                    </span>
+                  </a>
+                )}
               </div>
 
               {/* Tertiary text link */}
@@ -674,7 +679,7 @@ export const Home: React.FC = () => {
             <Button
                 variant="taupe"
                 size="cta"
-                onClick={() => window.location.hash = 'schedule'}
+                onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                 className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
             >
               {site.home.themes.cta}
@@ -918,7 +923,7 @@ export const Home: React.FC = () => {
                  <Button
                    variant="taupe"
                    size="cta"
-                   onClick={() => window.location.hash = 'schedule'}
+                   onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                    className="w-full min-w-0 shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
                    {site.home.cta.btnBook}

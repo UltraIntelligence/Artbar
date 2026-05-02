@@ -1,68 +1,18 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { Navigation, Star, MapPin, Loader2, Info, Sparkles } from 'lucide-react';
-import { Logo } from '../components/Logo';
+import { CalendarDays, Navigation } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { ARTBAR_BOOKING_URL } from '../constants';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
 export const Locations: React.FC = () => {
   const { lang, content, site, jpCopy } = useContent();
   const operatingReveal = useScrollReveal();
-  
-  // State for AI Insights
-  const [insights, setInsights] = useState<Record<string, { text: string; chunks: any[] }>>({});
-  const [loading, setLoading] = useState<Record<string, boolean>>({});
-  const isMounted = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const fetchLocationInsights = async (id: string, name: string, address: string) => {
-    // If already loaded, don't fetch again
-    if (insights[id]) return;
-
-    setLoading((prev) => ({ ...prev, [id]: true }));
-    try {
-      const prompt = `You are a helpful assistant for Artbar Tokyo. Write a short, engaging 2-3 sentence AI summary about the following location that highlights its atmosphere and local area for visitors.\n\nLocation: ${name}\nAddress: ${address}`;
-      const res = await fetch('/api/ai-text', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
-      });
-      if (!res.ok) throw new Error('API error');
-      const data = await res.json();
-
-      const text = data.text || "Could not fetch insights at this time.";
-      const chunks: any[] = [];
-
-      if (isMounted.current) {
-        setInsights((prev) => ({ ...prev, [id]: { text, chunks } }));
-      }
-    } catch (error) {
-      console.error("Failed to fetch location insights:", error);
-      if (isMounted.current) {
-        setInsights((prev) => ({
-            ...prev,
-            [id]: {
-              text: lang === 'en' ? "Unable to load Google Maps data." : jpCopy.ui.locations.aiError,
-              chunks: [],
-            }
-        }));
-      }
-    } finally {
-      if (isMounted.current) {
-        setLoading((prev) => ({ ...prev, [id]: false }));
-      }
-    }
-  };
 
   return (
     <div className="grain relative pt-24 md:pt-32 pb-16 md:pb-20 bg-artbar-bg min-h-screen">
@@ -86,9 +36,6 @@ export const Locations: React.FC = () => {
               loc={loc}
               lang={lang}
               jpCopy={jpCopy}
-              insights={insights}
-              loading={loading}
-              fetchLocationInsights={fetchLocationInsights}
             />
           ))}
         </div>
@@ -131,18 +78,13 @@ function LocationCard({
   loc,
   lang,
   jpCopy,
-  insights,
-  loading,
-  fetchLocationInsights,
 }: {
   loc: Location;
   lang: 'en' | 'jp';
   jpCopy: ResolvedJapaneseCopy;
-  insights: Record<string, { text: string; chunks: { web?: { uri?: string }; maps?: { uri?: string } }[] }>;
-  loading: Record<string, boolean>;
-  fetchLocationInsights: (id: string, name: string, address: string) => Promise<void>;
 }) {
   const reveal = useScrollReveal();
+  const isFranchise = loc.isFranchise === true;
   return (
             <div
               ref={reveal.ref}
@@ -164,6 +106,11 @@ function LocationCard({
                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                     <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy leading-tight">
                       {lang === 'en' ? loc.nameEn : loc.nameJp}
+                      {isFranchise && (
+                        <span className="ml-2 text-artbar-taupe">
+                          {lang === 'en' ? '(Franchise)' : '（フランチャイズ）'}
+                        </span>
+                      )}
                     </h2>
                  </div>
 
@@ -178,55 +125,18 @@ function LocationCard({
                       <Navigation size={12} className="md:w-3.5 md:h-3.5" /> {lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}
                     </a>
 
-                    <button
-                      onClick={() => fetchLocationInsights(loc.id, loc.nameEn, loc.addressJp)}
-                      disabled={loading[loc.id] || !!insights[loc.id]}
-                      className={`inline-flex min-h-[44px] items-center gap-2 rounded-full px-5 py-3 text-xs font-bold uppercase tracking-wide transition-colors border md:text-sm ${
-                        insights[loc.id] 
-                          ? 'bg-artbar-taupe/10 text-artbar-taupe border-artbar-taupe/20 cursor-default'
-                          : 'bg-white border-artbar-taupe text-artbar-taupe hover:bg-artbar-taupe hover:text-white'
-                      }`}
-                    >
-                       {loading[loc.id] ? (
-                          <Loader2 size={12} className="animate-spin md:w-3.5 md:h-3.5" />
-                       ) : (
-                          <Sparkles size={12} className="md:w-3.5 md:h-3.5" />
-                       )}
-                       {insights[loc.id] ? (lang === 'en' ? 'AI Loaded' : jpCopy.ui.locations.aiLoaded) : (lang === 'en' ? 'AI Summary' : jpCopy.ui.locations.aiSummary)}
-                    </button>
+                    {isFranchise && (
+                      <a
+                        href={ARTBAR_BOOKING_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
+                      >
+                        <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
+                        {lang === 'en' ? 'Book Now' : '予約する'}
+                      </a>
+                    )}
                  </div>
-
-                 {/* AI Insights Display */}
-                 {insights[loc.id] && (
-                    <div className="mb-8 bg-artbar-bg/50 p-5 md:p-6 rounded-2xl border border-artbar-taupe/10 animate-in fade-in slide-in-from-top-2">
-                       <div className="flex items-start gap-3">
-                          <div className="bg-white p-2 rounded-full shadow-sm text-yellow-500 shrink-0">
-                             <Star size={14} fill="currentColor" />
-                          </div>
-                          <div>
-                            <h4 className="font-heading font-bold text-artbar-navy text-xs md:text-sm mb-1 uppercase tracking-widest">{lang === 'en' ? 'Maps Insights' : jpCopy.ui.locations.mapsInsightsTitle}</h4>
-                            <p className="text-artbar-navy/80 text-sm leading-relaxed italic">
-                              "{insights[loc.id].text}"
-                            </p>
-                            
-                            {/* Source Links */}
-                            {insights[loc.id].chunks?.length > 0 && (
-                                <div className="flex flex-wrap gap-2 mt-4">
-                                    {insights[loc.id].chunks.map((chunk, i) => {
-                                        const uri = chunk.web?.uri || chunk.maps?.uri;
-                                        if (!uri) return null;
-                                        return (
-                                            <a key={i} href={uri} target="_blank" rel="noopener noreferrer" className="text-[9px] text-artbar-taupe hover:underline flex items-center gap-1 bg-white px-2 py-1 rounded border border-gray-100 font-bold uppercase">
-                                                <Info size={10} /> {lang === 'en' ? `Source ${i + 1}` : `${jpCopy.ui.locations.sourcePrefix} ${i + 1}`}
-                                            </a>
-                                        );
-                                    })}
-                                </div>
-                            )}
-                          </div>
-                       </div>
-                    </div>
-                 )}
 
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
