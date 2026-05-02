@@ -86,7 +86,9 @@ function LocationCard({
 }) {
   const reveal = useScrollReveal();
   const isFranchise = loc.isFranchise === true;
-  const directionsUrl = loc.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`;
+  const directionsUrl = loc.mapUrl?.trim()
+    ? loc.mapUrl
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`;
   const bookingUrl = loc.id.startsWith('osaka_') ? ARTBAR_OSAKA_URL : ARTBAR_BOOKING_URL;
   return (
             <div

@@ -59,7 +59,7 @@ export function JpText({ children, as: Tag = 'span', className }: JpTextProps) {
     });
     return createElement(Tag, { className }, nodes);
   }
-  if (className) {
+  if (className || Tag !== 'span') {
     return createElement(Tag, { className }, children);
   }
   return <>{children}</>;

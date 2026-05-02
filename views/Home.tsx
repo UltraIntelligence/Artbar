@@ -372,16 +372,8 @@ export const Home: React.FC = () => {
                 </span>
               </h1>
 
-              <h2
-                className={`text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 ${
-                  lang === 'jp' ? '' : 'whitespace-pre-line'
-                }`}
-              >
-                {lang === 'jp' ? (
-                  <span dangerouslySetInnerHTML={{ __html: site.home.hero.subtitle }} />
-                ) : (
-                  <JpText>{site.home.hero.subtitle}</JpText>
-                )}
+              <h2 className="text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 whitespace-pre-line">
+                <JpText>{site.home.hero.subtitle.replace(/<wbr\s*\/?>/gi, '')}</JpText>
               </h2>
 
               {/* Primary CTAs */}
