@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import type { ThemeListItem } from '@/lib/theme-slugs';
 import { themeBookingUrlFromItem, themeSlugFromItem } from '@/lib/theme-slugs';
+import { JpText } from './JpText';
 
 /** Same card treatment as the home “Popular Themes” grid. */
 export function PopularThemesGrid({
@@ -36,10 +37,10 @@ export function PopularThemesGrid({
             <div className="absolute inset-x-0 bottom-0 w-full px-4 pb-9 pt-4 md:px-10 md:pb-10 md:pt-8">
               <div className="transition-transform duration-300 ease-out group-hover:-translate-y-1">
                 <h3 className="mb-1.5 flex min-h-[2.5rem] items-end text-lg font-heading font-bold leading-tight tracking-tight text-white line-clamp-2 md:mb-2 md:min-h-[4.25rem] md:text-3xl">
-                  {themeItem.title}
+                  <JpText>{themeItem.title}</JpText>
                 </h3>
                 <p className="min-h-[3.75rem] text-xs font-light leading-snug text-white/85 line-clamp-3 sm:text-sm md:min-h-[4.25rem] md:text-base md:leading-relaxed md:line-clamp-3">
-                  {themeItem.desc}
+                  <JpText>{themeItem.desc}</JpText>
                 </p>
               </div>
             </div>
