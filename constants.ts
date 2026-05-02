@@ -352,6 +352,7 @@ export const TEAM_BUILDING_LOGISTICS_ROWS: {
     name: { en: 'Artbar Cat Street Harajuku', jp: 'Artbar キャットストリート原宿' },
     cap: { en: 'Max 20', jp: '最大20名' },
   },
+  { name: { en: 'Artbar Daikanyama', jp: 'Artbar 代官山' }, cap: { en: 'Max 10', jp: '最大10名' } },
   { name: { en: 'Artbar Yokohama', jp: 'Artbar 横浜' }, cap: { en: 'Max 40', jp: '最大40名' } },
   {
     name: { en: 'Your Office / Offsite', jp: '貴社オフィス／出張' },

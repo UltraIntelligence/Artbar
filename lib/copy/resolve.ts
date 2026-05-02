@@ -165,6 +165,19 @@ export function mergePublishedIntoContent(payload: JapaneseCopyPayload): Content
 }
 
 export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): ResolvedJapaneseCopy {
+  const legacyTeamBuildingRows = payload.teamBuildingLogisticsRows.length === TEAM_BUILDING_LOGISTICS_ROWS.length - 1;
+  const daikanyamaIndex = TEAM_BUILDING_LOGISTICS_ROWS.findIndex(
+    (item) => item.name.en === 'Artbar Daikanyama',
+  );
+  const getTeamBuildingLogisticsPayloadRow = (index: number) => {
+    if (legacyTeamBuildingRows && daikanyamaIndex >= 0) {
+      if (index === daikanyamaIndex) return undefined;
+      if (index > daikanyamaIndex) return payload.teamBuildingLogisticsRows[index - 1];
+    }
+
+    return payload.teamBuildingLogisticsRows[index];
+  };
+
   return {
     faqs: payload.faqs,
     teamBuildingTestimonials: payload.teamBuildingTestimonials,
@@ -173,17 +186,21 @@ export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): Resolve
       ...item,
       jp: payload.locationShortLabels[index] ?? item.jp,
     })),
-    teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item, index) => ({
-      ...item,
-      name: {
-        ...item.name,
-        jp: payload.teamBuildingLogisticsRows[index]?.name ?? item.name.jp,
-      },
-      cap: {
-        ...item.cap,
-        jp: payload.teamBuildingLogisticsRows[index]?.cap ?? item.cap.jp,
-      },
-    })),
+    teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item, index) => {
+      const payloadRow = getTeamBuildingLogisticsPayloadRow(index);
+
+      return {
+        ...item,
+        name: {
+          ...item.name,
+          jp: payloadRow?.name ?? item.name.jp,
+        },
+        cap: {
+          ...item.cap,
+          jp: payloadRow?.cap ?? item.cap.jp,
+        },
+      };
+    }),
     privatePartyCapacityRows: PRIVATE_PARTY_CAPACITY_ROWS.map((item, index) => ({
       ...item,
       name: {

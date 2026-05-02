@@ -165,7 +165,7 @@ export const defaultContent: ContentData = {
     },
     instructorsPage: {
       title: "Meet Our Instructors",
-      subtitle: "Our talented team of bilingual artists is here to guide you every step of the way."
+      subtitle: "Our talented team of artists is here to guide you every step of the way."
     },
     teamBuilding: {
       hero: {
@@ -216,7 +216,7 @@ export const defaultContent: ContentData = {
         },
         catering: {
           title: "Catering Options",
-          desc: "Need more food? We partner with Dean & DeLuca and other local caterers. You are welcome to bring your own food!",
+          desc: "Need more food? We can point you in the right direction for catering options, or you are welcome to bring your own food!",
           items: [],
           cta: ""
         },
@@ -228,16 +228,17 @@ export const defaultContent: ContentData = {
       },
       pricing: {
         badge: "Simple Pricing",
-        title: "All-Inclusive Packages",
-        desc: "No hidden fees. Just per-person pricing that includes everything you need for a successful event.",
+        title: "Inclusive Packages",
+        desc: "No hidden fees. Per-person pricing includes drinks, light snacks, materials, and instruction. Keep it simple, or add extras when your team needs something special.",
+        packageBadge: "In Studio",
         packageTitle: "Standard Team Building",
         packageSubtitle: "2 Hour Session",
-        price: "¥6,600",
+        price: "¥7,700",
         priceNote: "per person (tax inc)",
         feeLabel: "Venue Fee",
-        feePrice: "¥16,500 (Waived for groups of 20+)",
-        offsiteLabel: "Dispatch Fee",
-        offsitePrice: "¥33,000 + Transport",
+        feePrice: "¥5,500",
+        offsiteLabel: "Custom Options",
+        offsitePrice: "Contact us for more options.",
         cta: "Request Availability"
       }
     },
@@ -333,6 +334,8 @@ export const defaultContent: ContentData = {
         name: "Paint Garage LLC",
         address: "7-2 Daikanyamacho, Shibuya-ku, Tokyo",
         ceo: "CEO: Cathy Thompson",
+        inquiryText: "For franchise or hiring inquiries, contact us at",
+        inquiryEmail: "tokyo@artbar.co.jp",
         btnFranchise: "Franchise Inquiry",
         btnHiring: "We're Hiring"
       }
@@ -475,7 +478,7 @@ export const defaultContent: ContentData = {
     },
     instructorsPage: {
       title: "インストラクター紹介",
-      subtitle: "才能豊かなバイリンガルのアーティストたちが、あなたの創作をサポートします。"
+      subtitle: "才能豊かなアーティストたちが、あなたの創作をサポートします。"
     },
     teamBuilding: {
       hero: {
@@ -526,7 +529,7 @@ export const defaultContent: ContentData = {
         },
         catering: {
           title: "ケータリング・オプション",
-          desc: "お食事を充実させたい場合は、DEAN & DELUCA等の提携ケータリング手配が可能です。また、お食事の持ち込みも自由です。",
+          desc: "追加のお食事が必要な場合は、ご希望に合わせたケータリングをご案内することも、お持ち込みいただくことも可能です。",
           items: [],
           cta: ""
         },
@@ -538,16 +541,17 @@ export const defaultContent: ContentData = {
       },
       pricing: {
         badge: "料金プラン",
-        title: "オールインクルーシブ価格",
-        desc: "追加料金の心配がない、明瞭なパッケージ料金です。",
+        title: "パッケージ料金",
+        desc: "ドリンク、軽食、画材、講師による進行を含む、お一人様ごとの明瞭な料金です。シンプルな開催から特別なアレンジまで、目的に合わせてご提案します。",
+        packageBadge: "スタジオ開催",
         packageTitle: "スタンダード・プラン",
         packageSubtitle: "2時間セッション",
-        price: "¥6,600",
+        price: "¥7,700",
         priceNote: "1名様あたり (税込)",
         feeLabel: "会場費",
-        feePrice: "¥16,500 (20名以上のグループは無料)",
-        offsiteLabel: "出張費（オフサイト）",
-        offsitePrice: "¥33,000 + 交通費実費",
+        feePrice: "¥5,500",
+        offsiteLabel: "カスタムオプション",
+        offsitePrice: "詳しくはお問い合わせください。",
         cta: "空き状況・見積もりを依頼"
       }
     },
@@ -643,6 +647,8 @@ export const defaultContent: ContentData = {
         name: "Paint Garage 合同会社",
         address: "東京都渋谷区代官山町7-2",
         ceo: "代表: キャシー・トンプソン",
+        inquiryText: "フランチャイズ・採用に関するお問い合わせは、こちらまでご連絡ください。",
+        inquiryEmail: "tokyo@artbar.co.jp",
         btnFranchise: "フランチャイズ加盟について",
         btnHiring: "採用情報"
       }

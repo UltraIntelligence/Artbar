@@ -37,14 +37,10 @@ export const Navbar: React.FC = () => {
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
     { name: site.nav.locations, path: '/locations' },
-    { name: site.nav.blog, path: '/blog' },
   ];
 
   const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
     let active = isActive;
-    if (link.path === '/blog' && pathname.startsWith('/blog')) {
-        active = true;
-    }
 
     if (isMobile) {
         return `text-xl font-heading font-bold leading-snug ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe sm:text-2xl`;
