@@ -72,7 +72,10 @@ export const ThemeDetail: React.FC = () => {
     [resolvedSlug, site.home.themes.items]
   );
 
-  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, localizedTheme.title);
+  /** Strip JP `<wbr>` line-break markers when the title leaks into attribute-only
+   *  contexts (alt text, placeholder URLs) — they're rendering hints, not content. */
+  const titleAsText = localizedTheme.title.replace(/<wbr\s*\/?>/gi, '');
+  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, titleAsText);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -118,7 +121,7 @@ export const ThemeDetail: React.FC = () => {
         <Image
           key={heroSrc}
           src={heroSrc}
-          alt={`${localizedTheme.title} paint and sip class at Artbar Tokyo`}
+          alt={`${titleAsText} paint and sip class at Artbar Tokyo`}
           fill
           priority
           placeholder="blur"

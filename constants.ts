@@ -108,17 +108,20 @@ export const POPULAR_THEMES = [
   { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 
+/** Manual `<wbr>` markers on katakana compound titles give text-wrap: balance
+ *  a phrase boundary to use; BudouX returns these as single chunks. See
+ *  components/JpText.tsx for how the markers are honored. */
 export const POPULAR_THEMES_JP = [
-  { slug: "japan-inspired", title: "ジャパンインスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
-  { slug: "paint-pouring", title: "ポーリングアート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
-  { slug: "alcohol-ink", title: "アルコールインク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
+  { slug: "japan-inspired", title: "ジャパン<wbr>インスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
+  { slug: "paint-pouring", title: "ポーリング<wbr>アート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
+  { slug: "alcohol-ink", title: "アルコール<wbr>インク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
   { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/van-gogh` },
   { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/monet` },
   { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/picasso` },
   { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
   { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
   { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
-  { slug: "texture-painting", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
+  { slug: "texture-painting", title: "テクスチャー<wbr>アート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
   { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 

@@ -348,6 +348,29 @@ html:lang(ja) li {
   white-space: pre-line;
 }
 
+/* `text-wrap` only on block-level containers — keep it off inline `span`/`a`
+   so it doesn't override an outer heading's `balance` when JpText wraps text
+   in a span. Block elements still inherit/apply naturally. */
+html:lang(ja) p,
+html:lang(ja) li {
+  text-wrap: pretty;
+}
+
+/* JP headings: balance line lengths so a short heading doesn't leave one
+   stranded character on the last line (the "theme card orphan" problem).
+   Targets the heading AND any inline span JpText injects inside it.
+   Browsers cap balance at ~6 lines for perf; gracefully no-ops in unsupported browsers. */
+html:lang(ja) h1,
+html:lang(ja) h2,
+html:lang(ja) h3,
+html:lang(ja) h4,
+html:lang(ja) h1 span,
+html:lang(ja) h2 span,
+html:lang(ja) h3 span,
+html:lang(ja) h4 span {
+  text-wrap: balance;
+}
+
 /* ─── Utility Classes ───────────────────────────────────── */
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

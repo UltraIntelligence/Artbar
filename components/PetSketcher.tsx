@@ -12,6 +12,7 @@ import {
   Copy,
 } from 'lucide-react';
 import { Button } from './ui/Button';
+import { JpText } from './JpText';
 import { ARTBAR_TOKYO_EMAIL } from '../constants';
 import { useContent } from '../context/ContentContext';
 
@@ -342,10 +343,10 @@ ${text('Thank you!', copy.emailThanks)}`;
     <div className="bg-white rounded-[3rem] p-8 md:p-12 shadow-xl border border-gray-100 max-w-5xl mx-auto">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-heading font-heavy text-artbar-navy mb-4 flex items-center justify-center gap-3">
-          <Sparkles className="text-artbar-taupe" size={32} /> {text('Magic Sketch Preview', copy.sketchTitle)}
+          <Sparkles className="text-artbar-taupe" size={32} /> <JpText>{text('Magic Sketch Preview', copy.sketchTitle)}</JpText>
         </h2>
         <p className="text-artbar-gray max-w-lg mx-auto">
-          {text('Upload a photo of your pet to see how our AI envisions a simple canvas sketch.', copy.sketchIntro)}
+          <JpText>{text('Upload a photo of your pet to see how our AI envisions a simple canvas sketch.', copy.sketchIntro)}</JpText>
         </p>
       </div>
 
@@ -435,17 +436,17 @@ ${text('Thank you!', copy.emailThanks)}`;
               <div className="bg-green-50 text-green-800 p-4 rounded-xl border border-green-200 text-sm flex items-start gap-3">
 	                <Sparkles size={16} className="mt-0.5 flex-shrink-0" />
 	                <div>
-	                  <strong>{text('Like this version?', copy.likeThisVersionTitle)}</strong> {text('Send it to Artbar with your class details so the team can match it to the right student and class day.', copy.likeThisVersionBody)}
+	                  <strong><JpText>{text('Like this version?', copy.likeThisVersionTitle)}</JpText></strong> <JpText>{text('Send it to Artbar with your class details so the team can match it to the right student and class day.', copy.likeThisVersionBody)}</JpText>
 	                </div>
               </div>
 
               <div className="rounded-2xl border border-artbar-navy/10 bg-artbar-bg/80 p-5 md:p-6 space-y-4">
                 <div>
 	                  <h3 className="font-heading font-heavy text-artbar-navy text-lg mb-2">
-	                    {text('Use this sketch for your Paint Your Pet class', copy.classUseTitle)}
+	                    <JpText>{text('Use this sketch for your Paint Your Pet class', copy.classUseTitle)}</JpText>
 	                  </h3>
 	                  <p className="text-sm text-artbar-gray leading-relaxed">
-	                    {text('Fill in the class details below, then press the main button. We will package the sketch with a clear reference, save the files, and open an email to Artbar so it is easy for you to send.', copy.classUseBody)}
+	                    <JpText>{text('Fill in the class details below, then press the main button. We will package the sketch with a clear reference, save the files, and open an email to Artbar so it is easy for you to send.', copy.classUseBody)}</JpText>
 	                  </p>
                 </div>
 
@@ -576,7 +577,7 @@ ${text('Thank you!', copy.emailThanks)}`;
 	                    </button>
                   </div>
                   <p className="mt-2 text-xs text-artbar-gray leading-relaxed">
-	                    {text('This same reference is used in the file name, the email subject, and the handoff notes so the team can find the right student fast.', copy.referenceHelp)}
+	                    <JpText>{text('This same reference is used in the file name, the email subject, and the handoff notes so the team can find the right student fast.', copy.referenceHelp)}</JpText>
                   </p>
                 </div>
 
@@ -637,7 +638,7 @@ ${text('Thank you!', copy.emailThanks)}`;
               </div>
 
               <p className="text-center text-xs text-gray-500">
-	                {text('This package is prepared for you to send from your own email. We save the sketch, save the class details, and open a ready-made email to {email}.', copy.packageFooter).replace('{email}', ARTBAR_TOKYO_EMAIL)}
+	                <JpText>{text('This package is prepared for you to send from your own email. We save the sketch, save the class details, and open a ready-made email to {email}.', copy.packageFooter).replace('{email}', ARTBAR_TOKYO_EMAIL)}</JpText>
               </p>
 
               <button
