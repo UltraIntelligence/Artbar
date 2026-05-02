@@ -5,6 +5,10 @@ import type { ThemeListItem } from '@/lib/theme-slugs';
 import { themeBookingUrlFromItem, themeSlugFromItem } from '@/lib/theme-slugs';
 import { JpText } from './JpText';
 
+/** Strip the manual `<wbr>` line-break markers JP titles carry for JpText
+ *  before passing the string to attribute-only contexts (alt, aria-label, etc.). */
+const stripWbr = (s: string) => s.replace(/<wbr\s*\/?>/gi, '');
+
 /** Same card treatment as the home “Popular Themes” grid. */
 export function PopularThemesGrid({
   items,
@@ -28,7 +32,7 @@ export function PopularThemesGrid({
           >
             <Image
               src={themeItem.image}
-              alt={themeItem.title}
+              alt={stripWbr(themeItem.title)}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
