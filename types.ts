@@ -29,6 +29,7 @@ export interface Location {
   accessEn: string;
   accessJp: string;
   image: string;
+  mapUrl?: string;
   isFranchise?: boolean;
 }
 

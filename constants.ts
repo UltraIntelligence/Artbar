@@ -30,6 +30,7 @@ export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
 
 /** Public booking engine for all schedule and booking CTAs. */
 export const ARTBAR_BOOKING_URL = 'https://booking.artbar.co.jp';
+export const ARTBAR_OSAKA_URL = 'https://osaka.artbar.co.jp';
 export const PRIVATE_PARTY_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=private_party`;
 export const TEAM_BUILDING_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=team_building`;
 
@@ -402,7 +403,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒150-0034 東京都渋谷区代官山町 7-2 ベルビュー代官山 1階",
     accessEn: "5-minute walk from Daikanyama Station | 8-minute walk from Ebisu Station",
     accessJp: "代官山駅 徒歩5分 | 恵比寿駅 徒歩8分",
-    image: GI.locations.daikanyama
+    image: GI.locations.daikanyama,
+    mapUrl: "https://maps.app.goo.gl/1bAmzeGXqq5m4jSY7"
   },
   {
     id: "harajuku",
@@ -412,7 +414,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒150-0001 東京都渋谷区神宮前5-30-2 Takaraビル 201",
     accessEn: "7-minute walk from Shibuya Station",
     accessJp: "渋谷駅 徒歩7分 | 明治神宮前駅 徒歩5分",
-    image: GI.locations.harajuku
+    image: GI.locations.harajuku,
+    mapUrl: "https://maps.app.goo.gl/oktBHrayLwCaZFbV8"
   },
   {
     id: "ginza",
@@ -422,7 +425,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒104-0061 東京都中央区銀座1丁目6-1 銀座クレセントビル 10階",
     accessEn: "Access:\nMetro Ginza-Itchome Station 1 min walk\nJR Yurakucho Station 4 min walk\nMetro Ginza Station 5 min walk",
     accessJp: "アクセス:\n東京メトロ 銀座一丁目駅 徒歩1分\nJR 有楽町駅 徒歩4分\n東京メトロ 銀座駅 徒歩5分",
-    image: GI.locations.ginza
+    image: GI.locations.ginza,
+    mapUrl: "https://maps.app.goo.gl/FiudRj92hBAdPVH37"
   },
   {
     id: "yokohama",
@@ -432,7 +436,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒231-0861 神奈川県横浜市中区元町1-27-2 エンセント横濱元町ビル 2F",
     accessEn: "Motomachi-Chukagai station – 3 min walk\nIshikawacho station – 10 min walk",
     accessJp: "みなとみらい線 元町・中華街駅 徒歩3分\nJR石川町駅 徒歩10分",
-    image: GI.locations.yokohama
+    image: GI.locations.yokohama,
+    mapUrl: "https://maps.app.goo.gl/vWeeAb4QLDYMEayy5"
   },
   {
     id: "osaka_namba",
@@ -443,6 +448,7 @@ export const LOCATIONS: Location[] = [
     accessEn: "Please change to the low-floor elevator on the 10th floor common area and go up to the 17th floor. The studio is at the end of the corridor on your left.",
     accessJp: "10階で低層階用エレベーターに乗り換え、17階へお上がりください。スタジオは廊下突き当たり左手です。",
     image: GI.locations.osaka_namba,
+    mapUrl: "https://maps.app.goo.gl/4AqRmV2covWJf2FNA",
     isFranchise: true
   },
   {
@@ -454,6 +460,7 @@ export const LOCATIONS: Location[] = [
     accessEn: "Inside Tully's Coffee / Yurindo",
     accessJp: "タリーズコーヒー / 有隣堂 併設",
     image: GI.locations.osaka_umeda,
+    mapUrl: "https://maps.app.goo.gl/wkJNcyZoDheU6PkE9",
     isFranchise: true
   },
   {
@@ -465,6 +472,7 @@ export const LOCATIONS: Location[] = [
     accessEn: "Inside TULLY'S COFFEE",
     accessJp: "タリーズコーヒー併設",
     image: GI.locations.osaka_hirakata,
+    mapUrl: "https://maps.app.goo.gl/ybw2cRaFe4qT3NucA",
     isFranchise: true
   }
 ];

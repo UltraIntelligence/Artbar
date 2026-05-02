@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
+import { JpText } from '../components/JpText';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
@@ -17,9 +18,9 @@ export const BlogList: React.FC = () => {
         
         {/* Header */}
         <header className="text-center mb-20 animate-in fade-in slide-in-from-top-4 duration-700">
-           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">{site.nav.blog}</span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6">{site.blogPage.title}</h1>
-          <p className="text-lg md:text-xl text-artbar-gray max-w-2xl mx-auto">{site.blogPage.subtitle}</p>
+           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{site.nav.blog}</JpText></span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{site.blogPage.title}</JpText></h1>
+          <p className="text-lg md:text-xl text-artbar-gray max-w-2xl mx-auto"><JpText>{site.blogPage.subtitle}</JpText></p>
         </header>
 
         <div
@@ -57,22 +58,22 @@ export const BlogList: React.FC = () => {
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="flex items-center gap-4 text-sm text-artbar-taupe font-bold uppercase tracking-wider mb-4">
                      <span className="flex items-center gap-1"><Calendar size={12} /> {post.date}</span>
-                     <span className="flex items-center gap-1"><User size={12} /> {author}</span>
+                     <span className="flex items-center gap-1"><User size={12} /> <JpText>{author}</JpText></span>
                   </div>
                   
                   <Link href={`/blog/${post.slug}`} className="block group-hover:text-artbar-taupe transition-colors">
-                     <h2 className="text-2xl font-heading font-bold text-artbar-navy mb-4 leading-tight">{title}</h2>
+                     <h2 className="text-2xl font-heading font-bold text-artbar-navy mb-4 leading-tight"><JpText>{title}</JpText></h2>
                   </Link>
-                  
+
                   <p className="text-artbar-gray leading-relaxed mb-6 flex-grow line-clamp-3">
-                    {excerpt}
+                    <JpText>{excerpt}</JpText>
                   </p>
 
                   <Link 
                     href={`/blog/${post.slug}`} 
                     className="inline-flex min-h-[44px] items-center gap-2 py-2 font-heading font-bold text-artbar-navy hover:text-artbar-taupe transition-colors text-sm uppercase tracking-wider mt-auto"
                   >
-                    {site.blogPage.readMore} <ArrowRight size={16} />
+                    <JpText>{site.blogPage.readMore}</JpText> <ArrowRight size={16} />
                   </Link>
                 </div>
               </article>
@@ -82,7 +83,7 @@ export const BlogList: React.FC = () => {
 
         {posts.length === 0 && (
           <div className="text-center py-20 opacity-50">
-            <p className="text-xl font-heading font-bold text-artbar-navy">{lang === 'en' ? 'Coming Soon...' : jpCopy.ui.blogList.comingSoon}</p>
+            <p className="text-xl font-heading font-bold text-artbar-navy"><JpText>{lang === 'en' ? 'Coming Soon...' : jpCopy.ui.blogList.comingSoon}</JpText></p>
           </div>
         )}
 

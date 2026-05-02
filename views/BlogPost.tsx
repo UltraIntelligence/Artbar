@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
+import { JpText } from '../components/JpText';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { HERO_BLUR_DATA_URL } from '../constants';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -20,8 +21,8 @@ export const BlogPost: React.FC = () => {
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg">
-        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4">{lang === 'en' ? 'Article Not Found' : jpCopy.ui.blogPost.articleNotFoundTitle}</h1>
-        <Link href="/blog" className="text-artbar-taupe hover:underline">{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</Link>
+        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{lang === 'en' ? 'Article Not Found' : jpCopy.ui.blogPost.articleNotFoundTitle}</JpText></h1>
+        <Link href="/blog" className="text-artbar-taupe hover:underline"><JpText>{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</JpText></Link>
       </div>
     );
   }
@@ -54,7 +55,7 @@ export const BlogPost: React.FC = () => {
               href="/blog" 
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md text-sm font-bold text-white transition-colors hover:bg-white/30"
              >
-               <ArrowLeft size={16} /> {site.blogPage.back}
+               <ArrowLeft size={16} /> <JpText>{site.blogPage.back}</JpText>
              </Link>
            </div>
         </div>
@@ -72,13 +73,13 @@ export const BlogPost: React.FC = () => {
              </div>
              
              <h1 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-6 leading-tight">
-               {title}
+               <JpText>{title}</JpText>
              </h1>
              
              <div className="flex items-center justify-center gap-6 text-sm md:text-base text-artbar-gray border-t border-b border-gray-100 py-4">
                 <div className="flex items-center gap-2">
                    <User size={16} className="text-artbar-taupe" />
-                   <span className="font-heading font-bold">{author}</span>
+                   <span className="font-heading font-bold"><JpText>{author}</JpText></span>
                 </div>
                 <div className="flex items-center gap-2">
                    <Calendar size={16} className="text-artbar-taupe" />
@@ -95,7 +96,7 @@ export const BlogPost: React.FC = () => {
 
           <div className="mt-16 pt-8 border-t border-gray-100">
             <h3 className="text-center font-heading font-bold text-artbar-navy mb-6 text-sm uppercase tracking-widest">
-              {shareLabel}
+              <JpText>{shareLabel}</JpText>
             </h3>
             <div className="flex justify-center gap-4">
               <a
@@ -133,7 +134,7 @@ export const BlogPost: React.FC = () => {
 
       <section className="max-w-[1000px] mx-auto px-6 mt-20">
         <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">
-          {lang === 'en' ? 'More from the Journal' : jpCopy.ui.blogPost.moreFromJournal}
+          <JpText>{lang === 'en' ? 'More from the Journal' : jpCopy.ui.blogPost.moreFromJournal}</JpText>
         </h3>
         <div
           ref={moreReveal.ref}
@@ -159,10 +160,10 @@ export const BlogPost: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-artbar-navy mb-2 line-clamp-2">
-                    {lang === 'en' ? p.titleEn : p.titleJp}
+                    <JpText>{lang === 'en' ? p.titleEn : p.titleJp}</JpText>
                   </h4>
                   <span className="text-sm text-artbar-taupe font-bold uppercase tracking-wider">
-                    {lang === 'en' ? 'Read Story' : jpCopy.ui.blogPost.readStory}
+                    <JpText>{lang === 'en' ? 'Read Story' : jpCopy.ui.blogPost.readStory}</JpText>
                   </span>
                 </div>
               </Link>

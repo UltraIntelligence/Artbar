@@ -15,3 +15,4 @@ SPA/
 
 # Optional local staging for location photos (canonical URLs use public/media/generated/loc-*.jpg)
 media/locations/
+.gstack/

@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
+import { JpText } from '../components/JpText';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
@@ -301,7 +302,7 @@ export const Home: React.FC = () => {
               aria-live="polite"
             >
               <span className="sr-only">
-                {lang === 'jp' ? jpCopy.ui.home.heroLoading : 'Loading hero'}
+                <JpText>{lang === 'jp' ? jpCopy.ui.home.heroLoading : 'Loading hero'}</JpText>
               </span>
               <div className="h-1.5 w-56 max-w-[min(100%,14rem)] overflow-hidden rounded-full bg-artbar-navy/10">
                 <div className="h-full w-full rounded-full animate-hero-shimmer" />
@@ -325,9 +326,9 @@ export const Home: React.FC = () => {
                 }`}
               >
                 {lang === 'jp' ? (
-                  <span className="font-sans font-bold leading-none">{site.home.hero.badge}</span>
+                  <span className="font-sans font-bold leading-none"><JpText>{site.home.hero.badge}</JpText></span>
                 ) : (
-                  site.home.hero.badge
+                  <JpText>{site.home.hero.badge}</JpText>
                 )}
               </span>
 
@@ -340,7 +341,7 @@ export const Home: React.FC = () => {
                     delayBase={600}
                     className="md:[&>svg]:w-5 md:[&>svg]:h-5"
                   />
-                  <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums">{site.home.hero.ratingScore}</span>
+                  <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums"><JpText>{site.home.hero.ratingScore}</JpText></span>
                   <span className="hidden text-white/40 text-lg sm:inline" aria-hidden>
                     ·
                   </span>
@@ -352,9 +353,9 @@ export const Home: React.FC = () => {
                       : 'w-full text-sm leading-snug tracking-normal md:text-xl'
                   }`}
                 >
-                  {lang === 'jp'
+                  <JpText>{lang === 'jp'
                     ? site.home.hero.guestsSuffix.replace(/\{\{count\}\}/g, guestCountFormatted)
-                    : `${guestCountFormatted}+ ${site.home.hero.guestsSuffix}`}
+                    : `${guestCountFormatted}+ ${site.home.hero.guestsSuffix}`}</JpText>
                 </span>
               </div>
 
@@ -362,12 +363,12 @@ export const Home: React.FC = () => {
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
-                  {site.home.hero.title}
+                  <JpText>{site.home.hero.title}</JpText>
                 </span>
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
-                  {site.home.hero.titleHighlight}
+                  <JpText>{site.home.hero.titleHighlight}</JpText>
                 </span>
               </h1>
 
@@ -379,7 +380,7 @@ export const Home: React.FC = () => {
                 {lang === 'jp' ? (
                   <span dangerouslySetInnerHTML={{ __html: site.home.hero.subtitle }} />
                 ) : (
-                  site.home.hero.subtitle
+                  <JpText>{site.home.hero.subtitle}</JpText>
                 )}
               </h2>
 
@@ -391,7 +392,7 @@ export const Home: React.FC = () => {
                   className={`${heroCtaFrame} w-full max-w-[20rem] !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
                 >
                   <span className={heroCtaInner}>
-                    {site.home.hero.ctaSchedule}
+                    <JpText>{site.home.hero.ctaSchedule}</JpText>
                     <ArrowRight size={16} className="shrink-0 text-white" aria-hidden />
                   </span>
                 </Button>
@@ -404,7 +405,7 @@ export const Home: React.FC = () => {
                     className={`${heroCtaFrame} bg-[#06C755] text-white shadow-[0_8px_30px_-8px_rgba(6,199,85,0.4)] hover:bg-[#05b34c]`}
                   >
                     <span className={heroCtaInner}>
-                      {site.home.hero.ctaLineChat}
+                      <JpText>{site.home.hero.ctaLineChat}</JpText>
                       <img src={LINE_BRAND_ICON_SRC} alt="" width={24} height={24} className="h-5 w-5 shrink-0 object-contain md:h-6 md:w-6" />
                     </span>
                   </a>
@@ -417,7 +418,7 @@ export const Home: React.FC = () => {
                 onClick={scrollToPopularThemes}
                 className="inline-flex min-h-[44px] items-center gap-1.5 px-3 py-2 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
               >
-                <span className="animate-text-shimmer">{site.home.hero.ctaFindPainting}</span>
+                <span className="animate-text-shimmer"><JpText>{site.home.hero.ctaFindPainting}</JpText></span>
                 <ArrowRight size={14} className="animate-text-shimmer text-white/50" aria-hidden />
               </button>
             </div>
@@ -444,7 +445,7 @@ export const Home: React.FC = () => {
                 </div>
                 <StarRating size={14} className="mb-6" />
                 <p className="mb-8 flex-grow text-base font-light italic leading-relaxed text-artbar-navy md:text-lg">
-                  &ldquo;{item.text}&rdquo;
+                  &ldquo;<JpText>{item.text}</JpText>&rdquo;
                 </p>
                 <div className="mt-auto flex items-center gap-4">
                   {item.userImage ? (
@@ -462,10 +463,10 @@ export const Home: React.FC = () => {
                   )}
                   <div>
                     <p className="font-heading text-[10px] font-bold uppercase tracking-wide text-artbar-navy md:text-sm">
-                      {item.author}
+                      <JpText>{item.author}</JpText>
                     </p>
                     {item.role && (
-                      <p className="text-[9px] font-bold uppercase tracking-wider text-artbar-taupe md:text-xs">{item.role}</p>
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-artbar-taupe md:text-xs"><JpText>{item.role}</JpText></p>
                     )}
                   </div>
                 </div>
@@ -483,9 +484,9 @@ export const Home: React.FC = () => {
             {/* Section heading — matches site section title scale */}
             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy tracking-tight leading-tight whitespace-pre-line mb-10 md:mb-16 flex flex-col items-center max-w-4xl`}>
                <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-3 md:mb-5 opacity-80">
-                 {site.home.concept.est}
+                 <JpText>{site.home.concept.est}</JpText>
                </span>
-               {site.home.concept.title}
+               <JpText>{site.home.concept.title}</JpText>
             </h2>
 
             {/* Video / lifestyle — self-hosted MP4 (loop) + glass play → full video on YouTube */}
@@ -545,7 +546,7 @@ export const Home: React.FC = () => {
             {/* Bold Paragraph Copy - NORMAL SIZED */}
             <div className="max-w-4xl mx-auto space-y-12">
                <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed md:leading-relaxed font-normal">
-                 {site.home.concept.p1}
+                 <JpText>{site.home.concept.p1}</JpText>
                </p>
 
                {/* Social Proof centered stats */}
@@ -563,7 +564,7 @@ export const Home: React.FC = () => {
                       ))}
                       <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-[3px] border-white bg-artbar-navy px-0.5 text-white shadow-xl md:h-24 md:w-24 md:border-[6px]">
                         <span className="text-center font-heading text-[0.65rem] font-heavy tabular-nums leading-none md:text-lg">
-                          {formatGuestCountCompactK(lang)}
+                          <JpText>{formatGuestCountCompactK(lang)}</JpText>
                         </span>
                       </div>
                   </div>
@@ -571,26 +572,26 @@ export const Home: React.FC = () => {
                      <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">
                        {enGuestConceptSplit ? (
                          <>
-                           <span className="md:hidden">{guestConceptLabel}</span>
+                           <span className="md:hidden"><JpText>{guestConceptLabel}</JpText></span>
                            <span className="hidden md:flex md:flex-col md:items-center md:gap-1">
-                             <span>{enGuestConceptSplit.line1}</span>
-                             <span>{enGuestConceptSplit.line2}</span>
+                             <span><JpText>{enGuestConceptSplit.line1}</JpText></span>
+                             <span><JpText>{enGuestConceptSplit.line2}</JpText></span>
                            </span>
                          </>
                        ) : (
-                         guestConceptLabel
+                         <JpText>{guestConceptLabel}</JpText>
                        )}
                      </p>
                      <div className="mx-auto flex max-w-xl flex-col items-center gap-1 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:text-base leading-snug">
                         {lang === 'en' ? (
                           <>
-                            <span>{bilingualLine1}</span>
-                            <span>{bilingualLine2}</span>
+                            <span><JpText>{bilingualLine1}</JpText></span>
+                            <span><JpText>{bilingualLine2}</JpText></span>
                           </>
                         ) : (
                           <>
-                            <span className="normal-case tracking-normal">{bilingualJpLine1}</span>
-                            <span className="normal-case tracking-normal">{bilingualJpLine2}</span>
+                            <span className="normal-case tracking-normal"><JpText>{bilingualJpLine1}</JpText></span>
+                            <span className="normal-case tracking-normal"><JpText>{bilingualJpLine2}</JpText></span>
                           </>
                         )}
                      </div>
@@ -609,14 +610,14 @@ export const Home: React.FC = () => {
             <div className="mb-8 flex w-full items-center gap-3 sm:mb-12 sm:gap-4 md:mb-16 lg:mb-20">
               <div className="h-px flex-grow bg-artbar-navy/10" />
               <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray sm:px-6 md:px-8 md:text-xs">
-                {meetRegularsHeading}
+                <JpText>{meetRegularsHeading}</JpText>
               </p>
               <div className="h-px flex-grow bg-artbar-navy/10" />
             </div>
 
-            <div className="mx-auto mb-8 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-5 gap-y-9 sm:mb-12 sm:gap-x-10 sm:gap-y-16 md:mb-16 md:grid-cols-7 md:gap-x-14 md:gap-y-24 lg:mb-20 lg:gap-x-16 lg:gap-y-28 xl:gap-x-20">
+            <div className="mx-auto mb-8 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-4 gap-y-6 sm:mb-12 sm:gap-x-8 sm:gap-y-10 md:mb-16 md:grid-cols-7 md:gap-x-10 md:gap-y-14 lg:mb-20 lg:gap-x-12 lg:gap-y-16">
               {PARTNER_LOGOS.map((logo, i) => (
-                <PartnerLogo key={i} name={logo.name} url={logo.url} size="prominent" />
+                <PartnerLogo key={i} name={logo.name} url={logo.url} />
               ))}
             </div>
 
@@ -627,7 +628,7 @@ export const Home: React.FC = () => {
               onClick={() => router.push('/team-building')}
               className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
             >
-              {bookTeamBuildingCta}
+              <JpText>{bookTeamBuildingCta}</JpText>
               <ArrowRight size={18} className="shrink-0" aria-hidden />
             </Button>
           </div>
@@ -638,9 +639,9 @@ export const Home: React.FC = () => {
        <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
         <div ref={howItWorksReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`text-center mb-12 md:mb-20 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
-             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-6`}>{site.home.howItWorks.title}</h2>
+             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-6`}><JpText>{site.home.howItWorks.title}</JpText></h2>
              <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
-               {site.home.howItWorks.subtitle}
+               <JpText>{site.home.howItWorks.subtitle}</JpText>
              </p>
           </div>
 
@@ -652,9 +653,9 @@ export const Home: React.FC = () => {
                   <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white text-artbar-taupe flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
                     <Icon size={24} className="md:w-7 md:h-7" />
                   </div>
-                  <h3 className={`${theme.cardTitle} font-heading font-bold mb-3 text-artbar-navy group-hover:text-white transition-colors text-lg md:text-2xl`}>{step.title}</h3>
+                  <h3 className={`${theme.cardTitle} font-heading font-bold mb-3 text-artbar-navy group-hover:text-white transition-colors text-lg md:text-2xl`}><JpText>{step.title}</JpText></h3>
                   <p className={`${theme.body} text-artbar-gray group-hover:text-white/80 transition-colors leading-relaxed text-sm md:text-base`}>
-                    {step.desc}
+                    <JpText>{step.desc}</JpText>
                   </p>
                 </div>
               );
@@ -671,9 +672,9 @@ export const Home: React.FC = () => {
         <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
             <div>
-              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none">{site.home.themes.title}</h2>
+              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
               <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
-                {site.home.themes.subtitle}
+                <JpText>{site.home.themes.subtitle}</JpText>
               </p>
             </div>
             <Button
@@ -682,7 +683,7 @@ export const Home: React.FC = () => {
                 onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                 className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
             >
-              {site.home.themes.cta}
+              <JpText>{site.home.themes.cta}</JpText>
             </Button>
           </div>
 
@@ -697,9 +698,9 @@ export const Home: React.FC = () => {
       <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
         <div ref={featuresReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
            <div className={`text-center mb-12 md:mb-20 reveal ${featuresReveal.isVisible ? 'visible' : ''}`}>
-             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-4`}>{site.home.features.title}</h2>
+             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-4`}><JpText>{site.home.features.title}</JpText></h2>
              <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
-               {site.home.features.subtitle}
+               <JpText>{site.home.features.subtitle}</JpText>
              </p>
            </div>
            
@@ -716,9 +717,9 @@ export const Home: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-artbar-navy/10 group-hover:bg-transparent transition-colors"></div>
                    </div>
-                   <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-3 md:mb-4">{feature.title}</h3>
+                   <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-3 md:mb-4"><JpText>{feature.title}</JpText></h3>
                    <p className="text-artbar-gray leading-relaxed text-sm md:text-base">
-                     {feature.desc}
+                     <JpText>{feature.desc}</JpText>
                    </p>
                 </div>
               ))}
@@ -735,7 +736,7 @@ export const Home: React.FC = () => {
           <div className="mb-12 flex items-center gap-4 md:mb-16">
             <div className="h-px flex-grow bg-artbar-navy/10" />
             <h2 className="px-4 text-center font-heading text-xl font-heavy uppercase tracking-widest text-artbar-navy md:text-3xl lg:text-4xl">
-              {site.home.testimonials.title}
+              <JpText>{site.home.testimonials.title}</JpText>
             </h2>
             <div className="h-px flex-grow bg-artbar-navy/10" />
           </div>
@@ -764,11 +765,11 @@ export const Home: React.FC = () => {
                     aria-hidden
                   />
                   <p className="relative z-10 text-pretty text-lg font-heading font-normal leading-[1.55] text-artbar-navy md:text-2xl md:leading-[1.55] lg:text-[1.65rem] lg:leading-[1.6] xl:text-3xl xl:leading-[1.5]">
-                    &ldquo;{activeCarouselTestimonial.text}&rdquo;
+                    &ldquo;<JpText>{activeCarouselTestimonial.text}</JpText>&rdquo;
                   </p>
                   {activeCarouselTestimonial.date ? (
                     <p className="mt-6 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:mt-8 md:text-xs">
-                      {activeCarouselTestimonial.date}
+                      <JpText>{activeCarouselTestimonial.date}</JpText>
                     </p>
                   ) : null}
                 </div>
@@ -788,11 +789,11 @@ export const Home: React.FC = () => {
                     </div>
                   )}
                   <p className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-artbar-navy md:text-sm">
-                    {activeCarouselTestimonial.author}
+                    <JpText>{activeCarouselTestimonial.author}</JpText>
                   </p>
                   {activeCarouselTestimonial.role ? (
                     <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-artbar-taupe md:text-xs">
-                      {activeCarouselTestimonial.role}
+                      <JpText>{activeCarouselTestimonial.role}</JpText>
                     </p>
                   ) : null}
                 </div>
@@ -817,7 +818,7 @@ export const Home: React.FC = () => {
 
                 <div className="flex min-w-[5.5rem] flex-col items-center justify-center px-2 sm:min-w-[6.5rem] sm:px-4">
                   <span className="font-heading text-[9px] font-bold uppercase tracking-[0.25em] text-artbar-taupe/90">
-                    {lang === 'en' ? 'Stories' : jpCopy.ui.home.storiesLabel}
+                    <JpText>{lang === 'en' ? 'Stories' : jpCopy.ui.home.storiesLabel}</JpText>
                   </span>
                   <p className="font-heading text-lg font-heavy tabular-nums leading-none text-artbar-navy md:text-xl">
                     <span className="text-artbar-navy">{activeIndex + 1}</span>
@@ -848,8 +849,8 @@ export const Home: React.FC = () => {
       <section className="py-24 md:py-48 bg-white">
         <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
-             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">{mediaCoverageLabel}</span>
-             <h2 className="text-4xl md:text-7xl font-heading font-heavy text-artbar-navy tracking-tight">{asSeenInHeading}</h2>
+             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{mediaCoverageLabel}</JpText></span>
+             <h2 className="text-4xl md:text-7xl font-heading font-heavy text-artbar-navy tracking-tight"><JpText>{asSeenInHeading}</JpText></h2>
           </div>
           
           <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-10 reveal-stagger ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
@@ -882,7 +883,7 @@ export const Home: React.FC = () => {
                                  onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
                                />
                             ) : (
-                               <span className="text-[10px] font-bold text-artbar-navy uppercase tracking-widest">{item.outlet}</span>
+                               <span className="text-[10px] font-bold text-artbar-navy uppercase tracking-widest"><JpText>{item.outlet}</JpText></span>
                             )}
                          </div>
                          <span className="text-[10px] md:text-[11px] font-mono text-artbar-taupe font-bold tracking-widest block border-t border-gray-100 pt-2">
@@ -911,12 +912,12 @@ export const Home: React.FC = () => {
            
            <div className="relative z-10 px-8 py-12 md:p-32 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 text-center md:text-left">
               <div className="max-w-2xl">
-                 <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-4 block">{site.home.cta.badge}</span>
+                 <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-4 block"><JpText>{site.home.cta.badge}</JpText></span>
                  <h2 className="text-3xl md:text-7xl font-heading font-heavy text-white mb-6 leading-tight">
-                   {site.home.cta.title}
+                   <JpText>{site.home.cta.title}</JpText>
                  </h2>
                  <p className="text-base md:text-xl text-artbar-light-taupe/90 font-light max-w-lg leading-relaxed">
-                   {site.home.cta.subtitle}
+                   <JpText>{site.home.cta.subtitle}</JpText>
                  </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full md:w-auto">
@@ -926,7 +927,7 @@ export const Home: React.FC = () => {
                    onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                    className="w-full min-w-0 shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
-                   {site.home.cta.btnBook}
+                   <JpText>{site.home.cta.btnBook}</JpText>
                  </Button>
                  <Button
                    onClick={() => router.push('/contact')}
@@ -934,7 +935,7 @@ export const Home: React.FC = () => {
                    size="cta"
                    className="w-full sm:w-auto sm:min-w-[12.5rem]"
                  >
-                   {site.home.cta.btnContact}
+                   <JpText>{site.home.cta.btnContact}</JpText>
                  </Button>
               </div>
            </div>

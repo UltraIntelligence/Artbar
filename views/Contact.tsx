@@ -5,6 +5,7 @@ import { Button } from '../components/ui/Button';
 import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
+import { JpText } from '../components/JpText';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -55,21 +56,21 @@ export const Contact: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-20">
-          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block">{site.contactPage.badge}</span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-8">{site.contactPage.title}</h1>
+          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{site.contactPage.badge}</JpText></span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-8"><JpText>{site.contactPage.title}</JpText></h1>
           <div className="bg-white p-8 rounded-[2rem] max-w-3xl mx-auto shadow-sm">
             <p className="text-artbar-gray leading-relaxed mb-4">
-              {site.contactPage.notice1}
+              <JpText>{site.contactPage.notice1}</JpText>
             </p>
             <p className="text-artbar-navy leading-relaxed font-medium">
-              {site.contactPage.notice2}
+              <JpText>{site.contactPage.notice2}</JpText>
             </p>
           </div>
         </div>
 
         {/* FAQ Section */}
         <div className="mb-32">
-          <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-10 px-4 border-l-4 border-artbar-taupe">{site.contactPage.faqTitle}</h2>
+          <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-10 px-4 border-l-4 border-artbar-taupe"><JpText>{site.contactPage.faqTitle}</JpText></h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
               <div 
@@ -81,7 +82,7 @@ export const Contact: React.FC = () => {
                   className="w-full px-8 py-6 flex justify-between items-center text-left focus:outline-none"
                 >
                   <span className={`font-heading font-bold text-lg pr-8 ${openIndex === index ? 'text-artbar-navy' : 'text-artbar-navy/70'}`}>
-                    {faq.question}
+                    <JpText>{faq.question}</JpText>
                   </span>
                   <span className="flex-shrink-0 text-artbar-taupe">
                     {openIndex === index ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
@@ -93,7 +94,7 @@ export const Contact: React.FC = () => {
                   }`}
                 >
                   <p className="text-artbar-gray leading-relaxed">
-                    {faq.answer}
+                    <JpText>{faq.answer}</JpText>
                   </p>
                 </div>
               </div>
@@ -106,12 +107,12 @@ export const Contact: React.FC = () => {
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 
           <div className="bg-white border border-white shadow-xl rounded-[3rem] p-6 md:p-16 relative z-10">
-            <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-8 text-center">{site.contactPage.formTitle}</h2>
+            <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-8 text-center"><JpText>{site.contactPage.formTitle}</JpText></h2>
             {status === 'ok' && (
-              <p className="text-center text-artbar-navy mb-6 text-base">{copy.sent}</p>
+              <p className="text-center text-artbar-navy mb-6 text-base"><JpText>{copy.sent}</JpText></p>
             )}
             {status === 'err' && (
-              <p className="text-center text-red-700 mb-6 text-base">{copy.failed}</p>
+              <p className="text-center text-red-700 mb-6 text-base"><JpText>{copy.failed}</JpText></p>
             )}
             <form
               className="space-y-8"
@@ -122,7 +123,7 @@ export const Contact: React.FC = () => {
             >
               <div>
                 <label htmlFor="subject" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  {copy.subjectLabel}
+                  <JpText>{copy.subjectLabel}</JpText>
                 </label>
                 <select 
                   id="subject" 
@@ -140,7 +141,7 @@ export const Contact: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
                   <label htmlFor="name" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                    {copy.nameLabel}
+                    <JpText>{copy.nameLabel}</JpText>
                   </label>
                   <input 
                     type="text" 
@@ -152,7 +153,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                    {copy.emailLabel}
+                    <JpText>{copy.emailLabel}</JpText>
                   </label>
                   <input 
                     type="email" 
@@ -166,7 +167,7 @@ export const Contact: React.FC = () => {
 
               <div>
                 <label htmlFor="phone" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  {copy.phoneLabel}
+                  <JpText>{copy.phoneLabel}</JpText>
                 </label>
                 <input 
                   type="tel" 
@@ -179,7 +180,7 @@ export const Contact: React.FC = () => {
 
               <div>
                 <label htmlFor="message" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
-                  {copy.messageLabel}
+                  <JpText>{copy.messageLabel}</JpText>
                 </label>
                 <textarea 
                   id="message" 
@@ -197,7 +198,7 @@ export const Contact: React.FC = () => {
                   className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem]"
                 >
                   <span className="flex items-center gap-2">
-                    {copy.send} <Send size={18} />
+                    <JpText>{copy.send}</JpText> <Send size={18} />
                   </span>
                 </Button>
               </div>

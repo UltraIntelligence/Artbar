@@ -4,6 +4,7 @@ import React from 'react';
 import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './Logo';
+import { JpText } from './JpText';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
 
@@ -25,7 +26,7 @@ export const Footer: React.FC = () => {
                 <Logo variant="light" />
               </div>
               <p className="text-artbar-light-taupe/80 leading-relaxed mb-10 max-w-md font-light">
-                {site.footer.tagline}
+                <JpText>{site.footer.tagline}</JpText>
               </p>
               <div className="flex space-x-4">
                 <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Instagram' : jpCopy.ui.footer.instagramLabel}>
@@ -42,7 +43,7 @@ export const Footer: React.FC = () => {
 
             <div className="md:col-span-3">
               <h4 className="font-heading font-bold text-white text-lg mb-6 flex items-center gap-2">
-                <MapPin size={18} className="text-artbar-taupe" /> {site.footer.locations}
+                <MapPin size={18} className="text-artbar-taupe" /> <JpText>{site.footer.locations}</JpText>
               </h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 {jpCopy.locationShortLabels.map((loc) => (
@@ -59,7 +60,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <div className="md:col-span-2">
-              <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.explore}</h4>
+              <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.explore}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 <li><a href={ARTBAR_BOOKING_URL} className={footerLinkClass}>{site.nav.schedule}</a></li>
                 <li><Link href="/team-building" className={footerLinkClass}>{site.nav.teamBuilding}</Link></li>
@@ -70,7 +71,7 @@ export const Footer: React.FC = () => {
             </div>
 
              <div className="md:col-span-2">
-              <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.support}</h4>
+              <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.support}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 <li><Link href="/contact" className={footerLinkClass}>{site.nav.contact}</Link></li>
                 <li><Link href="/contact" className={footerLinkClass}>{lang === 'en' ? 'FAQ' : jpCopy.ui.footer.faq}</Link></li>
@@ -85,7 +86,7 @@ export const Footer: React.FC = () => {
               <Link href="/privacy-policy" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
               <Link href="/terms-of-service" className={footerMetaLinkClass}>{site.footer.terms}</Link>
               <Link href="/specified-commercial-transactions" className={footerMetaLinkClass}>{site.footer.commercial}</Link>
-              <span className="inline-flex min-h-[44px] items-center px-1">{site.footer.company}</span>
+              <span className="inline-flex min-h-[44px] items-center px-1"><JpText>{site.footer.company}</JpText></span>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
 
 export const Instructors: React.FC = () => {
@@ -11,9 +12,9 @@ export const Instructors: React.FC = () => {
     <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="text-center mb-20">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6">{site.instructorsPage.title}</h1>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{site.instructorsPage.title}</JpText></h1>
           <p className="text-lg md:text-xl text-artbar-gray max-w-3xl mx-auto">
-            {site.instructorsPage.subtitle}
+            <JpText>{site.instructorsPage.subtitle}</JpText>
           </p>
         </div>
 
@@ -51,13 +52,13 @@ export const Instructors: React.FC = () => {
 
                  <div>
                     <div className="flex justify-between items-baseline mb-2 flex-wrap gap-2">
-                       <h3 className="text-2xl font-heading font-bold text-artbar-navy">{instructor.name}</h3>
+                       <h3 className="text-2xl font-heading font-bold text-artbar-navy"><JpText>{instructor.name}</JpText></h3>
                     </div>
                     <p className="text-sm font-bold text-artbar-taupe uppercase tracking-wider mb-4">
-                        {lang === 'en' ? instructor.roleEn : instructor.roleJp}
+                        <JpText>{lang === 'en' ? instructor.roleEn : instructor.roleJp}</JpText>
                     </p>
                     <p className="text-artbar-gray leading-relaxed text-base md:text-lg">
-                      {lang === 'en' ? instructor.descEn : instructor.descJp}
+                      <JpText>{lang === 'en' ? instructor.descEn : instructor.descJp}</JpText>
                     </p>
                  </div>
               </div>

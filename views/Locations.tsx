@@ -4,9 +4,10 @@ import React from 'react';
 import Image from 'next/image';
 import { CalendarDays, Navigation } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { ARTBAR_BOOKING_URL } from '../constants';
+import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
@@ -20,12 +21,12 @@ export const Locations: React.FC = () => {
         
         {/* Page Header */}
         <div className="text-center mb-12 md:mb-20">
-          <h1 className="text-3xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-4">{site.nav.locations}</h1>
+          <h1 className="text-3xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{site.nav.locations}</JpText></h1>
           <p className="text-artbar-gray text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            {lang === 'en' 
+            <JpText>{lang === 'en'
               ? "Find your nearest studio. Each location offers a unique atmosphere for your creative journey."
               : jpCopy.ui.locations.intro
-            }
+            }</JpText>
           </p>
         </div>
 
@@ -44,10 +45,10 @@ export const Locations: React.FC = () => {
            <div className="bg-white border md:border-2 border-artbar-navy p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] max-w-4xl mx-auto text-center md:text-left">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                  <div>
-                    <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-4">{site.locationsPage.operating.title}</h3>
-                    <p className="font-bold text-base md:text-lg mb-1">{site.locationsPage.operating.name}</p>
-                    <p className="text-xs md:text-sm opacity-70 mb-1">{site.locationsPage.operating.address}</p>
-                    <p className="text-xs md:text-sm opacity-70">{site.locationsPage.operating.ceo}</p>
+                    <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-4"><JpText>{site.locationsPage.operating.title}</JpText></h3>
+                    <p className="font-bold text-base md:text-lg mb-1"><JpText>{site.locationsPage.operating.name}</JpText></p>
+                    <p className="text-xs md:text-sm opacity-70 mb-1"><JpText>{site.locationsPage.operating.address}</JpText></p>
+                    <p className="text-xs md:text-sm opacity-70"><JpText>{site.locationsPage.operating.ceo}</JpText></p>
                  </div>
                  <div className="flex flex-col gap-3 items-center md:items-end w-full md:w-auto">
                     <Button
@@ -55,14 +56,14 @@ export const Locations: React.FC = () => {
                       size="cta"
                       className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
                     >
-                       {site.locationsPage.operating.btnHiring}
+                       <JpText>{site.locationsPage.operating.btnHiring}</JpText>
                     </Button>
                     <Button
                       variant="outline"
                       size="cta"
                       className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
                     >
-                       {site.locationsPage.operating.btnFranchise}
+                       <JpText>{site.locationsPage.operating.btnFranchise}</JpText>
                     </Button>
                  </div>
               </div>
@@ -85,6 +86,8 @@ function LocationCard({
 }) {
   const reveal = useScrollReveal();
   const isFranchise = loc.isFranchise === true;
+  const directionsUrl = loc.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`;
+  const bookingUrl = loc.id.startsWith('osaka_') ? ARTBAR_OSAKA_URL : ARTBAR_BOOKING_URL;
   return (
             <div
               ref={reveal.ref}
@@ -105,10 +108,10 @@ function LocationCard({
               <div className="lg:w-3/5 p-6 md:p-12 flex flex-col">
                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                     <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy leading-tight">
-                      {lang === 'en' ? loc.nameEn : loc.nameJp}
+                      <JpText>{lang === 'en' ? loc.nameEn : loc.nameJp}</JpText>
                       {isFranchise && (
                         <span className="ml-2 text-artbar-taupe">
-                          {lang === 'en' ? '(Franchise)' : '（フランチャイズ）'}
+                          <JpText>{lang === 'en' ? '(Franchise)' : '（フランチャイズ）'}</JpText>
                         </span>
                       )}
                     </h2>
@@ -117,23 +120,23 @@ function LocationCard({
                  {/* Action Bar */}
                  <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
                     <a 
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`}
+                      href={directionsUrl}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
                     >
-                      <Navigation size={12} className="md:w-3.5 md:h-3.5" /> {lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}
+                      <Navigation size={12} className="md:w-3.5 md:h-3.5" /> <JpText>{lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}</JpText>
                     </a>
 
                     {isFranchise && (
                       <a
-                        href={ARTBAR_BOOKING_URL}
+                        href={bookingUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
                       >
                         <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
-                        {lang === 'en' ? 'Book Now' : '予約する'}
+                        <JpText>{lang === 'en' ? 'Book Now' : '予約する'}</JpText>
                       </a>
                     )}
                  </div>
@@ -141,15 +144,15 @@ function LocationCard({
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">{lang === 'en' ? 'Location Address' : jpCopy.ui.locations.locationAddressLabel}</span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{lang === 'en' ? 'Location Address' : jpCopy.ui.locations.locationAddressLabel}</JpText></span>
                         <p className="font-medium text-artbar-navy leading-relaxed text-sm">
-                           {lang === 'en' ? loc.addressEn : loc.addressJp}
+                           <JpText>{lang === 'en' ? loc.addressEn : loc.addressJp}</JpText>
                         </p>
                     </div>
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2">{lang === 'en' ? 'Transit Access' : jpCopy.ui.locations.transitAccessLabel}</span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{lang === 'en' ? 'Transit Access' : jpCopy.ui.locations.transitAccessLabel}</JpText></span>
                         <p className="font-medium text-artbar-gray leading-relaxed text-sm whitespace-pre-line">
-                           {lang === 'en' ? loc.accessEn : loc.accessJp}
+                           <JpText>{lang === 'en' ? loc.accessEn : loc.accessJp}</JpText>
                         </p>
                     </div>
                  </div>
