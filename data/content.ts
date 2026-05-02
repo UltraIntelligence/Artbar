@@ -478,7 +478,7 @@ export const defaultContent: ContentData = {
     },
     instructorsPage: {
       title: "インストラクター紹介",
-      subtitle: "才能豊かなバイリンガルのアーティストたちが、あなたの創作をサポートします。"
+      subtitle: "才能豊かなアーティストたちが、あなたの創作をサポートします。"
     },
     teamBuilding: {
       hero: {
@@ -529,7 +529,7 @@ export const defaultContent: ContentData = {
         },
         catering: {
           title: "ケータリング・オプション",
-          desc: "お食事を充実させたい場合は、DEAN & DELUCA等の提携ケータリング手配が可能です。また、お食事の持ち込みも自由です。",
+          desc: "追加のお食事が必要な場合は、ご希望に合わせたケータリングをご案内することも、お持ち込みいただくことも可能です。",
           items: [],
           cta: ""
         },
