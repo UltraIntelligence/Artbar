@@ -17,6 +17,20 @@ import type {
 } from '@/lib/copy/types';
 import type { ContentData } from '@/types';
 
+type JapaneseThemeItem = JapaneseCopyPayload['site']['home']['themes']['items'][number];
+
+function getRawJapaneseThemeItems(payload: unknown): JapaneseThemeItem[] | null {
+  if (typeof payload !== 'object' || payload === null) return null;
+  const site = (payload as { site?: unknown }).site;
+  if (typeof site !== 'object' || site === null) return null;
+  const home = (site as { home?: unknown }).home;
+  if (typeof home !== 'object' || home === null) return null;
+  const themes = (home as { themes?: unknown }).themes;
+  if (typeof themes !== 'object' || themes === null) return null;
+  const items = (themes as { items?: unknown }).items;
+  return Array.isArray(items) ? (items as JapaneseThemeItem[]) : null;
+}
+
 function shouldMigrateJapaneseThemeItems(
   items: JapaneseCopyPayload['site']['home']['themes']['items'],
 ): boolean {
@@ -27,6 +41,37 @@ function shouldMigrateJapaneseThemeItems(
   return items.every((item, index) => {
     const legacy = POPULAR_THEMES[index];
     return item.title === legacy.title && item.desc === legacy.desc;
+  });
+}
+
+function normalizeJapaneseThemeItems(
+  items: JapaneseCopyPayload['site']['home']['themes']['items'],
+  rawItems: JapaneseThemeItem[] | null,
+): JapaneseCopyPayload['site']['home']['themes']['items'] {
+  const rawItemsBySlug = new Map(
+    (rawItems ?? [])
+      .filter((item) => typeof item.slug === 'string')
+      .map((item) => [item.slug as string, item]),
+  );
+  const itemsBySlug = new Map(
+    items
+      .filter((item) => typeof item.slug === 'string')
+      .map((item) => [item.slug as string, item]),
+  );
+
+  return POPULAR_THEMES_JP.map((theme, index) => {
+    const candidate =
+      rawItemsBySlug.get(theme.slug) ??
+      itemsBySlug.get(theme.slug) ??
+      (items.length === POPULAR_THEMES_JP.length ? items[index] : undefined);
+
+    return {
+      ...theme,
+      ...(candidate ?? {}),
+      image: theme.image,
+      slug: theme.slug,
+      bookingUrl: theme.bookingUrl,
+    };
   });
 }
 
@@ -42,6 +87,7 @@ function shouldMigrateJapaneseFaqs(faqs: JapaneseCopyPayload['faqs']): boolean {
 }
 
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
+  const rawThemeItems = getRawJapaneseThemeItems(payload);
   const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
 
   // Older Japanese payloads stored the home theme cards from the English shared list.
@@ -52,13 +98,10 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
 
   // Theme card slugs are hidden routing IDs. Keep Momo's visible copy, but prevent
   // edited or older payloads from sending customers to the wrong theme page.
-  if (normalized.site.home.themes.items.length === POPULAR_THEMES_JP.length) {
-    normalized.site.home.themes.items = normalized.site.home.themes.items.map((item, index) => ({
-      ...item,
-      slug: POPULAR_THEMES_JP[index].slug,
-      bookingUrl: POPULAR_THEMES_JP[index].bookingUrl,
-    }));
-  }
+  normalized.site.home.themes.items = normalizeJapaneseThemeItems(
+    normalized.site.home.themes.items,
+    rawThemeItems,
+  );
 
   // Older Japanese payloads seeded FAQ entries from the English shared FAQ list.
   if (shouldMigrateJapaneseFaqs(normalized.faqs)) {
