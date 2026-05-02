@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
+import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
 import { HERO_BLUR_DATA_URL, PRIVATE_PARTY_INQUIRY_URL } from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -42,13 +43,13 @@ export const PrivateParties: React.FC = () => {
         </div>
 
         <div className="text-center max-w-4xl mx-auto mb-20">
-          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-6 block">{privateParties.hero.badge}</span>
+          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-6 block"><JpText>{privateParties.hero.badge}</JpText></span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-heavy text-artbar-navy mb-8 leading-tight">
-            <span className="block">{privateParties.hero.title}</span> 
-            <span className="text-artbar-taupe block">{privateParties.hero.titleHighlight}</span>
+            <span className="block"><JpText>{privateParties.hero.title}</JpText></span>
+            <span className="text-artbar-taupe block"><JpText>{privateParties.hero.titleHighlight}</JpText></span>
           </h1>
           <p className="text-lg md:text-2xl text-artbar-gray leading-relaxed font-light">
-            {privateParties.hero.subtitle}
+            <JpText>{privateParties.hero.subtitle}</JpText>
           </p>
         </div>
 
@@ -68,7 +69,7 @@ export const PrivateParties: React.FC = () => {
               <div className="absolute inset-0 bg-artbar-navy/20 group-hover:bg-artbar-navy/40 transition-colors"></div>
               <div className="absolute bottom-6 left-4 right-4 md:left-6 md:right-6">
                 <div className="bg-white/90 backdrop-blur-sm py-2 md:py-3 px-4 md:px-6 rounded-xl text-center shadow-lg">
-                  <span className="font-heading font-bold text-artbar-navy text-sm md:text-base">{item.title}</span>
+                  <span className="font-heading font-bold text-artbar-navy text-sm md:text-base"><JpText>{item.title}</JpText></span>
                 </div>
               </div>
             </div>
@@ -85,15 +86,15 @@ export const PrivateParties: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                       <div>
-                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block">{standardLabel}</span>
-                          <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2">{privateParties.pricing.adult.title}</h3>
-                          <p className="text-artbar-gray font-medium">{privateParties.pricing.adult.subtitle}</p>
+                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block"><JpText>{standardLabel}</JpText></span>
+                          <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2"><JpText>{privateParties.pricing.adult.title}</JpText></h3>
+                          <p className="text-artbar-gray font-medium"><JpText>{privateParties.pricing.adult.subtitle}</JpText></p>
                       </div>
                   </div>
-                  
+
                   <div className="flex items-baseline gap-2 mb-10">
                       <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.adult.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg">{priceSuffix}</span>
+                      <span className="text-artbar-gray text-base md:text-lg"><JpText>{priceSuffix}</JpText></span>
                   </div>
 
                   <div className="space-y-6 mb-12">
@@ -101,21 +102,21 @@ export const PrivateParties: React.FC = () => {
                         <div key={i} className="flex gap-4">
                             <div className="w-6 h-6 rounded-full bg-artbar-bg flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
-                            <span className="font-heading font-bold text-artbar-navy block">{item.title}</span>
-                            <span className="text-base md:text-lg text-artbar-gray">{item.desc}</span>
+                            <span className="font-heading font-bold text-artbar-navy block"><JpText>{item.title}</JpText></span>
+                            <span className="text-base md:text-lg text-artbar-gray"><JpText>{item.desc}</JpText></span>
                             </div>
                         </div>
                       ))}
                   </div>
-                  
+
                   <div className="bg-artbar-bg p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-artbar-gray text-sm">{privateParties.pricing.common.venueFeeLabel}</span>
+                        <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.venueFeeLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.venueFeePrice}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-artbar-gray text-sm">{privateParties.pricing.common.minGuestsLabel}</span>
-                        <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.minGuests}</span>
+                        <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.minGuestsLabel}</JpText></span>
+                        <span className="font-heading font-bold text-artbar-navy"><JpText>{privateParties.pricing.common.minGuests}</JpText></span>
                       </div>
                   </div>
 
@@ -125,7 +126,7 @@ export const PrivateParties: React.FC = () => {
 	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
 	                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
                   >
-                    {privateParties.pricing.adult.cta}
+                    <JpText>{privateParties.pricing.adult.cta}</JpText>
                   </Button>
                 </div>
             </div>
@@ -139,15 +140,15 @@ export const PrivateParties: React.FC = () => {
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-8">
                        <div>
-                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block">{standardLabel}</span>
-                          <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2">{privateParties.pricing.kids.title}</h3>
-                          <p className="text-artbar-gray font-medium">{privateParties.pricing.kids.subtitle}</p>
+                          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-2 block"><JpText>{standardLabel}</JpText></span>
+                          <h3 className="text-3xl md:text-4xl font-heading font-heavy text-artbar-navy mb-2"><JpText>{privateParties.pricing.kids.title}</JpText></h3>
+                          <p className="text-artbar-gray font-medium"><JpText>{privateParties.pricing.kids.subtitle}</JpText></p>
                       </div>
                   </div>
-                  
+
                   <div className="flex items-baseline gap-2 mb-10">
                       <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.kids.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg">{priceSuffix}</span>
+                      <span className="text-artbar-gray text-base md:text-lg"><JpText>{priceSuffix}</JpText></span>
                   </div>
 
                   <div className="space-y-6 mb-12">
@@ -155,8 +156,8 @@ export const PrivateParties: React.FC = () => {
                         <div key={i} className="flex gap-4">
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
-                            <span className="font-heading font-bold text-artbar-navy block">{item.title}</span>
-                            <span className="text-base md:text-lg text-artbar-gray">{item.desc}</span>
+                            <span className="font-heading font-bold text-artbar-navy block"><JpText>{item.title}</JpText></span>
+                            <span className="text-base md:text-lg text-artbar-gray"><JpText>{item.desc}</JpText></span>
                             </div>
                         </div>
                       ))}
@@ -164,12 +165,12 @@ export const PrivateParties: React.FC = () => {
 
                   <div className="bg-white p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
                       <div className="flex justify-between items-center mb-2">
-                        <span className="text-artbar-gray text-sm">{privateParties.pricing.common.venueFeeLabel}</span>
+                        <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.venueFeeLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.venueFeePrice}</span>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span className="text-artbar-gray text-sm">{privateParties.pricing.common.minGuestsLabel}</span>
-                        <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.minGuests}</span>
+                        <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.minGuestsLabel}</JpText></span>
+                        <span className="font-heading font-bold text-artbar-navy"><JpText>{privateParties.pricing.common.minGuests}</JpText></span>
                       </div>
                   </div>
 
@@ -179,24 +180,24 @@ export const PrivateParties: React.FC = () => {
 	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
 	                    className="w-full rounded-2xl border-2 border-artbar-navy bg-transparent text-base hover:bg-artbar-navy hover:text-white"
                   >
-                    {privateParties.pricing.kids.cta}
+                    <JpText>{privateParties.pricing.kids.cta}</JpText>
                   </Button>
                 </div>
             </div>
 
             <div className="bg-white/70 border-2 border-artbar-taupe p-8 md:p-10 rounded-[2.5rem] shadow-sm md:col-span-2 xl:col-span-1 xl:self-start">
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-8 leading-tight">
-                {specialtyInquiry.title}
+                <JpText>{specialtyInquiry.title}</JpText>
               </h3>
               <ul className="space-y-3 mb-10">
                 {specialtyInquiry.items.map((item) => (
                   <li key={item} className="text-lg font-heading font-bold text-artbar-navy leading-snug">
-                    {item}
+                    <JpText>{item}</JpText>
                   </li>
                 ))}
               </ul>
               <p className="text-base md:text-lg text-artbar-gray leading-relaxed mb-8">
-                {specialtyInquiry.note}
+                <JpText>{specialtyInquiry.note}</JpText>
               </p>
               <Button
 	                variant="taupe"
@@ -204,7 +205,7 @@ export const PrivateParties: React.FC = () => {
 	                onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
 	                className="w-full rounded-2xl text-base"
               >
-                {specialtyInquiry.cta}
+                <JpText>{specialtyInquiry.cta}</JpText>
               </Button>
             </div>
         </div>
@@ -212,7 +213,7 @@ export const PrivateParties: React.FC = () => {
         <div ref={capacityReveal.ref} className={`reveal mb-32 ${capacityReveal.isVisible ? 'visible' : ''}`}>
           <div className="flex items-center gap-4 mb-12">
              <div className="h-px bg-artbar-light-taupe flex-grow"></div>
-             <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy text-center px-4">{privateParties.capacity.title}</h2>
+             <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy text-center px-4"><JpText>{privateParties.capacity.title}</JpText></h2>
              <div className="h-px bg-artbar-light-taupe flex-grow"></div>
           </div>
           
@@ -220,9 +221,9 @@ export const PrivateParties: React.FC = () => {
              {jpCopy.privatePartyCapacityRows.map((loc, i) => (
                <div key={i} className={`p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
                   <span className="text-3xl md:text-4xl font-heading font-bold mb-2">{loc.cap}</span>
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4">{maxGuestsLabel}</span>
-                  <h4 className="font-bold text-base md:text-lg leading-tight">{loc.name[lang]}</h4>
-                  <span className="text-sm md:text-base mt-2 opacity-80">{loc.desc[lang]}</span>
+                  <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4"><JpText>{maxGuestsLabel}</JpText></span>
+                  <h4 className="font-bold text-base md:text-lg leading-tight"><JpText>{loc.name[lang]}</JpText></h4>
+                  <span className="text-sm md:text-base mt-2 opacity-80"><JpText>{loc.desc[lang]}</JpText></span>
                </div>
              ))}
           </div>
@@ -234,10 +235,10 @@ export const PrivateParties: React.FC = () => {
               {/* Timeline */}
               <div>
 	                 <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-8 flex items-center gap-3">
-	                    <Clock className="text-artbar-taupe" /> {privateParties.timeline.title}
+	                    <Clock className="text-artbar-taupe" /> <JpText>{privateParties.timeline.title}</JpText>
 	                 </h3>
                    <p className="mb-5 text-sm md:text-base font-bold text-artbar-taupe">
-                     {privateParties.timeline.note}
+                     <JpText>{privateParties.timeline.note}</JpText>
                    </p>
 	                 <div className="space-y-8 relative pl-4">
                     <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-artbar-bg"></div>
@@ -245,9 +246,9 @@ export const PrivateParties: React.FC = () => {
                        <div key={i} className="relative flex gap-6 items-start">
                           <div className="w-6 h-6 rounded-full bg-artbar-taupe border-4 border-white shadow-sm flex-shrink-0 relative z-10"></div>
                           <div>
-                             <span className="text-xs font-bold text-artbar-gray bg-artbar-bg px-2 py-1 rounded mb-1 inline-block">{step.time}</span>
-                             <h4 className="font-bold text-artbar-navy">{step.title}</h4>
-                             <p className="text-base md:text-lg text-artbar-gray">{step.desc}</p>
+                             <span className="text-xs font-bold text-artbar-gray bg-artbar-bg px-2 py-1 rounded mb-1 inline-block"><JpText>{step.time}</JpText></span>
+                             <h4 className="font-bold text-artbar-navy"><JpText>{step.title}</JpText></h4>
+                             <p className="text-base md:text-lg text-artbar-gray"><JpText>{step.desc}</JpText></p>
                           </div>
                        </div>
                     ))}
@@ -257,16 +258,16 @@ export const PrivateParties: React.FC = () => {
               {/* Catering */}
               <div className="bg-artbar-bg rounded-[2.5rem] p-8 md:p-10">
                   <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-6 flex items-center gap-3">
-                    <Utensils className="text-artbar-taupe" /> {privateParties.catering.title}
+                    <Utensils className="text-artbar-taupe" /> <JpText>{privateParties.catering.title}</JpText>
                   </h3>
                   <p className="text-artbar-navy leading-relaxed mb-6">
-                    {privateParties.catering.desc}
+                    <JpText>{privateParties.catering.desc}</JpText>
                   </p>
                   <ul className="space-y-4 mb-8">
                      {privateParties.catering.items.map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-base text-artbar-gray">
                             <Sparkles size={16} className="text-artbar-taupe mt-1 flex-shrink-0" />
-                            <span>{item}</span>
+                            <span><JpText>{item}</JpText></span>
                         </li>
                      ))}
                   </ul>
@@ -276,13 +277,13 @@ export const PrivateParties: React.FC = () => {
 	                      onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
 	                      className="w-full bg-white border-transparent text-artbar-navy hover:bg-artbar-taupe hover:text-white"
                     >
-	                     {privateParties.catering.cta}
+	                     <JpText>{privateParties.catering.cta}</JpText>
 	                  </Button>
                     <ul className="mt-8 space-y-3">
                       {privateParties.catering.notes.map((note) => (
                         <li key={note} className="flex items-start gap-3 text-sm md:text-base font-bold text-artbar-taupe">
                           <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-artbar-taupe flex-shrink-0" />
-                          <span>{note}</span>
+                          <span><JpText>{note}</JpText></span>
                         </li>
                       ))}
                     </ul>

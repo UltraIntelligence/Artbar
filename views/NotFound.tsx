@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '../components/ui/Button';
+import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
 
 export const NotFound: React.FC = () => {
@@ -39,11 +40,11 @@ export const NotFound: React.FC = () => {
         <h1 className="text-[8rem] md:text-[12rem] font-heading font-heavy text-artbar-taupe mb-2 select-none leading-none opacity-90">
           404
         </h1>
-        <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy mb-6">{copy.title}</h2>
-        <p className="text-artbar-gray text-lg mb-10 max-w-md mx-auto leading-relaxed">{copy.body}</p>
+        <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy mb-6"><JpText>{copy.title}</JpText></h2>
+        <p className="text-artbar-gray text-lg mb-10 max-w-md mx-auto leading-relaxed"><JpText>{copy.body}</JpText></p>
         <Link href="/">
           <Button variant="primary" size="cta" className="shadow-lg hover:bg-artbar-taupe">
-            {copy.cta}
+            <JpText>{copy.cta}</JpText>
           </Button>
         </Link>
       </div>

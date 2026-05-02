@@ -344,6 +344,7 @@ html:lang(ja) label,
 html:lang(ja) li {
   word-break: keep-all;
   overflow-wrap: anywhere;
+  line-break: strict;
   white-space: pre-line;
 }
 

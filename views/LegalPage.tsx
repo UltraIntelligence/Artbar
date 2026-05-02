@@ -1,4 +1,5 @@
 import type { LegalPageContent } from '@/data/legal-content';
+import { JpText } from '../components/JpText';
 
 type LegalPageProps = {
   page: LegalPageContent;
@@ -20,9 +21,9 @@ export function LegalPage({ page }: LegalPageProps) {
             Artbar Tokyo
           </span>
           <h1 className="font-heading text-4xl font-heavy text-artbar-navy md:text-6xl">
-            {primarySection?.eyebrow ?? page.title}
+            <JpText>{primarySection?.eyebrow ?? page.title}</JpText>
           </h1>
-          <p className="mt-4 text-lg text-artbar-gray">{page.title}</p>
+          <p className="mt-4 text-lg text-artbar-gray"><JpText>{page.title}</JpText></p>
           {page.updated ? (
             <p className="mt-5 text-sm text-artbar-gray">発効日 / Effective date: {page.updated}</p>
           ) : null}
@@ -38,19 +39,19 @@ export function LegalPage({ page }: LegalPageProps) {
               <div className="mb-8 flex flex-col gap-3 border-b border-artbar-navy/10 pb-6 md:flex-row md:items-end md:justify-between">
                 <div>
                   <span className="mb-2 block font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
-                    {section.eyebrow}
+                    <JpText>{section.eyebrow}</JpText>
                   </span>
                   <h2 className="font-heading text-3xl font-bold text-artbar-navy md:text-4xl">
-                    {section.title}
+                    <JpText>{section.title}</JpText>
                   </h2>
                 </div>
                 <span className="w-fit rounded-full bg-artbar-bg px-4 py-2 text-sm font-medium text-artbar-navy">
-                  {section.language}
+                  <JpText>{section.language}</JpText>
                 </span>
               </div>
 
               {section.intro ? (
-                <p className="mb-8 text-base leading-8 text-artbar-navy md:text-lg">{section.intro}</p>
+                <p className="mb-8 text-base leading-8 text-artbar-navy md:text-lg"><JpText>{section.intro}</JpText></p>
               ) : null}
 
               <div className="space-y-8">
@@ -58,13 +59,13 @@ export function LegalPage({ page }: LegalPageProps) {
                   <div key={`${section.language}-${block.heading ?? 'fields'}-${index}`}>
                     {block.heading ? (
                       <h3 className="mb-3 font-heading text-xl font-bold text-artbar-navy">
-                        {block.heading}
+                        <JpText>{block.heading}</JpText>
                       </h3>
                     ) : null}
 
                     {block.body?.map((paragraph) => (
                       <p key={paragraph} className="mb-3 text-base leading-8 text-artbar-gray">
-                        {paragraph}
+                        <JpText>{paragraph}</JpText>
                       </p>
                     ))}
 
@@ -73,7 +74,7 @@ export function LegalPage({ page }: LegalPageProps) {
                         {block.list.map((item) => (
                           <li key={item} className="flex gap-3">
                             <span className="mt-3 h-1.5 w-1.5 flex-none rounded-full bg-artbar-taupe" />
-                            <span>{item}</span>
+                            <span><JpText>{item}</JpText></span>
                           </li>
                         ))}
                       </ul>
@@ -84,9 +85,9 @@ export function LegalPage({ page }: LegalPageProps) {
                         {block.fields.map((field) => (
                           <div key={field.label} className="grid gap-2 px-5 py-4 md:grid-cols-[240px_1fr] md:gap-6">
                             <dt className="font-heading text-sm font-bold uppercase tracking-wide text-artbar-navy">
-                              {field.label}
+                              <JpText>{field.label}</JpText>
                             </dt>
-                            <dd className="text-base leading-7 text-artbar-gray">{field.value}</dd>
+                            <dd className="text-base leading-7 text-artbar-gray"><JpText>{field.value}</JpText></dd>
                           </div>
                         ))}
                       </dl>

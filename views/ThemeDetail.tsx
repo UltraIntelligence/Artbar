@@ -13,6 +13,7 @@ import {
   resolveThemeContentSlug,
 } from '../data/theme-details';
 import { Button } from '../components/ui/Button';
+import { JpText } from '../components/JpText';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, HERO_BLUR_DATA_URL } from '../constants';
 import { Heart, Lightbulb, Star, Users, Gift, ArrowRight } from 'lucide-react';
@@ -129,13 +130,13 @@ export const ThemeDetail: React.FC = () => {
 
         <div className="relative z-10 text-center px-6 max-w-5xl w-full">
           <span className="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-xs md:text-sm mb-6 md:mb-8 uppercase tracking-widest">
-            {localizedTheme.heroBadge}
+            <JpText>{localizedTheme.heroBadge}</JpText>
           </span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-heavy mb-6 md:mb-8 leading-tight tracking-tight">
-            {localizedTheme.title}
+            <JpText>{localizedTheme.title}</JpText>
           </h1>
           <p className="text-base sm:text-lg md:text-2xl opacity-90 mb-8 md:mb-12 max-w-3xl mx-auto font-light leading-relaxed">
-            {localizedTheme.heroSub}
+            <JpText>{localizedTheme.heroSub}</JpText>
           </p>
           <div className="flex justify-center items-center w-full px-4 sm:px-0 mb-8">
             <Button
@@ -144,7 +145,7 @@ export const ThemeDetail: React.FC = () => {
               onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
               className="animate-pulse w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
-              {ui.viewSchedule}
+              <JpText>{ui.viewSchedule}</JpText>
               <ArrowRight size={18} className="shrink-0" aria-hidden />
             </Button>
           </div>
@@ -159,10 +160,10 @@ export const ThemeDetail: React.FC = () => {
         >
           <div className="max-w-4xl mx-auto mb-16">
             <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-8 leading-tight">
-              {localizedTheme.introTitle}
+              <JpText>{localizedTheme.introTitle}</JpText>
             </h2>
             <p className="text-artbar-gray text-lg md:text-2xl leading-relaxed font-light">
-              {localizedTheme.introDesc}
+              <JpText>{localizedTheme.introDesc}</JpText>
             </p>
           </div>
 
@@ -176,10 +177,10 @@ export const ThemeDetail: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="font-heading font-bold text-artbar-navy text-xl mb-2 tracking-tight">
-                    {feat.title}
+                    <JpText>{feat.title}</JpText>
                   </h4>
                   <p className="text-artbar-gray text-sm md:text-base leading-relaxed max-w-[240px] mx-auto">
-                    {feat.desc}
+                    <JpText>{feat.desc}</JpText>
                   </p>
                 </div>
               </div>
@@ -196,13 +197,13 @@ export const ThemeDetail: React.FC = () => {
         >
           <div className="text-center mb-16">
             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
-              {ui.inspiration}
+              <JpText>{ui.inspiration}</JpText>
             </span>
             <h2 className="text-4xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4">
-              {ui.examplePaintings}
+              <JpText>{ui.examplePaintings}</JpText>
             </h2>
             <p className="text-artbar-gray text-lg md:text-xl font-light">
-              {ui.exampleBlurb(stripTitleForGallery(localizedTheme.title))}
+              <JpText>{ui.exampleBlurb(stripTitleForGallery(localizedTheme.title))}</JpText>
             </p>
           </div>
 
@@ -222,7 +223,7 @@ export const ThemeDetail: React.FC = () => {
                   <div className="absolute inset-0 bg-artbar-navy/0 group-hover:bg-artbar-navy/20 transition-colors" />
                 </div>
                 <h4 className="text-center font-heading font-bold text-artbar-navy text-sm md:text-base group-hover:text-artbar-taupe transition-colors px-2">
-                  {ex.title}
+                  <JpText>{ex.title}</JpText>
                 </h4>
               </div>
             ))}
@@ -256,7 +257,7 @@ export const ThemeDetail: React.FC = () => {
                     <Star size={14} fill="currentColor" />
                   </div>
                   <span className="text-xs md:text-sm font-bold text-artbar-navy uppercase tracking-widest">
-                    {ui.guestFavorite}
+                    <JpText>{ui.guestFavorite}</JpText>
                   </span>
                 </div>
               </div>
@@ -264,23 +265,23 @@ export const ThemeDetail: React.FC = () => {
             <div className="space-y-8 order-1 lg:order-2">
               <div className="flex flex-col gap-5 md:gap-6">
                 <span className="block w-fit text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase border-b border-artbar-taupe/30 pb-2.5">
-                  {ui.theExperience}
+                  <JpText>{ui.theExperience}</JpText>
                 </span>
                 <h3 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy leading-tight">
-                  {localizedTheme.expectTitle}
+                  <JpText>{localizedTheme.expectTitle}</JpText>
                 </h3>
               </div>
               <p className="text-artbar-gray text-lg md:text-xl leading-relaxed font-light">
-                {localizedTheme.expectDesc}
+                <JpText>{localizedTheme.expectDesc}</JpText>
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div className="flex items-center gap-3 text-artbar-navy font-bold text-sm">
                   <Users size={20} className="text-artbar-taupe" />
-                  <span className="uppercase tracking-widest">{ui.bilingualSessions}</span>
+                  <span className="uppercase tracking-widest"><JpText>{ui.bilingualSessions}</JpText></span>
                 </div>
                 <div className="flex items-center gap-3 text-artbar-navy font-bold text-sm">
                   <Lightbulb size={20} className="text-artbar-taupe" />
-                  <span className="uppercase tracking-widest">{ui.expertGuidance}</span>
+                  <span className="uppercase tracking-widest"><JpText>{ui.expertGuidance}</JpText></span>
                 </div>
               </div>
             </div>
@@ -296,10 +297,10 @@ export const ThemeDetail: React.FC = () => {
         >
           <div className="text-center mb-16">
             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
-              {ui.community}
+              <JpText>{ui.community}</JpText>
             </span>
             <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-4">
-              {localizedTheme.perfectTitle}
+              <JpText>{localizedTheme.perfectTitle}</JpText>
             </h2>
             <div className="h-1 w-24 bg-artbar-taupe mx-auto rounded-full" />
           </div>
@@ -316,7 +317,7 @@ export const ThemeDetail: React.FC = () => {
                   <Heart size={26} />
                 </div>
                 <p className="text-artbar-navy font-heading font-bold leading-relaxed group-hover:text-white transition-colors">
-                  {item}
+                  <JpText>{item}</JpText>
                 </p>
               </div>
             ))}
@@ -333,12 +334,12 @@ export const ThemeDetail: React.FC = () => {
           <div className="bg-artbar-bg rounded-[4rem] p-12 md:p-20 shadow-inner border border-artbar-light-taupe/10">
             <div className="mb-20 text-center max-w-3xl mx-auto">
               <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
-                {ui.bilingualArtClass}
+                <JpText>{ui.bilingualArtClass}</JpText>
               </span>
               <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-6">
-                {ui.whatToExpect}
+                <JpText>{ui.whatToExpect}</JpText>
               </h2>
-              <p className="text-artbar-gray text-lg md:text-xl font-light">{ui.whatToExpectSub}</p>
+              <p className="text-artbar-gray text-lg md:text-xl font-light"><JpText>{ui.whatToExpectSub}</JpText></p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-y-16 gap-x-24">
@@ -348,8 +349,8 @@ export const ThemeDetail: React.FC = () => {
                     <item.icon size={28} />
                   </div>
                   <div>
-                    <h4 className="text-2xl font-heading font-bold text-artbar-navy mb-2">{item.text}</h4>
-                    <p className="text-artbar-gray text-base leading-relaxed font-light">{item.sub}</p>
+                    <h4 className="text-2xl font-heading font-bold text-artbar-navy mb-2"><JpText>{item.text}</JpText></h4>
+                    <p className="text-artbar-gray text-base leading-relaxed font-light"><JpText>{item.sub}</JpText></p>
                   </div>
                 </div>
               ))}
@@ -358,7 +359,7 @@ export const ThemeDetail: React.FC = () => {
             <div className="mt-20 pt-12 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex gap-8">
                 <div className="flex items-center gap-3 text-xs font-bold text-artbar-taupe uppercase tracking-widest">
-                  <Gift size={16} /> {ui.perfectForGifting}
+                  <Gift size={16} /> <JpText>{ui.perfectForGifting}</JpText>
                 </div>
               </div>
             </div>
@@ -372,10 +373,10 @@ export const ThemeDetail: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-artbar-taupe/20 to-transparent" />
           <div className="relative z-10">
             <h2 className="text-3xl md:text-7xl font-heading font-bold text-white mb-6 tracking-tighter">
-              {localizedTheme.ctaTitle}
+              <JpText>{localizedTheme.ctaTitle}</JpText>
             </h2>
             <p className="text-white/80 text-lg md:text-2xl mb-12 font-light max-w-xl mx-auto leading-relaxed">
-              {localizedTheme.ctaSub}
+              <JpText>{localizedTheme.ctaSub}</JpText>
             </p>
             <div className="flex justify-center items-center w-full px-4 sm:px-0">
               <Button
@@ -384,7 +385,7 @@ export const ThemeDetail: React.FC = () => {
                 onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                 className="shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all hover:scale-105 hover:bg-white hover:text-artbar-navy hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] active:scale-95"
               >
-                {ui.viewUpcoming}
+                <JpText>{ui.viewUpcoming}</JpText>
               </Button>
             </div>
           </div>
@@ -397,9 +398,9 @@ export const ThemeDetail: React.FC = () => {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
             <div>
               <h2 className="text-4xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none">
-                {ui.discoverMore}
+                <JpText>{ui.discoverMore}</JpText>
               </h2>
-              <p className="text-artbar-gray text-lg font-light max-w-lg">{ui.discoverSub}</p>
+              <p className="text-artbar-gray text-lg font-light max-w-lg"><JpText>{ui.discoverSub}</JpText></p>
             </div>
             <Button
               onClick={() => router.push('/#popular-themes')}
@@ -407,7 +408,7 @@ export const ThemeDetail: React.FC = () => {
               size="cta"
               className="w-full uppercase tracking-widest text-xs md:w-auto"
             >
-              {ui.allCategories}
+              <JpText>{ui.allCategories}</JpText>
             </Button>
           </div>
 
