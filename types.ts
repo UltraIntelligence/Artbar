@@ -222,6 +222,7 @@ export interface SiteContent {
       badge: string;
       title: string;
       desc: string;
+      packageBadge: string;
       packageTitle: string;
       packageSubtitle: string;
       price: string;
@@ -291,6 +292,8 @@ export interface SiteContent {
       name: string;
       address: string;
       ceo: string;
+      inquiryText: string;
+      inquiryEmail: string;
       btnFranchise: string;
       btnHiring: string;
     };

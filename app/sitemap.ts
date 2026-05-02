@@ -1,4 +1,3 @@
-import { defaultContent } from '@/data/content';
 import type { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://artbar.co.jp';
@@ -15,17 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/privacy-policy`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/terms-of-service`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/specified-commercial-transactions`, priority: 0.3, changeFrequency: 'yearly' },
-    { url: `${BASE_URL}/blog`, priority: 0.8, changeFrequency: 'weekly' },
   ];
-
-  const blogRoutes: MetadataRoute.Sitemap = defaultContent.blog
-    .filter(p => p.published)
-    .map(post => ({
-      url: `${BASE_URL}/blog/${post.slug}`,
-      priority: 0.7,
-      changeFrequency: 'monthly' as const,
-      lastModified: new Date(post.date),
-    }));
 
   const themeRoutes: MetadataRoute.Sitemap = [
     'japan-inspired', 'van-gogh', 'paint-pouring', 'alcohol-ink',
@@ -37,5 +26,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
   }));
 
-  return [...staticRoutes, ...blogRoutes, ...themeRoutes];
+  return [...staticRoutes, ...themeRoutes];
 }

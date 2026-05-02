@@ -292,7 +292,13 @@ export const TeamBuilding: React.FC = () => {
               <div className="bg-white/5 p-8 md:p-10 rounded-[2.5rem] backdrop-blur-sm border border-white/10">
                 <div className="flex flex-col gap-8">
                    <div className="flex justify-between items-end border-b border-white/10 pb-6">
-                      <div><p className="font-heading font-bold text-xl md:text-2xl"><JpText>{site.teamBuilding.pricing.packageTitle}</JpText></p><p className="text-sm text-artbar-light-taupe mt-1"><JpText>{site.teamBuilding.pricing.packageSubtitle}</JpText></p></div>
+                      <div>
+                        <span className="mb-2 inline-flex rounded-sm bg-white px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-artbar-navy">
+                          <JpText>{site.teamBuilding.pricing.packageBadge}</JpText>
+                        </span>
+                        <p className="font-heading font-bold text-xl md:text-2xl"><JpText>{site.teamBuilding.pricing.packageTitle}</JpText></p>
+                        <p className="text-sm text-artbar-light-taupe mt-1"><JpText>{site.teamBuilding.pricing.packageSubtitle}</JpText></p>
+                      </div>
                       <div className="text-right"><p className="text-3xl md:text-4xl font-heading font-bold">{site.teamBuilding.pricing.price}</p><p className="text-xs opacity-60"><JpText>{site.teamBuilding.pricing.priceNote}</JpText></p></div>
                    </div>
                    <div className="space-y-4">

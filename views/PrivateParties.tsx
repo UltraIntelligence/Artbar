@@ -175,10 +175,10 @@ export const PrivateParties: React.FC = () => {
                   </div>
 
 	                  <Button
-	                    variant="outline"
+	                    variant="primary"
 	                    size="cta"
 	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
-	                    className="w-full rounded-2xl border-2 border-artbar-navy bg-transparent text-base hover:bg-artbar-navy hover:text-white"
+	                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
                   >
                     <JpText>{privateParties.pricing.kids.cta}</JpText>
                   </Button>
@@ -271,14 +271,6 @@ export const PrivateParties: React.FC = () => {
                         </li>
                      ))}
                   </ul>
-	                  <Button
-	                      size="sm"
-	                      variant="outline"
-	                      onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
-	                      className="w-full bg-white border-transparent text-artbar-navy hover:bg-artbar-taupe hover:text-white"
-                    >
-	                     <JpText>{privateParties.catering.cta}</JpText>
-	                  </Button>
                     <ul className="mt-8 space-y-3">
                       {privateParties.catering.notes.map((note) => (
                         <li key={note} className="flex items-start gap-3 text-sm md:text-base font-bold text-artbar-taupe">

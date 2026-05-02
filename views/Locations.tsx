@@ -3,13 +3,14 @@
 import React from 'react';
 import Image from 'next/image';
 import { CalendarDays, Navigation } from 'lucide-react';
-import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
+
+const SHOW_LOCATION_DIRECTIONS = false;
 
 export const Locations: React.FC = () => {
   const { lang, content, site, jpCopy } = useContent();
@@ -50,21 +51,16 @@ export const Locations: React.FC = () => {
                     <p className="text-xs md:text-sm opacity-70 mb-1"><JpText>{site.locationsPage.operating.address}</JpText></p>
                     <p className="text-xs md:text-sm opacity-70"><JpText>{site.locationsPage.operating.ceo}</JpText></p>
                  </div>
-                 <div className="flex flex-col gap-3 items-center md:items-end w-full md:w-auto">
-                    <Button
-                      variant="taupe"
-                      size="cta"
-                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
-                    >
-                       <JpText>{site.locationsPage.operating.btnHiring}</JpText>
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="cta"
-                      className="w-full rounded-xl font-bold uppercase text-[10px] md:w-auto md:text-xs"
-                    >
-                       <JpText>{site.locationsPage.operating.btnFranchise}</JpText>
-                    </Button>
+                 <div className="flex flex-col items-center md:items-end w-full md:w-auto">
+                    <p className="max-w-sm text-sm md:text-base leading-relaxed text-artbar-gray md:text-right">
+                       <JpText>{site.locationsPage.operating.inquiryText}</JpText>{' '}
+                       <a
+                         href={`mailto:${site.locationsPage.operating.inquiryEmail}`}
+                         className="font-heading font-bold text-artbar-navy underline decoration-artbar-taupe decoration-2 underline-offset-4 transition-colors hover:text-artbar-taupe"
+                       >
+                         {site.locationsPage.operating.inquiryEmail}
+                       </a>
+                    </p>
                  </div>
               </div>
            </div>
@@ -119,29 +115,32 @@ function LocationCard({
                     </h2>
                  </div>
 
-                 {/* Action Bar */}
-                 <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
-                    <a 
-                      href={directionsUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
-                    >
-                      <Navigation size={12} className="md:w-3.5 md:h-3.5" /> <JpText>{lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}</JpText>
-                    </a>
+                 {(SHOW_LOCATION_DIRECTIONS || isFranchise) && (
+                   <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
+                      {SHOW_LOCATION_DIRECTIONS && (
+                        <a
+                          href={directionsUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
+                        >
+                          <Navigation size={12} className="md:w-3.5 md:h-3.5" /> <JpText>{lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}</JpText>
+                        </a>
+                      )}
 
-                    {isFranchise && (
-                      <a
-                        href={bookingUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
-                      >
-                        <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
-                        <JpText>{lang === 'en' ? 'Book Now' : '予約する'}</JpText>
-                      </a>
-                    )}
-                 </div>
+                      {isFranchise && (
+                        <a
+                          href={bookingUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
+                        >
+                          <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
+                          <JpText>{lang === 'en' ? 'Book Now' : '予約する'}</JpText>
+                        </a>
+                      )}
+                   </div>
+                 )}
 
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

@@ -66,7 +66,6 @@ export const Footer: React.FC = () => {
                 <li><Link href="/team-building" className={footerLinkClass}>{site.nav.teamBuilding}</Link></li>
                 <li><Link href="/private-parties" className={footerLinkClass}>{site.nav.privateParties}</Link></li>
                 <li><Link href="/instructors" className={footerLinkClass}>{site.nav.instructors}</Link></li>
-                <li><Link href="/blog" className={footerLinkClass}>{site.nav.blog}</Link></li>
               </ul>
             </div>
 
