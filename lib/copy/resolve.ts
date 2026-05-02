@@ -56,6 +56,7 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     normalized.site.home.themes.items = normalized.site.home.themes.items.map((item, index) => ({
       ...item,
       slug: POPULAR_THEMES_JP[index].slug,
+      bookingUrl: POPULAR_THEMES_JP[index].bookingUrl,
     }));
   }
 

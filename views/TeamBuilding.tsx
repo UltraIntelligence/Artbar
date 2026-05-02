@@ -2,17 +2,15 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
-import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles, Flame, Droplets } from 'lucide-react';
+import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL } from '../constants';
+import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL, TEAM_BUILDING_INQUIRY_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
   const { site, content, lang, jpCopy } = useContent();
   const socialReveal = useScrollReveal();
   const valueReveal = useScrollReveal();
@@ -37,9 +35,6 @@ export const TeamBuilding: React.FC = () => {
   const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const logisticsRows = jpCopy.teamBuildingLogisticsRows;
   const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
-  const specialtyChips = lang === 'en'
-    ? ['Candle Making', 'Resin Art', 'Alcohol Ink']
-    : jpCopy.ui.teamBuilding.specialtyChips;
   const formatEnglishActivityTitle = (title: string) => {
     if (lang !== 'en') return title;
 
@@ -83,7 +78,7 @@ export const TeamBuilding: React.FC = () => {
             <Button
               variant="taupe"
               size="cta"
-              onClick={() => router.push('/contact')}
+              onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
               className="w-full shadow-xl sm:w-auto"
             >
                {site.teamBuilding.hero.cta}
@@ -204,18 +199,13 @@ export const TeamBuilding: React.FC = () => {
                  <p className="text-artbar-gray mb-8 max-w-md">
                     {site.teamBuilding.specialty.desc}
                  </p>
-                 <div className="flex flex-wrap gap-3">
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Flame size={14} className="text-orange-400" /> {specialtyChips[0]}</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Droplets size={14} className="text-blue-400" /> {specialtyChips[1]}</span>
-                    <span className="bg-white px-4 py-2 rounded-full text-artbar-navy font-bold text-sm border border-artbar-taupe/20 flex items-center gap-2"><Palette size={14} className="text-purple-400" /> {specialtyChips[2]}</span>
-                 </div>
-              </div>
+	              </div>
               <div className="md:w-1/2 flex justify-end w-full">
                  <Button
-                    variant="primary"
-                    size="cta"
-                    onClick={() => router.push('/contact')}
-                    className="w-full rounded-2xl text-base shadow-lg md:w-auto"
+	                    variant="primary"
+	                    size="cta"
+	                    onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
+	                    className="w-full rounded-2xl text-base shadow-lg md:w-auto"
                  >
                     {site.teamBuilding.specialty.cta}
                  </Button>
@@ -309,10 +299,10 @@ export const TeamBuilding: React.FC = () => {
                       <div className="flex justify-between text-sm"><span className="opacity-80">{site.teamBuilding.pricing.offsiteLabel}</span><span className="font-bold">{site.teamBuilding.pricing.offsitePrice}</span></div>
                    </div>
                    <Button
-                     variant="taupe"
-                     size="cta"
-                     onClick={() => router.push('/contact')}
-                     className="mt-4 w-full rounded-xl text-base hover:bg-white hover:text-artbar-navy"
+	                     variant="taupe"
+	                     size="cta"
+	                     onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
+	                     className="mt-4 w-full rounded-xl text-base hover:bg-white hover:text-artbar-navy"
                    >
                      {bookTeamCta}
                    </Button>

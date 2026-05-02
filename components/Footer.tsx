@@ -5,6 +5,7 @@ import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
+import { ARTBAR_BOOKING_URL } from '../constants';
 
 export const Footer: React.FC = () => {
   const { site, lang, jpCopy } = useContent();
@@ -60,8 +61,7 @@ export const Footer: React.FC = () => {
             <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6">{site.footer.explore}</h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><Link href="/" className={footerLinkClass}>{site.nav.schedule}</Link></li>
-                <li><Link href="/paint-your-pet" className={footerLinkClass}>{site.nav.paintYourPet}</Link></li>
+                <li><a href={ARTBAR_BOOKING_URL} className={footerLinkClass}>{site.nav.schedule}</a></li>
                 <li><Link href="/team-building" className={footerLinkClass}>{site.nav.teamBuilding}</Link></li>
                 <li><Link href="/private-parties" className={footerLinkClass}>{site.nav.privateParties}</Link></li>
                 <li><Link href="/instructors" className={footerLinkClass}>{site.nav.instructors}</Link></li>

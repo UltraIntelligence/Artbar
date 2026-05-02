@@ -7,6 +7,7 @@ import { Button } from '../components/ui/Button';
 import { PetSketcher } from '../components/PetSketcher';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
+import { ARTBAR_BOOKING_URL } from '../constants';
 export const PaintYourPet: React.FC = () => {
   const { site, lang, jpCopy } = useContent();
   const content = site.paintYourPet;
@@ -109,7 +110,7 @@ export const PaintYourPet: React.FC = () => {
                    <Button
                      variant="taupe"
                      size="cta"
-                     onClick={() => (window.location.href = '/#schedule')}
+                     onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                      className="mt-auto w-full rounded-2xl text-base shadow-md"
                    >
                       {site.nav.book}

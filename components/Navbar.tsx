@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
+import { ARTBAR_BOOKING_URL } from '../constants';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const { site, lang, toggleLang, jpCopy } = useContent();
 
   useEffect(() => {
@@ -32,8 +32,7 @@ export const Navbar: React.FC = () => {
   const isTransparent = isHeroNavLayout && !isOpen;
 
   const navLinks = [
-    { name: site.nav.schedule, path: '/', hash: '#schedule' },
-    { name: site.nav.paintYourPet, path: '/paint-your-pet' },
+    { name: site.nav.schedule, path: ARTBAR_BOOKING_URL, external: true },
     { name: site.nav.instructors, path: '/instructors' },
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
@@ -63,11 +62,7 @@ export const Navbar: React.FC = () => {
   };
 
   const handleBookClick = () => {
-      if (pathname !== '/') {
-          router.push('/#schedule');
-      } else {
-          window.location.hash = 'schedule';
-      }
+      window.location.href = ARTBAR_BOOKING_URL;
       setIsOpen(false);
   };
 
@@ -99,9 +94,9 @@ export const Navbar: React.FC = () => {
         <div className={`hidden xl:flex ${lang === 'jp' ? 'space-x-4' : 'space-x-6'} items-center`}>
           {navLinks.map((link) => (
             <Link
-              key={link.path + (link.hash || '')}
-              href={link.path + (link.hash || '')}
-              className={getLinkActiveClass(link, pathname === link.path && !link.hash)}
+              key={link.path}
+              href={link.path}
+              className={getLinkActiveClass(link, !link.external && pathname === link.path)}
             >
               {link.name}
             </Link>
@@ -145,10 +140,10 @@ export const Navbar: React.FC = () => {
           <div className="flex flex-col gap-3.5 sm:gap-4">
             {navLinks.map((link) => (
               <Link
-                key={link.path + (link.hash || '')}
-                href={link.path + (link.hash || '')}
+                key={link.path}
+                href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={getLinkActiveClass(link, pathname === link.path && !link.hash, true)}
+                className={getLinkActiveClass(link, !link.external && pathname === link.path, true)}
               >
                 {link.name}
               </Link>

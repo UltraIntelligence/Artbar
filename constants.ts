@@ -28,6 +28,11 @@ export const HERO_HOME_VIDEO_MOBILE = '/media/artbar-home-video-mobile-3 2.mp4';
 /** Replace @PLACEHOLDER_ID with your LINE official account ID when ready. */
 export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
 
+/** Public booking engine for all schedule and booking CTAs. */
+export const ARTBAR_BOOKING_URL = 'https://booking.artbar.co.jp';
+export const PRIVATE_PARTY_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=private_party`;
+export const TEAM_BUILDING_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=team_building`;
+
 /** Official LINE app mark (squircle); sits on #06C755 so colors align. Served from /public/media. */
 export const LINE_BRAND_ICON_SRC = '/media/LINE_Brand_icon.png';
 
@@ -89,33 +94,31 @@ export const PARTNER_LOGOS: { name: string; url: string }[] = [
 ];
 
 export const POPULAR_THEMES = [
-  { slug: "japan-inspired", title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
-  { slug: "paint-pouring", title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
-  { slug: "paint-your-pet", title: "Paint Your Pet", desc: "Immortalize your furry friend", image: GI.themes.paintYourPet },
-  { slug: "alcohol-ink", title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk },
-  { slug: "van-gogh", title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh },
-  { slug: "monet", title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet },
-  { slug: "picasso", title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso },
-  { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
-  { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
-  { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
-  { slug: "texture-art", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
-  { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
+  { slug: "japan-inspired", title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
+  { slug: "paint-pouring", title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
+  { slug: "alcohol-ink", title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
+  { slug: "van-gogh", title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/van-gogh` },
+  { slug: "monet", title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/monet` },
+  { slug: "picasso", title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/picasso` },
+  { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
+  { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
+  { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
+  { slug: "texture-art", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
+  { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 
 export const POPULAR_THEMES_JP = [
-  { slug: "japan-inspired", title: "ジャパンインスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired },
-  { slug: "paint-pouring", title: "ポーリングアート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring },
-  { slug: "paint-your-pet", title: "ペットを描こう", desc: "大切な家族をキャンバスに残す", image: GI.themes.paintYourPet },
-  { slug: "alcohol-ink", title: "アルコールインク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk },
-  { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh },
-  { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet },
-  { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso },
-  { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir },
-  { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse },
-  { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids },
-  { slug: "texture-art", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting },
-  { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol },
+  { slug: "japan-inspired", title: "ジャパンインスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
+  { slug: "paint-pouring", title: "ポーリングアート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
+  { slug: "alcohol-ink", title: "アルコールインク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
+  { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/van-gogh` },
+  { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/monet` },
+  { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/picasso` },
+  { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
+  { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
+  { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
+  { slug: "texture-art", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
+  { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 
 /** Bios only; image URLs come from `INSTRUCTOR_IDS` + `GI.instructors` (see `data/generated-image-paths.ts`). */
@@ -334,7 +337,6 @@ export const LOCATION_SHORT_LABELS = [
   { en: 'Ginza', jp: '銀座' },
   { en: 'Yokohama Motomachi', jp: '横浜元町' },
   { en: 'Osaka', jp: '大阪' },
-  { en: 'Okinawa', jp: '沖縄' },
 ] as const;
 
 export const OFFSITE_LABEL = { en: 'Offsite', jp: '出張' } as const;
@@ -416,10 +418,10 @@ export const LOCATIONS: Location[] = [
     id: "ginza",
     nameEn: "Artbar Ginza",
     nameJp: "Artbar 銀座",
-    addressEn: "Ginza, Chuo-ku, 3-3-12 3rd Floor Ginza Building.",
-    addressJp: "〒104-0061 東京都中央区銀座3-3-12 銀座ビル3階",
-    accessEn: "1-minute walk from Ginza Station Exit C8 of Metro Marunouchi, Hibiya and Ginza Line.\n4-minute walk from Ginza-itchome Station Exit 4 of Metro Yurakucho Line.\n5-minute walk from Yurakucho Station Exit D8 of Metro Yurakucho Line.",
-    accessJp: "銀座駅 C8出口 徒歩1分\n銀座一丁目駅 4番出口 徒歩4分\n有楽町駅 D8出口 徒歩5分",
+    addressEn: "10th Floor Ginza Crescent Bld\n1 Chome-6-1 Ginza\nChuo City, Tokyo 104-0061",
+    addressJp: "〒104-0061 東京都中央区銀座1丁目6-1 銀座クレセントビル 10階",
+    accessEn: "Access:\nMetro Ginza-Itchome Station 1 min walk\nJR Yurakucho Station 4 min walk\nMetro Ginza Station 5 min walk",
+    accessJp: "アクセス:\n東京メトロ 銀座一丁目駅 徒歩1分\nJR 有楽町駅 徒歩4分\n東京メトロ 銀座駅 徒歩5分",
     image: GI.locations.ginza
   },
   {
@@ -629,19 +631,19 @@ export const FAQS = [
   },
   {
     question: "Can you squeeze in an extra person for a sold out session?",
-    answer: "If the session you are booking will be held in Cat Street Harajuku, Ginza, or Yokohama, we may be able to add a slot for you. Please contact us via this online contact form and we can check availability. Due to the size of the studio cannot add slots for sessions held in Daikanyama and Ueno."
+    answer: "If the session you are booking will be held in Cat Street Harajuku, Ginza, or Yokohama, we may be able to add a slot for you. Please contact us via this online contact form and we can check availability. Due to the size of the studio, we cannot add slots for sessions held in Daikanyama."
   },
   {
     question: "Can I bring my child to an adult session?",
-    answer: "We do not allow children to attend the adult sessions as there is free-flow alcohol being served and it is a social setting for adults. Kids can join our weekend art sessions or arrange a private art party with us. Please check our new ageless studio designed for kids and families called Artbar Lab, located in Ueno's Marui Bld. !"
+    answer: "We do not allow children to attend the adult sessions as there is free-flow alcohol being served and it is a social setting for adults. Kids can join our weekend art sessions or arrange a private art party with us."
   },
   {
     question: "Can a child under 5 years old join the kids session?",
-    answer: "It's no problem for children who are most turning 5 to join the kids session. Children 4 years old and younger will not be able to join the kids sessions. Please check our new ageless studio designed for kids and families called Artbar Lab, located in Ueno's Marui Bld. !"
+    answer: "It's no problem for children who are almost turning 5 to join the kids session. Children 4 years old and younger will not be able to join the kids sessions."
   },
   {
     question: "Paint Points QR Code: I received the notification on my phone to retrieve my coupon code. How do I get my coupon code?",
-    answer: "Congratulations! Please take a screenshot of the coupon eligibility notification you received on your smart phone and send it to our email tokyo@artbar.co.jp. We will confirm your attendance and send you a coupon code which you can use during checkout when you book your next session. Please note the coupon code can only be used towards our standard painting sessions (5,000 yen for adult sessions, 3,500 yen for kids session) and not towards craft sessions, special collaboration events, paint pour sessions, large canvas sessions or any other sessions that have a price other than our standard session."
+    answer: "Congratulations, and thank you for being such a great customer!\n\n1. After you scan your final QR code, please show your completed card to the instructor.\n2. The instructor will give you a coupon card with your reward on the spot.\n3. Please take a photo of your reward code so you have it for your records.\n\nPlease note: We cannot add points for classes that were not scanned. One card represents one attendee, and only one scan per class is allowed."
   },
   {
     question: "I forgot to scan my points but am eligible for the coupon.",
@@ -653,7 +655,7 @@ export const FAQS = [
   },
   {
     question: "How can I cancel my session?",
-    answer: "For most classes, you may cancel up to 24 hours prior to the scheduled session start time. Cancellations after that time will not be accepted. You can cancel yourself using the contact form below. Please choose between a refund (500 yen refund fee will be charged) or transfer to another session. Please note that there are a few non-refundable classes due to the preparations of materials. They are indicated in the event description. Gift certificates are also non-refundable and not exchangeable for cash."
+    answer: "You can self-cancel your reservation from the bottom of your email confirmation.\n\nCancellation policies may differ for some classes that require custom orders. Please check your individual class information for specifics.\n\nFor most classes, our cancellation policy is:\nFull refund: Cancel up to 3 days before the event start time.\n25% cancellation fee: Cancel between 3 days and 24 hours before the event start time.\nNo refund: Cancellations within 24 hours of the event start time.\n\nGift certificates are non-refundable."
   }
 ];
 
@@ -668,19 +670,19 @@ export const FAQS_JP = [
   },
   {
     question: "満席のセッションに1名追加してもらうことはできますか？",
-    answer: "キャットストリート原宿、銀座、横浜で開催されるセッションの場合、追加枠をご用意できる場合があります。オンラインお問い合わせフォームよりご連絡ください。スタジオの広さの都合上、代官山と上野で開催されるセッションは追加枠をご用意できません。"
+    answer: "キャットストリート原宿、銀座、横浜で開催されるセッションの場合、追加枠をご用意できる場合があります。オンラインお問い合わせフォームよりご連絡ください。スタジオの広さの都合上、代官山で開催されるセッションは追加枠をご用意できません。"
   },
   {
     question: "大人向けセッションに子どもを連れて行けますか？",
-    answer: "大人向けセッションではフリーフローのアルコール提供があり、大人の方向けの交流の場として運営しているため、お子様のご参加はご遠慮いただいています。お子様は週末のキッズ向けアートセッション、またはプライベートアートパーティーをご利用ください。上野マルイ内には、キッズやファミリー向けのArtbar Labもございます。"
+    answer: "大人向けセッションではフリーフローのアルコール提供があり、大人の方向けの交流の場として運営しているため、お子様のご参加はご遠慮いただいています。お子様は週末のキッズ向けアートセッション、またはプライベートアートパーティーをご利用ください。"
   },
   {
     question: "5歳未満の子どもはキッズセッションに参加できますか？",
-    answer: "もうすぐ5歳になるお子様であれば、キッズセッションにご参加いただけます。4歳以下のお子様はキッズセッションにご参加いただけません。上野マルイ内には、キッズやファミリー向けのArtbar Labもございます。"
+    answer: "もうすぐ5歳になるお子様であれば、キッズセッションにご参加いただけます。4歳以下のお子様はキッズセッションにご参加いただけません。"
   },
   {
     question: "Paint PointsのQRコード通知を受け取りました。クーポンコードはどうすれば受け取れますか？",
-    answer: "クーポン対象の通知をスマートフォンで受け取った場合は、その画面のスクリーンショットを撮り、tokyo@artbar.co.jp までお送りください。ご来店履歴を確認後、次回予約時に使えるクーポンコードをお送りします。クーポンは通常のペイントセッション（大人5,000円、キッズ3,500円）にのみご利用いただけます。クラフトセッション、特別コラボイベント、ポーリングアート、大きなキャンバスのセッション、その他通常価格と異なるセッションにはご利用いただけません。"
+    answer: "いつもご利用いただきありがとうございます。\n\n1. 最後のQRコードをスキャンしたら、完成したカードをインストラクターにお見せください。\n2. インストラクターがその場で特典のクーポンカードをお渡しします。\n3. 記録用に、クーポンコードの写真を撮って保管してください。\n\nご注意: スキャンされていないクラス分のポイントを後から追加することはできません。カード1枚につき参加者1名分です。1クラスにつきスキャンは1回のみ有効です。"
   },
   {
     question: "ポイントのQRコードをスキャンし忘れましたが、クーポン対象です。対応できますか？",
@@ -692,6 +694,6 @@ export const FAQS_JP = [
   },
   {
     question: "セッションをキャンセルするにはどうすればよいですか？",
-    answer: "ほとんどのクラスは、開始時間の24時間前までキャンセル可能です。それ以降のキャンセルはお受けできません。下記のお問い合わせフォームからご自身でキャンセル手続きをお願いします。返金（返金手数料500円）または別セッションへの振替をお選びいただけます。材料準備の都合上、返金不可のクラスも一部ございます。その場合はイベント説明に記載しています。ギフト券は返金不可で、現金との交換もできません。"
+    answer: "予約確認メールの下部から、ご自身でキャンセル手続きができます。\n\n特注品や準備が必要なクラスは、キャンセルポリシーが異なる場合があります。詳細は各クラスの案内をご確認ください。\n\n多くのクラスのキャンセルポリシーは以下の通りです。\n全額返金: イベント開始3日前までのキャンセル。\n25%キャンセル料: イベント開始3日前から24時間前までのキャンセル。\n返金不可: イベント開始24時間以内のキャンセル。\n\nギフト券は返金不可です。"
   }
 ];
