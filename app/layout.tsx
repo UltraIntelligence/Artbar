@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: 'Artbar Tokyo | Paint & Sip Studio',
     template: '%s | Artbar Tokyo',
   },
-  description: "Artbar Tokyo — Japan's leading paint and sip studio. Creative art classes in Daikanyama, Harajuku, Ginza, Yokohama, Osaka and Okinawa.",
+  description: "Artbar Tokyo — Japan's leading paint and sip studio. Creative art classes in Daikanyama, Harajuku, Ginza, Yokohama, and Osaka.",
   metadataBase: new URL('https://artbar.co.jp'),
   openGraph: {
     siteName: 'Artbar Tokyo',

@@ -4,7 +4,7 @@ import { nextImageSrcSet } from '@/lib/image-preload';
 
 export const metadata = {
   title: 'Our Locations',
-  description: 'Find Artbar paint and sip studios in Daikanyama, Harajuku, Ginza, Yokohama, Osaka, and Okinawa.',
+  description: 'Find Artbar paint and sip studios in Daikanyama, Harajuku, Ginza, Yokohama, and Osaka.',
   alternates: { canonical: '/locations' },
 };
 
