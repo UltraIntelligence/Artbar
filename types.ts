@@ -29,6 +29,7 @@ export interface Location {
   accessEn: string;
   accessJp: string;
   image: string;
+  isFranchise?: boolean;
 }
 
 export interface MediaItem {
@@ -274,6 +275,12 @@ export interface SiteContent {
       desc: string;
       items: string[];
       notes: string[];
+      cta: string;
+    };
+    specialtyInquiry: {
+      title: string;
+      items: string[];
+      note: string;
       cta: string;
     };
   };

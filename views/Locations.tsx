@@ -10,8 +10,6 @@ import { ARTBAR_BOOKING_URL } from '../constants';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
-const FRANCHISE_LOCATION_IDS = new Set(['osaka_namba', 'osaka_umeda', 'osaka_hirakata']);
-
 export const Locations: React.FC = () => {
   const { lang, content, site, jpCopy } = useContent();
   const operatingReveal = useScrollReveal();
@@ -86,7 +84,7 @@ function LocationCard({
   jpCopy: ResolvedJapaneseCopy;
 }) {
   const reveal = useScrollReveal();
-  const isFranchise = FRANCHISE_LOCATION_IDS.has(loc.id);
+  const isFranchise = loc.isFranchise === true;
   return (
             <div
               ref={reveal.ref}

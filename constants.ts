@@ -103,7 +103,7 @@ export const POPULAR_THEMES = [
   { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
   { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
   { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
-  { slug: "texture-art", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
+  { slug: "texture-painting", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
   { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 
@@ -117,7 +117,7 @@ export const POPULAR_THEMES_JP = [
   { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
   { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
   { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
-  { slug: "texture-art", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
+  { slug: "texture-painting", title: "テクスチャーアート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
   { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
 ];
 
@@ -442,7 +442,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒542-0076 大阪府大阪市中央区難波5-1-60 なんばスカイオ 17F",
     accessEn: "Please change to the low-floor elevator on the 10th floor common area and go up to the 17th floor. The studio is at the end of the corridor on your left.",
     accessJp: "10階で低層階用エレベーターに乗り換え、17階へお上がりください。スタジオは廊下突き当たり左手です。",
-    image: GI.locations.osaka_namba
+    image: GI.locations.osaka_namba,
+    isFranchise: true
   },
   {
     id: "osaka_umeda",
@@ -452,7 +453,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "大阪府大阪市北区大深町6-38 グラングリーン大阪 ショップ＆レストラン 北館 2F",
     accessEn: "Inside Tully's Coffee / Yurindo",
     accessJp: "タリーズコーヒー / 有隣堂 併設",
-    image: GI.locations.osaka_umeda
+    image: GI.locations.osaka_umeda,
+    isFranchise: true
   },
   {
     id: "osaka_hirakata",
@@ -462,7 +464,8 @@ export const LOCATIONS: Location[] = [
     addressJp: "〒573-0032 大阪府枚方市1-9-1 枚方モール 2F",
     accessEn: "Inside TULLY'S COFFEE",
     accessJp: "タリーズコーヒー併設",
-    image: GI.locations.osaka_hirakata
+    image: GI.locations.osaka_hirakata,
+    isFranchise: true
   }
 ];
 

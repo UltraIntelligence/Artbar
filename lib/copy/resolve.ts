@@ -19,6 +19,10 @@ import type { ContentData } from '@/types';
 
 type JapaneseThemeItem = JapaneseCopyPayload['site']['home']['themes']['items'][number];
 
+const LEGACY_THEME_SLUGS: Record<string, string> = {
+  'texture-painting': 'texture-art',
+};
+
 function getRawJapaneseThemeItems(payload: unknown): JapaneseThemeItem[] | null {
   if (typeof payload !== 'object' || payload === null) return null;
   const site = (payload as { site?: unknown }).site;
@@ -60,9 +64,12 @@ function normalizeJapaneseThemeItems(
   );
 
   return POPULAR_THEMES_JP.map((theme, index) => {
+    const legacySlug = LEGACY_THEME_SLUGS[theme.slug];
     const candidate =
       rawItemsBySlug.get(theme.slug) ??
+      (legacySlug ? rawItemsBySlug.get(legacySlug) : undefined) ??
       itemsBySlug.get(theme.slug) ??
+      (legacySlug ? itemsBySlug.get(legacySlug) : undefined) ??
       (items.length === POPULAR_THEMES_JP.length ? items[index] : undefined);
 
     return {

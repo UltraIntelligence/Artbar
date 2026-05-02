@@ -34,7 +34,14 @@ export function themeBookingUrlFromItem(item: ThemeListItem): string {
   }
 
   const siteSlug = themeSlugFromItem(item);
-  const bookingSlug = THEME_BOOKING_SLUGS[siteSlug] ?? siteSlug;
+  const bookingSlug = THEME_BOOKING_SLUGS[siteSlug];
+  if (!bookingSlug) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`Missing booking theme mapping for "${siteSlug}". Falling back to booking home.`);
+    }
+    return ARTBAR_BOOKING_URL;
+  }
+
   return `${ARTBAR_BOOKING_URL}/themes/${bookingSlug}`;
 }
 

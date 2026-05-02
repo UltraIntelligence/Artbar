@@ -19,31 +19,7 @@ export const PrivateParties: React.FC = () => {
   const maxGuestsLabel = lang === 'en' ? 'Max Guests' : jpCopy.ui.privateParties.maxGuestsLabel;
   const priceSuffix = lang === 'en' ? '/ person (tax inc)' : jpCopy.ui.privateParties.priceSuffix;
   const standardLabel = lang === 'en' ? 'Standard' : 'スタンダード';
-  const specialtyInquiry = lang === 'en'
-    ? {
-        title: 'Looking for something different?',
-        items: [
-          'Mixed Adult & Child Family Events',
-          'Crafts',
-          'Private Pouring',
-          'Large Canvas',
-          'Specialty Events',
-        ],
-        note: 'Contact us for custom pricing',
-        cta: 'Inquire',
-      }
-    : {
-        title: '別の内容をご希望ですか？',
-        items: [
-          '大人と子どもの合同ファミリーイベント',
-          'クラフト',
-          'プライベートポーリング',
-          '大きなキャンバス',
-          '特別イベント',
-        ],
-        note: 'カスタム料金についてお問い合わせください',
-        cta: '問い合わせる',
-      };
+  const specialtyInquiry = privateParties.specialtyInquiry;
 
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
 

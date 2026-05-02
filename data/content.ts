@@ -313,6 +313,18 @@ export const defaultContent: ContentData = {
           "A ¥1,000 garbage fee applies if food is catered."
         ],
         cta: "Cake and catering contacts near our studios"
+      },
+      specialtyInquiry: {
+        title: "Looking for something different?",
+        items: [
+          "Mixed Adult & Child Family Events",
+          "Crafts",
+          "Private Pouring",
+          "Large Canvas",
+          "Specialty Events"
+        ],
+        note: "Contact us for custom pricing",
+        cta: "Inquire"
       }
     },
     locationsPage: {
@@ -611,6 +623,18 @@ export const defaultContent: ContentData = {
           "ケータリングをご利用の場合、ゴミ処理費として1,000円を頂戴します。"
         ],
         cta: "スタジオ近隣のケーキ・ケータリング情報"
+      },
+      specialtyInquiry: {
+        title: "別の内容をご希望ですか？",
+        items: [
+          "大人と子どもの合同ファミリーイベント",
+          "クラフト",
+          "プライベートポーリング",
+          "大きなキャンバス",
+          "特別イベント"
+        ],
+        note: "カスタム料金についてお問い合わせください",
+        cta: "問い合わせる"
       }
     },
     locationsPage: {
