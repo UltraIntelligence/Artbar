@@ -31,13 +31,16 @@ type BuildOgOptions = {
 
 /**
  * Per-page `openGraph` blocks fully override (not merge with) the parent layout's,
- * so we re-include the default OG image here unless the page provides its own.
+ * so we re-include the layout-level branding/locale fields and the default OG image
+ * here unless the page provides its own.
  */
 export function buildOpenGraph(opts: BuildOgOptions): NonNullable<Metadata['openGraph']> {
   const base = {
+    siteName: 'Artbar Tokyo',
     title: opts.title,
     ...(opts.description && { description: opts.description }),
     locale: ogLocale(opts.lang),
+    alternateLocale: opts.lang === 'jp' ? 'en_US' : 'ja_JP',
     images: opts.images ?? [DEFAULT_OG_IMAGE],
   };
   return opts.type === 'article'
