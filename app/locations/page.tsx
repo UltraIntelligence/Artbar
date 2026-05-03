@@ -1,12 +1,25 @@
 import { Locations } from '@/views/Locations';
 import { LOCATIONS } from '@/constants';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import type { Metadata } from 'next';
+import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
 
-export const metadata = {
-  title: 'Our Locations',
-  description: 'Find Artbar paint and sip studios in Daikanyama, Harajuku, Ginza, Yokohama, and Osaka.',
-  alternates: { canonical: '/locations' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  // No JP entries exist for the locations page hero/title — fall back to JP-equivalent
+  // copy derived from the existing nav label. og:locale still switches per visitor.
+  const lang = await getRequestLang();
+  const title = lang === 'jp' ? 'スタジオアクセス' : 'Our Locations';
+  const description =
+    lang === 'jp'
+      ? '代官山・原宿・銀座・横浜・大阪のArtbarペイント＆シップ・スタジオ案内。'
+      : 'Find Artbar paint and sip studios in Daikanyama, Harajuku, Ginza, Yokohama, and Osaka.';
+  return {
+    title,
+    description,
+    alternates: { canonical: '/locations' },
+    openGraph: buildOpenGraph({ lang, title, description }),
+  };
+}
 
 const jsonLd = {
   '@context': 'https://schema.org',
