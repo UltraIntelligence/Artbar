@@ -1,5 +1,9 @@
 import { Locations } from '@/views/Locations';
-import { LOCATIONS } from '@/constants';
+import {
+  LOCATIONS,
+  LOCATION_DEFAULT_OPENING_HOURS,
+  LOCATION_DEFAULT_PRICE_RANGE,
+} from '@/constants';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
@@ -35,6 +39,15 @@ const locationsJsonLd = {
       streetAddress: loc.addressEn,
       addressCountry: 'JP',
     },
+    ...(loc.geo && {
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: loc.geo.latitude,
+        longitude: loc.geo.longitude,
+      },
+    }),
+    openingHours: loc.openingHours ?? LOCATION_DEFAULT_OPENING_HOURS,
+    priceRange: loc.priceRange ?? LOCATION_DEFAULT_PRICE_RANGE,
     ...(loc.mapUrl && { hasMap: loc.mapUrl }),
   })),
 };
