@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { rateLimit } from '@/lib/rate-limit';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { createAdminSessionToken, setAdminSessionCookie } from '@/lib/copy/session';
 import { COPY_ADMIN_PATH } from '@/lib/copy/defaults';
 import { isCopyBackendConfigured } from '@/lib/copy/store';
@@ -19,7 +19,7 @@ function timingSafeEqual(a: string, b: string) {
 
 export async function POST(request: NextRequest) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
-  const { allowed } = rateLimit(ip, { limit: 8, windowMs: 60_000 });
+  const { allowed } = await checkRateLimit('copy-admin-login', ip, 8, 60);
   if (!allowed) {
     return NextResponse.redirect(new URL(`${COPY_ADMIN_PATH}/login?error=invalid`, request.url), 303);
   }
