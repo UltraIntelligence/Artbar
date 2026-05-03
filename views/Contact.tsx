@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -36,12 +37,12 @@ export const Contact: React.FC = () => {
   const copy = {
     subjectLabel: lang === 'en' ? 'Subject (required)' : jpCopy.ui.contact.subjectLabel,
     nameLabel: lang === 'en' ? 'Name (required)' : jpCopy.ui.contact.nameLabel,
-    namePlaceholder: lang === 'en' ? 'Artbar Taro' : jpCopy.ui.contact.namePlaceholder,
+    namePlaceholder: lang === 'en' ? 'Artbar Taro' : stripJpSentinel(jpCopy.ui.contact.namePlaceholder),
     emailLabel: lang === 'en' ? 'Email (required)' : jpCopy.ui.contact.emailLabel,
-    emailPlaceholder: lang === 'en' ? 'hello@example.com' : jpCopy.ui.contact.emailPlaceholder,
+    emailPlaceholder: lang === 'en' ? 'hello@example.com' : stripJpSentinel(jpCopy.ui.contact.emailPlaceholder),
     phoneLabel: lang === 'en' ? 'Phone (required)' : jpCopy.ui.contact.phoneLabel,
     messageLabel: lang === 'en' ? 'Message' : jpCopy.ui.contact.messageLabel,
-    messagePh: lang === 'en' ? 'How can we help you?' : jpCopy.ui.contact.messagePlaceholder,
+    messagePh: lang === 'en' ? 'How can we help you?' : stripJpSentinel(jpCopy.ui.contact.messagePlaceholder),
     send: lang === 'en' ? 'Send Message' : jpCopy.ui.contact.send,
     sent: lang === 'en' ? 'Message sent! We will get back to you soon.' : jpCopy.ui.contact.sent,
     failed: lang === 'en' ? 'Failed to send. Please try again or email us directly.' : jpCopy.ui.contact.failed,

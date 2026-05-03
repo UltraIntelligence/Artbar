@@ -75,7 +75,7 @@ export const ThemeDetail: React.FC = () => {
 
   /** Strip JP `<wbr>` line-break markers when the title leaks into attribute-only
    *  contexts (alt text, placeholder URLs) — they're rendering hints, not content. */
-  const titleAsText = localizedTheme.title.replace(/<wbr\s*\/?>/gi, '');
+  const titleAsText = stripJpSentinel(localizedTheme.title.replace(/<wbr\s*\/?>/gi, ''));
   const heroSrc = pageImages?.hero ?? getPh(1920, 1080, titleAsText);
 
   const stripTitleForGallery = (t: string) =>
