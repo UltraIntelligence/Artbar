@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { THEME_PAGE_SLUGS } from '@/data/generated-image-paths';
 
 const BASE_URL = 'https://artbar.co.jp';
 
@@ -11,20 +12,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/locations`, priority: 0.8, changeFrequency: 'monthly' },
     { url: `${BASE_URL}/press`, priority: 0.6, changeFrequency: 'monthly' },
     { url: `${BASE_URL}/contact`, priority: 0.7, changeFrequency: 'yearly' },
+    { url: `${BASE_URL}/blog`, priority: 0.7, changeFrequency: 'weekly' },
     { url: `${BASE_URL}/privacy-policy`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/terms-of-service`, priority: 0.3, changeFrequency: 'yearly' },
     { url: `${BASE_URL}/specified-commercial-transactions`, priority: 0.3, changeFrequency: 'yearly' },
   ];
 
-  const themeRoutes: MetadataRoute.Sitemap = [
-    'japan-inspired', 'van-gogh', 'paint-pouring', 'alcohol-ink',
-    'monet', 'picasso', 'renoir', 'matisse', 'kids',
-    'texture-art', 'texture-painting', 'paint-your-idol',
-  ].map(slug => ({
-    url: `${BASE_URL}/themes/${slug}`,
-    priority: 0.7,
-    changeFrequency: 'monthly' as const,
-  }));
+  // Source of truth: THEME_PAGE_SLUGS. `paint-your-pet` is excluded — its route handler
+  // calls notFound(), so it must not appear in the sitemap.
+  const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS
+    .filter((slug) => slug !== 'paint-your-pet')
+    .map((slug) => ({
+      url: `${BASE_URL}/themes/${slug}`,
+      priority: 0.7,
+      changeFrequency: 'monthly' as const,
+    }));
 
   return [...staticRoutes, ...themeRoutes];
 }

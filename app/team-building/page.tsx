@@ -2,12 +2,25 @@ import { defaultContent } from '@/data/content';
 import { TeamBuilding } from '@/views/TeamBuilding';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import type { Metadata } from 'next';
+import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
 
-export const metadata = {
-  title: defaultContent.en.teamBuilding.hero.title,
-  description: defaultContent.en.teamBuilding.hero.subtitle,
-  alternates: { canonical: '/team-building' },
-};
+function cleanCopy(s: string): string {
+  return s.replace(/<wbr\s*\/?>/g, '').replace(/\s*\n\s*/g, ' ').trim();
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = `${c.teamBuilding.hero.title} ${c.teamBuilding.hero.titleHighlight}`.trim();
+  const description = cleanCopy(c.teamBuilding.hero.subtitle);
+  return {
+    title,
+    description,
+    alternates: { canonical: '/team-building' },
+    openGraph: buildOpenGraph({ lang, title, description }),
+  };
+}
 
 export default function TeamBuildingPage() {
   return (

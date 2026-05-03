@@ -2,12 +2,25 @@ import { defaultContent } from '@/data/content';
 import { PrivateParties } from '@/views/PrivateParties';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import type { Metadata } from 'next';
+import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
 
-export const metadata = {
-  title: defaultContent.en.privateParties.hero.title,
-  description: defaultContent.en.privateParties.hero.subtitle,
-  alternates: { canonical: '/private-parties' },
-};
+function cleanCopy(s: string): string {
+  return s.replace(/<wbr\s*\/?>/g, '').replace(/\s*\n\s*/g, ' ').trim();
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = `${c.privateParties.hero.title} ${c.privateParties.hero.titleHighlight}`.trim();
+  const description = cleanCopy(c.privateParties.hero.subtitle);
+  return {
+    title,
+    description,
+    alternates: { canonical: '/private-parties' },
+    openGraph: buildOpenGraph({ lang, title, description }),
+  };
+}
 
 export default function PrivatePartiesPage() {
   return (

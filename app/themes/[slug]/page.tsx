@@ -4,6 +4,7 @@ import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-pa
 import { resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import { notFound } from 'next/navigation';
+import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -41,21 +42,14 @@ const THEME_DESCRIPTIONS: Record<string, string> = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  if (slug === 'paint-your-pet') {
-    return {
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
-  }
-
+  const lang = await getRequestLang();
   const title = THEME_TITLES[slug] ?? 'Theme | Artbar Tokyo';
   const description = THEME_DESCRIPTIONS[slug];
   return {
     title,
     ...(description && { description }),
     alternates: { canonical: `/themes/${slug}` },
+    openGraph: buildOpenGraph({ lang, title, description }),
   };
 }
 
