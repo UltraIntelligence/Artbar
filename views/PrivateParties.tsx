@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { HERO_BLUR_DATA_URL, PRIVATE_PARTY_INQUIRY_URL } from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -31,7 +32,7 @@ export const PrivateParties: React.FC = () => {
           <Image
             key={topHeroSrc || 'private-parties-hero'}
             src={topHeroSrc}
-            alt={lang === 'en' ? 'Private party at Artbar Tokyo' : jpCopy.ui.privateParties.heroImageAlt}
+            alt={lang === 'en' ? 'Private party at Artbar Tokyo' : stripJpSentinel(jpCopy.ui.privateParties.heroImageAlt)}
             fill
             priority
             placeholder="blur"

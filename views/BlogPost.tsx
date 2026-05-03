@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { HERO_BLUR_DATA_URL } from '../constants';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -104,7 +105,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#3b5998] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'Facebook' : jpCopy.ui.blogPost.facebookShareLabel}
+                aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.blogPost.facebookShareLabel)}
               >
                 <Facebook size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -113,7 +114,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#1DA1F2] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'X' : jpCopy.ui.blogPost.xShareLabel}
+                aria-label={lang === 'en' ? 'X' : stripJpSentinel(jpCopy.ui.blogPost.xShareLabel)}
               >
                 <Twitter size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -122,7 +123,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#0077B5] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'LinkedIn' : jpCopy.ui.blogPost.linkedinShareLabel}
+                aria-label={lang === 'en' ? 'LinkedIn' : stripJpSentinel(jpCopy.ui.blogPost.linkedinShareLabel)}
               >
                 <Linkedin size={20} className="text-current" strokeWidth={2} />
               </a>

@@ -16,6 +16,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
@@ -215,9 +216,9 @@ export const Home: React.FC = () => {
   const heroImageAlt = lang === 'en' ? 'Artbar Experience' : jpCopy.ui.home.heroImageAlt;
   const conceptImageAlt = lang === 'en' ? 'Artbar Lifestyle' : jpCopy.ui.home.conceptImageAlt;
   const ctaImageAlt = lang === 'en' ? 'Artbar Studio' : jpCopy.ui.home.ctaImageAlt;
-  const conceptVideoCta = lang === 'en' ? 'Watch the full video on YouTube' : jpCopy.ui.home.conceptVideoCta;
-  const previousTestimonialLabel = lang === 'en' ? 'Previous testimonial' : jpCopy.ui.home.previousTestimonial;
-  const nextTestimonialLabel = lang === 'en' ? 'Next testimonial' : jpCopy.ui.home.nextTestimonial;
+  const conceptVideoCta = lang === 'en' ? 'Watch the full video on YouTube' : stripJpSentinel(jpCopy.ui.home.conceptVideoCta);
+  const previousTestimonialLabel = lang === 'en' ? 'Previous testimonial' : stripJpSentinel(jpCopy.ui.home.previousTestimonial);
+  const nextTestimonialLabel = lang === 'en' ? 'Next testimonial' : stripJpSentinel(jpCopy.ui.home.nextTestimonial);
 
   return (
     <div className="w-full bg-artbar-bg">
@@ -851,7 +852,7 @@ export const Home: React.FC = () => {
                    {/* Background Image (Main) */}
                    <img 
                       src={item.image} 
-                      alt={item.outlet}
+                      alt={stripJpSentinel(item.outlet)}
                       loading="lazy"
                       decoding="async"
                       className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100" 
@@ -868,7 +869,7 @@ export const Home: React.FC = () => {
                             {item.logo ? (
                                <img 
                                  src={item.logo} 
-                                 alt={item.outlet} 
+                                 alt={stripJpSentinel(item.outlet)} 
                                  loading="lazy"
                                  decoding="async"
                                  className="max-h-full max-w-full object-contain"

@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { CalendarDays, Navigation } from 'lucide-react';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
@@ -94,7 +95,7 @@ function LocationCard({
               <div className="lg:w-2/5 relative min-h-[220px] lg:min-h-full overflow-hidden">
                 <Image 
                   src={loc.image} 
-                  alt={lang === 'en' ? loc.nameEn : loc.nameJp} 
+                  alt={lang === 'en' ? loc.nameEn : stripJpSentinel(loc.nameJp)}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 40vw"

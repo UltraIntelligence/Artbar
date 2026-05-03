@@ -2,17 +2,8 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ContentData, SiteContent } from '../types';
-import { defaultContent } from '../data/content';
 import { type SiteLanguage, setLangCookieClient } from '../lib/language';
-import {
-  DEFAULT_JAPANESE_COPY_PAYLOAD,
-} from '@/lib/copy/defaults';
-import {
-  buildResolvedJapaneseCopy,
-  mergePublishedIntoContent,
-  normalizeJapaneseCopyPayload,
-} from '@/lib/copy/resolve';
-import type { JapaneseCopyPayload, ResolvedJapaneseCopy } from '@/lib/copy/types';
+import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
 type Language = SiteLanguage;
 
@@ -24,32 +15,41 @@ interface ContentContextType {
   jpCopy: ResolvedJapaneseCopy;
 }
 
+interface PublishedJpResponse {
+  content: ContentData;
+  jpCopy: ResolvedJapaneseCopy;
+}
+
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
+/**
+ * ContentProvider is a pure consumer — initial content + JP copy are merged and
+ * BudouX-segmented server-side in `app/layout.tsx`. The runtime EN→JP toggle
+ * fetches `/api/copy-public`, which also returns merged + segmented data.
+ *
+ * Nothing in this client module imports `data/content` or `lib/copy/resolve`,
+ * so neither defaultContent nor BudouX ends up in the client bundle.
+ */
 export const ContentProvider: React.FC<{
   children: React.ReactNode;
   /** From server (cookie + Accept-Language) so first paint matches the browser. */
   initialLang: Language;
-  initialPublishedJpPayload?: JapaneseCopyPayload | null;
-}> = ({ children, initialLang, initialPublishedJpPayload = null }) => {
+  initialContent: ContentData;
+  initialJpCopy: ResolvedJapaneseCopy;
+}> = ({ children, initialLang, initialContent, initialJpCopy }) => {
   const [lang, setLang] = useState<Language>(initialLang);
-  const [publishedJpPayload, setPublishedJpPayload] =
-    useState<JapaneseCopyPayload | null>(initialPublishedJpPayload);
-  const [content, setContent] = useState<ContentData>(() =>
-    initialPublishedJpPayload
-      ? mergePublishedIntoContent(initialPublishedJpPayload)
-      : defaultContent
-  );
-  const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(() =>
-    buildResolvedJapaneseCopy(initialPublishedJpPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD)
-  );
+  const [content, setContent] = useState<ContentData>(initialContent);
+  const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(initialJpCopy);
+  // Track whether we've fetched the runtime-published JP override. Layout pre-fetches
+  // for JP visitors; EN visitors who toggle to JP later trigger the runtime fetch once.
+  const [hasFetchedRuntimeJp, setHasFetchedRuntimeJp] = useState<boolean>(initialLang === 'jp');
 
   useEffect(() => {
     document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
   }, [lang]);
 
   useEffect(() => {
-    if (lang !== 'jp' || publishedJpPayload) {
+    if (lang !== 'jp' || hasFetchedRuntimeJp) {
       return;
     }
 
@@ -61,19 +61,14 @@ export const ContentProvider: React.FC<{
           cache: 'no-store',
           signal: controller.signal,
         });
-        if (!response.ok) {
-          return;
-        }
+        if (!response.ok) return;
 
-        const data = (await response.json()) as { published?: JapaneseCopyPayload };
-        if (!data.published) {
-          return;
-        }
+        const data = (await response.json()) as PublishedJpResponse;
+        if (!data?.content || !data?.jpCopy) return;
 
-        const normalized = normalizeJapaneseCopyPayload(data.published);
-        setPublishedJpPayload(normalized);
-        setContent(mergePublishedIntoContent(normalized));
-        setJpCopy(buildResolvedJapaneseCopy(normalized));
+        setContent(data.content);
+        setJpCopy(data.jpCopy);
+        setHasFetchedRuntimeJp(true);
       } catch (error) {
         if (!controller.signal.aborted) {
           console.error('[copy-public] failed to load published Japanese copy', error);
@@ -84,7 +79,7 @@ export const ContentProvider: React.FC<{
     void loadPublishedCopy();
 
     return () => controller.abort();
-  }, [lang, publishedJpPayload]);
+  }, [lang, hasFetchedRuntimeJp]);
 
   const toggleLang = () => {
     setLang((prev) => {

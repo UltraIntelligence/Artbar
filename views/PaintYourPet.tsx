@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useContent } from '../context/ContentContext';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { PetSketcher } from '../components/PetSketcher';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
@@ -34,7 +35,7 @@ export const PaintYourPet: React.FC = () => {
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[-3deg]">
                  <Image
                    src="/media/petbefore.jpg"
-                   alt={lang === 'en' ? 'Original pet photo' : jpCopy.ui.paintYourPet.originalPhoto}
+                   alt={lang === 'en' ? 'Original pet photo' : stripJpSentinel(jpCopy.ui.paintYourPet.originalPhoto)}
                    fill
                    className="object-cover"
                    sizes="(max-width: 768px) 256px, 320px"
@@ -47,7 +48,7 @@ export const PaintYourPet: React.FC = () => {
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[3deg] bg-white">
                  <Image
                    src="/media/petafter.png"
-                   alt={lang === 'en' ? 'Pet sketch on canvas' : jpCopy.ui.paintYourPet.canvasSketch}
+                   alt={lang === 'en' ? 'Pet sketch on canvas' : stripJpSentinel(jpCopy.ui.paintYourPet.canvasSketch)}
                    fill
                    className="object-cover"
                    sizes="(max-width: 768px) 256px, 320px"

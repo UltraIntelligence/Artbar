@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useContent } from '../context/ContentContext';
+import { stripJpSentinel } from '../lib/jp-attr';
 
 interface LogoProps {
   className?: string;
@@ -111,7 +112,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
       {imgSrc ? (
         <img
           src={imgSrc}
-          alt={lang === 'en' ? 'Artbar Tokyo' : jpCopy.ui.footer.logoAlt}
+          alt={lang === 'en' ? 'Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.logoAlt)}
           className={imgClasses}
           onError={() => {
             if (imgSrc !== fallbackLogoUrl) {

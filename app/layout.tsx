@@ -8,6 +8,12 @@ import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { LANG_COOKIE_NAME, resolveInitialLanguage } from '@/lib/language';
 import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
+import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
+import {
+  buildResolvedJapaneseCopy,
+  mergePublishedIntoContent,
+} from '@/lib/copy/resolve';
+import { segmentJpDeep } from '@/lib/jp-segment';
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -48,11 +54,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     cookieStore.get(LANG_COOKIE_NAME)?.value,
     headersList.get('accept-language')
   );
-  const initialPublishedJpPayload =
-    initialLang === 'jp'
-      ? await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 })
-      : null;
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
+
+  // Build the merged content tree server-side. JP visitors get a Supabase fetch +
+  // BudouX segmentation; EN visitors skip the fetch and receive the static defaults
+  // (still segmented — defaultContent.jp leaks into both branches via the merge).
+  // Both branches hand ContentProvider a payload already shaped for direct render —
+  // no client-side merge, no client-side BudouX.
+  const publishedPayload =
+    initialLang === 'jp'
+      ? (await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 })) ?? DEFAULT_JAPANESE_COPY_PAYLOAD
+      : DEFAULT_JAPANESE_COPY_PAYLOAD;
+  const initialContent = segmentJpDeep(mergePublishedIntoContent(publishedPayload));
+  const initialJpCopy = segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload));
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
@@ -60,7 +74,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body suppressHydrationWarning>
         <ContentProvider
           initialLang={initialLang}
-          initialPublishedJpPayload={initialPublishedJpPayload}
+          initialContent={initialContent}
+          initialJpCopy={initialJpCopy}
         >
           <ThemeInjector />
           <ScrollToTop />
