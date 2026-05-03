@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { Button } from './ui/Button';
 import { JpText } from './JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { ARTBAR_TOKYO_EMAIL } from '../constants';
 import { useContent } from '../context/ContentContext';
 
@@ -362,7 +363,7 @@ ${text('Thank you!', copy.emailThanks)}`;
             {image ? (
 	              <img
 	                src={image}
-	                alt={text('Original Pet', copy.originalPetAlt)}
+	                alt={text('Original Pet', stripJpSentinel(copy.originalPetAlt))}
 	                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
 	              />
             ) : (
@@ -377,7 +378,7 @@ ${text('Thank you!', copy.emailThanks)}`;
               ref={fileInputRef}
               className="hidden"
               accept="image/*"
-	              aria-label={text('Upload pet photo', copy.uploadAriaLabel)}
+	              aria-label={text('Upload pet photo', stripJpSentinel(copy.uploadAriaLabel))}
               onChange={handleFileUpload}
             />
           </div>
@@ -411,7 +412,7 @@ ${text('Thank you!', copy.emailThanks)}`;
             {generatedImage ? (
 	              <img
 	                src={generatedImage}
-	                alt={text('AI Sketch', copy.aiSketchAlt)}
+	                alt={text('AI Sketch', stripJpSentinel(copy.aiSketchAlt))}
 	                className="block h-auto w-full max-h-[min(70vh,560px)] object-contain"
 	              />
             ) : (
@@ -463,7 +464,7 @@ ${text('Thank you!', copy.emailThanks)}`;
                         setStudentName(e.target.value);
                         resetHandoffState();
                       }}
-	                      placeholder={text('e.g. Alex Tanaka', copy.studentNamePlaceholder)}
+	                      placeholder={text('e.g. Alex Tanaka', stripJpSentinel(copy.studentNamePlaceholder))}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="name"
                     />
@@ -481,7 +482,7 @@ ${text('Thank you!', copy.emailThanks)}`;
                         setStudentEmail(e.target.value);
                         resetHandoffState();
                       }}
-	                      placeholder={text('e.g. alex@example.com', copy.studentEmailPlaceholder)}
+	                      placeholder={text('e.g. alex@example.com', stripJpSentinel(copy.studentEmailPlaceholder))}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="email"
                     />
@@ -499,7 +500,7 @@ ${text('Thank you!', copy.emailThanks)}`;
                         setPetName(e.target.value);
                         resetHandoffState();
                       }}
-	                      placeholder={text('e.g. Luna', copy.petNamePlaceholder)}
+	                      placeholder={text('e.g. Luna', stripJpSentinel(copy.petNamePlaceholder))}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="off"
                     />
@@ -533,7 +534,7 @@ ${text('Thank you!', copy.emailThanks)}`;
                         setClassLocation(e.target.value);
                         resetHandoffState();
                       }}
-	                      placeholder={text('e.g. Ginza', copy.locationPlaceholder)}
+	                      placeholder={text('e.g. Ginza', stripJpSentinel(copy.locationPlaceholder))}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe"
                       autoComplete="off"
                     />
@@ -550,7 +551,7 @@ ${text('Thank you!', copy.emailThanks)}`;
                         setBookingNotes(e.target.value);
                         resetHandoffState();
                       }}
-	                      placeholder={text('e.g. Booking under a different name, two pets, special note', copy.notesPlaceholder)}
+	                      placeholder={text('e.g. Booking under a different name, two pets, special note', stripJpSentinel(copy.notesPlaceholder))}
                       rows={3}
                       className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm text-artbar-navy placeholder:text-gray-400 focus:border-artbar-taupe focus:outline-none focus:ring-1 focus:ring-artbar-taupe resize-none"
                     />

@@ -213,9 +213,9 @@ export const Home: React.FC = () => {
   const bilingualJpLine2 = jpCopy.ui.home.bilingualLine2;
   const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : jpCopy.ui.home.mediaCoverageLabel;
   const asSeenInHeading = lang === 'en' ? 'As Seen In' : jpCopy.ui.home.asSeenInHeading;
-  const heroImageAlt = lang === 'en' ? 'Artbar Experience' : jpCopy.ui.home.heroImageAlt;
-  const conceptImageAlt = lang === 'en' ? 'Artbar Lifestyle' : jpCopy.ui.home.conceptImageAlt;
-  const ctaImageAlt = lang === 'en' ? 'Artbar Studio' : jpCopy.ui.home.ctaImageAlt;
+  const heroImageAlt = lang === 'en' ? 'Artbar Experience' : stripJpSentinel(jpCopy.ui.home.heroImageAlt);
+  const conceptImageAlt = lang === 'en' ? 'Artbar Lifestyle' : stripJpSentinel(jpCopy.ui.home.conceptImageAlt);
+  const ctaImageAlt = lang === 'en' ? 'Artbar Studio' : stripJpSentinel(jpCopy.ui.home.ctaImageAlt);
   const conceptVideoCta = lang === 'en' ? 'Watch the full video on YouTube' : stripJpSentinel(jpCopy.ui.home.conceptVideoCta);
   const previousTestimonialLabel = lang === 'en' ? 'Previous testimonial' : stripJpSentinel(jpCopy.ui.home.previousTestimonial);
   const nextTestimonialLabel = lang === 'en' ? 'Next testimonial' : stripJpSentinel(jpCopy.ui.home.nextTestimonial);
@@ -703,7 +703,7 @@ export const Home: React.FC = () => {
                    <div className="w-full h-56 md:h-64 rounded-[var(--radius-card)] overflow-hidden mb-6 md:mb-8 shadow-sm relative">
                       <Image
                         src={feature.image}
-                        alt={feature.title}
+                        alt={stripJpSentinel(feature.title)}
                         fill
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"

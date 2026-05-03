@@ -62,7 +62,7 @@ export const PrivateParties: React.FC = () => {
             <div key={idx} className="group relative h-48 md:h-96 rounded-[2rem] overflow-hidden cursor-pointer">
               <Image
                 src={item.image}
-                alt={item.title}
+                alt={stripJpSentinel(item.title)}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, 25vw"
