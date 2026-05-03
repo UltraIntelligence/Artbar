@@ -48,16 +48,16 @@ const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
 const SHOW_HERO_LINE_CTA = false;
 
 /**
- * Square face crops for the concept social strip — Unsplash (hotlink OK per Unsplash license).
- * Curated East Asian–presenting adults for a Tokyo audience (mixed genders).
+ * Square face crops for the concept social strip. Sourced from Unsplash, optimized
+ * to ~5 KB JPEGs at 192px and self-hosted to avoid third-party RTTs.
  */
 const CONCEPT_SOCIAL_AVATAR_URLS = [
-  'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
-  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&crop=faces&w=300&h=300&q=80',
+  '/media/testimonials/avatar-1.jpg',
+  '/media/testimonials/avatar-2.jpg',
+  '/media/testimonials/avatar-3.jpg',
+  '/media/testimonials/avatar-4.jpg',
+  '/media/testimonials/avatar-5.jpg',
+  '/media/testimonials/avatar-6.jpg',
 ] as const;
 
 export const Home: React.FC = () => {

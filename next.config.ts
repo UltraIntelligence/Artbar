@@ -12,6 +12,9 @@ const SECURITY_HEADERS = [
 /** Pin tracing root so a lockfile in a parent folder (e.g. ~/bun.lock) does not confuse Next. */
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname),
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   async headers() {
     return [{ source: '/(.*)', headers: SECURITY_HEADERS }];
   },
@@ -25,7 +28,6 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'upload.wikimedia.org' },
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'https', hostname: 'i.pravatar.cc' },
-      { protocol: 'https', hostname: 'images.unsplash.com' },
     ],
     // Avoid Sharp-based optimization in dev — reduces crashes on macOS (malloc / bad free) when
     // assets 404 or during heavy Fast Refresh; production builds still optimize images.
