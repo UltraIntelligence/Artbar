@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { pickDiscoveryThemes } from '../lib/theme-slugs';
 import { THEME_PAGE_IMAGES } from '../data/generated-image-paths';
@@ -218,7 +219,7 @@ export const ThemeDetail: React.FC = () => {
                 <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
                   <Image
                     src={pageImages?.examples[i] ?? ex.image}
-                    alt={ex.title}
+                    alt={stripJpSentinel(ex.title)}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                     sizes="(max-width: 1024px) 50vw, 25vw"
@@ -244,7 +245,7 @@ export const ThemeDetail: React.FC = () => {
             <div className="relative aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl order-2 lg:order-1">
               <Image
                 src={pageImages?.experience ?? getPh(1000, 750, 'Studio Atmosphere')}
-                alt={lang === 'en' ? 'Artbar Atmosphere' : jpCopy.ui.themeDetail.atmosphereImageAlt}
+                alt={lang === 'en' ? 'Artbar Atmosphere' : stripJpSentinel(jpCopy.ui.themeDetail.atmosphereImageAlt)}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

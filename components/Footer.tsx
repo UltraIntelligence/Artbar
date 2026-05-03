@@ -5,6 +5,7 @@ import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { JpText } from './JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
 
@@ -29,13 +30,13 @@ export const Footer: React.FC = () => {
                 <JpText>{site.footer.tagline}</JpText>
               </p>
               <div className="flex space-x-4">
-                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Instagram' : jpCopy.ui.footer.instagramLabel}>
+                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Instagram' : stripJpSentinel(jpCopy.ui.footer.instagramLabel)}>
                   <Instagram size={18} />
                 </a>
-                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Facebook' : jpCopy.ui.footer.facebookLabel}>
+                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.footer.facebookLabel)}>
                   <Facebook size={18} />
                 </a>
-                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label={lang === 'en' ? 'Email Artbar Tokyo' : jpCopy.ui.footer.emailLabel}>
+                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label={lang === 'en' ? 'Email Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.emailLabel)}>
                   <Mail size={18} />
                 </a>
               </div>
@@ -62,19 +63,19 @@ export const Footer: React.FC = () => {
             <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.explore}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><a href={ARTBAR_BOOKING_URL} className={footerLinkClass}>{site.nav.schedule}</a></li>
-                <li><Link href="/team-building" className={footerLinkClass}>{site.nav.teamBuilding}</Link></li>
-                <li><Link href="/private-parties" className={footerLinkClass}>{site.nav.privateParties}</Link></li>
-                <li><Link href="/instructors" className={footerLinkClass}>{site.nav.instructors}</Link></li>
+                <li><a href={ARTBAR_BOOKING_URL} className={footerLinkClass}><JpText>{site.nav.schedule}</JpText></a></li>
+                <li><Link href="/team-building" className={footerLinkClass}><JpText>{site.nav.teamBuilding}</JpText></Link></li>
+                <li><Link href="/private-parties" className={footerLinkClass}><JpText>{site.nav.privateParties}</JpText></Link></li>
+                <li><Link href="/instructors" className={footerLinkClass}><JpText>{site.nav.instructors}</JpText></Link></li>
               </ul>
             </div>
 
              <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.support}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><Link href="/contact" className={footerLinkClass}>{site.nav.contact}</Link></li>
-                <li><Link href="/contact" className={footerLinkClass}>{lang === 'en' ? 'FAQ' : jpCopy.ui.footer.faq}</Link></li>
-                <li><Link href="/contact" className={footerLinkClass}>{lang === 'en' ? 'Careers' : jpCopy.ui.footer.careers}</Link></li>
+                <li><Link href="/contact" className={footerLinkClass}><JpText>{site.nav.contact}</JpText></Link></li>
+                <li><Link href="/contact" className={footerLinkClass}><JpText>{lang === 'en' ? 'FAQ' : jpCopy.ui.footer.faq}</JpText></Link></li>
+                <li><Link href="/contact" className={footerLinkClass}><JpText>{lang === 'en' ? 'Careers' : jpCopy.ui.footer.careers}</JpText></Link></li>
               </ul>
             </div>
           </div>
@@ -82,9 +83,9 @@ export const Footer: React.FC = () => {
           <div className="border-t border-white/10 pt-8 mt-8 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">
             <p className="cursor-default text-center md:text-left">{`© ${currentYear} Artbar Tokyo · Paint and Wine Art Studio · All rights reserved`}</p>
             <div className="flex flex-wrap justify-center gap-x-4 md:gap-x-5 md:justify-end">
-              <Link href="/privacy-policy" className={footerMetaLinkClass}>{site.footer.privacy}</Link>
-              <Link href="/terms-of-service" className={footerMetaLinkClass}>{site.footer.terms}</Link>
-              <Link href="/specified-commercial-transactions" className={footerMetaLinkClass}>{site.footer.commercial}</Link>
+              <Link href="/privacy-policy" className={footerMetaLinkClass}><JpText>{site.footer.privacy}</JpText></Link>
+              <Link href="/terms-of-service" className={footerMetaLinkClass}><JpText>{site.footer.terms}</JpText></Link>
+              <Link href="/specified-commercial-transactions" className={footerMetaLinkClass}><JpText>{site.footer.commercial}</JpText></Link>
               <span className="inline-flex min-h-[44px] items-center px-1"><JpText>{site.footer.company}</JpText></span>
             </div>
           </div>

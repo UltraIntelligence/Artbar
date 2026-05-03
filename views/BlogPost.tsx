@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { HERO_BLUR_DATA_URL } from '../constants';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -28,10 +29,11 @@ export const BlogPost: React.FC = () => {
   }
 
   const title = lang === 'en' ? post.titleEn : post.titleJp;
+  const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
   const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const shareTitle = encodeURIComponent(title);
+  const shareTitle = encodeURIComponent(titleForAttr);
   const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
 
   return (
@@ -40,7 +42,7 @@ export const BlogPost: React.FC = () => {
         <Image
           key={post.image}
           src={post.image}
-          alt={title}
+          alt={titleForAttr}
           fill
           priority
           placeholder="blur"
@@ -104,7 +106,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#3b5998] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'Facebook' : jpCopy.ui.blogPost.facebookShareLabel}
+                aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.blogPost.facebookShareLabel)}
               >
                 <Facebook size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -113,7 +115,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#1DA1F2] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'X' : jpCopy.ui.blogPost.xShareLabel}
+                aria-label={lang === 'en' ? 'X' : stripJpSentinel(jpCopy.ui.blogPost.xShareLabel)}
               >
                 <Twitter size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -122,7 +124,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#0077B5] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'LinkedIn' : jpCopy.ui.blogPost.linkedinShareLabel}
+                aria-label={lang === 'en' ? 'LinkedIn' : stripJpSentinel(jpCopy.ui.blogPost.linkedinShareLabel)}
               >
                 <Linkedin size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -152,7 +154,7 @@ export const BlogPost: React.FC = () => {
                 <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
                   <Image
                     src={p.image}
-                    alt={lang === 'en' ? p.titleEn : p.titleJp}
+                    alt={lang === 'en' ? p.titleEn : stripJpSentinel(p.titleJp)}
                     fill
                     className="object-cover"
                     sizes="96px"

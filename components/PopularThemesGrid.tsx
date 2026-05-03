@@ -4,10 +4,11 @@ import Image from 'next/image';
 import type { ThemeListItem } from '@/lib/theme-slugs';
 import { themeBookingUrlFromItem, themeSlugFromItem } from '@/lib/theme-slugs';
 import { JpText } from './JpText';
+import { stripJpSentinel } from '@/lib/jp-attr';
 
-/** Strip the manual `<wbr>` line-break markers JP titles carry for JpText
- *  before passing the string to attribute-only contexts (alt, aria-label, etc.). */
-const stripWbr = (s: string) => s.replace(/<wbr\s*\/?>/gi, '');
+/** Strip both the manual `<wbr>` markers and the server-side BudouX phrase
+ *  sentinels (U+200B) before passing JP titles into attribute-only contexts. */
+const cleanForAttr = (s: string) => stripJpSentinel(s.replace(/<wbr\s*\/?>/gi, ''));
 
 /** Same card treatment as the home “Popular Themes” grid. */
 export function PopularThemesGrid({
@@ -32,7 +33,7 @@ export function PopularThemesGrid({
           >
             <Image
               src={themeItem.image}
-              alt={stripWbr(themeItem.title)}
+              alt={cleanForAttr(themeItem.title)}
               fill
               sizes="(max-width: 768px) 50vw, 25vw"
               className="object-cover transition-transform duration-1000 group-hover:scale-110"
