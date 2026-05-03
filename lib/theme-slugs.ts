@@ -1,48 +1,12 @@
-import { ARTBAR_BOOKING_URL } from '@/constants';
-
 export type ThemeListItem = {
   title: string;
   desc: string;
   image: string;
   slug?: string;
-  bookingUrl?: string;
 };
 
 export function themeSlugFromItem(item: Pick<ThemeListItem, 'title' | 'slug'>): string {
   return item.slug ?? item.title.toLowerCase().replace(/ /g, '-').replace('!', '');
-}
-
-const THEME_BOOKING_SLUGS: Record<string, string> = {
-  'japan-inspired': 'japan-inspired',
-  'paint-pouring': 'paint-pouring',
-  'paint-your-pet': 'paint-your-pet',
-  'alcohol-ink': 'alcohol-ink',
-  'van-gogh': 'van-gogh',
-  monet: 'monet',
-  picasso: 'picasso',
-  renoir: 'renoir',
-  matisse: 'matisse',
-  kids: 'kids',
-  'texture-art': 'texture-painting',
-  'texture-painting': 'texture-painting',
-  'paint-your-idol': 'paint-your-idol',
-};
-
-export function themeBookingUrlFromItem(item: ThemeListItem): string {
-  if (item.bookingUrl) {
-    return item.bookingUrl;
-  }
-
-  const siteSlug = themeSlugFromItem(item);
-  const bookingSlug = THEME_BOOKING_SLUGS[siteSlug];
-  if (!bookingSlug) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn(`Missing booking theme mapping for "${siteSlug}". Falling back to booking home.`);
-    }
-    return ARTBAR_BOOKING_URL;
-  }
-
-  return `${ARTBAR_BOOKING_URL}/themes/${bookingSlug}`;
 }
 
 function hashString(s: string): number {

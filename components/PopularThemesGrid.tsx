@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import type { ThemeListItem } from '@/lib/theme-slugs';
-import { themeBookingUrlFromItem, themeSlugFromItem } from '@/lib/theme-slugs';
+import { themeSlugFromItem } from '@/lib/theme-slugs';
 import { JpText } from './JpText';
 import { stripJpSentinel } from '@/lib/jp-attr';
 
@@ -24,11 +25,10 @@ export function PopularThemesGrid({
     >
       {items.map((themeItem) => {
         const slug = themeSlugFromItem(themeItem);
-        const href = themeBookingUrlFromItem(themeItem);
         return (
-          <a
+          <Link
             key={slug}
-            href={href}
+            href={`/themes/${slug}`}
             className="group relative block h-[380px] md:h-[500px] rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
           >
             <Image
@@ -49,7 +49,7 @@ export function PopularThemesGrid({
                 </p>
               </div>
             </div>
-          </a>
+          </Link>
         );
       })}
     </div>

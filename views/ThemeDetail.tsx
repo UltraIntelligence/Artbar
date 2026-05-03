@@ -118,7 +118,7 @@ export const ThemeDetail: React.FC = () => {
   return (
     <div className="bg-artbar-bg min-h-screen">
       {/* Hero Section */}
-      <div className="relative min-h-[60vh] md:min-h-[75vh] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-16 md:py-0">
+      <div className="relative min-h-[460px] bg-artbar-navy flex items-center justify-center text-white mt-24 mx-4 md:m-4 md:mt-24 rounded-[2.5rem] overflow-hidden py-14 md:min-h-[48vh] md:py-16">
         <Image
           key={heroSrc}
           src={heroSrc}
@@ -136,7 +136,7 @@ export const ThemeDetail: React.FC = () => {
           <span className="inline-block py-2 px-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-heading font-bold text-xs md:text-sm mb-6 md:mb-8 uppercase tracking-widest">
             <JpText>{localizedTheme.heroBadge}</JpText>
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-heading font-heavy mb-6 md:mb-8 leading-tight tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-heavy mb-6 md:mb-8 leading-tight tracking-tight">
             <JpText>{localizedTheme.title}</JpText>
           </h1>
           <p className="text-base sm:text-lg md:text-2xl opacity-90 mb-8 md:mb-12 max-w-3xl mx-auto font-light leading-relaxed">
