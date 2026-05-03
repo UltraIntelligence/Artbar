@@ -1,7 +1,9 @@
 import { defaultContent } from '@/data/content';
 import { Contact } from '@/views/Contact';
 import type { Metadata } from 'next';
+import { FAQS, FAQS_JP } from '@/constants';
 import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { safeJsonLd } from '@/lib/jsonld';
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getRequestLang();
@@ -18,6 +20,30 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function ContactPage() {
-  return <Contact />;
+export default async function ContactPage() {
+  const lang = await getRequestLang();
+  const faqs = lang === 'jp' ? FAQS_JP : FAQS;
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+
+  return (
+    <>
+      {faqs.length > 0 && (
+        // eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(faqJsonLd) }}
+        />
+      )}
+      <Contact />
+    </>
+  );
 }

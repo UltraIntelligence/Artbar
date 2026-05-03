@@ -1,13 +1,27 @@
 'use client';
 
 import React from 'react';
-import { Instagram, Facebook, Mail, MapPin } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { Logo } from './Logo';
 import { JpText } from './JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
-import { ARTBAR_BOOKING_URL } from '../constants';
+import { ARTBAR_BOOKING_URL, SOCIAL_PROFILES } from '../constants';
+
+// lucide-react has no TikTok icon (brand icons are deprecated upstream); inline SVG keeps the row consistent.
+const TikTokIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.83a8.16 8.16 0 0 0 4.77 1.52V6.93a4.85 4.85 0 0 1-1.84-.24Z" />
+  </svg>
+);
 
 export const Footer: React.FC = () => {
   const { site, lang, jpCopy } = useContent();
@@ -29,14 +43,48 @@ export const Footer: React.FC = () => {
               <p className="text-artbar-light-taupe/80 leading-relaxed mb-10 max-w-md font-light">
                 <JpText>{site.footer.tagline}</JpText>
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Instagram' : stripJpSentinel(jpCopy.ui.footer.instagramLabel)}>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href={SOCIAL_PROFILES.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialIconClass}
+                  aria-label={lang === 'en' ? 'Instagram' : stripJpSentinel(jpCopy.ui.footer.instagramLabel)}
+                >
                   <Instagram size={18} />
                 </a>
-                <a href="#" className={socialIconClass} aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.footer.facebookLabel)}>
+                <a
+                  href={SOCIAL_PROFILES.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialIconClass}
+                  aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.footer.facebookLabel)}
+                >
                   <Facebook size={18} />
                 </a>
-                <a href="mailto:tokyo@artbar.co.jp" className={socialIconClass} aria-label={lang === 'en' ? 'Email Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.emailLabel)}>
+                <a
+                  href={SOCIAL_PROFILES.tiktok}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialIconClass}
+                  aria-label="TikTok"
+                >
+                  <TikTokIcon size={18} />
+                </a>
+                <a
+                  href={SOCIAL_PROFILES.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialIconClass}
+                  aria-label="YouTube"
+                >
+                  <Youtube size={18} />
+                </a>
+                <a
+                  href="mailto:tokyo@artbar.co.jp"
+                  className={socialIconClass}
+                  aria-label={lang === 'en' ? 'Email Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.emailLabel)}
+                >
                   <Mail size={18} />
                 </a>
               </div>

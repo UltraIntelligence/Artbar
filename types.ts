@@ -31,6 +31,12 @@ export interface Location {
   image: string;
   mapUrl?: string;
   isFranchise?: boolean;
+  /** Approximate latitude/longitude for the studio (used in LocalBusiness JSON-LD). */
+  geo?: { latitude: number; longitude: number };
+  /** schema.org-formatted opening hours, e.g. "Mo-Su 09:00-21:00". */
+  openingHours?: string[];
+  /** schema.org price-range hint for LocalBusiness, e.g. "¥¥". */
+  priceRange?: string;
 }
 
 export interface MediaItem {

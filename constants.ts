@@ -43,6 +43,19 @@ export const ARTBAR_TOKYO_EMAIL = 'tokyo@artbar.co.jp';
 /** Full promo / lifestyle video on YouTube — home concept block “play” opens this in a new tab. */
 export const CONCEPT_BLOCK_YOUTUBE_URL = 'https://www.youtube.com/watch?v=wLjhqJ8v_Bs';
 
+/**
+ * Public social profiles. Used by the Footer icon row and by Organization.sameAs
+ * in JSON-LD — keep them in sync by editing here.
+ */
+export const SOCIAL_PROFILES = {
+  instagram: 'https://www.instagram.com/artbartokyo/',
+  facebook: 'https://www.facebook.com/artbartokyo/',
+  tiktok: 'https://www.tiktok.com/@artbartokyo',
+  youtube: 'https://www.youtube.com/@artbartokyo4258',
+} as const;
+
+export const SOCIAL_PROFILE_URLS: readonly string[] = Object.values(SOCIAL_PROFILES);
+
 export const SITE_IMAGES = {
   hero: {
     /** Default full-bleed hero: desktop MP4; pair with `homeMobile` for `<source media>`. */
@@ -400,6 +413,18 @@ export const PRIVATE_PARTY_CAPACITY_ROWS: {
   },
 ];
 
+/**
+ * Default LocalBusiness fields applied to every studio in JSON-LD unless overridden
+ * on the location entry. Hours are uniform across studios; price tier is stable.
+ */
+export const LOCATION_DEFAULT_OPENING_HOURS = ["Mo-Su 09:00-21:00"];
+export const LOCATION_DEFAULT_PRICE_RANGE = "¥¥";
+
+/**
+ * Per-studio coordinates are approximate (~50m), derived from the registered
+ * street address. Tighten by replacing with the exact lat/long from each
+ * mapUrl when convenient.
+ */
 export const LOCATIONS: Location[] = [
   {
     id: "daikanyama",
@@ -410,7 +435,8 @@ export const LOCATIONS: Location[] = [
     accessEn: "5-minute walk from Daikanyama Station | 8-minute walk from Ebisu Station",
     accessJp: "代官山駅 徒歩5分 | 恵比寿駅 徒歩8分",
     image: GI.locations.daikanyama,
-    mapUrl: "https://maps.app.goo.gl/1bAmzeGXqq5m4jSY7"
+    mapUrl: "https://maps.app.goo.gl/1bAmzeGXqq5m4jSY7",
+    geo: { latitude: 35.6499, longitude: 139.7029 }
   },
   {
     id: "harajuku",
@@ -421,7 +447,8 @@ export const LOCATIONS: Location[] = [
     accessEn: "7-minute walk from Shibuya Station",
     accessJp: "渋谷駅 徒歩7分 | 明治神宮前駅 徒歩5分",
     image: GI.locations.harajuku,
-    mapUrl: "https://maps.app.goo.gl/oktBHrayLwCaZFbV8"
+    mapUrl: "https://maps.app.goo.gl/oktBHrayLwCaZFbV8",
+    geo: { latitude: 35.6661, longitude: 139.7058 }
   },
   {
     id: "ginza",
@@ -432,7 +459,8 @@ export const LOCATIONS: Location[] = [
     accessEn: "Access:\nMetro Ginza-Itchome Station 1 min walk\nJR Yurakucho Station 4 min walk\nMetro Ginza Station 5 min walk",
     accessJp: "アクセス:\n東京メトロ 銀座一丁目駅 徒歩1分\nJR 有楽町駅 徒歩4分\n東京メトロ 銀座駅 徒歩5分",
     image: GI.locations.ginza,
-    mapUrl: "https://maps.app.goo.gl/FiudRj92hBAdPVH37"
+    mapUrl: "https://maps.app.goo.gl/FiudRj92hBAdPVH37",
+    geo: { latitude: 35.6745, longitude: 139.7649 }
   },
   {
     id: "yokohama",
@@ -443,7 +471,8 @@ export const LOCATIONS: Location[] = [
     accessEn: "Motomachi-Chukagai station – 3 min walk\nIshikawacho station – 10 min walk",
     accessJp: "みなとみらい線 元町・中華街駅 徒歩3分\nJR石川町駅 徒歩10分",
     image: GI.locations.yokohama,
-    mapUrl: "https://maps.app.goo.gl/vWeeAb4QLDYMEayy5"
+    mapUrl: "https://maps.app.goo.gl/vWeeAb4QLDYMEayy5",
+    geo: { latitude: 35.4422, longitude: 139.6505 }
   },
   {
     id: "osaka_namba",
@@ -455,6 +484,7 @@ export const LOCATIONS: Location[] = [
     accessJp: "10階で低層階用エレベーターに乗り換え、17階へお上がりください。スタジオは廊下突き当たり左手です。",
     image: GI.locations.osaka_namba,
     mapUrl: "https://maps.app.goo.gl/4AqRmV2covWJf2FNA",
+    geo: { latitude: 34.6620, longitude: 135.5022 },
     isFranchise: true
   },
   {
@@ -467,6 +497,7 @@ export const LOCATIONS: Location[] = [
     accessJp: "タリーズコーヒー / 有隣堂 併設",
     image: GI.locations.osaka_umeda,
     mapUrl: "https://maps.app.goo.gl/wkJNcyZoDheU6PkE9",
+    geo: { latitude: 34.7068, longitude: 135.4944 },
     isFranchise: true
   },
   {
@@ -479,6 +510,7 @@ export const LOCATIONS: Location[] = [
     accessJp: "タリーズコーヒー併設",
     image: GI.locations.osaka_hirakata,
     mapUrl: "https://maps.app.goo.gl/ybw2cRaFe4qT3NucA",
+    geo: { latitude: 34.8155, longitude: 135.6492 },
     isFranchise: true
   }
 ];
