@@ -43,6 +43,19 @@ export const ARTBAR_TOKYO_EMAIL = 'tokyo@artbar.co.jp';
 /** Full promo / lifestyle video on YouTube — home concept block “play” opens this in a new tab. */
 export const CONCEPT_BLOCK_YOUTUBE_URL = 'https://www.youtube.com/watch?v=wLjhqJ8v_Bs';
 
+/**
+ * Public social profiles. Used by the Footer icon row and by Organization.sameAs
+ * in JSON-LD — keep them in sync by editing here.
+ */
+export const SOCIAL_PROFILES = {
+  instagram: 'https://www.instagram.com/artbartokyo/',
+  facebook: 'https://www.facebook.com/artbartokyo/',
+  tiktok: 'https://www.tiktok.com/@artbartokyo',
+  youtube: 'https://www.youtube.com/@artbartokyo4258',
+} as const;
+
+export const SOCIAL_PROFILE_URLS: readonly string[] = Object.values(SOCIAL_PROFILES);
+
 export const SITE_IMAGES = {
   hero: {
     /** Default full-bleed hero: desktop MP4; pair with `homeMobile` for `<source media>`. */

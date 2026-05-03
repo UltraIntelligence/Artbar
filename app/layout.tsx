@@ -15,6 +15,7 @@ import {
 } from '@/lib/copy/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
+import { SOCIAL_PROFILE_URLS } from '@/constants';
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -22,6 +23,7 @@ const organizationJsonLd = {
   name: 'Artbar Tokyo',
   url: SITE_URL,
   logo: `${SITE_URL}/brand/artbar-logo-dark.png`,
+  sameAs: SOCIAL_PROFILE_URLS,
 };
 
 const josefinSans = Josefin_Sans({
