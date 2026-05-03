@@ -3,6 +3,7 @@ import { LOCATIONS } from '@/constants';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
 
 export async function generateMetadata(): Promise<Metadata> {
   // No JP entries exist for the locations page hero/title — fall back to JP-equivalent
@@ -21,18 +22,20 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const jsonLd = {
+const locationsJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  itemListElement: LOCATIONS.map((loc, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    item: {
-      '@type': 'ArtStudio',
-      name: loc.nameEn,
-      address: loc.addressEn,
-      url: `https://artbar.co.jp/locations#${loc.id}`,
+  '@graph': LOCATIONS.map((loc) => ({
+    '@type': 'LocalBusiness',
+    '@id': `${SITE_URL}/locations#${loc.id}`,
+    name: loc.nameEn,
+    image: `${SITE_URL}${loc.image}`,
+    url: `${SITE_URL}/locations#${loc.id}`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: loc.addressEn,
+      addressCountry: 'JP',
     },
+    ...(loc.mapUrl && { hasMap: loc.mapUrl }),
   })),
 };
 
@@ -45,7 +48,7 @@ export default function LocationsPage() {
       {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(locationsJsonLd) }}
       />
       {PRELOAD_LOCATION_IMAGES.map((src) => (
         <link
