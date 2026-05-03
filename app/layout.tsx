@@ -61,12 +61,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // (still segmented — defaultContent.jp leaks into both branches via the merge).
   // Both branches hand ContentProvider a payload already shaped for direct render —
   // no client-side merge, no client-side BudouX.
-  const publishedPayload =
-    initialLang === 'jp'
-      ? (await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 })) ?? DEFAULT_JAPANESE_COPY_PAYLOAD
-      : DEFAULT_JAPANESE_COPY_PAYLOAD;
+  //
+  // We track whether the Supabase fetch actually returned data (vs falling back to
+  // DEFAULT_JAPANESE_COPY_PAYLOAD on timeout/error). If it fell back, the client
+  // should still attempt a runtime fetch to recover fresh published copy.
+  const supabaseJpPayload =
+    initialLang === 'jp' ? await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }) : null;
+  const publishedPayload = supabaseJpPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
   const initialContent = segmentJpDeep(mergePublishedIntoContent(publishedPayload));
   const initialJpCopy = segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload));
+  const initialHasFetchedRuntimeJp = supabaseJpPayload !== null;
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
@@ -76,6 +80,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           initialLang={initialLang}
           initialContent={initialContent}
           initialJpCopy={initialJpCopy}
+          initialHasFetchedRuntimeJp={initialHasFetchedRuntimeJp}
         >
           <ThemeInjector />
           <ScrollToTop />

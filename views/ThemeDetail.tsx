@@ -219,7 +219,7 @@ export const ThemeDetail: React.FC = () => {
                 <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
                   <Image
                     src={pageImages?.examples[i] ?? ex.image}
-                    alt={ex.title}
+                    alt={stripJpSentinel(ex.title)}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
                     sizes="(max-width: 1024px) 50vw, 25vw"

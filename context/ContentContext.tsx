@@ -36,13 +36,21 @@ export const ContentProvider: React.FC<{
   initialLang: Language;
   initialContent: ContentData;
   initialJpCopy: ResolvedJapaneseCopy;
-}> = ({ children, initialLang, initialContent, initialJpCopy }) => {
+  /** True when the server already fetched fresh published JP copy from Supabase.
+   *  When false (EN visitors, or JP visitors whose Supabase fetch timed out),
+   *  the client retries via /api/copy-public on first JP render. */
+  initialHasFetchedRuntimeJp: boolean;
+}> = ({
+  children,
+  initialLang,
+  initialContent,
+  initialJpCopy,
+  initialHasFetchedRuntimeJp,
+}) => {
   const [lang, setLang] = useState<Language>(initialLang);
   const [content, setContent] = useState<ContentData>(initialContent);
   const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(initialJpCopy);
-  // Track whether we've fetched the runtime-published JP override. Layout pre-fetches
-  // for JP visitors; EN visitors who toggle to JP later trigger the runtime fetch once.
-  const [hasFetchedRuntimeJp, setHasFetchedRuntimeJp] = useState<boolean>(initialLang === 'jp');
+  const [hasFetchedRuntimeJp, setHasFetchedRuntimeJp] = useState<boolean>(initialHasFetchedRuntimeJp);
 
   useEffect(() => {
     document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';

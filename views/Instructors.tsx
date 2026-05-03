@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 
 export const Instructors: React.FC = () => {
@@ -25,7 +26,7 @@ export const Instructors: React.FC = () => {
                  <div className="absolute inset-0 bg-artbar-navy/10 z-[1]"></div>
                  <Image
                    src={instructor.artworkImage}
-                   alt={`${instructor.name}'s Art`}
+                   alt={`${stripJpSentinel(instructor.name)}'s Art`}
                    fill
                    className="object-cover group-hover:scale-105 transition-transform duration-700"
                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -37,7 +38,7 @@ export const Instructors: React.FC = () => {
                     <div className="w-32 h-32 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white relative">
                        <Image 
                          src={instructor.profileImage} 
-                         alt={instructor.name}
+                         alt={stripJpSentinel(instructor.name)}
                          width={128}
                          height={128}
                          className="object-cover"

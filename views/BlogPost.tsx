@@ -29,10 +29,11 @@ export const BlogPost: React.FC = () => {
   }
 
   const title = lang === 'en' ? post.titleEn : post.titleJp;
+  const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
   const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
   const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const shareTitle = encodeURIComponent(title);
+  const shareTitle = encodeURIComponent(titleForAttr);
   const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
 
   return (
@@ -41,7 +42,7 @@ export const BlogPost: React.FC = () => {
         <Image
           key={post.image}
           src={post.image}
-          alt={title}
+          alt={titleForAttr}
           fill
           priority
           placeholder="blur"
@@ -153,7 +154,7 @@ export const BlogPost: React.FC = () => {
                 <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">
                   <Image
                     src={p.image}
-                    alt={lang === 'en' ? p.titleEn : p.titleJp}
+                    alt={lang === 'en' ? p.titleEn : stripJpSentinel(p.titleJp)}
                     fill
                     className="object-cover"
                     sizes="96px"

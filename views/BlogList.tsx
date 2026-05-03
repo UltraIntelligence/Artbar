@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useContent } from '../context/ContentContext';
 import { JpText } from '../components/JpText';
+import { stripJpSentinel } from '../lib/jp-attr';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
@@ -29,6 +30,7 @@ export const BlogList: React.FC = () => {
         >
           {posts.map((post) => {
             const title = lang === 'en' ? post.titleEn : post.titleJp;
+            const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
             const excerpt = lang === 'en' ? post.excerptEn : post.excerptJp;
             const author = lang === 'en' ? post.authorEn : post.authorJp;
 
@@ -37,7 +39,7 @@ export const BlogList: React.FC = () => {
                 <Link href={`/blog/${post.slug}`} className="block relative overflow-hidden aspect-[4/3]">
                   <Image
                     src={post.image}
-                    alt={title}
+                    alt={titleForAttr}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
