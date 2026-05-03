@@ -644,7 +644,7 @@ export const FAQS = [
   },
   {
     question: "Is there a waiting list for cancellations of sold out sessions?",
-    answer: "Artbar does not have a waiting list system. If a session that was once sold out no longer has the “Sold Out” alert on the event, a cancellation has occurred and the session has availability. Please check the number of tickets left near event details booking button."
+    answer: "Yes! Artbar has a waitlist system from the event page. People on the waitlist will be notified at once when a seat opens. It is a first come first serve system."
   },
   {
     question: "Can you squeeze in an extra person for a sold out session?",
@@ -683,7 +683,7 @@ export const FAQS_JP = [
   },
   {
     question: "満席セッションのキャンセル待ちはできますか？",
-    answer: "Artbarではキャンセル待ちリストはご用意していません。一度満席になったセッションで「Sold Out」表示が消えている場合は、キャンセルが出て空席がある状態です。イベント詳細ページの予約ボタン付近で残席数をご確認ください。"
+    answer: "はい！Artbarではイベントページからキャンセル待ち登録ができます。空席が出るとキャンセル待ちの方へ一斉に通知が届き、先着順でご予約いただけます。"
   },
   {
     question: "満席のセッションに1名追加してもらうことはできますか？",
