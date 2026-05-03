@@ -11,6 +11,7 @@ const redis =
 
 const limiters = new Map<string, Ratelimit>();
 let warnedMissingRedis = false;
+let warnedRedisFailure = false;
 
 function getLimiter(name: string, max: number, windowSec: number): Ratelimit | null {
   if (!redis) return null;
@@ -57,6 +58,16 @@ export async function checkRateLimit(
     }
     return { allowed: true, remaining: -1, reset: 0 };
   }
-  const result = await limiter.limit(ip);
-  return { allowed: result.success, remaining: result.remaining, reset: result.reset };
+  try {
+    const result = await limiter.limit(ip);
+    return { allowed: result.success, remaining: result.remaining, reset: result.reset };
+  } catch (error) {
+    // Upstash network/transport failure: fail open so we don't take down /api/copy-admin/login or
+    // /api/generate-sketch when Redis blips. Log once per process to surface the incident.
+    if (!warnedRedisFailure) {
+      warnedRedisFailure = true;
+      console.warn('[rate-limit] Upstash request failed; allowing request', error);
+    }
+    return { allowed: true, remaining: -1, reset: 0 };
+  }
 }
