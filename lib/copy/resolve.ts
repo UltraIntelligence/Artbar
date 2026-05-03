@@ -77,7 +77,6 @@ function normalizeJapaneseThemeItems(
       ...(candidate ?? {}),
       image: theme.image,
       slug: theme.slug,
-      bookingUrl: theme.bookingUrl,
     };
   });
 }

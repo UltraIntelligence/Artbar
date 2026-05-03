@@ -95,34 +95,36 @@ export const PARTNER_LOGOS: { name: string; url: string }[] = [
 ];
 
 export const POPULAR_THEMES = [
-  { slug: "japan-inspired", title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
-  { slug: "paint-pouring", title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
-  { slug: "alcohol-ink", title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
-  { slug: "van-gogh", title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/van-gogh` },
-  { slug: "monet", title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/monet` },
-  { slug: "picasso", title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/picasso` },
-  { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
-  { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
-  { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
-  { slug: "texture-painting", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
-  { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
+  { slug: "japan-inspired", title: "Japan Inspired", desc: "Sakura, Mount Fuji & traditional motifs", image: GI.themes.japanInspired },
+  { slug: "paint-pouring", title: "Paint Pouring", desc: "Fluid art & mesmerizing cells", image: GI.themes.paintPouring },
+  { slug: "paint-your-pet", title: "Paint Your Pet", desc: "Immortalize your furry friend", image: GI.themes.paintYourPet },
+  { slug: "alcohol-ink", title: "Alcohol Ink", desc: "Ethereal & dreamy abstract art", image: GI.themes.alcoholInk },
+  { slug: "van-gogh", title: "Van Gogh", desc: "Starry nights & sunflower fields", image: GI.themes.vanGogh },
+  { slug: "monet", title: "Monet", desc: "Impressionist gardens & water lilies", image: GI.themes.monet },
+  { slug: "picasso", title: "Picasso", desc: "Cubist portraits & bold expressions", image: GI.themes.picasso },
+  { slug: "renoir", title: "Renoir", desc: "Soft light & romantic scenes", image: GI.themes.renoir },
+  { slug: "matisse", title: "Matisse", desc: "Vibrant colors & expressive forms", image: GI.themes.matisse },
+  { slug: "kids", title: "Kids!", desc: "Fun & simple designs for young artists", image: GI.themes.kids },
+  { slug: "texture-painting", title: "Texture Painting", desc: "Sculptural & dimensional art", image: GI.themes.texturePainting },
+  { slug: "paint-your-idol", title: "Paint Your Idol", desc: "Celebrate your favorite icon", image: GI.themes.paintYourIdol },
 ];
 
 /** Manual `<wbr>` markers on katakana compound titles give text-wrap: balance
  *  a phrase boundary to use; BudouX returns these as single chunks. See
  *  components/JpText.tsx for how the markers are honored. */
 export const POPULAR_THEMES_JP = [
-  { slug: "japan-inspired", title: "ジャパン<wbr>インスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/japan-inspired` },
-  { slug: "paint-pouring", title: "ポーリング<wbr>アート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-pouring` },
-  { slug: "alcohol-ink", title: "アルコール<wbr>インク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/alcohol-ink` },
-  { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/van-gogh` },
-  { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/monet` },
-  { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/picasso` },
-  { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/renoir` },
-  { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/matisse` },
-  { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/kids` },
-  { slug: "texture-painting", title: "テクスチャー<wbr>アート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/texture-painting` },
-  { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol, bookingUrl: `${ARTBAR_BOOKING_URL}/themes/paint-your-idol` },
+  { slug: "japan-inspired", title: "ジャパン<wbr>インスパイア", desc: "桜や富士山など、日本らしいモチーフ", image: GI.themes.japanInspired },
+  { slug: "paint-pouring", title: "ポーリング<wbr>アート", desc: "流れる絵の具が生む幻想的な模様", image: GI.themes.paintPouring },
+  { slug: "paint-your-pet", title: "ペットを<wbr>描こう", desc: "大切な家族をキャンバスに残す", image: GI.themes.paintYourPet },
+  { slug: "alcohol-ink", title: "アルコール<wbr>インク", desc: "にじみと透明感が美しい抽象アート", image: GI.themes.alcoholInk },
+  { slug: "van-gogh", title: "ゴッホ", desc: "星月夜やひまわりの世界観を楽しむ", image: GI.themes.vanGogh },
+  { slug: "monet", title: "モネ", desc: "印象派の庭園や睡蓮をやさしく表現", image: GI.themes.monet },
+  { slug: "picasso", title: "ピカソ", desc: "大胆な形と色で描くキュビズム", image: GI.themes.picasso },
+  { slug: "renoir", title: "ルノワール", desc: "やわらかな光に包まれた優雅な絵", image: GI.themes.renoir },
+  { slug: "matisse", title: "マティス", desc: "鮮やかな色と自由なフォルムを楽しむ", image: GI.themes.matisse },
+  { slug: "kids", title: "キッズ", desc: "子どもたちが楽しく描ける人気テーマ", image: GI.themes.kids },
+  { slug: "texture-painting", title: "テクスチャー<wbr>アート", desc: "立体感のある質感を楽しむモダンアート", image: GI.themes.texturePainting },
+  { slug: "paint-your-idol", title: "推しを描こう", desc: "大好きなアイコンや推しを作品に", image: GI.themes.paintYourIdol },
 ];
 
 /** Bios only; image URLs come from `INSTRUCTOR_IDS` + `GI.instructors` (see `data/generated-image-paths.ts`). */
@@ -642,7 +644,7 @@ export const FAQS = [
   },
   {
     question: "Is there a waiting list for cancellations of sold out sessions?",
-    answer: "Artbar does not have a waiting list system. If a session that was once sold out no longer has the “Sold Out” alert on the event, a cancellation has occurred and the session has availability. Please check the number of tickets left near event details booking button."
+    answer: "Yes! Artbar has a waitlist system from the event page. People on the waitlist will be notified at once when a seat opens. It is a first come first serve system."
   },
   {
     question: "Can you squeeze in an extra person for a sold out session?",
@@ -681,7 +683,7 @@ export const FAQS_JP = [
   },
   {
     question: "満席セッションのキャンセル待ちはできますか？",
-    answer: "Artbarではキャンセル待ちリストはご用意していません。一度満席になったセッションで「Sold Out」表示が消えている場合は、キャンセルが出て空席がある状態です。イベント詳細ページの予約ボタン付近で残席数をご確認ください。"
+    answer: "はい！Artbarではイベントページからキャンセル待ち登録ができます。空席が出るとキャンセル待ちの方へ一斉に通知が届き、先着順でご予約いただけます。"
   },
   {
     question: "満席のセッションに1名追加してもらうことはできますか？",

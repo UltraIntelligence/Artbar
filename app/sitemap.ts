@@ -18,15 +18,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/specified-commercial-transactions`, priority: 0.3, changeFrequency: 'yearly' },
   ];
 
-  // Source of truth: THEME_PAGE_SLUGS. `paint-your-pet` is excluded — its route handler
-  // calls notFound(), so it must not appear in the sitemap.
-  const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS
-    .filter((slug) => slug !== 'paint-your-pet')
-    .map((slug) => ({
-      url: `${BASE_URL}/themes/${slug}`,
-      priority: 0.7,
-      changeFrequency: 'monthly' as const,
-    }));
+  const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS.map((slug) => ({
+    url: `${BASE_URL}/themes/${slug}`,
+    priority: 0.7,
+    changeFrequency: 'monthly' as const,
+  }));
 
   return [...staticRoutes, ...themeRoutes];
 }
