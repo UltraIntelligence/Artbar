@@ -5,6 +5,8 @@
     { "source": "/calendar", "destination": "/", "permanent": true },
     { "source": "/about/instructors", "destination": "/instructors", "permanent": true },
     { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/contact-en", "destination": "/contact", "permanent": true },
+    { "source": "/contact-en/", "destination": "/contact", "permanent": true },
     { "source": "/category/:slug", "destination": "/blog", "permanent": true },
     { "source": "/:year(\\d{4})/:month(\\d{2})/:slug", "destination": "/blog/:slug", "permanent": true }
   ],

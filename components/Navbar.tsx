@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
 import { Logo } from './Logo';
+import { TransitionBanner } from './TransitionBanner';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
 
@@ -77,6 +78,7 @@ export const Navbar: React.FC = () => {
         isTransparent ? 'bg-transparent shadow-none' : 'bg-artbar-bg/95 backdrop-blur-md shadow-sm'
       }`}
     >
+      <TransitionBanner />
       <div
         className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-24 flex justify-between items-center ${
           isHeroNavLayout ? 'py-6 md:py-10' : 'py-4'

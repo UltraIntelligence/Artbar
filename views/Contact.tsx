@@ -7,6 +7,7 @@ import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
+import { ContactTransitionNotice } from '../components/ContactTransitionNotice';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -55,6 +56,9 @@ export const Contact: React.FC = () => {
         className={`reveal max-w-[1000px] mx-auto px-6 md:px-10 ${mainReveal.isVisible ? 'visible' : ''}`}
       >
         
+        {/* Transition notice */}
+        <ContactTransitionNotice />
+
         {/* Header */}
         <div className="text-center mb-20">
           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{site.contactPage.badge}</JpText></span>
@@ -103,7 +107,7 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative overflow-hidden">
+        {false && <div className="relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-artbar-taupe/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -205,7 +209,7 @@ export const Contact: React.FC = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
