@@ -103,12 +103,9 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
   }, [configuredLogoUrl, fallbackLogoUrl]);
 
   const hasHeightClass = className.includes('h-');
-  /** Light variant sits over the hero wash; a soft shadow keeps it legible
-   *  when the underlying media is bright. */
-  const lightShadow = variant === 'light' ? ' drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]' : '';
-  const imgClasses = (hasHeightClass
+  const imgClasses = hasHeightClass
     ? "w-auto object-contain"
-    : "h-6 md:h-8 w-auto object-contain transition-all duration-300") + lightShadow;
+    : "h-6 md:h-8 w-auto object-contain transition-all duration-300";
 
   return (
     <div className={`flex items-center ${className}`}>
@@ -118,12 +115,14 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
           alt={lang === 'en' ? 'Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.logoAlt)}
           className={imgClasses}
           onError={() => {
+            /** Only swap to the fallback URL when the configured src differs.
+             *  Never fall through to the text fallback on a single load failure:
+             *  configured and fallback are usually identical now, so a transient
+             *  Cloudflare miss or network blip would otherwise permanently flip
+             *  the logo to text for the rest of the page lifecycle. */
             if (imgSrc !== fallbackLogoUrl) {
               setImgSrc(fallbackLogoUrl);
-              return;
             }
-
-            setImgSrc('');
           }}
         />
       ) : (
