@@ -48,6 +48,12 @@ const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
 
 const SHOW_HERO_LINE_CTA = false;
 
+/** TEMPORARILY HIDDEN: WordPress PR image assets (logos + magazine covers)
+ *  for `content.media` were not migrated. Re-enable by flipping this flag
+ *  once the files are restored under /public/press/ and the URLs in
+ *  `MEDIA_LIST` (constants.ts) point at them. */
+const SHOW_MEDIA_COVERAGE = false;
+
 /**
  * Square face crops for the concept social strip. Sourced from Unsplash, optimized
  * to ~5 KB JPEGs at 192px and self-hosted to avoid third-party RTTs.
@@ -838,7 +844,8 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* As Seen In Section - GALLERY STYLE */}
+      {/* As Seen In Section - GALLERY STYLE — gated by SHOW_MEDIA_COVERAGE */}
+      {SHOW_MEDIA_COVERAGE && (
       <section className="py-24 md:py-48 bg-white">
         <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
@@ -889,6 +896,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Bottom CTA */}
       <section className="py-16 md:py-32 px-4 md:px-6">

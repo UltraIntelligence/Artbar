@@ -115,12 +115,14 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
           alt={lang === 'en' ? 'Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.logoAlt)}
           className={imgClasses}
           onError={() => {
+            /** Only swap to the fallback URL when the configured src differs.
+             *  Never fall through to the text fallback on a single load failure:
+             *  configured and fallback are usually identical now, so a transient
+             *  Cloudflare miss or network blip would otherwise permanently flip
+             *  the logo to text for the rest of the page lifecycle. */
             if (imgSrc !== fallbackLogoUrl) {
               setImgSrc(fallbackLogoUrl);
-              return;
             }
-
-            setImgSrc('');
           }}
         />
       ) : (
