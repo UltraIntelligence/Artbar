@@ -212,7 +212,7 @@ export const defaultContent: ContentData = {
         included: {
           title: "What's Included",
           desc: "We make planning easy with our all-inclusive packages.",
-          items: ["2 Hours of Studio Time", "All Art Materials & Aprons", "Bilingual Instruction", "Free-Flow Wine, Tea, Coffee", "Light Snacks (Crackers/Nuts)", "Cleanup Service"]
+          items: ["2 Hours of Studio Time", "All Art Materials & Aprons", "Bilingual Instruction Available on Request", "Free-Flow Wine, Tea, Coffee", "Light Snacks (Crackers/Nuts)", "Cleanup Service"]
         },
         catering: {
           title: "Catering Options",
@@ -449,7 +449,7 @@ export const defaultContent: ContentData = {
         items: [
           { title: "オールインクルーシブ", desc: "画材、エプロン、お持ち帰り袋など、必要なものは全てご用意。手ぶらでお越しください。", image: GI.featureAllInclusive },
           { title: "フリーフロードリンク", desc: "セッション中は、ワイン、紅茶、コーヒー、軽食をフリーフロー（飲み放題）でお楽しみいただけます。", image: GI.featureFreeFlowDrinks },
-          { title: "バイリンガル対応", desc: "英語・日本語でインストラクターがサポート。グローバルな雰囲気も魅力です。", image: GI.featureBilingual }
+          { title: "バイリンガル対応あり", desc: "多くのクラスで英語・日本語のバイリンガル指導をご提供しています。各クラスの講師情報をご確認ください。", image: GI.featureBilingual }
         ]
       },
       testimonials: {
@@ -525,7 +525,7 @@ export const defaultContent: ContentData = {
         included: {
           title: "パッケージに含まれるもの",
           desc: "イベントの成功に必要なものは、すべて基本プランに含まれています。",
-          items: ["2時間のスタジオ貸切・セッション", "全ての画材・エプロン", "バイリンガル講師による指導", "フリーフロードリンク（ワイン/お茶/珈琲）", "軽食（クラッカー/ナッツ）", "準備・清掃サービス"]
+          items: ["2時間のスタジオ貸切・セッション", "全ての画材・エプロン", "バイリンガル指導（ご希望に応じて）", "フリーフロードリンク（ワイン/お茶/珈琲）", "軽食（クラッカー/ナッツ）", "準備・清掃サービス"]
         },
         catering: {
           title: "ケータリング・オプション",

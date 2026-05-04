@@ -17,7 +17,7 @@ import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, HERO_BLUR_DATA_URL } from '../constants';
-import { Heart, Lightbulb, Star, Users, Gift, ArrowRight } from 'lucide-react';
+import { Heart, Lightbulb, Star, Users, ArrowRight } from 'lucide-react';
 
 export const ThemeDetail: React.FC = () => {
   const params = useParams();
@@ -49,11 +49,6 @@ export const ThemeDetail: React.FC = () => {
           expectDesc: themePageCopy.expectDesc,
           perfectTitle: themePageCopy.perfectTitle,
           perfectFor: themePageCopy.perfectFor,
-          whatYouGet: theme.whatYouGet.map((item, index) => ({
-            ...item,
-            text: themePageCopy.whatYouGet[index]?.text ?? item.text,
-            sub: themePageCopy.whatYouGet[index]?.sub ?? item.sub,
-          })),
           ctaTitle: themePageCopy.ctaTitle,
           ctaSub: themePageCopy.ctaSub,
           seoTitle: themePageCopy.seoTitle,
@@ -66,7 +61,6 @@ export const ThemeDetail: React.FC = () => {
   const gallery = useScrollReveal();
   const experience = useScrollReveal();
   const perfect = useScrollReveal();
-  const whatYouGet = useScrollReveal();
 
   const discoveryThemes = useMemo(
     () => pickDiscoveryThemes(resolvedSlug, site.home.themes.items, 4),
@@ -96,16 +90,9 @@ export const ThemeDetail: React.FC = () => {
         : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name),
     theExperience: lang === 'en' ? 'THE EXPERIENCE' : jpCopy.ui.themeDetail.theExperience,
     guestFavorite: lang === 'en' ? 'Guest Favorite' : jpCopy.ui.themeDetail.guestFavorite,
-    bilingualSessions: lang === 'en' ? 'Bilingual Social Sessions' : jpCopy.ui.themeDetail.bilingualSessions,
+    bilingualSessions: lang === 'en' ? 'Social Painting Sessions' : jpCopy.ui.themeDetail.bilingualSessions,
     expertGuidance: lang === 'en' ? 'Expert Step-by-Step Guidance' : jpCopy.ui.themeDetail.expertGuidance,
     community: lang === 'en' ? 'The Community' : jpCopy.ui.themeDetail.community,
-    whatToExpect: lang === 'en' ? 'What to Expect' : jpCopy.ui.themeDetail.whatToExpect,
-    whatToExpectSub:
-      lang === 'en'
-        ? 'Everything you need to create your masterpiece in Tokyo is provided. No extra fees, no hidden costs.'
-        : jpCopy.ui.themeDetail.whatToExpectSub,
-    bilingualArtClass: lang === 'en' ? 'Bilingual Art Class' : jpCopy.ui.themeDetail.bilingualArtClass,
-    perfectForGifting: lang === 'en' ? 'Perfect for Gifting' : jpCopy.ui.themeDetail.perfectForGifting,
     viewUpcoming: lang === 'en' ? 'View Upcoming Schedule' : jpCopy.ui.themeDetail.viewUpcoming,
     discoverMore: lang === 'en' ? 'Discover More Styles' : jpCopy.ui.themeDetail.discoverMore,
     discoverSub:
@@ -325,48 +312,6 @@ export const ThemeDetail: React.FC = () => {
                 </p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Value Block */}
-      <section className="py-24 bg-white md:mx-6 md:rounded-[3rem] shadow-sm">
-        <div
-          ref={whatYouGet.ref}
-          className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${whatYouGet.isVisible ? 'visible' : ''}`}
-        >
-          <div className="bg-artbar-bg rounded-[4rem] p-12 md:p-20 shadow-inner border border-artbar-light-taupe/10">
-            <div className="mb-20 text-center max-w-3xl mx-auto">
-              <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
-                <JpText>{ui.bilingualArtClass}</JpText>
-              </span>
-              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-6">
-                <JpText>{ui.whatToExpect}</JpText>
-              </h2>
-              <p className="text-artbar-gray text-lg md:text-xl font-light"><JpText>{ui.whatToExpectSub}</JpText></p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-y-16 gap-x-24">
-              {localizedTheme.whatYouGet.map((item, i) => (
-                <div key={i} className="flex items-start gap-8 group">
-                  <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-artbar-taupe shrink-0 group-hover:bg-artbar-navy group-hover:text-white transition-all duration-300 shadow-sm border border-gray-100">
-                    <item.icon size={28} />
-                  </div>
-                  <div>
-                    <h4 className="text-2xl font-heading font-bold text-artbar-navy mb-2"><JpText>{item.text}</JpText></h4>
-                    <p className="text-artbar-gray text-base leading-relaxed font-light"><JpText>{item.sub}</JpText></p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-20 pt-12 border-t border-gray-200 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex gap-8">
-                <div className="flex items-center gap-3 text-xs font-bold text-artbar-taupe uppercase tracking-widest">
-                  <Gift size={16} /> <JpText>{ui.perfectForGifting}</JpText>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
