@@ -103,9 +103,12 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
   }, [configuredLogoUrl, fallbackLogoUrl]);
 
   const hasHeightClass = className.includes('h-');
-  const imgClasses = hasHeightClass
+  /** Light variant sits over the hero wash; a soft shadow keeps it legible
+   *  when the underlying media is bright. */
+  const lightShadow = variant === 'light' ? ' drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]' : '';
+  const imgClasses = (hasHeightClass
     ? "w-auto object-contain"
-    : "h-6 md:h-8 w-auto object-contain transition-all duration-300";
+    : "h-6 md:h-8 w-auto object-contain transition-all duration-300") + lightShadow;
 
   return (
     <div className={`flex items-center ${className}`}>
