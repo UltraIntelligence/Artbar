@@ -565,107 +565,107 @@ export const TEAM_BUILDING_TESTIMONIALS: Testimonial[] = [
 ];
 
 export const MEDIA_LIST: MediaItem[] = [
-  { 
-    outlet: "Hot Pepper Beauty", 
-    date: "2022.09", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-09-hot-pepper-beauty/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-09-hot-pepper-beauty/main.png"
+  {
+    outlet: "Hot Pepper Beauty",
+    date: "2022.09",
+    logo: "/press/2022-09-hot-pepper-beauty/logo.png",
+    image: "/press/2022-09-hot-pepper-beauty/cover.jpg",
   },
-  { 
-    outlet: "SPRiNG Magazine", 
-    date: "2022.06", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-06-spring-magazine/logo.jpg",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-06-spring-magazine/main.png"
+  {
+    outlet: "SPRiNG Magazine",
+    date: "2022.06",
+    logo: "/press/2022-06-spring-magazine/logo.jpg",
+    image: "/press/2022-06-spring-magazine/cover.jpg",
   },
-  { 
-    outlet: "ぶらり途中下車の旅", 
-    date: "2022.05", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-05-%E3%81%B5%E3%82%99%E3%82%89%E3%82%8A%E9%80%94%E4%B8%AD%E4%B8%8B%E8%BB%8A%E3%81%AE%E6%97%85/logo.jpg",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-05-%E3%81%B5%E3%82%99%E3%82%89%E3%82%8A%E9%80%94%E4%B8%AD%E4%B8%8B%E8%BB%8A%E3%81%AE%E6%97%85/logo.jpg"
+  {
+    outlet: "ぶらり途中下車の旅",
+    date: "2022.05",
+    logo: "/press/2022-05-burari-tochuu/logo.jpg",
+    image: "/press/2022-05-burari-tochuu/logo.jpg",
   },
-  { 
-    outlet: "J-Wave Radio", 
-    date: "2022.01", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-01-j-wave-radio/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2022-01-j-wave-radio/main.jpg"
+  {
+    outlet: "J-Wave Radio",
+    date: "2022.01",
+    logo: "/press/2022-01-j-wave-radio/logo.png",
+    image: "/press/2022-01-j-wave-radio/cover.jpg",
   },
-  { 
-    outlet: "Fuji TV", 
-    date: "2021.06", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2021-06-fuji-tv/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2021-06-fuji-tv/bg.jpg"
+  {
+    outlet: "Fuji TV",
+    date: "2021.06",
+    logo: "/press/2021-06-fuji-tv/logo.png",
+    image: "/press/2021-06-fuji-tv/cover.jpg",
   },
-  { 
-    outlet: "Vogue Japan", 
-    date: "2020.11", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-vogue-japan/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-vogue-japan/main.jpg"
+  {
+    outlet: "Vogue Japan",
+    date: "2020.11",
+    logo: "/press/2020-11-vogue-japan/logo.png",
+    image: "/press/2020-11-vogue-japan/cover.jpg",
   },
-  { 
-    outlet: "Ginger", 
-    date: "2020.11", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-ginger/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-11-ginger/main.jpg"
+  {
+    outlet: "Ginger",
+    date: "2020.11",
+    logo: "/press/2020-11-ginger/logo.png",
+    image: "/press/2020-11-ginger/cover.jpg",
   },
-  { 
-    outlet: "Tokyo MX", 
-    date: "2020.08", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-08-tokyo-mx/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-08-tokyo-mx/main.png"
+  {
+    outlet: "Tokyo MX",
+    date: "2020.08",
+    logo: "/press/2020-08-tokyo-mx/logo.png",
+    image: "/press/2020-08-tokyo-mx/cover.jpg",
   },
-  { 
-    outlet: "Aera Magazine", 
-    date: "2020.02", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-02-aera-magazine/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2020-02-aera-magazine/main.png"
+  {
+    outlet: "Aera Magazine",
+    date: "2020.02",
+    logo: "/press/2020-02-aera-magazine/logo.png",
+    image: "/press/2020-02-aera-magazine/cover.jpg",
   },
-  { 
-    outlet: "Timeout Tokyo", 
-    date: "2019.10", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-10-timeout-tokyo/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-10-timeout-tokyo/main.png"
+  {
+    outlet: "Timeout Tokyo",
+    date: "2019.10",
+    logo: "/press/2019-10-timeout-tokyo/logo.png",
+    image: "/press/2019-10-timeout-tokyo/cover.jpg",
   },
-  { 
-    outlet: "The Japan Times", 
-    date: "2019.10", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-10-the-japan-times/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-10-the-japan-times/main.jpg"
+  {
+    outlet: "The Japan Times",
+    date: "2019.10",
+    logo: "/press/2019-10-the-japan-times/logo.png",
+    image: "/press/2019-10-the-japan-times/cover.jpg",
   },
-  { 
-    outlet: "BuzzFeed Japan", 
-    date: "2019.09", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-09-buzzfeed-japan/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-09-buzzfeed-japan/main.png"
+  {
+    outlet: "BuzzFeed Japan",
+    date: "2019.09",
+    logo: "/press/2019-09-buzzfeed-japan/logo.png",
+    image: "/press/2019-09-buzzfeed-japan/cover.jpg",
   },
-  { 
-    outlet: "Tokyo Calendar", 
-    date: "2019.08", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-08-tokyo-calendar/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-08-tokyo-calendar/main.png"
+  {
+    outlet: "Tokyo Calendar",
+    date: "2019.08",
+    logo: "/press/2019-08-tokyo-calendar/logo.png",
+    image: "/press/2019-08-tokyo-calendar/cover.jpg",
   },
-  { 
-    outlet: "Harumari Tokyo", 
-    date: "2019.08", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-08-harumari-tokyo/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-08-harumari-tokyo/main.png"
+  {
+    outlet: "Harumari Tokyo",
+    date: "2019.08",
+    logo: "/press/2019-08-harumari-tokyo/logo.png",
+    image: "/press/2019-08-harumari-tokyo/cover.jpg",
   },
-  { 
-    outlet: "2nd Magazine", 
-    date: "2019.05", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-05-2nd-magazine/logo.jpg",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2019-05-2nd-magazine/main.jpg"
+  {
+    outlet: "2nd Magazine",
+    date: "2019.05",
+    logo: "/press/2019-05-2nd-magazine/logo.jpg",
+    image: "/press/2019-05-2nd-magazine/cover.jpg",
   },
-  { 
-    outlet: "Hanako Magazine", 
-    date: "2018.07", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2018-07-hanako-magazine/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2018-07-hanako-magazine/main.jpg"
+  {
+    outlet: "Hanako Magazine",
+    date: "2018.07",
+    logo: "/press/2018-07-hanako-magazine/logo.jpg",
+    image: "/press/2018-07-hanako-magazine/cover.jpg",
   },
-  { 
-    outlet: "Tokyo Weekender", 
-    date: "2016.03", 
-    logo: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2016-03-tokyo-weekender/logo.png",
-    image: "https://artbar.co.jp/wp-content/themes/artbar/assets/pr-images/2016-03-tokyo-weekender/2016-main.jpg"
+  {
+    outlet: "Tokyo Weekender",
+    date: "2016.03",
+    logo: "/press/2016-03-tokyo-weekender/logo.png",
+    image: "/press/2016-03-tokyo-weekender/cover.jpg",
   },
 ];
 
