@@ -838,7 +838,11 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* As Seen In Section - GALLERY STYLE */}
+      {/* As Seen In Section - GALLERY STYLE
+       *  TEMPORARILY HIDDEN: WordPress PR image assets (logos + magazine covers)
+       *  were not migrated. Re-enable by removing the `false &&` wrapper once the
+       *  files are restored under /public/press/ and MEDIA_LIST is updated. */}
+      {false && (
       <section className="py-24 md:py-48 bg-white">
         <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
@@ -889,6 +893,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Bottom CTA */}
       <section className="py-16 md:py-32 px-4 md:px-6">
