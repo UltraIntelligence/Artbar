@@ -856,7 +856,7 @@ export const Home: React.FC = () => {
                       loading="lazy"
                       decoding="async"
                       className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100" 
-                      onError={(e) => (e.target as HTMLImageElement).src = `https://picsum.photos/seed/media${i}/600/800`}
+                      onError={(e) => { (e.target as HTMLImageElement).style.visibility = 'hidden'; }}
                    />
                    
                    {/* Dark Gradient Overlay */}
