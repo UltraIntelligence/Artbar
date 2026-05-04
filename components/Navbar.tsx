@@ -37,6 +37,7 @@ export const Navbar: React.FC = () => {
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
     { name: site.nav.locations, path: '/locations' },
+    { name: site.nav.contact, path: '/contact' },
   ];
 
   const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
