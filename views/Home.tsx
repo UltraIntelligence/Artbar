@@ -208,7 +208,7 @@ export const Home: React.FC = () => {
   const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : jpCopy.ui.home.meetRegularsHeading;
   const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
   const bilingualLine1 = 'Professional Bilingual';
-  const bilingualLine2 = 'Instruction Provided';
+  const bilingualLine2 = 'Instruction Available';
   const bilingualJpLine1 = jpCopy.ui.home.bilingualLine1;
   const bilingualJpLine2 = jpCopy.ui.home.bilingualLine2;
   const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : jpCopy.ui.home.mediaCoverageLabel;

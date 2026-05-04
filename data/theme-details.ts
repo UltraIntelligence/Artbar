@@ -49,13 +49,13 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Cherry Blossom Path", image: getPh(800, 800, "Sakura Path") }
     ],
     expectTitle: "A Premier Tokyo Creative Experience",
-    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are the gold standard of 'sip and paint' in Tokyo. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn, teaching you to build layered gradients and rhythmic brushwork while you enjoy premium wine. This bilingual art class is designed for relaxation, ensuring every guest leaves with a masterpiece and a smile.",
+    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are the gold standard of 'sip and paint' in Tokyo. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn, teaching you to build layered gradients and rhythmic brushwork while you enjoy wine. This art class is designed for relaxation, ensuring every guest leaves with a masterpiece and a smile. Bilingual instruction available in most sessions.",
     perfectTitle: "Who it's Perfect For",
     perfectFor: [
       "Visitors wanting a creative and authentic Tokyo memory", 
       "Locals who love Japanese scenery and traditional aesthetics", 
       "Couples seeking a calm, artistic date night in the heart of the city", 
-      "Art enthusiasts looking for a bilingual social painting event"
+      "Art enthusiasts looking for a social painting event (bilingual sessions available)"
     ],
     whatYouGet: [
       { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
@@ -64,9 +64,9 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Explore Japan-Inspired Sessions",
-    ctaSub: "Browse our upcoming bilingual art classes and reserve your spot today.",
+    ctaSub: "Browse our upcoming art classes and reserve your spot today. Bilingual instruction available in most sessions.",
     seoTitle: "Japan-Inspired Painting Classes Tokyo | Artbar Tokyo",
-    seoDesc: "Paint Mt. Fuji, Sakura, and Hokusai waves at Artbar Tokyo. Join our bilingual paint and sip experience in Shibuya and Ginza."
+    seoDesc: "Paint Mt. Fuji, Sakura, and Hokusai waves at Artbar Tokyo. A paint and sip experience in Shibuya and Ginza — bilingual classes available."
   },
   'van-gogh': {
     title: "Van Gogh Paint and Sip Classes",
@@ -101,9 +101,9 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Paint Like Van Gogh",
-    ctaSub: "Check our bilingual calendar for upcoming Starry Night and Sunflower sessions.",
+    ctaSub: "Check our calendar for upcoming Starry Night and Sunflower sessions — bilingual instruction available in most classes.",
     seoTitle: "Van Gogh Painting Class Tokyo | Artbar Paint and Sip",
-    seoDesc: "Create your own Starry Night in Tokyo. Professional bilingual art classes with wine, snacks, and all-inclusive materials."
+    seoDesc: "Create your own Starry Night in Tokyo. Professional art classes with wine, snacks, and all-inclusive materials. Bilingual classes available."
   },
   'paint-pouring': {
     title: "Paint Pouring Classes with Wine",
@@ -123,7 +123,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Neon Energy Abstract", image: getPh(800, 800, "Neon Pour") }
     ],
     expectTitle: "A Mesmerizing Tokyo Fluid Art Experience",
-    expectDesc: "Step into our high-energy studio for Tokyo's premier paint pouring experience. You'll learn several techniques guided by our bilingual experts while sipping on bottomless premium wine.",
+    expectDesc: "Step into our high-energy studio for Tokyo's premier paint pouring experience. You'll learn several techniques guided by our expert instructors while sipping on bottomless wine. Bilingual instruction available in most classes.",
     perfectTitle: "Perfect for Every Creator",
     perfectFor: [
       "Beginners looking for an easy, high-impact art style", 
@@ -140,7 +140,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Unleash Your Inner Fluid Artist",
     ctaSub: "Browse our upcoming paint pouring sessions and reserve your spot today.",
     seoTitle: "Paint Pouring Classes Tokyo | Fluid Art Paint and Sip Artbar",
-    seoDesc: "Discover the magic of paint pouring in Tokyo. Join our bilingual fluid art sessions with wine, snacks, and expert instruction."
+    seoDesc: "Discover the magic of paint pouring in Tokyo. Fluid art sessions with wine, snacks, and expert instruction — bilingual classes available."
   },
   'alcohol-ink': {
     title: "Alcohol Ink Art Classes with Wine",
@@ -197,7 +197,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Poppy Field", image: getPh(800, 800, "Poppy Field") }
     ],
     expectTitle: "The Poetry of Impressionism",
-    expectDesc: "Join us for a relaxing afternoon or evening painting Monet's most beloved scenes. Our bilingual instructors teach you to layer colors to create depth and atmosphere, all while you enjoy bottomless wine and light snacks.",
+    expectDesc: "Join us for a relaxing afternoon or evening painting Monet's most beloved scenes. Our instructors teach you to layer colors to create depth and atmosphere, all while you enjoy bottomless wine and light snacks. Bilingual instruction available in most classes.",
     perfectTitle: "For Lovers of Light",
     perfectFor: ["Beginner painters", "Garden and nature enthusiasts", "Couples", "Art history buffs"],
     whatYouGet: [
@@ -209,7 +209,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Capture the Impression",
     ctaSub: "Reserve your spot for our next Monet garden session.",
     seoTitle: "Monet Painting Classes Tokyo | Impressionist Paint and Sip",
-    seoDesc: "Paint like Monet in Tokyo. Join our bilingual water lily workshops with free-flow wine and snacks. Perfect for beginners."
+    seoDesc: "Paint like Monet in Tokyo. Join our water lily workshops with free-flow wine and snacks. Bilingual classes available. Perfect for beginners."
   },
   'picasso': {
     title: "Picasso Style Paint and Sip Classes",
@@ -241,7 +241,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Be a Modern Master",
     ctaSub: "Browse our Picasso-inspired sessions and book now.",
     seoTitle: "Picasso Abstract Art Class Tokyo | Paint and Sip Artbar",
-    seoDesc: "Create cubist art at Artbar Tokyo. Our Picasso sessions are bold, fun, and bilingual. Wine and all materials included."
+    seoDesc: "Create cubist art at Artbar Tokyo. Our Picasso sessions are bold and fun. Bilingual classes available. Wine and all materials included."
   },
   'renoir': {
     title: "Renoir Painting Classes with Wine",
@@ -261,7 +261,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Summer Flowers", image: getPh(800, 800, "Renoir Flowers") }
     ],
     expectTitle: "A Session of Pure Beauty",
-    expectDesc: "Our Renoir sessions are calm and rewarding. You'll learn how to use soft blending techniques to create a glowing effect on your canvas, paired with a selection of premium wines for a romantic evening.",
+    expectDesc: "Our Renoir sessions are calm and rewarding. You'll learn how to use soft blending techniques to create a glowing effect on your canvas, paired with a selection of wines for a romantic evening.",
     perfectTitle: "Perfect for Dreamers",
     perfectFor: ["Fans of classical beauty", "Couples", "Anyone seeking a relaxing art session", "Portrait lovers"],
     whatYouGet: [
@@ -273,7 +273,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Paint Romance",
     ctaSub: "Book your soft-light Renoir session in Tokyo today.",
     seoTitle: "Renoir Painting Class Tokyo | Romantic Paint and Sip Artbar",
-    seoDesc: "Paint with soft light and romantic colors at Artbar Tokyo. Renoir-style classes with wine and snacks in a bilingual environment."
+    seoDesc: "Paint with soft light and romantic colors at Artbar Tokyo. Renoir-style classes with wine and snacks. Bilingual classes available."
   },
   'matisse': {
     title: "Matisse Inspired Art Classes with Wine",
@@ -303,9 +303,9 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Find Your Joy",
-    ctaSub: "Check our bilingual schedule for upcoming Matisse workshops.",
+    ctaSub: "Check our schedule for upcoming Matisse workshops — bilingual instruction available in most classes.",
     seoTitle: "Matisse Modern Art Class Tokyo | Paint and Sip Artbar",
-    seoDesc: "Discover the joy of color at Artbar Tokyo. Matisse-style workshops featuring bold colors and simple shapes. Bilingual and wine-inclusive."
+    seoDesc: "Discover the joy of color at Artbar Tokyo. Matisse-style workshops featuring bold colors and simple shapes. Bilingual classes available. Wine-inclusive."
   },
   'kids': {
     title: "Creative Painting Classes for Kids",
@@ -337,7 +337,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Start Their Art Journey",
     ctaSub: "View our weekend kids' sessions and book today.",
     seoTitle: "Kids Art Classes Tokyo | Children's Painting Workshops Artbar",
-    seoDesc: "Fun and bilingual art classes for kids in Tokyo. Weekend sessions with snacks, juice, and all materials. Safe and supportive environment."
+    seoDesc: "Fun art classes for kids in Tokyo — bilingual classes available. Weekend sessions with snacks, juice, and all materials. Safe and supportive environment."
   },
   'texture-art': {
     title: "Texture Painting Classes with Wine",
@@ -369,7 +369,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Feel the Art",
     ctaSub: "Book your texture session in Shibuya or Ginza today.",
     seoTitle: "Texture Art Classes Tokyo | 3D Paint and Sip Artbar",
-    seoDesc: "Create sculptural 3D art at Artbar Tokyo. Use modeling paste and palette knives in our bilingual wine sessions. Perfect for abstract art lovers."
+    seoDesc: "Create sculptural 3D art at Artbar Tokyo. Use modeling paste and palette knives in our wine sessions. Bilingual classes available. Perfect for abstract art lovers."
   },
   'paint-your-pet': {
     title: "Paint Your Pet Classes with Wine",
@@ -401,7 +401,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "Paint Your Best Friend",
     ctaSub: "Check our calendar for the next limited Paint Your Pet session.",
     seoTitle: "Paint Your Pet Tokyo | Custom Pet Portraits Class | Artbar",
-    seoDesc: "Paint a portrait of your pet at Artbar Tokyo. We sketch it for you! Professional bilingual instruction with wine and snacks included."
+    seoDesc: "Paint a portrait of your pet at Artbar Tokyo. We sketch it for you! Professional instruction with wine and snacks included. Bilingual classes available."
   },
   'paint-your-idol': {
     title: "Paint Your Idol Classes with Wine",
@@ -438,7 +438,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ctaTitle: "immortalize Your Idol",
     ctaSub: "View our upcoming pop-culture and icon sessions.",
     seoTitle: "Paint Your Idol Classes Tokyo | Icon & Fan Art Artbar",
-    seoDesc: "Paint your favorite icon at Artbar Tokyo. Music, wine, and bilingual portrait coaching in our high-energy Shibuya and Ginza studios."
+    seoDesc: "Paint your favorite icon at Artbar Tokyo. Music, wine, and portrait coaching in our high-energy Shibuya and Ginza studios. Bilingual classes available."
   },
 };
 
