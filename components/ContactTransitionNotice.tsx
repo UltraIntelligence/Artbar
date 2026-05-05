@@ -13,7 +13,10 @@ export const ContactTransitionNotice: React.FC = () => {
   useEffect(() => {
     setHasMounted(true);
     try {
-      const dismissed = window.localStorage.getItem(DISMISSED_KEY) === '1';
+      // sessionStorage: dismissal lasts the current tab session only.
+      // Returning visitors see the notice again because they may still need
+      // the pre/post-May-5 cancellation policy distinction.
+      const dismissed = window.sessionStorage.getItem(DISMISSED_KEY) === '1';
       setIsDismissed(dismissed);
       if (!dismissed) requestAnimationFrame(() => setVisible(true));
     } catch {
@@ -28,7 +31,7 @@ export const ContactTransitionNotice: React.FC = () => {
     setVisible(false);
     setTimeout(() => {
       setIsDismissed(true);
-      try { window.localStorage.setItem(DISMISSED_KEY, '1'); } catch {}
+      try { window.sessionStorage.setItem(DISMISSED_KEY, '1'); } catch {}
     }, 350);
   };
 
