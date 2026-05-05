@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Mail } from 'lucide-react';
 
 export const ContactTransitionNotice: React.FC = () => {
   const [hasMounted, setHasMounted] = useState(false);
@@ -175,34 +174,6 @@ export const ContactTransitionNotice: React.FC = () => {
               予約確認メールのリンクから直接キャンセルが可能です。
             </p>
           </div>
-        </div>
-
-        {/* ── Email CTA ── */}
-        <div className="mt-6 text-center">
-          <a
-            href="mailto:tokyo@artbar.co.jp"
-            className="inline-flex items-center gap-2.5 rounded-full font-heading font-bold text-sm transition-all"
-            style={{
-              background: 'rgba(163,147,132,0.25)',
-              border: '1px solid rgba(163,147,132,0.45)',
-              color: '#F1EFEC',
-              padding: '0.65rem 1.5rem',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(163,147,132,0.4)';
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(163,147,132,0.7)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(163,147,132,0.25)';
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(163,147,132,0.45)';
-            }}
-          >
-            <Mail size={15} />
-            Email us&ensp;·&ensp;tokyo@artbar.co.jp
-          </a>
-          <p className="text-xs mt-2" style={{ color: 'rgba(241,239,236,0.4)' }}>
-            メールでのお問い合わせ
-          </p>
         </div>
       </div>
 
