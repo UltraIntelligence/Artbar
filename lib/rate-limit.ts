@@ -17,22 +17,54 @@ type LocalBucket = {
   reset: number;
   windowMs: number;
   hits: number[];
+  lastSeen: number;
 };
 
 const localBuckets = new Map<string, LocalBucket>();
+const LOCAL_BUCKET_LIMIT = 10_000;
+const LOCAL_BUCKET_SWEEP_INTERVAL_MS = 30_000;
+let lastLocalBucketSweep = 0;
+
+function sweepLocalBuckets(now: number) {
+  if (localBuckets.size <= LOCAL_BUCKET_LIMIT && now - lastLocalBucketSweep < LOCAL_BUCKET_SWEEP_INTERVAL_MS) {
+    return;
+  }
+
+  lastLocalBucketSweep = now;
+
+  for (const [bucketKey, value] of localBuckets) {
+    if (value.hits.every((hit) => now - hit >= value.windowMs)) {
+      localBuckets.delete(bucketKey);
+    }
+  }
+
+  if (localBuckets.size <= LOCAL_BUCKET_LIMIT) {
+    return;
+  }
+
+  const oldestBuckets = [...localBuckets.entries()]
+    .sort(([, a], [, b]) => a.lastSeen - b.lastSeen)
+    .slice(0, localBuckets.size - LOCAL_BUCKET_LIMIT);
+
+  for (const [bucketKey] of oldestBuckets) {
+    localBuckets.delete(bucketKey);
+  }
+}
 
 function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: number): RateLimitResult {
   const now = Date.now();
   const windowMs = windowSec * 1000;
   const key = `${name}:${max}:${windowSec}:${ip}`;
-  const bucket = localBuckets.get(key) ?? { reset: now + windowMs, windowMs, hits: [] };
+  const bucket = localBuckets.get(key) ?? { reset: now + windowMs, windowMs, hits: [], lastSeen: now };
   bucket.windowMs = windowMs;
+  bucket.lastSeen = now;
   bucket.hits = bucket.hits.filter((hit) => now - hit < windowMs);
 
   if (bucket.hits.length >= max) {
     const oldest = bucket.hits[0] ?? now;
     bucket.reset = oldest + windowMs;
     localBuckets.set(key, bucket);
+    sweepLocalBuckets(now);
     return {
       allowed: false,
       remaining: 0,
@@ -43,14 +75,7 @@ function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: n
   bucket.hits.push(now);
   bucket.reset = (bucket.hits[0] ?? now) + windowMs;
   localBuckets.set(key, bucket);
-
-  if (localBuckets.size > 10_000) {
-    for (const [bucketKey, value] of localBuckets) {
-      if (value.hits.every((hit) => now - hit >= value.windowMs)) {
-        localBuckets.delete(bucketKey);
-      }
-    }
-  }
+  sweepLocalBuckets(now);
 
   return {
     allowed: true,
