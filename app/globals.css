@@ -356,6 +356,22 @@ html:lang(ja) li {
   text-wrap: pretty;
 }
 
+/* Explicit per-element nowrap intent must win over the JP defaults above
+   (`white-space: pre-line`) and the heading `text-wrap: balance` below.
+   Without this, Tailwind's `.whitespace-nowrap` is silently overridden by
+   the higher-specificity `html:lang(ja) span` rule and headings get split
+   into balanced lines on platforms whose default JP font is wider than
+   Hiragino (Windows/Android/Linux). */
+html:lang(ja) .whitespace-nowrap,
+html:lang(ja) span.whitespace-nowrap,
+html:lang(ja) h1 span.whitespace-nowrap,
+html:lang(ja) h2 span.whitespace-nowrap,
+html:lang(ja) h3 span.whitespace-nowrap,
+html:lang(ja) h4 span.whitespace-nowrap {
+  white-space: nowrap;
+  text-wrap: nowrap;
+}
+
 /* JP headings: balance line lengths so a short heading doesn't leave one
    stranded character on the last line (the "theme card orphan" problem).
    Targets the heading AND any inline span JpText injects inside it.
