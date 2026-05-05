@@ -86,6 +86,7 @@ export const defaultContent: ContentData = {
       locations: "Locations",
       press: "Press",
       contact: "Contact",
+      gifts: "Gifts",
       book: "View Schedule",
       blog: "Journal",
       paintYourPet: "Paint Your Pet"
@@ -399,6 +400,7 @@ export const defaultContent: ContentData = {
       locations: "スタジオアクセス",
       press: "メディア掲載",
       contact: "お問い合わせ",
+      gifts: "ギフト券",
       book: "予約する",
       blog: "ジャーナル",
       paintYourPet: "ペットを描こう"

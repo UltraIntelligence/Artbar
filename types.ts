@@ -98,8 +98,9 @@ export interface SiteContent {
     locations: string;
     press: string;
     contact: string;
+    gifts: string;
     book: string;
-    blog: string; 
+    blog: string;
     paintYourPet: string; // New
   };
   home: {

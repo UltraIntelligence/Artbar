@@ -38,6 +38,7 @@ export const Navbar: React.FC = () => {
     { name: site.nav.privateParties, path: '/private-parties' },
     { name: site.nav.locations, path: '/locations' },
     { name: site.nav.contact, path: '/contact' },
+    { name: site.nav.gifts, path: 'https://booking.artbar.co.jp/gift-certificates', external: true },
   ];
 
   const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
