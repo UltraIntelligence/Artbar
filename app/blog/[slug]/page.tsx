@@ -23,6 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: { canonical: `/blog/${slug}` },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: post.image ? [post.image] : ['/og-image.png'],
+    },
     openGraph: buildOpenGraph({
       lang,
       title,

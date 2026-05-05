@@ -18,11 +18,12 @@ export const ThemeInjector: React.FC = () => {
     const systemFonts = ['Hiragino', 'YuGothic', 'Meiryo', 'sans-serif', 'serif', 'Arial', 'Helvetica'];
     return systemFonts.some(sf => fontName.includes(sf));
   };
+  const isBundledFont = (fontName: string) => fontName === 'Josefin Sans';
 
   let googleFontsUrl = '';
   const fontsToLoad = new Set<string>();
-  if (!isSystemFont(fonts.heading)) fontsToLoad.add(fonts.heading);
-  if (!isSystemFont(fonts.body)) fontsToLoad.add(fonts.body);
+  if (!isSystemFont(fonts.heading) && !isBundledFont(fonts.heading)) fontsToLoad.add(fonts.heading);
+  if (!isSystemFont(fonts.body) && !isBundledFont(fonts.body)) fontsToLoad.add(fonts.body);
 
   if (fontsToLoad.size > 0) {
     // Construct Google Fonts URL: family=Name:wght@300;400;600;700&...

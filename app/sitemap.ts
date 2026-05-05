@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { defaultContent } from '@/data/content';
 import { THEME_PAGE_SLUGS } from '@/data/generated-image-paths';
 
 const BASE_URL = 'https://artbar.co.jp';
@@ -24,5 +25,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
   }));
 
-  return [...staticRoutes, ...themeRoutes];
+  const blogRoutes: MetadataRoute.Sitemap = defaultContent.blog
+    .filter((post) => post.published)
+    .map((post) => ({
+      url: `${BASE_URL}/blog/${post.slug}`,
+      priority: 0.6,
+      changeFrequency: 'yearly' as const,
+    }));
+
+  return [...staticRoutes, ...themeRoutes, ...blogRoutes];
 }
