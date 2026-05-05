@@ -1,36 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { X, Mail } from 'lucide-react';
-
-const DISMISSED_KEY = 'artbar_contact_notice_v1';
+import { Mail } from 'lucide-react';
 
 export const ContactTransitionNotice: React.FC = () => {
-  const [isDismissed, setIsDismissed] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
-    try {
-      const dismissed = window.localStorage.getItem(DISMISSED_KEY) === '1';
-      setIsDismissed(dismissed);
-      if (!dismissed) requestAnimationFrame(() => setVisible(true));
-    } catch {
-      setIsDismissed(false);
-      requestAnimationFrame(() => setVisible(true));
-    }
+    requestAnimationFrame(() => setVisible(true));
   }, []);
 
-  if (!hasMounted || isDismissed) return null;
-
-  const handleDismiss = () => {
-    setVisible(false);
-    setTimeout(() => {
-      setIsDismissed(true);
-      try { window.localStorage.setItem(DISMISSED_KEY, '1'); } catch {}
-    }, 350);
-  };
+  if (!hasMounted) return null;
 
   return (
     <div
@@ -224,28 +206,6 @@ export const ContactTransitionNotice: React.FC = () => {
         </div>
       </div>
 
-      {/* ── Dismiss button ── */}
-      <button
-        type="button"
-        onClick={handleDismiss}
-        aria-label="Dismiss"
-        className="absolute top-4 right-4 z-20 rounded-full flex items-center justify-center transition-colors"
-        style={{
-          width: 32, height: 32,
-          background: 'rgba(255,255,255,0.1)',
-          color: 'rgba(241,239,236,0.6)',
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)';
-          (e.currentTarget as HTMLButtonElement).style.color = '#F1EFEC';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.1)';
-          (e.currentTarget as HTMLButtonElement).style.color = 'rgba(241,239,236,0.6)';
-        }}
-      >
-        <X size={15} />
-      </button>
     </div>
   );
 };

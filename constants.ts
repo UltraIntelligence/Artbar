@@ -21,9 +21,9 @@ export const HERO_BLUR_DATA_URL =
 /** Default hero background image (served from /public/media) when not using MP4; also used as video `poster`. */
 export const HERO_HOME_FALLBACK = '/media/gemini-hero-background.jpeg';
 
-/** Full-bleed home hero looping videos (`public/media/`). Spaces in filenames are OK — use encodeURI in components. */
-export const HERO_HOME_VIDEO_DESKTOP = '/media/artbar-home-video-desktop 1.mp4';
-export const HERO_HOME_VIDEO_MOBILE = '/media/artbar-home-video-mobile-3 2.mp4';
+/** Full-bleed home hero looping videos (`public/media/`). */
+export const HERO_HOME_VIDEO_DESKTOP = '/media/artbar-home-video-desktop.mp4';
+export const HERO_HOME_VIDEO_MOBILE = '/media/artbar-home-video-mobile.mp4';
 
 /** Replace @PLACEHOLDER_ID with your LINE official account ID when ready. */
 export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
