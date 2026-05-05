@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lang = await getRequestLang();
   const title = lang === 'jp' ? post.titleJp : post.titleEn;
   const description = lang === 'jp' ? post.excerptJp : post.excerptEn;
+  const twitterImage = encodeURI(post.image ?? '/og-image.png');
   return {
     title,
     description,
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: post.image ? [post.image] : ['/og-image.png'],
+      images: [twitterImage],
     },
     openGraph: buildOpenGraph({
       lang,

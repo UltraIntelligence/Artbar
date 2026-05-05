@@ -3,6 +3,9 @@
 import React from 'react';
 import { useContent } from '../context/ContentContext';
 
+const BUNDLED_HEADING_FONT = 'Josefin Sans';
+const SYSTEM_FONT_HINTS = ['Hiragino', 'YuGothic', 'Meiryo', 'sans-serif', 'serif', 'Arial', 'Helvetica'];
+
 /** Single font-family name, safe for CSS custom properties (multi-word names must be quoted). */
 function cssFontFamilyName(name: string): string {
   const escaped = name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -10,23 +13,24 @@ function cssFontFamilyName(name: string): string {
 }
 
 function cssFontFamilyValue(name: string): string {
-  if (name === 'Josefin Sans') {
+  if (isBundledFont(name)) {
     return `var(--font-josefin), ${cssFontFamilyName(name)}`;
   }
 
   return cssFontFamilyName(name);
 }
 
+function isSystemFont(fontName: string): boolean {
+  return SYSTEM_FONT_HINTS.some(sf => fontName.includes(sf));
+}
+
+function isBundledFont(fontName: string): boolean {
+  return fontName === BUNDLED_HEADING_FONT;
+}
+
 export const ThemeInjector: React.FC = () => {
   const { content } = useContent();
-  const { fonts } = content.theme || { fonts: { heading: 'Josefin Sans', body: 'Hiragino Kaku Gothic ProN' } };
-
-  // Helper to identify if we need to load from Google (skip system fonts)
-  const isSystemFont = (fontName: string) => {
-    const systemFonts = ['Hiragino', 'YuGothic', 'Meiryo', 'sans-serif', 'serif', 'Arial', 'Helvetica'];
-    return systemFonts.some(sf => fontName.includes(sf));
-  };
-  const isBundledFont = (fontName: string) => fontName === 'Josefin Sans';
+  const { fonts } = content.theme || { fonts: { heading: BUNDLED_HEADING_FONT, body: 'Hiragino Kaku Gothic ProN' } };
 
   let googleFontsUrl = '';
   const fontsToLoad = new Set<string>();
