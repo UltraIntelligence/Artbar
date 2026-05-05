@@ -447,8 +447,17 @@ export const THEME_SLUG_ALIASES: Record<string, string> = {
   'texture-painting': 'texture-art',
 };
 
+/** Public theme URLs that should be indexed as a different canonical slug. */
+export const THEME_CANONICAL_SLUGS: Record<string, string> = {
+  'texture-art': 'texture-painting',
+};
+
 export function resolveThemeContentSlug(urlSlug: string): string {
   return THEME_SLUG_ALIASES[urlSlug] || urlSlug;
+}
+
+export function getCanonicalThemeSlug(urlSlug: string): string {
+  return THEME_CANONICAL_SLUGS[urlSlug] || urlSlug;
 }
 
 export function getThemeContent(resolvedSlug: string, lang: 'en' | 'jp'): ThemeContent {

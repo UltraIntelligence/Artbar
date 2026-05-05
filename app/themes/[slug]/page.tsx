@@ -1,7 +1,7 @@
 import { ThemeDetail } from '@/views/ThemeDetail';
 import type { Metadata } from 'next';
 import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-paths';
-import { getThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
+import { getCanonicalThemeSlug, getThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
@@ -15,9 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = theme.seoTitle;
   const description = theme.seoDesc;
   return {
-    title,
+    title: { absolute: title },
     ...(description && { description }),
-    alternates: { canonical: `/themes/${slug}` },
+    alternates: { canonical: `/themes/${getCanonicalThemeSlug(slug)}` },
     openGraph: buildOpenGraph({ lang, title, description }),
   };
 }
@@ -29,7 +29,7 @@ export default async function ThemeDetailPage({ params }: Props) {
   const resolvedSlug = resolveThemeContentSlug(slug);
   const heroImage = THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero;
   const theme = getThemeContent(resolvedSlug, lang);
-  const themeUrl = `${SITE_URL}/themes/${slug}`;
+  const themeUrl = `${SITE_URL}/themes/${getCanonicalThemeSlug(slug)}`;
   const homeName = lang === 'jp' ? 'ホーム' : 'Home';
 
   const breadcrumbJsonLd = {

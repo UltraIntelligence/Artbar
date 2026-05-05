@@ -18,12 +18,12 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary:
-      'bg-artbar-navy text-white hover:bg-opacity-90 shadow-lg hover:shadow-xl focus:ring-artbar-navy',
+      'bg-artbar-navy text-white hover:bg-artbar-navy/90 shadow-lg hover:shadow-xl focus:ring-artbar-navy',
     outline:
       'border-2 border-artbar-navy text-artbar-navy hover:bg-gray-50 focus:ring-artbar-navy',
     ghost: 'text-artbar-navy hover:bg-gray-100 focus:ring-artbar-navy',
     taupe:
-      'bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 border-none shadow-lg hover:shadow-xl focus:ring-artbar-taupe',
+      'bg-[#B8AB9F] text-artbar-navy hover:bg-[#B1A294] border-none shadow-lg hover:shadow-xl focus:ring-artbar-taupe',
     outlineWhite:
       'border-2 border-white text-white bg-transparent hover:bg-white hover:text-artbar-navy shadow-none focus:ring-white focus:ring-offset-artbar-navy',
   };

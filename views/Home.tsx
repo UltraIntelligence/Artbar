@@ -547,7 +547,7 @@ export const Home: React.FC = () => {
           <div className="flex w-full flex-col items-center rounded-[var(--radius-feature)] border border-gray-100 bg-white p-6 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.12)] sm:p-10 md:p-14 md:shadow-[0_40px_120px_-30px_rgba(0,0,0,0.15)] lg:px-16 lg:py-20 xl:py-24">
             <div className="mb-8 flex w-full items-center gap-3 sm:mb-12 sm:gap-4 md:mb-16 lg:mb-20">
               <div className="h-px flex-grow bg-artbar-navy/10" />
-              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-gray sm:px-6 md:px-8 md:text-xs">
+              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-navy sm:px-6 md:px-8 md:text-xs">
                 <JpText>{meetRegularsHeading}</JpText>
               </p>
               <div className="h-px flex-grow bg-artbar-navy/10" />
