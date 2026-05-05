@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { defaultContent } from '@/data/content';
 import { THEME_PAGE_SLUGS } from '@/data/generated-image-paths';
+import { getCanonicalThemeSlug } from '@/data/theme-details';
 
 const BASE_URL = 'https://artbar.co.jp';
 
@@ -20,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS.map((slug) => ({
-    url: `${BASE_URL}/themes/${slug === 'texture-art' ? 'texture-painting' : slug}`,
+    url: `${BASE_URL}/themes/${getCanonicalThemeSlug(slug)}`,
     priority: 0.7,
     changeFrequency: 'monthly' as const,
   }));
