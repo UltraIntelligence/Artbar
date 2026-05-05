@@ -3,6 +3,7 @@ import { checkRateLimit } from '@/lib/rate-limit';
 import { createAdminSessionToken, setAdminSessionCookie } from '@/lib/copy/session';
 import { COPY_ADMIN_PATH } from '@/lib/copy/defaults';
 import { isCopyBackendConfigured } from '@/lib/copy/store';
+import { isSameOriginMutation } from '@/lib/copy/request-security';
 
 function timingSafeEqual(a: string, b: string) {
   if (a.length !== b.length) {
@@ -18,6 +19,10 @@ function timingSafeEqual(a: string, b: string) {
 }
 
 export async function POST(request: NextRequest) {
+  if (!isSameOriginMutation(request)) {
+    return NextResponse.redirect(new URL(`${COPY_ADMIN_PATH}/login?error=invalid`, request.url), 303);
+  }
+
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const { allowed } = await checkRateLimit('copy-admin-login', ip, 8, 60);
   if (!allowed) {

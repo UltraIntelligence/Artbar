@@ -37,6 +37,7 @@ const SECURITY_HEADERS = [
 /** Pin tracing root so a lockfile in a parent folder (e.g. ~/bun.lock) does not confuse Next. */
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname),
+  poweredByHeader: false,
   async headers() {
     return [{ source: '/(.*)', headers: SECURITY_HEADERS }];
   },

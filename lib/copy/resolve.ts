@@ -11,6 +11,7 @@ import {
   DEFAULT_JAPANESE_COPY_PAYLOAD,
   deepMergeTemplate,
 } from '@/lib/copy/defaults';
+import { sanitizeBlogHtml } from '@/lib/blog-html';
 import type {
   JapaneseCopyPayload,
   ResolvedJapaneseCopy,
@@ -114,6 +115,11 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     normalized.faqs = structuredClone(FAQS_JP);
   }
 
+  normalized.blog = normalized.blog.map((item) => ({
+    ...item,
+    contentJp: sanitizeBlogHtml(item.contentJp),
+  }));
+
   return normalized;
 }
 
@@ -154,7 +160,7 @@ export function mergePublishedIntoContent(payload: JapaneseCopyPayload): Content
           ...item,
           titleJp: copy.titleJp,
           excerptJp: copy.excerptJp,
-          contentJp: copy.contentJp,
+          contentJp: sanitizeBlogHtml(copy.contentJp),
           authorJp: copy.authorJp,
         }
       : item;
