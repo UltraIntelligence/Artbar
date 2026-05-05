@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = theme.seoTitle;
   const description = theme.seoDesc;
   return {
-    title,
+    title: { absolute: title },
     ...(description && { description }),
     alternates: { canonical: `/themes/${slug}` },
     openGraph: buildOpenGraph({ lang, title, description }),

@@ -97,7 +97,7 @@ export const TeamBuilding: React.FC = () => {
         >
           <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
             <div className="h-px flex-grow bg-artbar-navy/10" />
-            <p className="shrink-0 px-6 text-center font-heading text-[10px] font-bold uppercase tracking-[0.4em] text-artbar-gray md:px-8 md:text-xs">
+            <p className="shrink-0 px-6 text-center font-heading text-[10px] font-bold uppercase tracking-[0.4em] text-artbar-navy md:px-8 md:text-xs">
               <JpText>{site.teamBuilding.socialProof.title}</JpText>
             </p>
             <div className="h-px flex-grow bg-artbar-navy/10" />

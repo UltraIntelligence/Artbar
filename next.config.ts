@@ -44,6 +44,20 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: '/(.*)', headers: SECURITY_HEADERS }];
   },
+  async redirects() {
+    return [
+      {
+        source: '/themes/texture-art',
+        destination: '/themes/texture-painting',
+        permanent: true,
+      },
+      {
+        source: '/notification-based-on-the-specified-commercial-transactions-act',
+        destination: '/specified-commercial-transactions',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

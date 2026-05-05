@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS.map((slug) => ({
-    url: `${BASE_URL}/themes/${slug}`,
+    url: `${BASE_URL}/themes/${slug === 'texture-art' ? 'texture-painting' : slug}`,
     priority: 0.7,
     changeFrequency: 'monthly' as const,
   }));
