@@ -9,6 +9,14 @@ function cssFontFamilyName(name: string): string {
   return `'${escaped}'`;
 }
 
+function cssFontFamilyValue(name: string): string {
+  if (name === 'Josefin Sans') {
+    return `var(--font-josefin), ${cssFontFamilyName(name)}`;
+  }
+
+  return cssFontFamilyName(name);
+}
+
 export const ThemeInjector: React.FC = () => {
   const { content } = useContent();
   const { fonts } = content.theme || { fonts: { heading: 'Josefin Sans', body: 'Hiragino Kaku Gothic ProN' } };
@@ -38,8 +46,8 @@ export const ThemeInjector: React.FC = () => {
       {/* Inject CSS Variables for Tailwind using native style tag */}
       <style>{`
         :root {
-          --font-heading: ${cssFontFamilyName(fonts.heading)};
-          --font-body: ${cssFontFamilyName(fonts.body)};
+          --font-heading: ${cssFontFamilyValue(fonts.heading)};
+          --font-body: ${cssFontFamilyValue(fonts.body)};
         }
       `}</style>
       
