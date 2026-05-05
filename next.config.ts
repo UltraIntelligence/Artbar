@@ -38,6 +38,9 @@ const SECURITY_HEADERS = [
 const nextConfig: NextConfig = {
   outputFileTracingRoot: path.join(__dirname),
   poweredByHeader: false,
+  // Keep core SEO tags in the initial HTML instead of streaming them later. This is
+  // friendlier to Lighthouse, social preview tools, and simpler crawlers.
+  htmlLimitedBots: /.*/,
   async headers() {
     return [{ source: '/(.*)', headers: SECURITY_HEADERS }];
   },

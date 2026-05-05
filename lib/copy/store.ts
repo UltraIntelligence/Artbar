@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { revalidateTag, unstable_cache } from 'next/cache';
 import {
   COPY_LOCALE,
   COPY_TABLE,
@@ -53,6 +54,23 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T | nul
   });
 }
 
+const PUBLISHED_COPY_CACHE_TAG = 'artbar-published-japanese-copy';
+
+const readPublishedCopyRecord = unstable_cache(
+  async () => {
+    const record = await readCopyRecord();
+    if (!record) {
+      throw new Error('Published Japanese copy is unavailable.');
+    }
+    return record;
+  },
+  ['artbar-published-japanese-copy-v1'],
+  {
+    tags: [PUBLISHED_COPY_CACHE_TAG],
+    revalidate: 60,
+  },
+);
+
 async function readCopyRecord(): Promise<CopyRecord | null> {
   const supabase = getSupabaseAdmin();
   if (!supabase) {
@@ -90,8 +108,8 @@ export function isCopyBackendConfigured() {
 
 export async function getPublishedJapaneseCopyPayload(options?: { timeoutMs?: number }) {
   const record = options?.timeoutMs
-    ? await withTimeout(readCopyRecord(), options.timeoutMs)
-    : await readCopyRecord();
+    ? await withTimeout(readPublishedCopyRecord(), options.timeoutMs)
+    : await readPublishedCopyRecord().catch(() => null);
 
   return record?.published_payload ?? null;
 }
@@ -176,6 +194,8 @@ export async function publishDraftPayload() {
     throw new Error('Failed to publish Japanese copy.');
   }
 
+  revalidateTag(PUBLISHED_COPY_CACHE_TAG);
+
   return {
     draft,
     published: draft,
@@ -214,6 +234,8 @@ export async function rollbackPublishedPayload() {
     console.error('[copy-store] failed to roll back payload', error);
     throw new Error('Failed to roll back Japanese copy.');
   }
+
+  revalidateTag(PUBLISHED_COPY_CACHE_TAG);
 
   return {
     draft: previous,

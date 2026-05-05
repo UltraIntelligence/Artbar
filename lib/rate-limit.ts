@@ -13,6 +13,77 @@ const limiters = new Map<string, Ratelimit>();
 let warnedMissingRedis = false;
 let warnedRedisFailure = false;
 
+type LocalBucket = {
+  reset: number;
+  windowMs: number;
+  hits: number[];
+  lastSeen: number;
+};
+
+const localBuckets = new Map<string, LocalBucket>();
+const LOCAL_BUCKET_LIMIT = 10_000;
+const LOCAL_BUCKET_SWEEP_INTERVAL_MS = 30_000;
+let lastLocalBucketSweep = 0;
+
+function sweepLocalBuckets(now: number) {
+  if (localBuckets.size <= LOCAL_BUCKET_LIMIT && now - lastLocalBucketSweep < LOCAL_BUCKET_SWEEP_INTERVAL_MS) {
+    return;
+  }
+
+  lastLocalBucketSweep = now;
+
+  for (const [bucketKey, value] of localBuckets) {
+    if (value.hits.every((hit) => now - hit >= value.windowMs)) {
+      localBuckets.delete(bucketKey);
+    }
+  }
+
+  if (localBuckets.size <= LOCAL_BUCKET_LIMIT) {
+    return;
+  }
+
+  const oldestBuckets = [...localBuckets.entries()]
+    .sort(([, a], [, b]) => a.lastSeen - b.lastSeen)
+    .slice(0, localBuckets.size - LOCAL_BUCKET_LIMIT);
+
+  for (const [bucketKey] of oldestBuckets) {
+    localBuckets.delete(bucketKey);
+  }
+}
+
+function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: number): RateLimitResult {
+  const now = Date.now();
+  const windowMs = windowSec * 1000;
+  const key = `${name}:${max}:${windowSec}:${ip}`;
+  const bucket = localBuckets.get(key) ?? { reset: now + windowMs, windowMs, hits: [], lastSeen: now };
+  bucket.windowMs = windowMs;
+  bucket.lastSeen = now;
+  bucket.hits = bucket.hits.filter((hit) => now - hit < windowMs);
+
+  if (bucket.hits.length >= max) {
+    const oldest = bucket.hits[0] ?? now;
+    bucket.reset = oldest + windowMs;
+    localBuckets.set(key, bucket);
+    sweepLocalBuckets(now);
+    return {
+      allowed: false,
+      remaining: 0,
+      reset: bucket.reset,
+    };
+  }
+
+  bucket.hits.push(now);
+  bucket.reset = (bucket.hits[0] ?? now) + windowMs;
+  localBuckets.set(key, bucket);
+  sweepLocalBuckets(now);
+
+  return {
+    allowed: true,
+    remaining: Math.max(0, max - bucket.hits.length),
+    reset: bucket.reset,
+  };
+}
+
 function getLimiter(name: string, max: number, windowSec: number): Ratelimit | null {
   if (!redis) return null;
   const cacheKey = `${name}:${max}:${windowSec}`;
@@ -35,10 +106,10 @@ export type RateLimitResult = {
 };
 
 /**
- * Sliding-window rate limit backed by Upstash Redis. Falls back to allow-all when
- * UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN are unset; this lets the route
- * stay up before the Upstash Marketplace integration is provisioned. A warning is
- * logged once per process in production so ops can see the gap.
+ * Sliding-window rate limit backed by Upstash Redis. Falls back to a per-process
+ * in-memory limiter when Redis is missing or briefly unavailable. That fallback is
+ * not globally distributed across serverless instances, but it still protects the
+ * common abuse path and avoids the previous allow-all behavior.
  *
  * IP extraction relies on the leftmost x-forwarded-for value, which Vercel's edge
  * sets to the trusted client IP. If deployed behind a different proxy, callers must
@@ -54,20 +125,20 @@ export async function checkRateLimit(
   if (!limiter) {
     if (process.env.NODE_ENV === 'production' && !warnedMissingRedis) {
       warnedMissingRedis = true;
-      console.warn('[rate-limit] Upstash Redis not configured; allowing all requests');
+      console.warn('[rate-limit] Upstash Redis not configured; using local fallback limiter');
     }
-    return { allowed: true, remaining: -1, reset: 0 };
+    return checkLocalRateLimit(name, ip, max, windowSec);
   }
   try {
     const result = await limiter.limit(ip);
     return { allowed: result.success, remaining: result.remaining, reset: result.reset };
   } catch (error) {
-    // Upstash network/transport failure: fail open so we don't take down /api/copy-admin/login or
-    // /api/generate-sketch when Redis blips. Log once per process to surface the incident.
+    // Upstash network/transport failure: degrade to the same local limiter used
+    // when Redis is not configured, instead of letting every request through.
     if (!warnedRedisFailure) {
       warnedRedisFailure = true;
-      console.warn('[rate-limit] Upstash request failed; allowing request', error);
+      console.warn('[rate-limit] Upstash request failed; using local fallback limiter', error);
     }
-    return { allowed: true, remaining: -1, reset: 0 };
+    return checkLocalRateLimit(name, ip, max, windowSec);
   }
 }
