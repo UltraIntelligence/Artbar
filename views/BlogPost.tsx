@@ -32,7 +32,7 @@ export const BlogPost: React.FC = () => {
   const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
   const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareUrl = `https://artbar.co.jp/blog/${slug}`;
   const shareTitle = encodeURIComponent(titleForAttr);
   const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
 

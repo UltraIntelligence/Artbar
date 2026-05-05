@@ -104,6 +104,7 @@ export const Navbar: React.FC = () => {
 
           <button
              onClick={toggleLang}
+             aria-label={lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
              className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8`}
           >
              {lang === 'en' ? jpCopy.ui.navbar.compactJapanese : jpCopy.ui.navbar.compactEnglish}
@@ -111,7 +112,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={handleBookClick}
-            className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-white hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
           >
             {site.nav.book}
           </button>
@@ -121,6 +122,8 @@ export const Navbar: React.FC = () => {
           <button
             type="button"
             onClick={() => setIsOpen((o) => !o)}
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isOpen}
             className={`flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full p-2 ${isTransparent ? 'text-white' : 'text-artbar-navy'} transition-colors`}
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}

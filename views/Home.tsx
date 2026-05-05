@@ -327,11 +327,11 @@ export const Home: React.FC = () => {
                 <Button
                   onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
                   variant="taupe"
-                  className={`${heroCtaFrame} w-full max-w-[20rem] !text-white shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
+                  className={`${heroCtaFrame} w-full max-w-[20rem] !text-artbar-navy shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
                 >
                   <span className={heroCtaInner}>
                     <JpText>{site.home.hero.ctaSchedule}</JpText>
-                    <ArrowRight size={16} className="shrink-0 text-white" aria-hidden />
+                    <ArrowRight size={16} className="shrink-0 text-artbar-navy" aria-hidden />
                   </span>
                 </Button>
 

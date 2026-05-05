@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
       'border-2 border-artbar-navy text-artbar-navy hover:bg-gray-50 focus:ring-artbar-navy',
     ghost: 'text-artbar-navy hover:bg-gray-100 focus:ring-artbar-navy',
     taupe:
-      'bg-artbar-taupe text-white hover:bg-opacity-90 border-none shadow-lg hover:shadow-xl focus:ring-artbar-taupe',
+      'bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 border-none shadow-lg hover:shadow-xl focus:ring-artbar-taupe',
     outlineWhite:
       'border-2 border-white text-white bg-transparent hover:bg-white hover:text-artbar-navy shadow-none focus:ring-white focus:ring-offset-artbar-navy',
   };
