@@ -58,6 +58,15 @@ function getLang(value: unknown): Lang {
   return value === 'jp' ? 'jp' : 'en';
 }
 
+function langFromAcceptHeader(header: string | null): Lang {
+  if (!header) return 'en';
+  return header.toLowerCase().includes('ja') ? 'jp' : 'en';
+}
+
+function isNonNullObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
 function getString(value: unknown, max: number): string | null {
   if (typeof value !== 'string') return null;
   const trimmed = value.trim();
@@ -80,8 +89,10 @@ function escapeHtml(value: string): string {
 }
 
 export async function POST(req: NextRequest) {
-  // Resolve language as early as possible so error messages match the customer's locale.
-  let lang: Lang = 'en';
+  // Best-effort locale resolution before parsing the body so early errors
+  // (rate limit, missing config, malformed JSON) still match the visitor's locale.
+  // The body's lang field overrides this once we have it.
+  let lang: Lang = langFromAcceptHeader(req.headers.get('accept-language'));
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const { allowed } = await checkRateLimit('contact', ip, 3, 60);
@@ -100,12 +111,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: Record<string, unknown>;
+  let parsed: unknown;
   try {
-    body = await req.json();
+    parsed = await req.json();
   } catch {
     return NextResponse.json({ error: MESSAGES.invalidBody[lang] }, { status: 400 });
   }
+
+  if (!isNonNullObject(parsed)) {
+    return NextResponse.json({ error: MESSAGES.invalidBody[lang] }, { status: 400 });
+  }
+  const body = parsed;
 
   lang = getLang(body.lang);
 
@@ -115,10 +131,12 @@ export async function POST(req: NextRequest) {
   }
 
   const subjectKey = typeof body.subject === 'string' ? body.subject.trim() : '';
-  const subjectLabels = SUBJECT_LABELS[subjectKey];
-  if (!subjectLabels) {
+  // Object.hasOwn guards against prototype-chain keys (__proto__, constructor, …)
+  // which would otherwise return truthy non-string values and bypass validation.
+  if (!Object.hasOwn(SUBJECT_LABELS, subjectKey)) {
     return NextResponse.json({ error: MESSAGES.needSubject[lang] }, { status: 400 });
   }
+  const subjectLabels = SUBJECT_LABELS[subjectKey];
 
   const name = getString(body.name, MAX_FIELD_LENGTHS.name);
   const email = getString(body.email, MAX_FIELD_LENGTHS.email);
