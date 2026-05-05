@@ -15,6 +15,7 @@ let warnedRedisFailure = false;
 
 type LocalBucket = {
   reset: number;
+  windowMs: number;
   hits: number[];
 };
 
@@ -24,7 +25,8 @@ function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: n
   const now = Date.now();
   const windowMs = windowSec * 1000;
   const key = `${name}:${max}:${windowSec}:${ip}`;
-  const bucket = localBuckets.get(key) ?? { reset: now + windowMs, hits: [] };
+  const bucket = localBuckets.get(key) ?? { reset: now + windowMs, windowMs, hits: [] };
+  bucket.windowMs = windowMs;
   bucket.hits = bucket.hits.filter((hit) => now - hit < windowMs);
 
   if (bucket.hits.length >= max) {
@@ -44,7 +46,7 @@ function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: n
 
   if (localBuckets.size > 10_000) {
     for (const [bucketKey, value] of localBuckets) {
-      if (value.reset <= now) {
+      if (value.hits.every((hit) => now - hit >= value.windowMs)) {
         localBuckets.delete(bucketKey);
       }
     }
