@@ -43,9 +43,8 @@ function checkLocalRateLimit(name: string, ip: string, max: number, windowSec: n
   localBuckets.set(key, bucket);
 
   if (localBuckets.size > 10_000) {
-    const expiredBefore = now - windowMs;
     for (const [bucketKey, value] of localBuckets) {
-      if (value.hits.every((hit) => hit < expiredBefore)) {
+      if (value.reset <= now) {
         localBuckets.delete(bucketKey);
       }
     }

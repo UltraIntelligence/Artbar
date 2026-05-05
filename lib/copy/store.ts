@@ -57,7 +57,13 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T | nul
 const PUBLISHED_COPY_CACHE_TAG = 'artbar-published-japanese-copy';
 
 const readPublishedCopyRecord = unstable_cache(
-  readCopyRecord,
+  async () => {
+    const record = await readCopyRecord();
+    if (!record) {
+      throw new Error('Published Japanese copy is unavailable.');
+    }
+    return record;
+  },
   ['artbar-published-japanese-copy-v1'],
   {
     tags: [PUBLISHED_COPY_CACHE_TAG],
@@ -103,7 +109,7 @@ export function isCopyBackendConfigured() {
 export async function getPublishedJapaneseCopyPayload(options?: { timeoutMs?: number }) {
   const record = options?.timeoutMs
     ? await withTimeout(readPublishedCopyRecord(), options.timeoutMs)
-    : await readPublishedCopyRecord();
+    : await readPublishedCopyRecord().catch(() => null);
 
   return record?.published_payload ?? null;
 }
