@@ -11,9 +11,48 @@ import { ContactTransitionNotice } from '../components/ContactTransitionNotice';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [status, setStatus] = useState<'idle' | 'ok' | 'err'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    subject: '',
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+    company: '', // honeypot — must stay empty
+  });
   const { content, site, lang, jpCopy } = useContent();
   const mainReveal = useScrollReveal();
+
+  const updateField = (field: keyof typeof form) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+  ) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (status === 'sending') return;
+    setStatus('sending');
+    setErrorMessage(null);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...form, lang }),
+      });
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setErrorMessage(data?.error ?? null);
+        setStatus('err');
+        return;
+      }
+      setStatus('ok');
+      setForm({ subject: '', name: '', email: '', phone: '', message: '', company: '' });
+    } catch {
+      setStatus('err');
+    }
+  };
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -107,7 +146,7 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        {false && <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-artbar-taupe/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -117,23 +156,36 @@ export const Contact: React.FC = () => {
               <p className="text-center text-artbar-navy mb-6 text-base"><JpText>{copy.sent}</JpText></p>
             )}
             {status === 'err' && (
-              <p className="text-center text-red-700 mb-6 text-base"><JpText>{copy.failed}</JpText></p>
+              <p className="text-center text-red-700 mb-6 text-base">
+                {errorMessage ? errorMessage : <JpText>{copy.failed}</JpText>}
+              </p>
             )}
-            <form
-              className="space-y-8"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setStatus('ok');
-              }}
-            >
+            <form className="space-y-8" onSubmit={handleSubmit} noValidate>
+              {/* Honeypot — hidden from real users; bots fill it. */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="company">Company</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.company}
+                  onChange={updateField('company')}
+                />
+              </div>
+
               <div>
                 <label htmlFor="subject" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
                   <JpText>{copy.subjectLabel}</JpText>
                 </label>
-                <select 
-                  id="subject" 
+                <select
+                  id="subject"
+                  name="subject"
                   className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none appearance-none text-artbar-navy text-base"
                   required
+                  value={form.subject}
+                  onChange={updateField('subject')}
                 >
                   {subjects.map((s, i) => (
                     <option key={s.value || 'placeholder'} value={s.value} disabled={i === 0 && s.value === ''}>
@@ -148,24 +200,30 @@ export const Contact: React.FC = () => {
                   <label htmlFor="name" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
                     <JpText>{copy.nameLabel}</JpText>
                   </label>
-                  <input 
-                    type="text" 
-                    id="name" 
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
                     className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none"
                     placeholder={copy.namePlaceholder}
                     required
+                    value={form.name}
+                    onChange={updateField('name')}
                   />
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
                     <JpText>{copy.emailLabel}</JpText>
                   </label>
-                  <input 
-                    type="email" 
-                    id="email" 
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
                     className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none"
                     placeholder={copy.emailPlaceholder}
                     required
+                    value={form.email}
+                    onChange={updateField('email')}
                   />
                 </div>
               </div>
@@ -174,12 +232,15 @@ export const Contact: React.FC = () => {
                 <label htmlFor="phone" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
                   <JpText>{copy.phoneLabel}</JpText>
                 </label>
-                <input 
-                  type="tel" 
-                  id="phone" 
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
                   className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none"
                   placeholder="090-1234-5678"
                   required
+                  value={form.phone}
+                  onChange={updateField('phone')}
                 />
               </div>
 
@@ -187,11 +248,14 @@ export const Contact: React.FC = () => {
                 <label htmlFor="message" className="block text-base font-heading font-bold text-artbar-navy mb-2 tracking-wide">
                   <JpText>{copy.messageLabel}</JpText>
                 </label>
-                <textarea 
-                  id="message" 
+                <textarea
+                  id="message"
+                  name="message"
                   rows={6}
                   className="w-full px-6 py-4 rounded-xl bg-artbar-bg border-2 border-transparent focus:bg-white focus:border-artbar-taupe focus:ring-0 transition-colors outline-none resize-none text-base"
                   placeholder={copy.messagePh}
+                  value={form.message}
+                  onChange={updateField('message')}
                 ></textarea>
               </div>
 
@@ -200,16 +264,17 @@ export const Contact: React.FC = () => {
                   type="submit"
                   variant="primary"
                   size="cta"
-                  className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem]"
+                  disabled={status === 'sending'}
+                  className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <span className="flex items-center gap-2">
-                    <JpText>{copy.send}</JpText> <Send size={18} />
+                    <JpText>{status === 'sending' ? (lang === 'en' ? 'Sending…' : '送信中…') : copy.send}</JpText> <Send size={18} />
                   </span>
                 </Button>
               </div>
             </form>
           </div>
-        </div>}
+        </div>
       </div>
     </div>
   );
