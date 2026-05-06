@@ -1,8 +1,10 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { ContentData, SiteContent } from '../types';
 import { type SiteLanguage, setLangCookieClient } from '../lib/language';
+import { routeLocaleFromPathname, routeLocaleToSiteLanguage, switchLocaleHref } from '../lib/locale-routing';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
 type Language = SiteLanguage;
@@ -47,6 +49,8 @@ export const ContentProvider: React.FC<{
   initialJpCopy,
   initialHasFetchedRuntimeJp,
 }) => {
+  const pathname = usePathname();
+  const router = useRouter();
   const [lang, setLang] = useState<Language>(initialLang);
   const [content, setContent] = useState<ContentData>(initialContent);
   const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(initialJpCopy);
@@ -55,6 +59,11 @@ export const ContentProvider: React.FC<{
   useEffect(() => {
     document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
   }, [lang]);
+
+  useEffect(() => {
+    const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
+    setLang(routeLang);
+  }, [pathname]);
 
   useEffect(() => {
     if (lang !== 'jp' || hasFetchedRuntimeJp) {
@@ -90,11 +99,12 @@ export const ContentProvider: React.FC<{
   }, [lang, hasFetchedRuntimeJp]);
 
   const toggleLang = () => {
-    setLang((prev) => {
-      const next: Language = prev === 'en' ? 'jp' : 'en';
-      setLangCookieClient(next);
-      return next;
-    });
+    const next: Language = lang === 'en' ? 'jp' : 'en';
+    setLangCookieClient(next);
+    const suffix =
+      typeof window === 'undefined' ? '' : `${window.location.search}${window.location.hash}`;
+    setLang(next);
+    router.push(switchLocaleHref(`${pathname}${suffix}`, next));
   };
 
   const site = content[lang];

@@ -6,12 +6,13 @@ import {
 } from '@/constants';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import type { Metadata } from 'next';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
+import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 
 export async function generateMetadata(): Promise<Metadata> {
   // No JP entries exist for the locations page hero/title — fall back to JP-equivalent
-  // copy derived from the existing nav label. og:locale still switches per visitor.
+  // copy derived from the existing nav label. og:locale follows the route language.
   const lang = await getRequestLang();
   const title = lang === 'jp' ? 'スタジオアクセス' : 'Our Locations';
   const description =
@@ -21,41 +22,43 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: '/locations' },
+    alternates: buildLocalizedAlternates('/locations', lang),
     openGraph: buildOpenGraph({ lang, title, description }),
   };
 }
 
-const locationsJsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': LOCATIONS.map((loc) => ({
-    '@type': 'LocalBusiness',
-    '@id': `${SITE_URL}/locations#${loc.id}`,
-    name: loc.nameEn,
-    image: `${SITE_URL}${loc.image}`,
-    url: `${SITE_URL}/locations#${loc.id}`,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: loc.addressEn,
-      addressCountry: 'JP',
-    },
-    ...(loc.geo && {
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: loc.geo.latitude,
-        longitude: loc.geo.longitude,
-      },
-    }),
-    openingHours: loc.openingHours ?? LOCATION_DEFAULT_OPENING_HOURS,
-    priceRange: loc.priceRange ?? LOCATION_DEFAULT_PRICE_RANGE,
-    ...(loc.mapUrl && { hasMap: loc.mapUrl }),
-  })),
-};
-
 // Preload the first two location images (above the fold on most viewports)
 const PRELOAD_LOCATION_IMAGES = LOCATIONS.slice(0, 2).map((loc) => loc.image);
 
-export default function LocationsPage() {
+export default async function LocationsPage() {
+  const lang = await getRequestLang();
+  const locationsUrl = publicUrlForPath('/locations', siteLanguageToRouteLocale(lang));
+  const locationsJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': LOCATIONS.map((loc) => ({
+      '@type': 'LocalBusiness',
+      '@id': `${locationsUrl}#${loc.id}`,
+      name: loc.nameEn,
+      image: `${SITE_URL}${loc.image}`,
+      url: `${locationsUrl}#${loc.id}`,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: loc.addressEn,
+        addressCountry: 'JP',
+      },
+      ...(loc.geo && {
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: loc.geo.latitude,
+          longitude: loc.geo.longitude,
+        },
+      }),
+      openingHours: loc.openingHours ?? LOCATION_DEFAULT_OPENING_HOURS,
+      priceRange: loc.priceRange ?? LOCATION_DEFAULT_PRICE_RANGE,
+      ...(loc.mapUrl && { hasMap: loc.mapUrl }),
+    })),
+  };
+
   return (
     <>
       {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}

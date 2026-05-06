@@ -6,6 +6,8 @@ import type { ThemeListItem } from '@/lib/theme-slugs';
 import { themeSlugFromItem } from '@/lib/theme-slugs';
 import { JpText } from './JpText';
 import { stripJpSentinel } from '@/lib/jp-attr';
+import { useContent } from '@/context/ContentContext';
+import { localizeHrefForLanguage } from '@/lib/locale-routing';
 
 /** Strip both the manual `<wbr>` markers and the server-side BudouX phrase
  *  sentinels (U+200B) before passing JP titles into attribute-only contexts. */
@@ -19,6 +21,8 @@ export function PopularThemesGrid({
   items: ThemeListItem[];
   className?: string;
 }) {
+  const { lang } = useContent();
+
   return (
     <div
       className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 ${className ?? ''}`}
@@ -28,7 +32,7 @@ export function PopularThemesGrid({
         return (
           <Link
             key={slug}
-            href={`/themes/${slug}`}
+            href={localizeHrefForLanguage(`/themes/${slug}`, lang)}
             className="group relative block h-[380px] md:h-[500px] rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] overflow-hidden cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500"
           >
             <Image

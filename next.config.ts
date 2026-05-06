@@ -52,8 +52,28 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/en/themes/texture-art',
+        destination: '/en/themes/texture-painting',
+        permanent: true,
+      },
+      {
         source: '/notification-based-on-the-specified-commercial-transactions-act',
         destination: '/specified-commercial-transactions',
+        permanent: true,
+      },
+      {
+        source: '/en/notification-based-on-the-specified-commercial-transactions-act',
+        destination: '/en/specified-commercial-transactions',
+        permanent: true,
+      },
+      {
+        source: '/contact-en',
+        destination: '/en/contact',
+        permanent: true,
+      },
+      {
+        source: '/contact-en/',
+        destination: '/en/contact',
         permanent: true,
       },
     ];

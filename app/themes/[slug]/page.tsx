@@ -3,8 +3,9 @@ import type { Metadata } from 'next';
 import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-paths';
 import { getCanonicalThemeSlug, getThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
+import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: { absolute: title },
     ...(description && { description }),
-    alternates: { canonical: `/themes/${getCanonicalThemeSlug(slug)}` },
+    alternates: buildLocalizedAlternates(`/themes/${getCanonicalThemeSlug(slug)}`, lang),
     openGraph: buildOpenGraph({ lang, title, description }),
   };
 }
@@ -29,14 +30,16 @@ export default async function ThemeDetailPage({ params }: Props) {
   const resolvedSlug = resolveThemeContentSlug(slug);
   const heroImage = THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero;
   const theme = getThemeContent(resolvedSlug, lang);
-  const themeUrl = `${SITE_URL}/themes/${getCanonicalThemeSlug(slug)}`;
+  const routeLocale = siteLanguageToRouteLocale(lang);
+  const themeUrl = publicUrlForPath(`/themes/${getCanonicalThemeSlug(slug)}`, routeLocale);
+  const homeUrl = publicUrlForPath('/', routeLocale);
   const homeName = lang === 'jp' ? 'ホーム' : 'Home';
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: homeName, item: SITE_URL },
+      { '@type': 'ListItem', position: 1, name: homeName, item: homeUrl },
       { '@type': 'ListItem', position: 2, name: theme.title, item: themeUrl },
     ],
   };

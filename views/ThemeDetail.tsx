@@ -17,6 +17,7 @@ import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, HERO_BLUR_DATA_URL } from '../constants';
+import { localizeHrefForLanguage } from '../lib/locale-routing';
 import { Heart, Lightbulb, Star, Users, ArrowRight } from 'lucide-react';
 
 export const ThemeDetail: React.FC = () => {
@@ -352,7 +353,7 @@ export const ThemeDetail: React.FC = () => {
               <p className="text-artbar-gray text-lg font-light max-w-lg"><JpText>{ui.discoverSub}</JpText></p>
             </div>
             <Button
-              onClick={() => router.push('/#popular-themes')}
+              onClick={() => router.push(localizeHrefForLanguage('/#popular-themes', lang))}
               variant="outline"
               size="cta"
               className="w-full uppercase tracking-widest text-xs md:w-auto"
