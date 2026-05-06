@@ -24,23 +24,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function HomePage() {
-  return (
-    <>
-      <link
-        rel="preload"
-        href="/media/artbar-home-video-mobile.mp4"
-        as="video"
-        type="video/mp4"
-        media="(max-width: 767px)"
-      />
-      <link
-        rel="preload"
-        href="/media/artbar-home-video-desktop.mp4"
-        as="video"
-        type="video/mp4"
-        media="(min-width: 768px)"
-      />
-      <Home />
-    </>
-  );
+  return <Home />;
 }

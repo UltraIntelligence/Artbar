@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
@@ -12,6 +12,7 @@ import { localizeHrefForLanguage, stripLocalePrefix } from '../lib/locale-routin
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
   const { site, lang, toggleLang, jpCopy } = useContent();
   const barePathname = stripLocalePrefix(pathname);
@@ -73,6 +74,12 @@ export const Navbar: React.FC = () => {
       setIsOpen(false);
   };
 
+  const handleMobileLanguageToggle = () => {
+    mobileMenuButtonRef.current?.focus();
+    setIsOpen(false);
+    toggleLang();
+  };
+
   const handleLogoClick = (e: React.MouseEvent) => {
     if (barePathname === '/') {
       e.preventDefault();
@@ -129,6 +136,7 @@ export const Navbar: React.FC = () => {
 
         <div className="xl:hidden z-50 flex items-center gap-3">
           <button
+            ref={mobileMenuButtonRef}
             type="button"
             onClick={() => setIsOpen((o) => !o)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -164,10 +172,7 @@ export const Navbar: React.FC = () => {
             <div className="h-px w-full bg-artbar-light-taupe my-1"></div>
             <button
               type="button"
-              onClick={() => {
-                toggleLang();
-                setIsOpen(false);
-              }}
+              onClick={handleMobileLanguageToggle}
               className="text-base font-heading font-bold text-artbar-navy text-left flex items-center gap-2 sm:text-lg"
             >
               <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
