@@ -365,12 +365,12 @@ export const TEAM_BUILDING_LOGISTICS_ROWS: {
   name: { en: string; jp: string };
   cap: { en: string; jp: string };
 }[] = [
-  { name: { en: 'Artbar Daikanyama', jp: 'Artbar Daikanyama' }, cap: { en: 'Max 12', jp: '最大12名' } },
   { name: { en: 'Artbar Ginza', jp: 'Artbar Ginza' }, cap: { en: 'Max 30', jp: '最大30名' } },
   {
     name: { en: 'Artbar Cat Street Harajuku', jp: 'Artbar Cat Street Harajuku' },
     cap: { en: 'Max 20', jp: '最大20名' },
   },
+  { name: { en: 'Artbar Daikanyama', jp: 'Artbar Daikanyama' }, cap: { en: 'Max 12', jp: '最大12名' } },
   { name: { en: 'Artbar Yokohama', jp: 'Artbar Yokohama' }, cap: { en: 'Max 40', jp: '最大40名' } },
   {
     name: { en: 'Your Office / Offsite', jp: 'Your Office / Offsite' },

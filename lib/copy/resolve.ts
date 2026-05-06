@@ -123,6 +123,35 @@ function migrateLegacyEnglishPageCopy(payload: JapaneseCopyPayload): void {
   if (site.blogPage.back === en.blogPage.back) site.blogPage.back = jp.blogPage.back;
 }
 
+const LEGACY_TEAM_BUILDING_LOGISTICS_NAMES: Record<string, string> = {
+  'Artbar 銀座': 'Artbar Ginza',
+  'Artbar Ginza(銀座スタジオ)': 'Artbar Ginza',
+  'Artbar キャットストリート原宿': 'Artbar Cat Street Harajuku',
+  'Artbar Cat Street Harajuku(原宿スタジオ)': 'Artbar Cat Street Harajuku',
+  'Artbar 代官山': 'Artbar Daikanyama',
+  'Artbar 横浜': 'Artbar Yokohama',
+  'Artbar Yokohama Motomachi(横浜スタジオ)': 'Artbar Yokohama',
+  '貴社オフィス／出張': 'Your Office / Offsite',
+};
+
+function migrateLegacyTeamBuildingLogisticsRows(payload: JapaneseCopyPayload): void {
+  const targetsByName = new Map(
+    TEAM_BUILDING_LOGISTICS_ROWS.map((row) => [row.name.en, row]),
+  );
+
+  payload.teamBuildingLogisticsRows = payload.teamBuildingLogisticsRows.map((row) => {
+    const migratedName = LEGACY_TEAM_BUILDING_LOGISTICS_NAMES[row.name];
+    const target = migratedName ? targetsByName.get(migratedName) : undefined;
+    const name = target?.name.jp ?? row.name;
+    const cap =
+      name === 'Artbar Daikanyama' && row.cap === '最大10名'
+        ? '最大12名'
+        : row.cap;
+
+    return { ...row, name, cap };
+  });
+}
+
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
   const rawThemeItems = getRawJapaneseThemeItems(payload);
   const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
@@ -131,6 +160,7 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
   // page headings. Upgrade only exact legacy English values so admin-edited JP
   // copy stays untouched.
   migrateLegacyEnglishPageCopy(normalized);
+  migrateLegacyTeamBuildingLogisticsRows(normalized);
 
   // Older Japanese payloads stored the home theme cards from the English shared list.
   // Upgrade those exact legacy cards so the live site and copy admin both show JP text.
