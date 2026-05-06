@@ -1,9 +1,9 @@
 import type { SiteLanguage } from './language';
+export { ROUTE_LOCALE_HEADER } from './language';
 
 export type RouteLocale = 'ja' | 'en';
 
 export const EN_PREFIX = '/en';
-export const ROUTE_LOCALE_HEADER = 'x-artbar-route-locale';
 
 const ABSOLUTE_OR_SPECIAL_HREF = /^[a-z][a-z\d+.-]*:|^#|^\/\//i;
 

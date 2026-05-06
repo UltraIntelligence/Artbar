@@ -66,16 +66,6 @@ const nextConfig: NextConfig = {
         destination: '/en/specified-commercial-transactions',
         permanent: true,
       },
-      {
-        source: '/contact-en',
-        destination: '/en/contact',
-        permanent: true,
-      },
-      {
-        source: '/contact-en/',
-        destination: '/en/contact',
-        permanent: true,
-      },
     ];
   },
   images: {

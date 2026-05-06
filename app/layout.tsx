@@ -6,7 +6,7 @@ import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { LANG_COOKIE_NAME, LANG_HEADER_NAME, resolveInitialLanguage, resolveRouteLanguage } from '@/lib/language';
+import { LANG_COOKIE_NAME, ROUTE_LOCALE_HEADER, resolveInitialLanguage, resolveRouteLanguage } from '@/lib/language';
 import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
 import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
 import {
@@ -64,7 +64,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const cookieStore = await cookies();
   const headersList = await headers();
   const initialLang =
-    resolveRouteLanguage(headersList.get(LANG_HEADER_NAME)) ??
+    resolveRouteLanguage(headersList.get(ROUTE_LOCALE_HEADER)) ??
     resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, headersList.get('accept-language'));
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 

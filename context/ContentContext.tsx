@@ -61,6 +61,7 @@ export const ContentProvider: React.FC<{
   }, [lang]);
 
   useEffect(() => {
+    // Bare public URLs are intentionally Japanese; `/en` is the explicit English route.
     const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
     setLang(routeLang);
   }, [pathname]);

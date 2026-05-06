@@ -2,7 +2,7 @@ import 'server-only';
 import { cookies, headers } from 'next/headers';
 import {
   LANG_COOKIE_NAME,
-  LANG_HEADER_NAME,
+  ROUTE_LOCALE_HEADER,
   resolveInitialLanguage,
   resolveRouteLanguage,
   type SiteLanguage,
@@ -18,7 +18,7 @@ import { localizedAlternates } from './locale-routing';
 export async function getRequestLang(): Promise<SiteLanguage> {
   const cookieStore = await cookies();
   const headersList = await headers();
-  const routeLang = resolveRouteLanguage(headersList.get(LANG_HEADER_NAME));
+  const routeLang = resolveRouteLanguage(headersList.get(ROUTE_LOCALE_HEADER));
   if (routeLang) return routeLang;
   const acceptLanguage = headersList.get('accept-language');
   return resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, acceptLanguage);
