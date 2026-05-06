@@ -948,7 +948,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     },
     pressPage: {
       badge: "メディア掲載",
-      title: "Media Coverage",
+      title: "メディア掲載",
       subtitle: "日本初のPaint & Sipスタジオとして、ファッション誌やテレビなど多数のメディアにご紹介いただいています。",
       popupsTitle: "過去のポップアップイベント",
       popups: [
@@ -959,14 +959,14 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     },
     contactPage: {
       badge: "お問い合わせ",
-      title: "Contact Us",
+      title: "お問い合わせ",
       notice1: "キャンセルや変更は以下のフォームより承ります。開催24時間以内のキャンセルは返金対象外となりますのでご注意ください。",
       notice2: "通常24時間以内に担当者より返信いたします。",
       faqTitle: "よくある質問",
       formTitle: "メッセージを送る"
     },
     blogPage: {
-      title: "Artbar Journal",
+      title: "Artbarジャーナル",
       subtitle: "アート、クリエイティビティ、そして東京のライフスタイルについて。",
       readMore: "記事を読む",
       back: "ジャーナルに戻る"
