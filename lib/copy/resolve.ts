@@ -93,9 +93,44 @@ function shouldMigrateJapaneseFaqs(faqs: JapaneseCopyPayload['faqs']): boolean {
   });
 }
 
+function migrateLegacyEnglishPageCopy(payload: JapaneseCopyPayload): void {
+  const { site } = payload;
+  const jp = defaultContent.jp;
+  const en = defaultContent.en;
+
+  if (site.pressPage.badge === en.pressPage.badge) site.pressPage.badge = jp.pressPage.badge;
+  if (
+    site.pressPage.title === en.pressPage.title ||
+    site.pressPage.title === 'Media Coverage'
+  ) {
+    site.pressPage.title = jp.pressPage.title;
+  }
+  if (site.pressPage.subtitle === en.pressPage.subtitle) site.pressPage.subtitle = jp.pressPage.subtitle;
+  if (site.pressPage.popupsTitle === en.pressPage.popupsTitle) {
+    site.pressPage.popupsTitle = jp.pressPage.popupsTitle;
+  }
+
+  if (site.contactPage.badge === en.contactPage.badge) site.contactPage.badge = jp.contactPage.badge;
+  if (site.contactPage.title === en.contactPage.title) site.contactPage.title = jp.contactPage.title;
+  if (site.contactPage.notice1 === en.contactPage.notice1) site.contactPage.notice1 = jp.contactPage.notice1;
+  if (site.contactPage.notice2 === en.contactPage.notice2) site.contactPage.notice2 = jp.contactPage.notice2;
+  if (site.contactPage.faqTitle === en.contactPage.faqTitle) site.contactPage.faqTitle = jp.contactPage.faqTitle;
+  if (site.contactPage.formTitle === en.contactPage.formTitle) site.contactPage.formTitle = jp.contactPage.formTitle;
+
+  if (site.blogPage.title === en.blogPage.title) site.blogPage.title = jp.blogPage.title;
+  if (site.blogPage.subtitle === en.blogPage.subtitle) site.blogPage.subtitle = jp.blogPage.subtitle;
+  if (site.blogPage.readMore === en.blogPage.readMore) site.blogPage.readMore = jp.blogPage.readMore;
+  if (site.blogPage.back === en.blogPage.back) site.blogPage.back = jp.blogPage.back;
+}
+
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
   const rawThemeItems = getRawJapaneseThemeItems(payload);
   const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
+
+  // Older published JP copy records still contain English text for a few public
+  // page headings. Upgrade only exact legacy English values so admin-edited JP
+  // copy stays untouched.
+  migrateLegacyEnglishPageCopy(normalized);
 
   // Older Japanese payloads stored the home theme cards from the English shared list.
   // Upgrade those exact legacy cards so the live site and copy admin both show JP text.
