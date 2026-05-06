@@ -2,6 +2,8 @@
   "redirects": [
     { "source": "/events", "destination": "https://booking.artbar.co.jp", "permanent": false },
     { "source": "/events/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": false },
+    { "source": "/event-schedule", "destination": "https://booking.artbar.co.jp", "permanent": false },
+    { "source": "/event-schedule/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": false },
     { "source": "/calendar", "destination": "/", "permanent": true },
     { "source": "/about/instructors", "destination": "/instructors", "permanent": true },
     { "source": "/contact-us", "destination": "/contact", "permanent": true },
