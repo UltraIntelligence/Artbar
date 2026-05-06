@@ -3,7 +3,7 @@ import { TeamBuilding } from '@/views/TeamBuilding';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import type { Metadata } from 'next';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
 function cleanCopy(s: string): string {
   return s.replace(/<wbr\s*\/?>/g, '').replace(/\s*\n\s*/g, ' ').trim();
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: '/team-building' },
+    alternates: buildLocalizedAlternates('/team-building', lang),
     openGraph: buildOpenGraph({ lang, title, description }),
   };
 }

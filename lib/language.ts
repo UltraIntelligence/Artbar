@@ -1,6 +1,7 @@
 export type SiteLanguage = 'en' | 'jp';
 
 export const LANG_COOKIE_NAME = 'artbar_lang';
+export const ROUTE_LOCALE_HEADER = 'x-artbar-route-locale';
 
 /**
  * Prefer Japanese when the browser lists any `ja` tag first in Accept-Language.
@@ -23,6 +24,12 @@ export function resolveInitialLanguage(
 ): SiteLanguage {
   if (cookieValue === 'en' || cookieValue === 'jp') return cookieValue;
   return languageFromAcceptLanguage(acceptLanguage ?? null);
+}
+
+export function resolveRouteLanguage(routeLocale: string | undefined | null): SiteLanguage | null {
+  if (routeLocale === 'en') return 'en';
+  if (routeLocale === 'ja') return 'jp';
+  return null;
 }
 
 export function setLangCookieClient(lang: SiteLanguage): void {

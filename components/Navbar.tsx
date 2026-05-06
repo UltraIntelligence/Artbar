@@ -7,12 +7,14 @@ import { Menu, X, Globe } from 'lucide-react';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
+import { localizeHrefForLanguage, stripLocalePrefix } from '../lib/locale-routing';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { site, lang, toggleLang, jpCopy } = useContent();
+  const barePathname = stripLocalePrefix(pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +28,7 @@ export const Navbar: React.FC = () => {
     setIsOpen(false);
   }, [pathname]);
 
-  const isHome = pathname === '/';
+  const isHome = barePathname === '/';
   /** Hero/top-of-home bar height — must not depend on `isOpen` or the logo jumps when the mobile menu opens. */
   const isHeroNavLayout = isHome && !scrolled;
   const isTransparent = isHeroNavLayout && !isOpen;
@@ -44,8 +46,8 @@ export const Navbar: React.FC = () => {
 
   const isLinkActive = (link: { path: string; external?: boolean }) => {
     if (link.external) return false;
-    if (link.path === '/blog') return pathname === '/blog' || pathname.startsWith('/blog/');
-    return pathname === link.path;
+    if (link.path === '/blog') return barePathname === '/blog' || barePathname.startsWith('/blog/');
+    return barePathname === link.path;
   };
 
   const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
@@ -72,7 +74,7 @@ export const Navbar: React.FC = () => {
   };
 
   const handleLogoClick = (e: React.MouseEvent) => {
-    if (pathname === '/') {
+    if (barePathname === '/') {
       e.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -91,7 +93,7 @@ export const Navbar: React.FC = () => {
           isHeroNavLayout ? 'py-6 md:py-10' : 'py-4'
         }`}
       >
-        <Link href="/" onClick={handleLogoClick} className="z-50 group relative flex min-h-[44px] items-center py-1">
+        <Link href={localizeHrefForLanguage('/', lang)} onClick={handleLogoClick} className="z-50 group relative flex min-h-[44px] items-center py-1">
           <Logo variant={isTransparent ? 'light' : 'dark'} />
         </Link>
 
@@ -100,7 +102,7 @@ export const Navbar: React.FC = () => {
           {navLinks.map((link) => (
             <Link
               key={link.path}
-              href={link.path}
+              href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
               className={getLinkActiveClass(link, isLinkActive(link))}
             >
               {link.name}
@@ -151,7 +153,7 @@ export const Navbar: React.FC = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.path}
-                href={link.path}
+                href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
                 onClick={() => setIsOpen(false)}
                 className={getLinkActiveClass(link, isLinkActive(link), true)}
               >

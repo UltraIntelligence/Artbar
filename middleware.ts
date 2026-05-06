@@ -3,12 +3,16 @@ import type { NextRequest } from 'next/server';
 import { LANG_COOKIE_NAME, languageFromAcceptLanguage, type SiteLanguage } from '@/lib/language';
 import { COPY_ADMIN_COOKIE, COPY_ADMIN_PATH } from '@/lib/copy/defaults';
 import { getCopyAdminLoginUrl, hasValidAdminSession } from '@/lib/copy/session';
+import { ROUTE_LOCALE_HEADER, routeLocaleFromPathname } from '@/lib/locale-routing';
 
 function isValidLang(v: string | undefined): v is SiteLanguage {
   return v === 'en' || v === 'jp';
 }
 
 export async function middleware(request: NextRequest) {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set(ROUTE_LOCALE_HEADER, routeLocaleFromPathname(request.nextUrl.pathname));
+
   if (request.nextUrl.pathname === '/admin') {
     return NextResponse.rewrite(new URL('/404', request.url));
   }
@@ -32,10 +36,10 @@ export async function middleware(request: NextRequest) {
 
   const existing = request.cookies.get(LANG_COOKIE_NAME)?.value;
   if (isValidLang(existing)) {
-    return NextResponse.next();
+    return NextResponse.next({ request: { headers: requestHeaders } });
   }
   const lang = languageFromAcceptLanguage(request.headers.get('accept-language'));
-  const res = NextResponse.next();
+  const res = NextResponse.next({ request: { headers: requestHeaders } });
   res.cookies.set(LANG_COOKIE_NAME, lang, {
     path: '/',
     maxAge: 60 * 60 * 24 * 365,

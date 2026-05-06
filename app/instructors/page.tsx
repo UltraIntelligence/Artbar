@@ -1,7 +1,7 @@
 import { defaultContent } from '@/data/content';
 import { Instructors } from '@/views/Instructors';
 import type { Metadata } from 'next';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getRequestLang();
@@ -9,7 +9,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: c.instructorsPage.title,
     description: c.instructorsPage.subtitle,
-    alternates: { canonical: '/instructors' },
+    alternates: buildLocalizedAlternates('/instructors', lang),
     openGraph: buildOpenGraph({
       lang,
       title: c.instructorsPage.title,

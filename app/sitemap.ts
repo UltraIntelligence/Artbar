@@ -2,37 +2,67 @@ import type { MetadataRoute } from 'next';
 import { defaultContent } from '@/data/content';
 import { THEME_PAGE_SLUGS } from '@/data/generated-image-paths';
 import { getCanonicalThemeSlug } from '@/data/theme-details';
+import { localizePath, type RouteLocale } from '@/lib/locale-routing';
 
 const BASE_URL = 'https://artbar.co.jp';
 
+function localizedEntry(
+  path: string,
+  locale: RouteLocale,
+  options: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'>
+): MetadataRoute.Sitemap[number] {
+  return {
+    url: `${BASE_URL}${localizePath(path, locale)}`,
+    alternates: {
+      languages: {
+        ja: `${BASE_URL}${localizePath(path, 'ja')}`,
+        en: `${BASE_URL}${localizePath(path, 'en')}`,
+      },
+    },
+    ...options,
+  };
+}
+
+function localizedEntries(
+  path: string,
+  options: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'>
+): MetadataRoute.Sitemap {
+  return [localizedEntry(path, 'ja', options), localizedEntry(path, 'en', options)];
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: BASE_URL, priority: 1.0, changeFrequency: 'weekly' },
-    { url: `${BASE_URL}/instructors`, priority: 0.8, changeFrequency: 'monthly' },
-    { url: `${BASE_URL}/team-building`, priority: 0.9, changeFrequency: 'monthly' },
-    { url: `${BASE_URL}/private-parties`, priority: 0.9, changeFrequency: 'monthly' },
-    { url: `${BASE_URL}/locations`, priority: 0.8, changeFrequency: 'monthly' },
-    { url: `${BASE_URL}/press`, priority: 0.6, changeFrequency: 'monthly' },
-    { url: `${BASE_URL}/contact`, priority: 0.7, changeFrequency: 'yearly' },
-    { url: `${BASE_URL}/blog`, priority: 0.7, changeFrequency: 'weekly' },
-    { url: `${BASE_URL}/privacy-policy`, priority: 0.3, changeFrequency: 'yearly' },
-    { url: `${BASE_URL}/terms-of-service`, priority: 0.3, changeFrequency: 'yearly' },
-    { url: `${BASE_URL}/specified-commercial-transactions`, priority: 0.3, changeFrequency: 'yearly' },
+    ...localizedEntries('/', { priority: 1.0, changeFrequency: 'weekly' }),
+    ...localizedEntries('/instructors', { priority: 0.8, changeFrequency: 'monthly' }),
+    ...localizedEntries('/team-building', { priority: 0.9, changeFrequency: 'monthly' }),
+    ...localizedEntries('/private-parties', { priority: 0.9, changeFrequency: 'monthly' }),
+    ...localizedEntries('/locations', { priority: 0.8, changeFrequency: 'monthly' }),
+    ...localizedEntries('/press', { priority: 0.6, changeFrequency: 'monthly' }),
+    ...localizedEntries('/contact', { priority: 0.7, changeFrequency: 'yearly' }),
+    ...localizedEntries('/blog', { priority: 0.7, changeFrequency: 'weekly' }),
+    ...localizedEntries('/privacy-policy', { priority: 0.3, changeFrequency: 'yearly' }),
+    ...localizedEntries('/terms-of-service', { priority: 0.3, changeFrequency: 'yearly' }),
+    ...localizedEntries('/specified-commercial-transactions', {
+      priority: 0.3,
+      changeFrequency: 'yearly',
+    }),
   ];
 
-  const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS.map((slug) => ({
-    url: `${BASE_URL}/themes/${getCanonicalThemeSlug(slug)}`,
-    priority: 0.7,
-    changeFrequency: 'monthly' as const,
-  }));
+  const themeRoutes: MetadataRoute.Sitemap = THEME_PAGE_SLUGS.flatMap((slug) =>
+    localizedEntries(`/themes/${getCanonicalThemeSlug(slug)}`, {
+      priority: 0.7,
+      changeFrequency: 'monthly' as const,
+    })
+  );
 
   const blogRoutes: MetadataRoute.Sitemap = defaultContent.blog
     .filter((post) => post.published)
-    .map((post) => ({
-      url: `${BASE_URL}/blog/${post.slug}`,
-      priority: 0.6,
-      changeFrequency: 'yearly' as const,
-    }));
+    .flatMap((post) =>
+      localizedEntries(`/blog/${post.slug}`, {
+        priority: 0.6,
+        changeFrequency: 'yearly' as const,
+      })
+    );
 
   return [...staticRoutes, ...themeRoutes, ...blogRoutes];
 }

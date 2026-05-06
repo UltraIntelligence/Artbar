@@ -38,6 +38,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useMediaMinMd } from '../hooks/useMediaMinMd';
 import { useNearViewport } from '../hooks/useNearViewport';
 import { PrefetchHeroes } from '../components/PrefetchHeroes';
+import { localizeHrefForLanguage } from '../lib/locale-routing';
 
 /**
  * Fixed carousel height (~Ida Don’s testimonial) so the page doesn’t jump between slides.
@@ -563,7 +564,7 @@ export const Home: React.FC = () => {
               type="button"
               variant="taupe"
               size="cta"
-              onClick={() => router.push('/team-building')}
+              onClick={() => router.push(localizeHrefForLanguage('/team-building', lang))}
               className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
             >
               <JpText>{bookTeamBuildingCta}</JpText>
@@ -868,7 +869,7 @@ export const Home: React.FC = () => {
                    <JpText>{site.home.cta.btnBook}</JpText>
                  </Button>
                  <Button
-                   onClick={() => router.push('/contact')}
+                   onClick={() => router.push(localizeHrefForLanguage('/contact', lang))}
                    variant="outlineWhite"
                    size="cta"
                    className="w-full sm:w-auto sm:min-w-[12.5rem]"

@@ -9,6 +9,7 @@ import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { HERO_BLUR_DATA_URL } from '../constants';
+import { localizeHrefForLanguage, publicUrlForPath, siteLanguageToRouteLocale } from '../lib/locale-routing';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
 export const BlogPost: React.FC = () => {
   const params = useParams();
@@ -17,13 +18,15 @@ export const BlogPost: React.FC = () => {
   const proseReveal = useScrollReveal();
   const moreReveal = useScrollReveal();
 
+  const blogHref = localizeHrefForLanguage('/blog', lang);
+
   const post = content.blog.find(p => p.slug === slug);
 
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg">
         <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{lang === 'en' ? 'Article Not Found' : jpCopy.ui.blogPost.articleNotFoundTitle}</JpText></h1>
-        <Link href="/blog" className="text-artbar-taupe hover:underline"><JpText>{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</JpText></Link>
+        <Link href={blogHref} className="text-artbar-taupe hover:underline"><JpText>{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</JpText></Link>
       </div>
     );
   }
@@ -32,7 +35,7 @@ export const BlogPost: React.FC = () => {
   const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
   const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
-  const shareUrl = `https://artbar.co.jp/blog/${slug}`;
+  const shareUrl = publicUrlForPath(`/blog/${slug}`, siteLanguageToRouteLocale(lang));
   const shareTitle = encodeURIComponent(titleForAttr);
   const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
 
@@ -54,7 +57,7 @@ export const BlogPost: React.FC = () => {
         <div className="absolute top-32 left-0 w-full px-6">
            <div className="max-w-[1000px] mx-auto">
              <Link 
-              href="/blog" 
+              href={blogHref}
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-md text-sm font-bold text-white transition-colors hover:bg-white/30"
              >
                <ArrowLeft size={16} /> <JpText>{site.blogPage.back}</JpText>
@@ -148,7 +151,7 @@ export const BlogPost: React.FC = () => {
             .map((p) => (
               <Link
                 key={p.id}
-                href={`/blog/${p.slug}`}
+                href={localizeHrefForLanguage(`/blog/${p.slug}`, lang)}
                 className="bg-white rounded-2xl p-6 flex gap-4 items-center hover:shadow-lg transition-all snap-start"
               >
                 <div className="relative w-24 h-24 rounded-xl overflow-hidden shrink-0">

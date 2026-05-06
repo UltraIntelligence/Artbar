@@ -1,7 +1,7 @@
 import { defaultContent } from '@/data/content';
 import { Home } from '@/views/Home';
 import type { Metadata } from 'next';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
 function cleanCopy(s: string): string {
   return s.replace(/<wbr\s*\/?>/g, '').replace(/\s*\n\s*/g, ' ').trim();
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: { absolute: title },
     description,
-    alternates: { canonical: '/' },
+    alternates: buildLocalizedAlternates('/', lang),
     openGraph: buildOpenGraph({ lang, title, description }),
   };
 }

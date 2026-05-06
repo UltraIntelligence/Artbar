@@ -1,15 +1,26 @@
 import 'server-only';
 import { cookies, headers } from 'next/headers';
-import { LANG_COOKIE_NAME, resolveInitialLanguage, type SiteLanguage } from './language';
+import {
+  LANG_COOKIE_NAME,
+  ROUTE_LOCALE_HEADER,
+  resolveInitialLanguage,
+  resolveRouteLanguage,
+  type SiteLanguage,
+} from './language';
 import type { Metadata } from 'next';
+import { localizedAlternates } from './locale-routing';
 
 /**
  * Resolve the visitor's preferred language for use inside `generateMetadata`.
- * Mirrors the logic in `app/layout.tsx` and `middleware.ts`: cookie wins, then Accept-Language.
+ * Public SEO routes are language-locked by middleware (`/en` = English, bare URLs = Japanese).
+ * Cookie/browser language is only a fallback when middleware is not part of the request.
  */
 export async function getRequestLang(): Promise<SiteLanguage> {
   const cookieStore = await cookies();
-  const acceptLanguage = (await headers()).get('accept-language');
+  const headersList = await headers();
+  const routeLang = resolveRouteLanguage(headersList.get(ROUTE_LOCALE_HEADER));
+  if (routeLang) return routeLang;
+  const acceptLanguage = headersList.get('accept-language');
   return resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, acceptLanguage);
 }
 
@@ -46,4 +57,8 @@ export function buildOpenGraph(opts: BuildOgOptions): NonNullable<Metadata['open
   return opts.type === 'article'
     ? { ...base, type: 'article' as const }
     : { ...base, type: 'website' as const };
+}
+
+export function buildLocalizedAlternates(pathname: string, lang: SiteLanguage): Metadata['alternates'] {
+  return localizedAlternates(pathname, lang);
 }

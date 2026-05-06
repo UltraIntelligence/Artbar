@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
 import { useContent } from '../context/ContentContext';
+import { localizeHrefForLanguage } from '../lib/locale-routing';
 
 export const NotFound: React.FC = () => {
   const { lang, jpCopy } = useContent();
@@ -42,7 +43,7 @@ export const NotFound: React.FC = () => {
         </h1>
         <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy mb-6"><JpText>{copy.title}</JpText></h2>
         <p className="text-artbar-gray text-lg mb-10 max-w-md mx-auto leading-relaxed"><JpText>{copy.body}</JpText></p>
-        <Link href="/">
+        <Link href={localizeHrefForLanguage('/', lang)}>
           <Button variant="primary" size="cta" className="shadow-lg hover:bg-artbar-taupe">
             <JpText>{copy.cta}</JpText>
           </Button>

@@ -3,8 +3,9 @@ import { BlogPost } from '@/views/BlogPost';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { nextImageSrcSet } from '@/lib/image-preload';
-import { getRequestLang, buildOpenGraph } from '@/lib/request-lang';
+import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
+import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
-    alternates: { canonical: `/blog/${slug}` },
+    alternates: buildLocalizedAlternates(`/blog/${slug}`, lang),
     twitter: {
       card: 'summary_large_image',
       title,
@@ -47,7 +48,10 @@ export default async function BlogPostPage({ params }: Props) {
   const lang = await getRequestLang();
   const headline = lang === 'jp' ? post.titleJp : post.titleEn;
   const authorName = lang === 'jp' ? post.authorJp : post.authorEn;
-  const postUrl = `${SITE_URL}/blog/${slug}`;
+  const routeLocale = siteLanguageToRouteLocale(lang);
+  const postUrl = publicUrlForPath(`/blog/${slug}`, routeLocale);
+  const blogUrl = publicUrlForPath('/blog', routeLocale);
+  const homeUrl = publicUrlForPath('/', routeLocale);
 
   // post.date arrives as "YYYY.MM.DD" in source data; normalize to ISO 8601 for schema.org.
   const isoDate = post.date.replace(/\./g, '-');
@@ -73,8 +77,8 @@ export default async function BlogPostPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: lang === 'jp' ? 'ホーム' : 'Home', item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: lang === 'jp' ? 'ブログ' : 'Blog', item: `${SITE_URL}/blog` },
+      { '@type': 'ListItem', position: 1, name: lang === 'jp' ? 'ホーム' : 'Home', item: homeUrl },
+      { '@type': 'ListItem', position: 2, name: lang === 'jp' ? 'ブログ' : 'Blog', item: blogUrl },
       { '@type': 'ListItem', position: 3, name: headline, item: postUrl },
     ],
   };

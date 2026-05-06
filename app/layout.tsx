@@ -6,7 +6,7 @@ import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { LANG_COOKIE_NAME, resolveInitialLanguage } from '@/lib/language';
+import { LANG_COOKIE_NAME, ROUTE_LOCALE_HEADER, resolveInitialLanguage, resolveRouteLanguage } from '@/lib/language';
 import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
 import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
 import {
@@ -42,15 +42,15 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Artbar Tokyo | Paint & Sip Studio',
+    default: 'Artbar Tokyo | 東京のペイント＆シップスタジオ',
     template: '%s | Artbar Tokyo',
   },
-  description: "Artbar Tokyo — Japan's leading paint and sip studio. Creative art classes in Daikanyama, Harajuku, Ginza, Yokohama, and Osaka.",
+  description: 'Artbar Tokyoは、東京・横浜・大阪で楽しめるペイント＆シップスタジオです。初心者歓迎、ワインやドリンク付きのアート体験を提供しています。',
   metadataBase: new URL('https://artbar.co.jp'),
   openGraph: {
     siteName: 'Artbar Tokyo',
-    locale: 'en_US',
-    alternateLocale: 'ja_JP',
+    locale: 'ja_JP',
+    alternateLocale: 'en_US',
     type: 'website',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Artbar Tokyo' }],
   },
@@ -63,10 +63,9 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
   const headersList = await headers();
-  const initialLang = resolveInitialLanguage(
-    cookieStore.get(LANG_COOKIE_NAME)?.value,
-    headersList.get('accept-language')
-  );
+  const initialLang =
+    resolveRouteLanguage(headersList.get(ROUTE_LOCALE_HEADER)) ??
+    resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, headersList.get('accept-language'));
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 
   // Build the merged content tree server-side. JP visitors get a Supabase fetch +

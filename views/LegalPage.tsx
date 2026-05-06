@@ -1,14 +1,17 @@
 import type { LegalPageContent } from '@/data/legal-content';
 import { JpText } from '../components/JpText';
+import type { SiteLanguage } from '@/lib/language';
 
 type LegalPageProps = {
   page: LegalPageContent;
+  lang: SiteLanguage;
 };
 
-export function LegalPage({ page }: LegalPageProps) {
+export function LegalPage({ page, lang }: LegalPageProps) {
   const sections = [...page.sections].sort((a, b) => {
-    if (a.language === '日本語') return -1;
-    if (b.language === '日本語') return 1;
+    const preferred = lang === 'en' ? 'English' : '日本語';
+    if (a.language === preferred) return -1;
+    if (b.language === preferred) return 1;
     return 0;
   });
   const primarySection = sections[0];
