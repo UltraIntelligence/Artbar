@@ -37,9 +37,16 @@ export const Navbar: React.FC = () => {
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
     { name: site.nav.locations, path: '/locations' },
+    { name: site.nav.blog, path: '/blog' },
     { name: site.nav.contact, path: '/contact' },
     { name: site.nav.gifts, path: 'https://booking.artbar.co.jp/gift-certificates', external: true },
   ];
+
+  const isLinkActive = (link: { path: string; external?: boolean }) => {
+    if (link.external) return false;
+    if (link.path === '/blog') return pathname === '/blog' || pathname.startsWith('/blog/');
+    return pathname === link.path;
+  };
 
   const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
     let active = isActive;
@@ -94,7 +101,7 @@ export const Navbar: React.FC = () => {
             <Link
               key={link.path}
               href={link.path}
-              className={getLinkActiveClass(link, !link.external && pathname === link.path)}
+              className={getLinkActiveClass(link, isLinkActive(link))}
             >
               {link.name}
             </Link>
@@ -146,7 +153,7 @@ export const Navbar: React.FC = () => {
                 key={link.path}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={getLinkActiveClass(link, !link.external && pathname === link.path, true)}
+                className={getLinkActiveClass(link, isLinkActive(link), true)}
               >
                 {link.name}
               </Link>
