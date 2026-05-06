@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
-import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, Clock, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
+import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL, TEAM_BUILDING_INQUIRY_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
@@ -201,7 +201,7 @@ export const TeamBuilding: React.FC = () => {
                  <p className="text-artbar-gray mb-8 max-w-md">
                     <JpText>{site.teamBuilding.specialty.desc}</JpText>
                  </p>
-	              </div>
+              </div>
               <div className="md:w-1/2 flex justify-end w-full">
                  <Button
 	                    variant="primary"
