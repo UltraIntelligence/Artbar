@@ -18,7 +18,8 @@ function getRateLimitIp(request: NextRequest) {
   const forwardedFor = request.headers.get('x-forwarded-for');
   return (
     request.headers.get('x-real-ip') ??
-    forwardedFor?.split(',').at(-1)?.trim() ??
+    request.headers.get('x-vercel-forwarded-for') ??
+    forwardedFor?.split(',')[0]?.trim() ??
     'unknown'
   );
 }
