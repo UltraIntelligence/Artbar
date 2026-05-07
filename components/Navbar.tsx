@@ -8,6 +8,7 @@ import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
 import { localizeHrefForLanguage, stripLocalePrefix } from '../lib/locale-routing';
+import { trackBookingClick } from '../lib/analytics';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +71,7 @@ export const Navbar: React.FC = () => {
   };
 
   const handleBookClick = () => {
+      trackBookingClick('nav_book_button');
       window.location.href = ARTBAR_BOOKING_URL;
       setIsOpen(false);
   };
@@ -110,6 +112,7 @@ export const Navbar: React.FC = () => {
             <Link
               key={link.path}
               href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
+              onClick={link.path === ARTBAR_BOOKING_URL ? () => trackBookingClick('nav_schedule') : undefined}
               className={getLinkActiveClass(link, isLinkActive(link))}
             >
               {link.name}
@@ -162,7 +165,10 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  if (link.path === ARTBAR_BOOKING_URL) trackBookingClick('nav_schedule');
+                  setIsOpen(false);
+                }}
                 className={getLinkActiveClass(link, isLinkActive(link), true)}
               >
                 {link.name}

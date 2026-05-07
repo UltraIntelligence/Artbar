@@ -8,6 +8,7 @@ import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
+import { trackBookingClick } from '../lib/analytics';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
@@ -134,6 +135,7 @@ function LocationCard({
                           href={bookingUrl}
                           target="_blank"
                           rel="noreferrer"
+                          onClick={() => trackBookingClick(`location_${loc.id}`)}
                           className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
                         >
                           <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
