@@ -7,6 +7,7 @@ export type ThemeJpStrings = {
   introDesc: string;
   quickFeatures: { title: string; desc: string }[];
   examples: { title: string }[];
+  exampleBlurb?: string;
   expectTitle: string;
   expectDesc: string;
   perfectTitle: string;
@@ -39,7 +40,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     ],
     expectTitle: '東京で味わうプレミアム・クリエイティブ体験',
     expectDesc:
-      '初めての方でも安心のスタジオで、対話と創作が交わる時間。北斎の波や秋の富士など代表作を題材に、重ね塗りや筆のリズムを楽しみながらワインもご用意。多くのクラスで英語・日本語のバイリンガル指導をご提供しており、リラックスして作品をお持ち帰りいただけます。',
+      '初めての方でも安心のスタジオで、対話と創作が交わる時間。日本の巨匠や伝統表現に着想を得た作品を、自分らしく描けます。北斎の波や秋の富士などを題材に、重ね塗りや筆のリズムを楽しみながらワインもご用意。リラックスして作品をお持ち帰りいただけます。',
     perfectTitle: 'こんな方におすすめ',
     perfectFor: [
       '東京で創作と思い出を残したい旅行者',
@@ -50,7 +51,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     whatYouGet: [
       { text: '飲み放題ワイン＆ソフトドリンク', sub: '赤・白・季節のドリンクがしっかり付いた安心パッケージ' },
       { text: '上質な日本茶＆コーヒー', sub: '集中力を支えるローカルドリンク' },
-      { text: 'バイリンガル・ステップガイド', sub: '英語・日本語で丁寧にサポート' },
+      { text: '日本の思い出を作品に', sub: '英語・日本語で丁寧にサポート' },
       { text: '持ち帰り＆配送オプション', sub: '作品のお持ち帰りや配送もご相談ください' },
     ],
     ctaTitle: 'ジャパン・インスパイアード枠を見る',
@@ -105,21 +106,22 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     heroSub: '流体のダイナミクスと鮮やかなセル模様に没頭する、当店自慢のポーリング体験。',
     introTitle: 'ペイントポーリングとは？',
     introDesc:
-      'アクリルを希釈してキャンバスに流し込み、大理石のような唯一無二の模様を生む技法です。',
+      'アクリルを希釈してキャンバスに流し込み、大理石のような唯一無二の模様を生む技法です。同じ仕上がりは二つとありません。',
     quickFeatures: [
       { title: '流体のコントロール', desc: '密度と混色でセルを美しく仕上げます。' },
-      { title: '一気に完成感', desc: '一度のセッションで印象的な抽象画に。' },
+      { title: '初心者にもおすすめ', desc: 'どのレベルでも完成度の高い作品に。' },
       { title: '直感の表現', desc: 'デッサンが苦手でも楽しめます。' },
     ],
     examples: [
-      { title: 'オーシャンウェーブ' },
-      { title: 'ギャラクシー・ネビュラ' },
-      { title: 'メタリック大理石' },
-      { title: 'ネオン抽象' },
+      { title: 'オーシャンカラー' },
+      { title: 'ギャラクシー風' },
+      { title: '大理石・ジオード風' },
+      { title: '好きな色で' },
     ],
+    exampleBlurb: 'これまでのお客様の作品例。同じ模様は二つとない、すべてオリジナルです。',
     expectTitle: '東京屈指のフルイドアート体験',
     expectDesc:
-      '講師が技法をレクチャー。ワインを片手に、流動の美を楽しみます。（多くのクラスでバイリンガル対応）',
+      '講師が技法をレクチャー。ワインを片手に、流動の美を楽しみます。初めてでも、完成度の高い自分だけの作品に仕上がります。',
     perfectTitle: 'あらゆるクリエイターに',
     perfectFor: [
       '手軽にインパクトのある作品を作りたい初心者',
@@ -145,18 +147,19 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     heroSub: '鮮やかなインクと空気の流れで、夢のような抽象を東京スタジオで。',
     introTitle: 'アルコールインクとは？',
     introDesc:
-      '透明感のある色層とメタリックを重ね、空気でにじませて大理石や雲のような有機的な構図を作ります。',
+      'アルコールに浮かぶ透明感のあるインクを重ね、ブロワーや熱で流れを導きながら、有機的で軽やかな構図を作ります。同じ作品は二つとなく、一枚一枚がオリジナルです。',
     quickFeatures: [
       { title: 'エアフロー技法', desc: 'ブロワーでインクを動かし柔らかな縁を作ります。' },
-      { title: 'メタリックアクセント', desc: '金・銀箔でラグジュアリーに。' },
+      { title: 'メタリックアクセント', desc: '金・銀のメタリックインクで上品に。' },
       { title: '幻想的なムード', desc: '夢見るような抽象や色の波を描きます。' },
     ],
     examples: [
-      { title: '深海の奥' },
-      { title: '夕焼けの雲' },
-      { title: '大理石のエレガンス' },
-      { title: '金彩の花' },
+      { title: 'ロマンチックカラー' },
+      { title: 'エレガント・ミニマル' },
+      { title: 'インク＆ペンアート' },
+      { title: '印刷キャンバスにインク' },
     ],
+    exampleBlurb: '上品で一点ものの作品に仕上がる、アルコールインクの表現例。',
     expectTitle: '洗練されたクリエイティブ逃避',
     expectDesc:
       'インテリア映えする仕上がりを目指す人気枠。非吸収紙と高発色インクをご用意。ワインを片手に、色の流れを味わいます。',
@@ -332,19 +335,20 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     introDesc:
       '宇宙や恐竜、かわいい動物など楽しいテーマで、基礎スキルをわかりやすくレクチャーします。',
     quickFeatures: [
-      { title: '楽しいテーマ', desc: '動物・宇宙・魔法など想像を広げます。' },
+      { title: 'クリエイティブに', desc: '動物・宇宙・魔法など想像を広げます。' },
       { title: '色彩の入門', desc: '混色や色の探検を楽しみます。' },
       { title: '自信が育つ', desc: 'お子さま一人ひとりがアーティスト。' },
     ],
     examples: [
       { title: '宇宙冒険' },
-      { title: 'レインボーキャット' },
-      { title: 'ジャングルの仲間' },
-      { title: '魔法のお城' },
+      { title: '海の仲間と動物' },
+      { title: '自由な抽象アート' },
+      { title: '楽しいクラフト' },
     ],
+    exampleBlurb: '子どもたちが夢中になれる、楽しい制作テーマの一例。',
     expectTitle: '見守り付きクリエイティブタイム',
     expectDesc:
-      '90分〜2時間のワクワク体験。講師が丁寧にサポート。保護者の方も近くでお休みいただけます。',
+      '保護者の方はお子さまを預けて、2時間たっぷり楽しめます。講師は子ども向けクラスに慣れており、リラックスした雰囲気で創造力と交流を楽しめます。',
     perfectTitle: '小さな冒険家へ',
     perfectFor: ['5〜12歳', '学校の休み', '週末のお出かけ', '誕生日のお祝い'],
     whatYouGet: [
@@ -362,7 +366,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
   'texture-art': {
     title: 'テクスチャー（立体）ペイントクラス',
     heroBadge: '3Dシリーズ',
-    heroSub: 'モデリングペーストとナイフで、触覚の喜びをキャンバスに。',
+    heroSub: 'モデリングペーストとパレットナイフで、テクスチャーや彫刻のような表現を楽しめます。',
     introTitle: 'テクスチャーアートとは？',
     introDesc:
       'パレットナイフやスポンジ、ペーストで凹凸をつくり、光を受ける立体の絵を描きます。',
@@ -374,8 +378,8 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     examples: [
       { title: '海のうねり' },
       { title: 'ミニマルな花' },
-      { title: '山脈の稜線' },
-      { title: '抽象リズム' },
+      { title: '名画を立体的に' },
+      { title: 'スカルプチャーアート' },
     ],
     expectTitle: '触覚のアート体験',
     expectDesc:
@@ -402,7 +406,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
   'paint-your-pet': {
     title: 'ペイント・ユア・ペット',
     heroBadge: 'スペシャル',
-    heroSub: '下絵付きキャンバスで、愛するペットを東京でキャンバスに。',
+    heroSub: 'ペット好き同士で、大切な家族を意味のあるアート作品に。',
     introTitle: '大人気のセッション',
     introDesc:
       '事前にお預かりしたお写真から下絵を用意。来店後は色と個性に集中できます。',
@@ -447,10 +451,10 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: 'ファンアート傑作', desc: '飾れる一枚を目指します。' },
     ],
     examples: [
-      { title: '80年代ロック・レジェンド' },
-      { title: 'モダン・ポップスター' },
-      { title: 'アニメヒーロー' },
-      { title: 'クラシック映画スター' },
+      { title: '映画スター' },
+      { title: 'ポップアイドル' },
+      { title: '家族や友人' },
+      { title: 'カップル' },
     ],
     expectTitle: 'アイコンを祝うハイテンション枠',
     expectDesc:

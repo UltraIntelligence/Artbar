@@ -86,9 +86,10 @@ export const ThemeDetail: React.FC = () => {
     inspiration: lang === 'en' ? 'Inspiration' : jpCopy.ui.themeDetail.inspiration,
     examplePaintings: lang === 'en' ? 'Example Paintings' : jpCopy.ui.themeDetail.examplePaintings,
     exampleBlurb: (name: string) =>
-      lang === 'en'
+      localizedTheme.exampleBlurb ??
+      (lang === 'en'
         ? `A glimpse into our ${name} paint and sip art classes`
-        : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name),
+        : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name)),
     theExperience: lang === 'en' ? 'THE EXPERIENCE' : jpCopy.ui.themeDetail.theExperience,
     guestFavorite: lang === 'en' ? 'Guest Favorite' : jpCopy.ui.themeDetail.guestFavorite,
     bilingualSessions: lang === 'en' ? 'Social Painting Sessions' : jpCopy.ui.themeDetail.bilingualSessions,

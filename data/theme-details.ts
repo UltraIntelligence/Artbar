@@ -16,6 +16,7 @@ export interface ThemeContent {
   introDesc: string;
   quickFeatures: { icon: LucideIcon; title: string; desc: string }[];
   examples: { title: string; image: string }[];
+  exampleBlurb?: string;
   expectTitle: string;
   expectDesc: string;
   perfectTitle: string;
@@ -49,7 +50,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Cherry Blossom Path", image: getPh(800, 800, "Sakura Path") }
     ],
     expectTitle: "A Premier Tokyo Creative Experience",
-    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are the gold standard of 'sip and paint' in Tokyo. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn, teaching you to build layered gradients and rhythmic brushwork while you enjoy wine. This art class is designed for relaxation, ensuring every guest leaves with a masterpiece and a smile. Bilingual instruction available in most sessions.",
+    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are both original and inspired by Japanese masters. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn, teaching you to build layered gradients and rhythmic brushwork while you enjoy wine. This class is designed for relaxation, ensuring every guest leaves with their own masterpiece and a smile.",
     perfectTitle: "Who it's Perfect For",
     perfectFor: [
       "Visitors wanting a creative and authentic Tokyo memory", 
@@ -60,7 +61,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     whatYouGet: [
       { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: GlassWater, text: "Assorted Teas & Coffee", sub: "Tea, coffee, and soft drinks to fuel your focus" },
-      { icon: CheckCircle, text: "Step-by-Step Guide", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: CheckCircle, text: "Create Your Own Memories of Japan", sub: "Many classes are bilingual; please check the instructor's listed language" },
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Explore Japan-Inspired Sessions",
@@ -110,20 +111,21 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     heroBadge: "Fluid Art Series",
     heroSub: "Dive into the mesmerizing world of fluid dynamics and vibrant cells in our signature paint pouring art classes.",
     introTitle: "What is Paint Pouring Art?",
-    introDesc: "Paint pouring, or fluid art, is a mesmerizing technique where acrylic paints are thinned and poured onto a canvas to create unique, marble-like patterns.",
+    introDesc: "Paint pouring, or fluid art, is a mesmerizing technique where acrylic paints are thinned and poured onto a canvas to create unique, marble-like patterns. No two ever look alike.",
     quickFeatures: [
       { icon: Droplets, title: "Fluid Dynamics", desc: "Master the art of paint density and mixing for perfect cells." },
-      { icon: Zap, title: "Instant Results", desc: "Create stunning, professional-looking abstract art in one session." },
+      { icon: Zap, title: "Great for Beginners", desc: "Create stunning, professional-looking art at any level." },
       { icon: Wand2, title: "Pure Expression", desc: "Unleash your creativity without the need for traditional drawing skills." }
     ],
     examples: [
-      { title: "Ocean Wave Fluid Art", image: getPh(800, 800, "Ocean Pour") },
-      { title: "Galaxy Nebula Swirl", image: getPh(800, 800, "Galaxy Pour") },
-      { title: "Metallic Marble Melt", image: getPh(800, 800, "Marble Pour") },
-      { title: "Neon Energy Abstract", image: getPh(800, 800, "Neon Pour") }
+      { title: "Ocean Colors", image: getPh(800, 800, "Ocean Pour") },
+      { title: "Galaxy Inspired", image: getPh(800, 800, "Galaxy Pour") },
+      { title: "Marble or Geode Feel", image: getPh(800, 800, "Marble Pour") },
+      { title: "Favorite Colors", image: getPh(800, 800, "Neon Pour") }
     ],
+    exampleBlurb: "A glimpse into creations from past customers. All original, since no two ever look alike.",
     expectTitle: "A Mesmerizing Tokyo Fluid Art Experience",
-    expectDesc: "Step into our high-energy studio for Tokyo's premier paint pouring experience. You'll learn several techniques guided by our expert instructors while sipping on bottomless wine. Bilingual instruction available in most classes.",
+    expectDesc: "Step into our high-energy studio for Tokyo's premier paint pouring experience. You'll learn several techniques guided by our expert instructors while sipping on bottomless wine. The result feels polished and original, even if it is your first time painting.",
     perfectTitle: "Perfect for Every Creator",
     perfectFor: [
       "Beginners looking for an easy, high-impact art style", 
@@ -147,18 +149,19 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     heroBadge: "Ethereal Series",
     heroSub: "Create dreamy, ethereal abstract art using vibrant inks and airflow in our specialized Tokyo studio.",
     introTitle: "What is Alcohol Ink Art?",
-    introDesc: "Alcohol ink art is a delicate process of layering translucent colors and metallic highlights, moved by air and spirit to create organic, flowy compositions that resemble marble or clouds.",
+    introDesc: "Alcohol ink art is a delicate process of layering translucent inks floating in alcohol and guiding them with blowers and heat to create organic, flowy compositions. No two are alike, and every artwork becomes an original masterpiece.",
     quickFeatures: [
       { icon: Wind, title: "Airflow Technique", desc: "Learn to move ink with blowers and air to create soft edges." },
-      { icon: Sparkles, title: "Metallic Accents", desc: "Add gold and silver leaf for a luxurious, elevated finish." },
+      { icon: Sparkles, title: "Metallic Accents", desc: "Add gold and silver metallic inks for a luxurious, elevated finish." },
       { icon: Cloud, title: "Ethereal Moods", desc: "Craft dreamy landscapes and abstract color washes." }
     ],
     examples: [
-      { title: "Ocean Depths", image: getPh(800, 800, "Ocean Ink") },
-      { title: "Sunset Clouds", image: getPh(800, 800, "Sunset Ink") },
-      { title: "Marble Elegance", image: getPh(800, 800, "Marble Ink") },
-      { title: "Gilded Blossom", image: getPh(800, 800, "Gilded Ink") }
+      { title: "Romantic Colors", image: getPh(800, 800, "Ocean Ink") },
+      { title: "Elegant Minimalist", image: getPh(800, 800, "Sunset Ink") },
+      { title: "Ink and Pen Art", image: getPh(800, 800, "Marble Ink") },
+      { title: "Ink on Printed Canvas", image: getPh(800, 800, "Gilded Ink") }
     ],
+    exampleBlurb: "Ink techniques to create elegant artworks that are one of a kind.",
     expectTitle: "A Sophisticated Creative Escape",
     expectDesc: "Our Alcohol Ink sessions are among the most popular for those seeking a modern, interior-design-ready result. We provide specialized non-porous paper and high-pigment inks. With wine in hand, you'll learn to control the uncontrollable flow of color.",
     perfectTitle: "For the Modern Aesthetic",
@@ -314,18 +317,19 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     introTitle: "Artbar for Kids",
     introDesc: "Our kids' sessions are designed to spark curiosity and confidence. We focus on fun themes—from space and dinosaurs to cute animals—while teaching basic art skills in an easy-to-follow way.",
     quickFeatures: [
-      { icon: Smile, title: "Fun Themes", desc: "Animals, space, and magic for imaginative minds." },
+      { icon: Smile, title: "Get Creative", desc: "Animals, space, and magic for imaginative minds." },
       { icon: Palette, title: "Color Theory", desc: "Introduction to mixing and exploring the rainbow." },
       { icon: Heart, title: "Confidence Boost", desc: "A positive environment where every child is an artist." }
     ],
     examples: [
       { title: "Space Adventure", image: getPh(800, 800, "Space Kid") },
-      { title: "Rainbow Cat", image: getPh(800, 800, "Rainbow Cat") },
-      { title: "Jungle Friends", image: getPh(800, 800, "Jungle") },
-      { title: "Magical Castle", image: getPh(800, 800, "Castle") }
+      { title: "Ocean Friends & Animals", image: getPh(800, 800, "Rainbow Cat") },
+      { title: "Abstract and Free", image: getPh(800, 800, "Jungle") },
+      { title: "Fun Crafts", image: getPh(800, 800, "Castle") }
     ],
+    exampleBlurb: "A glimpse into creative directions for kids to dive into.",
     expectTitle: "A Supervised Creative Playdate",
-    expectDesc: "Expect 90 minutes to 2 hours of pure fun. Our instructors are patient and used to teaching kids of all skill levels. Parents can relax nearby while kids create their own canvas masterpieces.",
+    expectDesc: "Parents drop kids off for 2 hours of pure fun. Our instructors are patient and experienced teaching kids. Kids can be creative and social in a relaxed, nurturing atmosphere.",
     perfectTitle: "For Young Explorers",
     perfectFor: ["Kids aged 5-12", "School holidays", "Weekend activities", "Birthday treats"],
     whatYouGet: [
@@ -342,7 +346,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
   'texture-art': {
     title: "Texture Painting Classes with Wine",
     heroBadge: "3D Series",
-    heroSub: "Experience the tactile joy of sculptural art using modeling paste and knives in our Tokyo studio.",
+    heroSub: "Experience the tactile joy of texture or sculpture art using modeling paste and palette knives.",
     introTitle: "What is Texture Art?",
     introDesc: "Texture art is about adding a third dimension to your canvas. Using palette knives, sponges, and modeling paste, you'll create peaks, valleys, and patterns that catch the light.",
     quickFeatures: [
@@ -353,8 +357,8 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     examples: [
       { title: "Ocean Swells", image: getPh(800, 800, "Ocean Texture") },
       { title: "Minimalist Bloom", image: getPh(800, 800, "Textured Flower") },
-      { title: "Mountain Ridges", image: getPh(800, 800, "Mountain Texture") },
-      { title: "Abstract Rhythm", image: getPh(800, 800, "Abstract 3D") }
+      { title: "Masters Reimagined", image: getPh(800, 800, "Mountain Texture") },
+      { title: "Sculpture Art", image: getPh(800, 800, "Abstract 3D") }
     ],
     expectTitle: "A Tactile Artistic Experience",
     expectDesc: "Texture painting is deeply satisfying. You'll move beyond the brush and use a variety of tools to 'sculpt' your painting. It's a meditative, physical process paired perfectly with a glass of wine.",
@@ -374,7 +378,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
   'paint-your-pet': {
     title: "Paint Your Pet Classes with Wine",
     heroBadge: "Special Edition",
-    heroSub: "Immortalize your furry friend on canvas with our professional sketch-assisted painting classes in Tokyo.",
+    heroSub: "Create meaningful art with fellow pet lovers in our professional sketch-assisted painting classes in Tokyo.",
     introTitle: "Our Most Popular Session",
     introDesc: "Paint Your Pet is a unique experience where our artists hand-sketch your pet's photo onto a canvas before you arrive, making it easy for you to focus on the colors and personality.",
     quickFeatures: [
@@ -415,10 +419,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Trophy, title: "Fan Masterpieces", desc: "Create a unique piece of fan-art that you'll be proud to display." }
     ],
     examples: [
-      { title: "80s Rock Legend", image: getPh(800, 800, "Rock Icon") },
-      { title: "Modern Pop Star", image: getPh(800, 800, "Pop Star Art") },
-      { title: "Anime Hero Portrait", image: getPh(800, 800, "Anime Hero") },
-      { title: "Classical Movie Star", image: getPh(800, 800, "Vintage Movie Star") }
+      { title: "Movie Stars", image: getPh(800, 800, "Rock Icon") },
+      { title: "Pop-Idols", image: getPh(800, 800, "Pop Star Art") },
+      { title: "Family or Friends", image: getPh(800, 800, "Anime Hero") },
+      { title: "Couples", image: getPh(800, 800, "Vintage Movie Star") }
     ],
     expectTitle: "A High-Energy Celebration of Icons",
     expectDesc: "Bring your fandom to the studio! Our instructors help you navigate portrait painting with stylized techniques, making it achievable for beginners. The atmosphere is social and vibrant, fueled by great music and bottomless wine.",
@@ -435,7 +439,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: CheckCircle, text: "Portrait Style Guidance", sub: "Learn to capture likeness with modern techniques" },
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
-    ctaTitle: "immortalize Your Idol",
+    ctaTitle: "Immortalize Your Idol",
     ctaSub: "View our upcoming pop-culture and icon sessions.",
     seoTitle: "Paint Your Idol Classes Tokyo | Icon & Fan Art Artbar",
     seoDesc: "Paint your favorite icon at Artbar Tokyo. Music, wine, and portrait coaching in our high-energy Shibuya and Ginza studios. Bilingual classes available."
@@ -481,6 +485,7 @@ export function getThemeContent(resolvedSlug: string, lang: 'en' | 'jp'): ThemeC
       ...ex,
       title: jp.examples[i]?.title ?? ex.title,
     })),
+    exampleBlurb: jp.exampleBlurb ?? base.exampleBlurb,
     expectTitle: jp.expectTitle,
     expectDesc: jp.expectDesc,
     perfectTitle: jp.perfectTitle,
