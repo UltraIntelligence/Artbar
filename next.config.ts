@@ -1,16 +1,19 @@
 import path from 'path';
 import type { NextConfig } from 'next';
 
-// Report-only first: browsers report violations but don't block. After two weeks of clean
-// production data we can tighten this and switch to enforcing Content-Security-Policy.
-const CSP_REPORT_ONLY = [
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isVercelProduction = process.env.VERCEL_ENV === 'production';
+const shouldEnforceCsp = isVercelProduction;
+
+const CSP = [
   `default-src 'self'`,
-  // Next.js boot scripts and JSON-LD blocks are inline; 'unsafe-inline' / 'unsafe-eval' are
-  // required until we adopt nonce-based CSP via middleware.
-  `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com`,
+  // Next.js boot scripts and JSON-LD blocks are inline. Keep inline scripts allowed for
+  // static performance; only local dev needs eval for tooling.
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
   // Tailwind injects inline style attributes; Google Fonts CSS is loaded by ThemeInjector.
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `img-src 'self' data: blob: https:`,
+  `media-src 'self' data: blob: https:`,
   `font-src 'self' data: https://fonts.gstatic.com`,
   // Supabase reads are server-side only today; keeping the host whitelisted keeps the door open
   // for the copy-admin UI if it ever fetches client-side.
@@ -23,13 +26,12 @@ const CSP_REPORT_ONLY = [
   `object-src 'none'`,
   `report-uri /api/csp-report`,
   `report-to csp-endpoint`,
-  // upgrade-insecure-requests is ignored by browsers when delivered in a report-only policy;
-  // re-add when promoting this header to Content-Security-Policy (enforcing).
+  ...(shouldEnforceCsp ? [`upgrade-insecure-requests`] : []),
 ].join('; ');
 
-const CSP_REPORT_ENDPOINT = process.env.NODE_ENV === 'development'
+const CSP_REPORT_ENDPOINT = !process.env.VERCEL_URL
   ? `http://localhost:${process.env.PORT ?? 3000}/api/csp-report`
-  : `https://${process.env.VERCEL_URL || 'artbar.co.jp'}/api/csp-report`;
+  : `https://${process.env.VERCEL_URL}/api/csp-report`;
 const CSP_REPORT_TO = JSON.stringify({
   group: 'csp-endpoint',
   max_age: 10886400,
@@ -44,7 +46,7 @@ const SECURITY_HEADERS = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
   { key: 'Reporting-Endpoints', value: `csp-endpoint="${CSP_REPORT_ENDPOINT}"` },
   { key: 'Report-To', value: CSP_REPORT_TO },
-  { key: 'Content-Security-Policy-Report-Only', value: CSP_REPORT_ONLY },
+  { key: shouldEnforceCsp ? 'Content-Security-Policy' : 'Content-Security-Policy-Report-Only', value: CSP },
 ];
 
 /** Pin tracing root so a lockfile in a parent folder (e.g. ~/bun.lock) does not confuse Next. */

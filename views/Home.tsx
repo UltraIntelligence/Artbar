@@ -65,6 +65,7 @@ const CONCEPT_SOCIAL_AVATAR_URLS = [
 export const Home: React.FC = () => {
   const { content, site, lang, jpCopy } = useContent();
   const router = useRouter();
+  const [hasMounted, setHasMounted] = useState(false);
   const theme = content.theme.typography;
   /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. */
   const heroTitleScale =
@@ -141,6 +142,12 @@ export const Home: React.FC = () => {
   const heroMobilePreload = mdUp ? 'none' : 'auto';
   const conceptDesktopPreload = conceptVideoLazy.near && mdUp ? 'auto' : 'none';
   const conceptMobilePreload = conceptVideoLazy.near && !mdUp ? 'auto' : 'none';
+  const heroDesktopSrc = hasMounted && mdUp ? heroBgUrl : undefined;
+  const heroMobileSrc = hasMounted && !mdUp ? heroBgMobileUrl : undefined;
+  const conceptDesktopSrc =
+    hasMounted && conceptVideoLazy.near && mdUp ? conceptVideoDesktopUrl : undefined;
+  const conceptMobileSrc =
+    hasMounted && conceptVideoLazy.near && !mdUp ? conceptVideoMobileUrl : undefined;
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -148,6 +155,10 @@ export const Home: React.FC = () => {
   const carouselTestimonials = site.home.testimonials.carousel;
   const featuredTestimonials = site.home.testimonials.featured;
   const activeCarouselTestimonial = carouselTestimonials[activeIndex];
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     setActiveIndex(0);
@@ -219,7 +230,7 @@ export const Home: React.FC = () => {
                     loop
                     playsInline
                     preload={heroDesktopPreload}
-                    src={heroBgUrl}
+                    src={heroDesktopSrc}
                     className="absolute inset-0 z-[1] hidden h-full w-full object-cover object-[center_19%] md:block"
                     aria-hidden
                   />
@@ -229,7 +240,7 @@ export const Home: React.FC = () => {
                     loop
                     playsInline
                     preload={heroMobilePreload}
-                    src={heroBgMobileUrl}
+                    src={heroMobileSrc}
                     className="absolute inset-0 z-[1] h-full w-full object-cover object-[center_19%] md:hidden"
                     aria-hidden
                   />
@@ -442,7 +453,7 @@ export const Home: React.FC = () => {
                     playsInline
                     preload={conceptDesktopPreload}
                     poster={content.images.concept.main}
-                    src={conceptVideoDesktopUrl}
+                    src={conceptDesktopSrc}
                     className="hidden h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:block"
                   />
                   <video
@@ -452,7 +463,7 @@ export const Home: React.FC = () => {
                     playsInline
                     preload={conceptMobilePreload}
                     poster={content.images.concept.main}
-                    src={conceptVideoMobileUrl}
+                    src={conceptMobileSrc}
                     className="h-full w-full object-cover transition-transform duration-[4s] ease-out group-hover:scale-105 md:hidden"
                   />
                 </>
