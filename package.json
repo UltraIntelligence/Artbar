@@ -26,6 +26,11 @@
     "sanitize-html": "^2.17.3",
     "sharp": "^0.34.5"
   },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.14"
+    }
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",
     "@types/node": "^22.14.0",
