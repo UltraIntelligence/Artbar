@@ -507,7 +507,8 @@ export const Home: React.FC = () => {
                           key={src}
                           src={src}
                           alt=""
-                          loading="lazy"
+                          width={96}
+                          height={96}
                           decoding="async"
                           className="h-14 w-14 shrink-0 rounded-full border-[3px] border-white object-cover shadow-xl md:h-24 md:w-24 md:border-[6px]"
                         />
@@ -807,30 +808,30 @@ export const Home: React.FC = () => {
              {content.media.map((item, i) => (
                 <div key={i} className="group relative aspect-[4/5] rounded-[var(--radius-card)] overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
                    {/* Background Image (Main) */}
-                   <img 
-                      src={item.image} 
-                      alt={stripJpSentinel(item.outlet)}
-                      loading="lazy"
-                      decoding="async"
-                      className="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100" 
-                      onError={(e) => { (e.target as HTMLImageElement).style.visibility = 'hidden'; }}
-                   />
-                   
+                   {item.image ? (
+                     <Image
+                        src={item.image}
+                        alt={stripJpSentinel(item.outlet)}
+                        fill
+                        sizes="(min-width: 1280px) 220px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                        className="object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100"
+                     />
+                   ) : null}
+
                    {/* Dark Gradient Overlay */}
                    <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
-                   
+
                    {/* Foreground Content */}
                    <div className="absolute inset-0 p-6 flex flex-col justify-end items-center text-center">
                       <div className="w-full bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/50 transform transition-transform duration-500 group-hover:scale-105">
-                         <div className="h-10 md:h-12 w-full flex items-center justify-center mb-2">
+                         <div className="relative h-10 md:h-12 w-full flex items-center justify-center mb-2">
                             {item.logo ? (
-                               <img 
-                                 src={item.logo} 
-                                 alt={stripJpSentinel(item.outlet)} 
-                                 loading="lazy"
-                                 decoding="async"
-                                 className="max-h-full max-w-full object-contain"
-                                 onError={(e) => (e.target as HTMLImageElement).style.display = 'none'}
+                               <Image
+                                 src={item.logo}
+                                 alt={stripJpSentinel(item.outlet)}
+                                 fill
+                                 sizes="(min-width: 768px) 140px, 110px"
+                                 className="object-contain"
                                />
                             ) : (
                                <span className="text-[10px] font-bold text-artbar-navy uppercase tracking-widest"><JpText>{item.outlet}</JpText></span>
