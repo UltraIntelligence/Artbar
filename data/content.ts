@@ -26,7 +26,7 @@ export const defaultContent: ContentData = {
     typography: {
       // Mobile-first scale; cap xl so two headline rows fit in viewport with proof + CTAs (no clip/overlap)
       heroTitle:
-        'text-[clamp(1.9rem,5.65vw+0.68rem,2.7rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight',
+        'text-[clamp(1.9rem,min(5.65vw+0.68rem,7vh),2.7rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight',
       pageTitle: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
       sectionTitle: "text-3xl sm:text-4xl md:text-5xl",
       cardTitle: "text-2xl md:text-3xl",
