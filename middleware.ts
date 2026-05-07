@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { LANG_COOKIE_NAME, languageFromAcceptLanguage, type SiteLanguage } from '@/lib/language';
+import { LANG_COOKIE_NAME, ROUTE_PATHNAME_HEADER, languageFromAcceptLanguage, type SiteLanguage } from '@/lib/language';
 import { COPY_ADMIN_COOKIE, COPY_ADMIN_PATH } from '@/lib/copy/defaults';
 import { getCopyAdminLoginUrl, hasValidAdminSession } from '@/lib/copy/session';
 import { ROUTE_LOCALE_HEADER, routeLocaleFromPathname } from '@/lib/locale-routing';
@@ -12,6 +12,7 @@ function isValidLang(v: string | undefined): v is SiteLanguage {
 export async function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(ROUTE_LOCALE_HEADER, routeLocaleFromPathname(request.nextUrl.pathname));
+  requestHeaders.set(ROUTE_PATHNAME_HEADER, request.nextUrl.pathname);
 
   if (request.nextUrl.pathname === '/admin') {
     return NextResponse.rewrite(new URL('/404', request.url));

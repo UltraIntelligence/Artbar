@@ -75,7 +75,7 @@ export const ContentProvider: React.FC<{
 
     const loadPublishedCopy = async () => {
       try {
-        const response = await fetch('/api/copy-public', {
+        const response = await fetch(`/api/copy-public?path=${encodeURIComponent(pathname)}`, {
           cache: 'no-store',
           signal: controller.signal,
         });
