@@ -27,7 +27,9 @@ const CSP_REPORT_ONLY = [
   // re-add when promoting this header to Content-Security-Policy (enforcing).
 ].join('; ');
 
-const CSP_REPORT_ENDPOINT = `https://${process.env.VERCEL_URL || 'artbar.co.jp'}/api/csp-report`;
+const CSP_REPORT_ENDPOINT = process.env.NODE_ENV === 'development'
+  ? `http://localhost:${process.env.PORT ?? 3000}/api/csp-report`
+  : `https://${process.env.VERCEL_URL || 'artbar.co.jp'}/api/csp-report`;
 const CSP_REPORT_TO = JSON.stringify({
   group: 'csp-endpoint',
   max_age: 10886400,
