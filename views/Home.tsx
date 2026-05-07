@@ -67,10 +67,10 @@ export const Home: React.FC = () => {
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const theme = content.theme.typography;
-  /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. */
+  /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. `min(vw, vh)` clause shrinks the title on short viewports (e.g. landscape) so the headline doesn't dominate when there's no vertical room. */
   const heroTitleScale =
     lang === 'jp'
-      ? 'text-[clamp(1.5rem,7.4vw,1.9rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight'
+      ? 'text-[clamp(1.5rem,min(7.4vw,6vh),1.9rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight'
       : theme.heroTitle;
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
@@ -215,7 +215,7 @@ export const Home: React.FC = () => {
   return (
     <div className="w-full bg-artbar-bg">
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
-      <section className="relative z-[1] min-h-[calc(100svh+4rem)] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
+      <section className="relative z-[1] min-h-[100svh] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
         <div
           className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy"
         >
@@ -271,9 +271,9 @@ export const Home: React.FC = () => {
           />
 
           <div
-            className="absolute inset-0 z-[3] flex min-h-full flex-col items-center justify-center px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] pb-10 text-center md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 md:pb-20 max-w-[1400px] mx-auto"
+            className="absolute inset-0 z-[3] flex min-h-full flex-col items-center justify-end pb-16 px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] text-center md:justify-center md:pb-20 md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 max-w-[1400px] mx-auto"
           >
-            <div className="max-w-4xl flex w-full flex-col items-center gap-5 md:gap-7 lg:gap-8">
+            <div className="max-w-4xl flex w-full flex-col items-center gap-4 sm:gap-5 md:gap-7 lg:gap-8">
 
               {/* Badge — JP: `font-sans` inner; padding between earlier symmetric and the heavier top bias */}
               <span
@@ -380,7 +380,7 @@ export const Home: React.FC = () => {
       <section className="relative z-[3] bg-transparent px-4 pb-10 md:px-10 md:pb-14">
         <div
           ref={featuredTestimonialsReveal.ref}
-          className={`mx-auto max-w-[1400px] -mt-16 sm:-mt-20 md:-mt-28 lg:-mt-32 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
+          className={`mx-auto max-w-[1400px] -mt-8 sm:-mt-12 md:-mt-28 lg:-mt-32 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
         >
           <div
             className={`grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 reveal-stagger ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
