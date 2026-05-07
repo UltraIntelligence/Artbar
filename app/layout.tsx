@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
@@ -112,6 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <ScrollToTop />
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
+        <Analytics />
       </body>
     </html>
   );
