@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -11,16 +11,52 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { HERO_BLUR_DATA_URL } from '../constants';
 import { localizeHrefForLanguage, publicUrlForPath, siteLanguageToRouteLocale } from '../lib/locale-routing';
 import { ArrowLeft, Calendar, User, Facebook, Twitter, Linkedin } from 'lucide-react';
+import type { BlogPost as BlogPostData } from '../types';
 export const BlogPost: React.FC = () => {
   const params = useParams();
   const slug = params.slug as string;
   const { content, lang, site, jpCopy } = useContent();
+  const [fetchedPost, setFetchedPost] = useState<BlogPostData | null>(null);
   const proseReveal = useScrollReveal();
   const moreReveal = useScrollReveal();
 
   const blogHref = localizeHrefForLanguage('/blog', lang);
 
-  const post = content.blog.find(p => p.slug === slug);
+  const contentPost = content.blog.find(p => p.slug === slug);
+  const post = fetchedPost?.slug === slug && contentPost
+    ? { ...contentPost, ...fetchedPost }
+    : contentPost;
+  const bodyContent = post ? (lang === 'en' ? post.contentEn : post.contentJp) : '';
+  const needsBodyFetch = Boolean(post && !bodyContent);
+
+  useEffect(() => {
+    if (!needsBodyFetch) return;
+
+    const controller = new AbortController();
+
+    const loadPost = async () => {
+      try {
+        const response = await fetch(`/api/blog-post/${encodeURIComponent(slug)}`, {
+          cache: 'no-store',
+          signal: controller.signal,
+        });
+        if (!response.ok) return;
+
+        const data = (await response.json()) as { post?: BlogPostData };
+        if (data.post?.slug === slug) {
+          setFetchedPost(data.post);
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          console.error('[blog-post] failed to load article body', error);
+        }
+      }
+    };
+
+    void loadPost();
+
+    return () => controller.abort();
+  }, [needsBodyFetch, slug]);
 
   if (!post) {
     return (
@@ -33,7 +69,6 @@ export const BlogPost: React.FC = () => {
 
   const title = lang === 'en' ? post.titleEn : post.titleJp;
   const titleForAttr = lang === 'en' ? post.titleEn : stripJpSentinel(post.titleJp);
-  const bodyContent = lang === 'en' ? post.contentEn : post.contentJp;
   const author = lang === 'en' ? post.authorEn : post.authorJp;
   const shareUrl = publicUrlForPath(`/blog/${slug}`, siteLanguageToRouteLocale(lang));
   const shareTitle = encodeURIComponent(titleForAttr);
@@ -98,6 +133,13 @@ export const BlogPost: React.FC = () => {
             className={`reveal artbar-prose max-w-none ${proseReveal.isVisible ? 'visible' : ''}`}
             dangerouslySetInnerHTML={{ __html: bodyContent }}
           />
+          {needsBodyFetch && (
+            <div className="space-y-4" aria-hidden="true">
+              <div className="h-4 w-3/4 rounded-full bg-artbar-bg" />
+              <div className="h-4 w-full rounded-full bg-artbar-bg" />
+              <div className="h-4 w-5/6 rounded-full bg-artbar-bg" />
+            </div>
+          )}
 
           <div className="mt-16 pt-8 border-t border-gray-100">
             <h3 className="text-center font-heading font-bold text-artbar-navy mb-6 text-sm uppercase tracking-widest">

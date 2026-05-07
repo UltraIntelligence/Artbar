@@ -6,7 +6,13 @@ import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
-import { LANG_COOKIE_NAME, ROUTE_LOCALE_HEADER, resolveInitialLanguage, resolveRouteLanguage } from '@/lib/language';
+import {
+  LANG_COOKIE_NAME,
+  ROUTE_LOCALE_HEADER,
+  ROUTE_PATHNAME_HEADER,
+  resolveInitialLanguage,
+  resolveRouteLanguage,
+} from '@/lib/language';
 import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
 import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
 import {
@@ -16,6 +22,7 @@ import {
 import { segmentJpDeep } from '@/lib/jp-segment';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
 import { SOCIAL_PROFILE_URLS } from '@/constants';
+import { trimBlogBodiesForPath } from '@/lib/content-payload';
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -81,6 +88,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     initialLang === 'jp' ? await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }) : null;
   const publishedPayload = supabaseJpPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
   const initialContent = segmentJpDeep(mergePublishedIntoContent(publishedPayload));
+  const requestPathname = headersList.get(ROUTE_PATHNAME_HEADER);
+  const trimmedInitialContent = trimBlogBodiesForPath(initialContent, requestPathname);
   const initialJpCopy = segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload));
   const initialHasFetchedRuntimeJp = supabaseJpPayload !== null;
 
@@ -95,7 +104,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
         <ContentProvider
           initialLang={initialLang}
-          initialContent={initialContent}
+          initialContent={trimmedInitialContent}
           initialJpCopy={initialJpCopy}
           initialHasFetchedRuntimeJp={initialHasFetchedRuntimeJp}
         >

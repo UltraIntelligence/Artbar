@@ -2,6 +2,7 @@ export type SiteLanguage = 'en' | 'jp';
 
 export const LANG_COOKIE_NAME = 'artbar_lang';
 export const ROUTE_LOCALE_HEADER = 'x-artbar-route-locale';
+export const ROUTE_PATHNAME_HEADER = 'x-artbar-pathname';
 
 /**
  * Prefer Japanese when the browser lists any `ja` tag first in Accept-Language.
