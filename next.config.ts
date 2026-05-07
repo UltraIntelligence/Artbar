@@ -21,9 +21,20 @@ const CSP_REPORT_ONLY = [
   `base-uri 'self'`,
   `form-action 'self'`,
   `object-src 'none'`,
+  `report-uri /api/csp-report`,
+  `report-to csp-endpoint`,
   // upgrade-insecure-requests is ignored by browsers when delivered in a report-only policy;
   // re-add when promoting this header to Content-Security-Policy (enforcing).
 ].join('; ');
+
+const CSP_REPORT_ENDPOINT = process.env.NODE_ENV === 'development'
+  ? `http://localhost:${process.env.PORT ?? 3000}/api/csp-report`
+  : `https://${process.env.VERCEL_URL || 'artbar.co.jp'}/api/csp-report`;
+const CSP_REPORT_TO = JSON.stringify({
+  group: 'csp-endpoint',
+  max_age: 10886400,
+  endpoints: [{ url: CSP_REPORT_ENDPOINT }],
+});
 
 const SECURITY_HEADERS = [
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
@@ -31,6 +42,8 @@ const SECURITY_HEADERS = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
+  { key: 'Reporting-Endpoints', value: `csp-endpoint="${CSP_REPORT_ENDPOINT}"` },
+  { key: 'Report-To', value: CSP_REPORT_TO },
   { key: 'Content-Security-Policy-Report-Only', value: CSP_REPORT_ONLY },
 ];
 
