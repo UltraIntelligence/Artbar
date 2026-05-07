@@ -10,6 +10,7 @@ import { PetSketcher } from '../components/PetSketcher';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
 import { ARTBAR_BOOKING_URL } from '../constants';
+import { trackBookingClick } from '../lib/analytics';
 export const PaintYourPet: React.FC = () => {
   const { site, lang, jpCopy } = useContent();
   const content = site.paintYourPet;
@@ -112,7 +113,10 @@ export const PaintYourPet: React.FC = () => {
                    <Button
                      variant="taupe"
                      size="cta"
-                     onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
+                     onClick={() => {
+                       trackBookingClick('paint_your_pet');
+                       window.location.href = ARTBAR_BOOKING_URL;
+                     }}
                      className="mt-auto w-full rounded-2xl text-base shadow-md"
                    >
                       <JpText>{site.nav.book}</JpText>

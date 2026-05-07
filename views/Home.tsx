@@ -28,6 +28,7 @@ import {
   CONCEPT_BLOCK_YOUTUBE_URL,
   PARTNER_LOGOS,
 } from '../constants';
+import { trackBookingClick } from '../lib/analytics';
 import { PartnerLogo } from '../components/PartnerLogo';
 import {
   formatGuestCountCompactK,
@@ -337,7 +338,10 @@ export const Home: React.FC = () => {
               {/* Primary CTAs */}
               <div className="flex w-full justify-center px-4 pt-4 pb-1 sm:pt-5 md:pt-6">
                 <Button
-                  onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
+                  onClick={() => {
+                    trackBookingClick('home_hero');
+                    window.location.href = ARTBAR_BOOKING_URL;
+                  }}
                   variant="taupe"
                   className={`${heroCtaFrame} w-full max-w-[20rem] !text-artbar-navy shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
                 >
@@ -631,7 +635,10 @@ export const Home: React.FC = () => {
             <Button
                 variant="taupe"
                 size="cta"
-                onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
+                onClick={() => {
+                  trackBookingClick('home_themes');
+                  window.location.href = ARTBAR_BOOKING_URL;
+                }}
                 className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
             >
               <JpText>{site.home.themes.cta}</JpText>
@@ -875,7 +882,10 @@ export const Home: React.FC = () => {
                  <Button
                    variant="taupe"
                    size="cta"
-                   onClick={() => { window.location.href = ARTBAR_BOOKING_URL; }}
+                   onClick={() => {
+                     trackBookingClick('home_bottom');
+                     window.location.href = ARTBAR_BOOKING_URL;
+                   }}
                    className="w-full min-w-0 shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
                    <JpText>{site.home.cta.btnBook}</JpText>

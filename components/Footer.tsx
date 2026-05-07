@@ -9,6 +9,7 @@ import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL, SOCIAL_PROFILES } from '../constants';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
+import { trackBookingClick } from '../lib/analytics';
 
 // lucide-react has no TikTok icon (brand icons are deprecated upstream); inline SVG keeps the row consistent.
 const TikTokIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
@@ -113,7 +114,7 @@ export const Footer: React.FC = () => {
             <div className="md:col-span-2">
               <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.explore}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                <li><a href={ARTBAR_BOOKING_URL} className={footerLinkClass}><JpText>{site.nav.schedule}</JpText></a></li>
+                <li><a href={ARTBAR_BOOKING_URL} onClick={() => trackBookingClick('footer')} className={footerLinkClass}><JpText>{site.nav.schedule}</JpText></a></li>
                 <li><Link href={href('/team-building')} className={footerLinkClass}><JpText>{site.nav.teamBuilding}</JpText></Link></li>
                 <li><Link href={href('/private-parties')} className={footerLinkClass}><JpText>{site.nav.privateParties}</JpText></Link></li>
                 <li><Link href={href('/instructors')} className={footerLinkClass}><JpText>{site.nav.instructors}</JpText></Link></li>
