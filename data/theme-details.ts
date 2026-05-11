@@ -50,7 +50,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Cherry Blossom Path", image: getPh(800, 800, "Sakura Path") }
     ],
     expectTitle: "A Premier Tokyo Creative Experience",
-    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are both original and inspired by Japanese masters. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn, teaching you to build layered gradients and rhythmic brushwork while you enjoy wine. This class is designed for relaxation, ensuring every guest leaves with their own masterpiece and a smile.",
+    expectDesc: "Expect a warm, beginner-friendly studio atmosphere where creativity meets social connection. Our Japan-inspired sessions are both original and inspired by Japanese masters. We guide you through iconic pieces like Hokusai's Great Wave or Fuji in Autumn. This class is designed for relaxation, ensuring every guest leaves with their own masterpiece and a smile.",
     perfectTitle: "Who it's Perfect For",
     perfectFor: [
       "Visitors wanting a creative and authentic Tokyo memory", 
@@ -61,7 +61,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     whatYouGet: [
       { icon: Wine, text: "Free-flow Wine & Soft Drinks", sub: "Unlimited red and white wine, plus Italian soda for most classes" },
       { icon: GlassWater, text: "Assorted Teas & Coffee", sub: "Tea, coffee, and soft drinks to fuel your focus" },
-      { icon: CheckCircle, text: "Create Your Own Memories of Japan", sub: "Many classes are bilingual; please check the instructor's listed language" },
+      { icon: CheckCircle, text: "Create your own memories of Japan", sub: "Many classes are bilingual; please check the instructor's listed language" },
       { icon: Truck, text: "Take Home & Delivery", sub: "Take most paintings home the same day, some with extended drying times require COD delivery within Japan" }
     ],
     ctaTitle: "Explore Japan-Inspired Sessions",
@@ -84,8 +84,9 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Starry Night over Tokyo", image: getPh(800, 800, "Starry Night") },
       { title: "Sunflowers", image: getPh(800, 800, "Sunflowers") },
       { title: "Cafe Terrace at Night", image: getPh(800, 800, "Cafe Terrace") },
-      { title: "Bedroom in Arles", image: getPh(800, 800, "Arles Bedroom") }
+      { title: "Pink Peach Tree", image: getPh(800, 800, "Pink Peach Tree") }
     ],
+    exampleBlurb: "Here are some samples of Van Gogh-inspired art to create with us.",
     expectTitle: "The Ultimate Sip and Paint Session",
     expectDesc: "Step into our lounge-style studio for an unforgettable Tokyo art class. We simplify the complex layers of 'Starry Night' into achievable steps, making it perfect for those with zero experience. As you paint and sip on bottomless wine, you'll feel the stress of the city melt away.",
     perfectTitle: "Ideal for Creative Minds",
@@ -118,10 +119,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Wand2, title: "Pure Expression", desc: "Unleash your creativity without the need for traditional drawing skills." }
     ],
     examples: [
-      { title: "Ocean Colors", image: getPh(800, 800, "Ocean Pour") },
-      { title: "Galaxy Inspired", image: getPh(800, 800, "Galaxy Pour") },
+      { title: "Round Earth and Ocean", image: getPh(800, 800, "Round Earth and Ocean") },
+      { title: "Figure Pouring Art", image: getPh(800, 800, "Figure Pour") },
       { title: "Marble or Geode Feel", image: getPh(800, 800, "Marble Pour") },
-      { title: "Favorite Colors", image: getPh(800, 800, "Neon Pour") }
+      { title: "Favorite Colors", image: getPh(800, 800, "Favorite Colors") }
     ],
     exampleBlurb: "A glimpse into creations from past customers. All original, since no two ever look alike.",
     expectTitle: "A Mesmerizing Tokyo Fluid Art Experience",
@@ -156,7 +157,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Cloud, title: "Ethereal Moods", desc: "Craft dreamy landscapes and abstract color washes." }
     ],
     examples: [
-      { title: "Romantic Colors", image: getPh(800, 800, "Ocean Ink") },
+      { title: "Colorful Ink", image: getPh(800, 800, "Colorful Ink") },
       { title: "Elegant Minimalist", image: getPh(800, 800, "Sunset Ink") },
       { title: "Ink and Pen Art", image: getPh(800, 800, "Marble Ink") },
       { title: "Ink on Printed Canvas", image: getPh(800, 800, "Gilded Ink") }
@@ -194,11 +195,12 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Wind, title: "Soft Edges", desc: "Learn to blend without boundaries for a dreamy finish." }
     ],
     examples: [
-      { title: "Water Lilies in Blue", image: getPh(800, 800, "Water Lilies") },
-      { title: "Woman with Parasol", image: getPh(800, 800, "Parasol") },
+      { title: "Water Lilies in Autumn", image: getPh(800, 800, "Water Lilies") },
+      { title: "View of Vetheuil", image: getPh(800, 800, "Vetheuil") },
       { title: "Japanese Bridge", image: getPh(800, 800, "Bridge") },
-      { title: "Poppy Field", image: getPh(800, 800, "Poppy Field") }
+      { title: "Playful Takes on Iconic Works", image: getPh(800, 800, "Playful Monet") }
     ],
+    exampleBlurb: "A glimpse into the peaceful world of Monet. Just a few of the many Monet-inspired artworks to create with us.",
     expectTitle: "The Poetry of Impressionism",
     expectDesc: "Join us for a relaxing afternoon or evening painting Monet's most beloved scenes. Our instructors teach you to layer colors to create depth and atmosphere, all while you enjoy bottomless wine and light snacks. Bilingual instruction available in most classes.",
     perfectTitle: "For Lovers of Light",
@@ -227,10 +229,11 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     ],
     examples: [
       { title: "Cubist Self Portrait", image: getPh(800, 800, "Cubist Face") },
-      { title: "Abstract Guitarist", image: getPh(800, 800, "Guitarist") },
+      { title: "Picasso Style Pets", image: getPh(800, 800, "Picasso Style Pets") },
       { title: "The Blue Period Study", image: getPh(800, 800, "Blue Period") },
-      { title: "Modern Muse", image: getPh(800, 800, "Modern Muse") }
+      { title: "Girl Before the Mirror", image: getPh(800, 800, "Girl Before the Mirror") }
     ],
+    exampleBlurb: "Our homage to Picasso and his Cubism style in these fun classes.",
     expectTitle: "A Bold Creative Workout",
     expectDesc: "Expect a session full of energy and experimentation. We guide you through the process of 'abstracting' your subject, encouraging you to be brave with your brushwork while you enjoy unlimited wine.",
     perfectTitle: "For the Bold & Brave",
@@ -258,11 +261,12 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Palette, title: "Soft Textures", desc: "Master the look of delicate fabrics and skin tones." }
     ],
     examples: [
-      { title: "Girl with a Watering Can", image: getPh(800, 800, "Renoir Girl") },
-      { title: "Two Girls at Piano", image: getPh(800, 800, "Piano Study") },
-      { title: "Boating Party Mood", image: getPh(800, 800, "Boating Party") },
-      { title: "Summer Flowers", image: getPh(800, 800, "Renoir Flowers") }
+      { title: "Roses", image: getPh(800, 800, "Roses") },
+      { title: "Woman with Parasol in the Garden", image: getPh(800, 800, "Parasol Garden") },
+      { title: "Clifftop Walk at Pourville", image: getPh(800, 800, "Pourville Walk") },
+      { title: "Vase of Flowers", image: getPh(800, 800, "Vase of Flowers") }
     ],
+    exampleBlurb: "Step into the romantic soft elegance of Renoir.",
     expectTitle: "A Session of Pure Beauty",
     expectDesc: "Our Renoir sessions are calm and rewarding. You'll learn how to use soft blending techniques to create a glowing effect on your canvas, paired with a selection of wines for a romantic evening.",
     perfectTitle: "Perfect for Dreamers",
@@ -290,11 +294,12 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Paintbrush, title: "Expressive Lines", desc: "Master the art of minimal, flowing brushstrokes." }
     ],
     examples: [
-      { title: "Blue Nude Cut-out", image: getPh(800, 800, "Blue Nude") },
-      { title: "Goldfish Bowl", image: getPh(800, 800, "Matisse Goldfish") },
-      { title: "The Dance Study", image: getPh(800, 800, "The Dance") },
-      { title: "Red Room Abstract", image: getPh(800, 800, "Red Room") }
+      { title: "Still life with Lemons", image: getPh(800, 800, "Still life with Lemons") },
+      { title: "Cat with Red Fish", image: getPh(800, 800, "Cat with Red Fish") },
+      { title: "Still Life with Asphodels", image: getPh(800, 800, "Still Life with Asphodels") },
+      { title: "The Red Room", image: getPh(800, 800, "Red Room") }
     ],
+    exampleBlurb: "Recreate the unique style of Matisse. Here are some of our many classes inspired by the Masters.",
     expectTitle: "A Joyful Creative Escape",
     expectDesc: "Matisse sessions are fun, liberating, and very beginner-friendly. We focus on the emotional power of color and the grace of simple shapes. With bottomless wine, it's a celebration of pure creativity.",
     perfectTitle: "For Lovers of Color",
@@ -317,12 +322,12 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
     introTitle: "Artbar for Kids",
     introDesc: "Our kids' sessions are designed to spark curiosity and confidence. We focus on fun themes—from space and dinosaurs to cute animals—while teaching basic art skills in an easy-to-follow way.",
     quickFeatures: [
-      { icon: Smile, title: "Get Creative", desc: "Animals, space, and magic for imaginative minds." },
-      { icon: Palette, title: "Color Theory", desc: "Introduction to mixing and exploring the rainbow." },
+      { icon: Smile, title: "Fun Themes", desc: "Animals, space, and magic for imaginative minds." },
+      { icon: Palette, title: "Get Creative", desc: "Introduction to mixing and exploring the rainbow." },
       { icon: Heart, title: "Confidence Boost", desc: "A positive environment where every child is an artist." }
     ],
     examples: [
-      { title: "Space Adventure", image: getPh(800, 800, "Space Kid") },
+      { title: "Masters for Kids", image: getPh(800, 800, "Masters for Kids") },
       { title: "Ocean Friends & Animals", image: getPh(800, 800, "Rainbow Cat") },
       { title: "Abstract and Free", image: getPh(800, 800, "Jungle") },
       { title: "Fun Crafts", image: getPh(800, 800, "Castle") }
@@ -387,10 +392,10 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { icon: Palette, title: "Custom Palettes", desc: "Get help mixing the perfect fur and eye colors." }
     ],
     examples: [
-      { title: "Happy Golden Retriever", image: getPh(800, 800, "Golden Portrait") },
-      { title: "Majestic Calico Cat", image: getPh(800, 800, "Calico Portrait") },
-      { title: "Frenchie in Color", image: getPh(800, 800, "Frenchie Art") },
-      { title: "Double Pet Portrait", image: getPh(800, 800, "Two Pets") }
+      { title: "Pet Portraits", image: getPh(800, 800, "Pet Portraits") },
+      { title: "Pop-Art Pets", image: getPh(800, 800, "Pop-Art Pets") },
+      { title: "Pets in Style of the Masters", image: getPh(800, 800, "Pet Masters") },
+      { title: "Textured Pets", image: getPh(800, 800, "Textured Pets") }
     ],
     expectTitle: "A Heartwarming Artistic Journey",
     expectDesc: "Expect a session filled with smiles and 'awws'. Since the sketch is already done, there's no stress about proportions. You can simply enjoy your wine and bring your pet to life on canvas.",

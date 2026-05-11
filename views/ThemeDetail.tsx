@@ -93,7 +93,14 @@ export const ThemeDetail: React.FC = () => {
         : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name)),
     theExperience: lang === 'en' ? 'THE EXPERIENCE' : jpCopy.ui.themeDetail.theExperience,
     guestFavorite: lang === 'en' ? 'Guest Favorite' : jpCopy.ui.themeDetail.guestFavorite,
-    bilingualSessions: lang === 'en' ? 'Social Painting Sessions' : jpCopy.ui.themeDetail.bilingualSessions,
+    bilingualSessions:
+      lang === 'en'
+        ? ({
+            'japan-inspired': 'Create your own memories of Japan',
+            kids: 'Bilingual Social Sessions',
+            'paint-your-pet': 'Meaningful art with fellow pet lovers!',
+          }[resolvedSlug] ?? 'Social Painting Sessions')
+        : jpCopy.ui.themeDetail.bilingualSessions,
     expertGuidance: lang === 'en' ? 'Expert Step-by-Step Guidance' : jpCopy.ui.themeDetail.expertGuidance,
     community: lang === 'en' ? 'The Community' : jpCopy.ui.themeDetail.community,
     viewUpcoming: lang === 'en' ? 'View Upcoming Schedule' : jpCopy.ui.themeDetail.viewUpcoming,

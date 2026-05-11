@@ -36,7 +36,6 @@ export const Navbar: React.FC = () => {
   const isTransparent = isHeroNavLayout && !isOpen;
 
   const navLinks = [
-    { name: site.nav.schedule, path: ARTBAR_BOOKING_URL, external: true },
     { name: site.nav.instructors, path: '/instructors' },
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
@@ -112,7 +111,6 @@ export const Navbar: React.FC = () => {
             <Link
               key={link.path}
               href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
-              onClick={link.path === ARTBAR_BOOKING_URL ? () => trackBookingClick('nav_schedule') : undefined}
               className={getLinkActiveClass(link, isLinkActive(link))}
             >
               {link.name}
@@ -166,7 +164,6 @@ export const Navbar: React.FC = () => {
                 key={link.path}
                 href={link.external ? link.path : localizeHrefForLanguage(link.path, lang)}
                 onClick={() => {
-                  if (link.path === ARTBAR_BOOKING_URL) trackBookingClick('nav_schedule');
                   setIsOpen(false);
                 }}
                 className={getLinkActiveClass(link, isLinkActive(link), true)}
