@@ -21,17 +21,12 @@ import {
   mergePublishedIntoContent,
 } from '@/lib/copy/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
-import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
-import { SOCIAL_PROFILE_URLS } from '@/constants';
+import { buildOrganizationJsonLd, buildWebsiteJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { trimBlogBodiesForPath } from '@/lib/content-payload';
 
-const organizationJsonLd = {
+const siteJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Artbar Tokyo',
-  url: SITE_URL,
-  logo: `${SITE_URL}/brand/artbar-logo-dark.png`,
-  sameAs: SOCIAL_PROFILE_URLS,
+  '@graph': [buildOrganizationJsonLd(), buildWebsiteJsonLd()],
 };
 
 const josefinSans = Josefin_Sans({
@@ -101,7 +96,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: safeJsonLd(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
         />
         <ContentProvider
           initialLang={initialLang}

@@ -1,16 +1,25 @@
 import { ThemeDetail } from '@/views/ThemeDetail';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import type { Metadata } from 'next';
-import { THEME_PAGE_IMAGES, type ThemePageSlug } from '@/data/generated-image-paths';
-import { getCanonicalThemeSlug, getThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
+import { notFound } from 'next/navigation';
+import { THEME_PAGE_IMAGES, THEME_PAGE_SLUGS, type ThemePageSlug } from '@/data/generated-image-paths';
+import { getCanonicalThemeSlug, getThemeContent, hasThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
-import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
+import { buildServiceJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 
 type Props = { params: Promise<{ slug: string }> };
 
+export function generateStaticParams() {
+  return Array.from(new Set(THEME_PAGE_SLUGS.map((slug) => getCanonicalThemeSlug(slug)))).map((slug) => ({
+    slug,
+  }));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  if (!hasThemeContent(slug)) notFound();
   const lang = await getRequestLang();
   const theme = getThemeContent(resolveThemeContentSlug(slug), lang);
   const title = theme.seoTitle;
@@ -25,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ThemeDetailPage({ params }: Props) {
   const { slug } = await params;
+  if (!hasThemeContent(slug)) notFound();
   const lang = await getRequestLang();
 
   const resolvedSlug = resolveThemeContentSlug(slug);
@@ -34,6 +44,7 @@ export default async function ThemeDetailPage({ params }: Props) {
   const themeUrl = publicUrlForPath(`/themes/${getCanonicalThemeSlug(slug)}`, routeLocale);
   const homeUrl = publicUrlForPath('/', routeLocale);
   const homeName = lang === 'jp' ? 'ホーム' : 'Home';
+  const canonicalPath = `/themes/${getCanonicalThemeSlug(slug)}`;
 
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -44,19 +55,33 @@ export default async function ThemeDetailPage({ params }: Props) {
     ],
   };
 
+  const serviceJsonLd = buildServiceJsonLd({
+    url: themeUrl,
+    name: theme.title,
+    description: theme.seoDesc,
+    serviceType: 'Paint and sip art class',
+  });
+
   return (
     <>
+      <PageJsonLd path={canonicalPath} lang={lang} name={theme.seoTitle} description={theme.seoDesc} />
       {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
+      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(serviceJsonLd) }}
+      />
       {heroImage && (
         <link
           rel="preload"
           as="image"
-          imageSrcSet={nextImageSrcSet(heroImage)}
-          imageSizes="100vw"
+          {...(process.env.NODE_ENV === 'development'
+            ? { href: heroImage }
+            : { imageSrcSet: nextImageSrcSet(heroImage), imageSizes: '100vw' })}
           fetchPriority="high"
         />
       )}

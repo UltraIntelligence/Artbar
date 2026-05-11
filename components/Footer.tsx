@@ -7,8 +7,9 @@ import { Logo } from './Logo';
 import { JpText } from './JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
-import { ARTBAR_BOOKING_URL, SOCIAL_PROFILES } from '../constants';
+import { ARTBAR_BOOKING_URL, LOCATIONS, SOCIAL_PROFILES } from '../constants';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
+import { locationPath } from '../lib/location-pages';
 import { trackBookingClick } from '../lib/analytics';
 
 // lucide-react has no TikTok icon (brand icons are deprecated upstream); inline SVG keeps the row consistent.
@@ -98,13 +99,13 @@ export const Footer: React.FC = () => {
                 <MapPin size={18} className="text-artbar-taupe" /> <JpText>{site.footer.locations}</JpText>
               </h4>
               <ul className="space-y-3 text-artbar-light-taupe">
-                {jpCopy.locationShortLabels.map((loc) => (
-                  <li key={loc.en}>
+                {LOCATIONS.map((loc) => (
+                  <li key={loc.id}>
                     <Link
-                      href={href('/locations')}
+                      href={href(locationPath(loc.id))}
                       className={footerLinkClass}
                     >
-                      {loc[lang]}
+                      {lang === 'en' ? loc.nameEn.replace(/^Artbar\s+/i, '') : loc.nameJp.replace(/^Artbar\s*/i, '')}
                     </Link>
                   </li>
                 ))}
@@ -118,6 +119,8 @@ export const Footer: React.FC = () => {
                 <li><Link href={href('/team-building')} className={footerLinkClass}><JpText>{site.nav.teamBuilding}</JpText></Link></li>
                 <li><Link href={href('/private-parties')} className={footerLinkClass}><JpText>{site.nav.privateParties}</JpText></Link></li>
                 <li><Link href={href('/instructors')} className={footerLinkClass}><JpText>{site.nav.instructors}</JpText></Link></li>
+                <li><Link href={href('/guides')} className={footerLinkClass}><JpText>{lang === 'en' ? 'Guides' : 'ガイド'}</JpText></Link></li>
+                <li><Link href={href('/blog')} className={footerLinkClass}><JpText>{site.nav.blog}</JpText></Link></li>
               </ul>
             </div>
 

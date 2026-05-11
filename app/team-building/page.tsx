@@ -1,4 +1,5 @@
 import { defaultContent } from '@/data/content';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import { TeamBuilding } from '@/views/TeamBuilding';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
@@ -22,9 +23,15 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function TeamBuildingPage() {
+export default async function TeamBuildingPage() {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = `${c.teamBuilding.hero.title} ${c.teamBuilding.hero.titleHighlight}`.trim();
+  const description = cleanCopy(c.teamBuilding.hero.subtitle);
+
   return (
     <>
+      <PageJsonLd path="/team-building" lang={lang} name={title} description={description} />
       <link
         rel="preload"
         as="image"

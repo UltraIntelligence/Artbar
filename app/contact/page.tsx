@@ -1,4 +1,5 @@
 import { defaultContent } from '@/data/content';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import { Contact } from '@/views/Contact';
 import type { Metadata } from 'next';
 import { FAQS, FAQS_JP } from '@/constants';
@@ -23,6 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactPage() {
   const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = lang === 'jp' ? c.nav.contact : c.contactPage.title;
+  const description =
+    lang === 'jp'
+      ? 'Artbar Tokyoへのお問い合わせはこちらから。通常24時間以内にご返信いたします。ご予約・キャンセル・各種お問い合わせを承ります。'
+      : 'Get in touch with Artbar Tokyo. We reply within 24 hours. Use the form for bookings, cancellations, or general enquiries.';
   const faqs = lang === 'jp' ? FAQS_JP : FAQS;
 
   const faqJsonLd = {
@@ -37,6 +44,7 @@ export default async function ContactPage() {
 
   return (
     <>
+      <PageJsonLd path="/contact" lang={lang} name={title} description={description} />
       {faqs.length > 0 && (
         // eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input
         <script
