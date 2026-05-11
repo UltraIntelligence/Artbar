@@ -299,7 +299,7 @@ export const THEME_CONFIG: Record<string, ThemeContent> = {
       { title: "Still Life with Asphodels", image: getPh(800, 800, "Still Life with Asphodels") },
       { title: "The Red Room", image: getPh(800, 800, "Red Room") }
     ],
-    exampleBlurb: "Recreate the unique style of Matisse. Here are some of our many classes inspired by the Masters",
+    exampleBlurb: "Recreate the unique style of Matisse. Here are some of our many classes inspired by the Masters.",
     expectTitle: "A Joyful Creative Escape",
     expectDesc: "Matisse sessions are fun, liberating, and very beginner-friendly. We focus on the emotional power of color and the grace of simple shapes. With bottomless wine, it's a celebration of pure creativity.",
     perfectTitle: "For Lovers of Color",
