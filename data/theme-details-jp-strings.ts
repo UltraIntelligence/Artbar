@@ -73,11 +73,12 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '鮮やかなパレット', desc: '高コントラストと感情表現に挑戦します。' },
     ],
     examples: [
-      { title: '東京の星月夜' },
+      { title: '星月夜' },
       { title: 'ひまわり' },
       { title: '夜のカフェテラス' },
-      { title: 'アルルの寝室' },
+      { title: 'ピンクの桃の木' },
     ],
+    exampleBlurb: 'Artbarで制作できる、ゴッホ風アートのサンプルです。',
     expectTitle: '究極のシップ＆ペイント',
     expectDesc:
       'ラウンジのような空間で、複雑に見える「星月夜」も段階的に分解。飲み放題のワインとともに、都会の疲れをほどいていきます。',
@@ -113,8 +114,8 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '直感の表現', desc: 'デッサンが苦手でも楽しめます。' },
     ],
     examples: [
-      { title: 'オーシャンカラー' },
-      { title: 'ギャラクシー風' },
+      { title: '丸い地球と海' },
+      { title: 'フィギュア・ポーリングアート' },
       { title: '大理石・ジオード風' },
       { title: '好きな色で' },
     ],
@@ -154,7 +155,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '幻想的なムード', desc: '夢見るような抽象や色の波を描きます。' },
     ],
     examples: [
-      { title: 'ロマンチックカラー' },
+      { title: 'カラフルインク' },
       { title: 'エレガント・ミニマル' },
       { title: 'インク＆ペンアート' },
       { title: '印刷キャンバスにインク' },
@@ -195,11 +196,12 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '柔らかな輪郭', desc: '境界のないブレンドで夢見るような仕上がりに。' },
     ],
     examples: [
-      { title: '青い睡蓮' },
-      { title: '日傘の女' },
+      { title: '秋の睡蓮' },
+      { title: 'ヴェトゥイユの眺め' },
       { title: '日本の橋' },
-      { title: 'ポピー畑' },
+      { title: '名画を楽しくアレンジ' },
     ],
+    exampleBlurb: 'モネの穏やかな世界を少しだけ。Artbarで制作できるモネ風アートの一例です。',
     expectTitle: '印象派の詩情',
     expectDesc:
       'モネの名場面を、重ね塗りで奥行きと空気感を出しながら描きます。飲み放題ワインと軽食付き。',
@@ -231,10 +233,11 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     ],
     examples: [
       { title: 'キュビスト自画像' },
-      { title: '抽象ギタリスト' },
+      { title: '遊び心あるペット' },
       { title: '青の時代のスタディ' },
-      { title: 'モダン・ミューズ' },
+      { title: '鏡の前の少女' },
     ],
+    exampleBlurb: 'ピカソとキュビズムへのオマージュを、楽しいクラスで体験できます。',
     expectTitle: '大胆な創作ワークアウト',
     expectDesc:
       'エネルギッシュな実験の時間。対象を「抽象化」するプロセスをガイドし、飲み放題ワインとともに挑戦します。',
@@ -270,11 +273,12 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '柔らかな質感', desc: '布や肌のトーンを丁寧に。' },
     ],
     examples: [
-      { title: 'じょうろを持つ少女' },
-      { title: 'ピアノの前の二人の少女' },
-      { title: 'ボートパーティのムード' },
-      { title: '夏の花' },
+      { title: 'バラ' },
+      { title: '庭園の日傘の女性' },
+      { title: 'プールヴィルの崖の散歩' },
+      { title: '花瓶の花' },
     ],
+    exampleBlurb: 'ルノワールらしい柔らかくロマンティックな優雅さを感じる作品例です。',
     expectTitle: '美しさに浸るセッション',
     expectDesc:
       '柔らかなブレンドで「ルノワールの輝き」を目指します。厳選ワインとともにロマンチックな夜に。',
@@ -305,11 +309,12 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: '表現的な線', desc: '最小限で流れるような線を。' },
     ],
     examples: [
-      { title: '青い裸婦（切り絵風）' },
-      { title: '金魚鉢' },
-      { title: 'ダンスのスタディ' },
-      { title: '赤い室内' },
+      { title: 'レモンのある静物' },
+      { title: '赤い魚と猫' },
+      { title: 'アスフォデルのある静物' },
+      { title: '赤い部屋' },
     ],
+    exampleBlurb: 'マティスならではのスタイルを再現。巨匠に着想を得たクラスの一例です。',
     expectTitle: '歓びあふれる創作時間',
     expectDesc:
       '色の感情力とシンプルな形にフォーカス。飲み放題ワインで純粋な創造を祝います。',
@@ -335,12 +340,12 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     introDesc:
       '宇宙や恐竜、かわいい動物など楽しいテーマで、基礎スキルをわかりやすくレクチャーします。',
     quickFeatures: [
-      { title: 'クリエイティブに', desc: '動物・宇宙・魔法など想像を広げます。' },
-      { title: '色彩の入門', desc: '混色や色の探検を楽しみます。' },
+      { title: '楽しいテーマ', desc: '動物・宇宙・魔法など想像を広げます。' },
+      { title: 'クリエイティブに', desc: '混色や色の探検を楽しみます。' },
       { title: '自信が育つ', desc: 'お子さま一人ひとりがアーティスト。' },
     ],
     examples: [
-      { title: '宇宙冒険' },
+      { title: 'キッズ向け名画' },
       { title: '海の仲間と動物' },
       { title: '自由な抽象アート' },
       { title: '楽しいクラフト' },
@@ -416,10 +421,10 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       { title: 'カスタム配色', desc: '毛色や目の色のミックスをサポート。' },
     ],
     examples: [
-      { title: 'ゴールデン・レトリバー' },
-      { title: '三毛猫' },
-      { title: 'カラフルなフレンチブル' },
-      { title: '二匹のポートレート' },
+      { title: 'ペットポートレート' },
+      { title: 'ポップアート・ペット' },
+      { title: '巨匠風ペット' },
+      { title: 'テクスチャー・ペット' },
     ],
     expectTitle: '心温まる制作の旅',
     expectDesc:
