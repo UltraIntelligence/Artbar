@@ -460,6 +460,10 @@ export function resolveThemeContentSlug(urlSlug: string): string {
   return THEME_SLUG_ALIASES[urlSlug] || urlSlug;
 }
 
+export function hasThemeContent(urlSlug: string): boolean {
+  return Object.prototype.hasOwnProperty.call(THEME_CONFIG, resolveThemeContentSlug(urlSlug));
+}
+
 export function getCanonicalThemeSlug(urlSlug: string): string {
   return THEME_CANONICAL_SLUGS[urlSlug] || urlSlug;
 }

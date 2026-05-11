@@ -6,11 +6,19 @@ import { nextImageSrcSet } from '@/lib/image-preload';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
+import { isBlogPostAvailableForLanguage } from '@/lib/blog-language';
+import { metaDescription } from '@/lib/seo-text';
 
 type Props = { params: Promise<{ slug: string }> };
 
 function getPostBySlug(slug: string) {
-  return defaultContent.blog.find(p => p.slug === slug);
+  return defaultContent.blog.find(p => p.slug === slug && p.published);
+}
+
+export function generateStaticParams() {
+  return defaultContent.blog
+    .filter((post) => post.published)
+    .map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,12 +27,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: 'Blog | Artbar Tokyo' };
   const lang = await getRequestLang();
   const title = lang === 'jp' ? post.titleJp : post.titleEn;
-  const description = lang === 'jp' ? post.excerptJp : post.excerptEn;
+  const isIndexable = isBlogPostAvailableForLanguage(post, lang);
+  const hasEnglishVersion = isBlogPostAvailableForLanguage(post, 'en');
+  const description = metaDescription(lang === 'jp' ? post.excerptJp : post.excerptEn, lang === 'jp' ? 110 : 155);
   const twitterImage = encodeURI(post.image ?? '/og-image.png');
   return {
     title,
     description,
-    alternates: buildLocalizedAlternates(`/blog/${slug}`, lang),
+    alternates: hasEnglishVersion
+      ? buildLocalizedAlternates(`/blog/${slug}`, lang)
+      : {
+          canonical: `/blog/${slug}`,
+          languages: { ja: `/blog/${slug}`, 'x-default': `/blog/${slug}` },
+        },
+    ...(!isIndexable && { robots: { index: false, follow: true } }),
     twitter: {
       card: 'summary_large_image',
       title,

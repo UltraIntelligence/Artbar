@@ -1,4 +1,5 @@
 import { defaultContent } from '@/data/content';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import { PrivateParties } from '@/views/PrivateParties';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
@@ -22,9 +23,15 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function PrivatePartiesPage() {
+export default async function PrivatePartiesPage() {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = `${c.privateParties.hero.title} ${c.privateParties.hero.titleHighlight}`.trim();
+  const description = cleanCopy(c.privateParties.hero.subtitle);
+
   return (
     <>
+      <PageJsonLd path="/private-parties" lang={lang} name={title} description={description} />
       <link
         rel="preload"
         as="image"

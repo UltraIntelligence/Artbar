@@ -1,4 +1,5 @@
 import { defaultContent } from '@/data/content';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import { Home } from '@/views/Home';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
@@ -23,6 +24,19 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function HomePage() {
-  return <Home />;
+export default async function HomePage() {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title =
+    lang === 'jp'
+      ? `${c.home.hero.title}${c.home.hero.titleHighlight}`
+      : 'Artbar Tokyo | Paint & Sip Studio';
+  const description = cleanCopy(c.home.hero.subtitle);
+
+  return (
+    <>
+      <PageJsonLd path="/" lang={lang} name={title} description={description} />
+      <Home />
+    </>
+  );
 }

@@ -114,7 +114,8 @@ export const ThemeDetail: React.FC = () => {
           src={heroSrc}
           alt={`${titleAsText} paint and sip class at Artbar Tokyo`}
           fill
-          priority
+          priority={process.env.NODE_ENV !== 'development'}
+          unoptimized={process.env.NODE_ENV === 'development'}
           placeholder="blur"
           blurDataURL={HERO_BLUR_DATA_URL}
           className="object-cover opacity-50"

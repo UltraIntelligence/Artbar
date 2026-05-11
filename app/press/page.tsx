@@ -1,4 +1,5 @@
 import { defaultContent } from '@/data/content';
+import { PageJsonLd } from '@/components/PageJsonLd';
 import { Press } from '@/views/Press';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
@@ -19,6 +20,15 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default function PressPage() {
-  return <Press />;
+export default async function PressPage() {
+  const lang = await getRequestLang();
+  const c = defaultContent[lang];
+  const title = lang === 'jp' ? c.nav.press : c.pressPage.title;
+
+  return (
+    <>
+      <PageJsonLd path="/press" lang={lang} name={title} description={c.pressPage.subtitle} />
+      <Press />
+    </>
+  );
 }

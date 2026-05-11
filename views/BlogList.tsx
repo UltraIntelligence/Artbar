@@ -8,10 +8,12 @@ import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
-import { ArrowRight, Calendar, User } from 'lucide-react';
+import { isBlogPostAvailableForLanguage } from '../lib/blog-language';
+import { SEO_GUIDES, guideCopy, guidePath, guidePrimaryIntent } from '../data/seo-guides';
+import { ArrowRight, BookOpen, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
   const { content, site, lang, jpCopy } = useContent();
-  const posts = content.blog.filter(p => p.published);
+  const posts = content.blog.filter(p => isBlogPostAvailableForLanguage(p, lang));
   const gridReveal = useScrollReveal();
 
   return (
@@ -24,6 +26,47 @@ export const BlogList: React.FC = () => {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{site.blogPage.title}</JpText></h1>
           <p className="text-lg md:text-xl text-artbar-gray max-w-2xl mx-auto"><JpText>{site.blogPage.subtitle}</JpText></p>
         </header>
+
+        <section className="mb-16 rounded-lg bg-white p-6 shadow-sm md:p-8">
+          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="mb-2 flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
+                <BookOpen size={15} /> <JpText>{lang === 'en' ? 'Tokyo Art Guides' : '東京アートガイド'}</JpText>
+              </p>
+              <h2 className="font-heading text-3xl font-heavy text-artbar-navy">
+                <JpText>{lang === 'en' ? 'Start with the right experience' : '目的に合う体験を探す'}</JpText>
+              </h2>
+            </div>
+            <Link
+              href={localizeHrefForLanguage('/guides', lang)}
+              className="inline-flex min-h-[44px] items-center gap-2 font-heading text-sm font-bold uppercase tracking-wider text-artbar-navy transition hover:text-artbar-taupe"
+            >
+              <JpText>{lang === 'en' ? 'All guides' : 'すべてのガイド'}</JpText> <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {SEO_GUIDES.slice(0, 3).map((guide) => {
+              const guideLocalCopy = guideCopy(guide, lang);
+              return (
+                <Link
+                  key={guide.slug}
+                  href={localizeHrefForLanguage(guidePath(guide.slug), lang)}
+                  className="group rounded-lg border border-black/5 bg-artbar-bg p-5 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
+                >
+                  <p className="mb-2 font-heading text-xs font-bold uppercase tracking-wider text-artbar-taupe">
+                    {guidePrimaryIntent(guide, lang)}
+                  </p>
+                  <h3 className="mb-2 font-heading text-xl font-bold leading-tight text-artbar-navy group-hover:text-artbar-taupe">
+                    <JpText>{guideLocalCopy.title}</JpText>
+                  </h3>
+                  <p className="line-clamp-2 text-sm leading-relaxed text-artbar-gray">
+                    <JpText>{guideLocalCopy.description}</JpText>
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
 
         <div
           ref={gridReveal.ref}
