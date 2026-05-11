@@ -14,5 +14,6 @@ export function metaDescription(input: string, maxLength = 155): string {
   if (text.length <= maxLength) return text;
   const clipped = text.slice(0, maxLength - 3);
   const lastSpace = clipped.lastIndexOf(' ');
-  return `${lastSpace > 80 ? clipped.slice(0, lastSpace) : clipped}...`;
+  const wordBoundaryThreshold = Math.floor(clipped.length * 0.8);
+  return `${lastSpace > wordBoundaryThreshold ? clipped.slice(0, lastSpace) : clipped}...`;
 }

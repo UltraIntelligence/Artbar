@@ -37,8 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: hasEnglishVersion
       ? buildLocalizedAlternates(`/blog/${slug}`, lang)
       : {
-          canonical: lang === 'jp' ? `/blog/${slug}` : `/en/blog/${slug}`,
-          languages: lang === 'jp' ? { ja: `/blog/${slug}`, 'x-default': `/blog/${slug}` } : undefined,
+          canonical: `/blog/${slug}`,
+          languages: { ja: `/blog/${slug}`, 'x-default': `/blog/${slug}` },
         },
     ...(!isIndexable && { robots: { index: false, follow: true } }),
     twitter: {

@@ -105,7 +105,7 @@ export const Footer: React.FC = () => {
                       href={href(locationPath(loc.id))}
                       className={footerLinkClass}
                     >
-                      {lang === 'en' ? loc.nameEn.replace(/^Artbar\s+/i, '') : loc.nameJp.replace(/^Artbar\s*/i, '')}
+                      {lang === 'en' ? loc.nameEn.replace(/^Artbar\s*/i, '') : loc.nameJp.replace(/^Artbar\s*/i, '')}
                     </Link>
                   </li>
                 ))}

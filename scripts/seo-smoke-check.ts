@@ -1,8 +1,9 @@
-import { readFileSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import { join } from 'path';
 import robots from '../app/robots';
 import sitemap from '../app/sitemap';
 import { ENGLISH_BLOG_POSTS_NEED_TRANSLATION } from '../lib/blog-language';
+import { SEO_GUIDES } from '../data/seo-guides';
 
 const SITE_URL = 'https://artbar.co.jp';
 
@@ -161,11 +162,20 @@ function checkJsonLdHelpers() {
   }
 }
 
+function checkGuideImages() {
+  for (const guide of SEO_GUIDES) {
+    if (/^https?:\/\//.test(guide.image)) continue;
+    const imagePath = join(process.cwd(), 'public', guide.image.replace(/^\//, ''));
+    assert(existsSync(imagePath), `Guide image missing: ${guide.slug} -> ${guide.image}`);
+  }
+}
+
 function main() {
   checkSitemap();
   checkRobots();
   checkRedirects();
   checkJsonLdHelpers();
+  checkGuideImages();
   console.log('SEO smoke check passed.');
 }
 

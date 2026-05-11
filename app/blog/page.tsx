@@ -46,6 +46,8 @@ export default async function BlogPage() {
         url: publicUrlForPath(`/blog/${post.slug}`, routeLocale),
         image: absoluteUrl(post.image),
         datePublished: post.date.replace(/\./g, '-'),
+        dateModified: post.date.replace(/\./g, '-'),
+        author: { '@type': 'Person', name: lang === 'jp' ? post.authorJp : post.authorEn },
       })),
   };
 

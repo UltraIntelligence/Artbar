@@ -34,7 +34,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const location = getLocationBySlug(slug);
-  if (!location) return { title: 'Location | Artbar Tokyo' };
+  if (!location) notFound();
 
   const lang = await getRequestLang();
   const { name, description } = locationCopy(location, lang);

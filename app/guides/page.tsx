@@ -80,7 +80,7 @@ export default async function GuidesPage() {
         </header>
 
         <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
-          {SEO_GUIDES.map((guide) => {
+          {SEO_GUIDES.map((guide, index) => {
             const guideLocalCopy = guideCopy(guide, lang);
             return (
               <article key={guide.slug} className="group flex h-full flex-col overflow-hidden rounded-lg border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
@@ -89,7 +89,7 @@ export default async function GuidesPage() {
                     src={guide.image}
                     alt={guideLocalCopy.title}
                     fill
-                    loading="eager"
+                    priority={index === 0}
                     className="object-cover transition duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                   />

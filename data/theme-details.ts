@@ -461,7 +461,7 @@ export function resolveThemeContentSlug(urlSlug: string): string {
 }
 
 export function hasThemeContent(urlSlug: string): boolean {
-  return resolveThemeContentSlug(urlSlug) in THEME_CONFIG;
+  return Object.prototype.hasOwnProperty.call(THEME_CONFIG, resolveThemeContentSlug(urlSlug));
 }
 
 export function getCanonicalThemeSlug(urlSlug: string): string {
