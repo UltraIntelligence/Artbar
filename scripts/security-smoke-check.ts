@@ -6,6 +6,7 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 const sketchRoute = readFileSync(join(process.cwd(), 'app/api/generate-sketch/route.ts'), 'utf8');
+const nextConfig = readFileSync(join(process.cwd(), 'next.config.ts'), 'utf8');
 const contentLengthIndex = sketchRoute.indexOf("req.headers.get('content-length')");
 const boundedBodyReadIndex = sketchRoute.indexOf('await readBoundedJsonBody(req)');
 
@@ -28,5 +29,12 @@ assert(
 );
 assert(sketchRoute.includes('BodyTooLargeError'), 'Sketch route must return a 413 path for oversized streamed bodies.');
 assert(sketchRoute.includes('InvalidJsonBodyError'), 'Sketch route must return a 400 path for malformed JSON.');
+
+for (const disallowedHost of ['picsum.photos', 'i.pravatar.cc']) {
+  assert(
+    !nextConfig.includes(`hostname: '${disallowedHost}'`) && !nextConfig.includes(`hostname: "${disallowedHost}"`),
+    `next/image remotePatterns should not allow unused placeholder host: ${disallowedHost}`
+  );
+}
 
 console.log('Security smoke check passed.');
