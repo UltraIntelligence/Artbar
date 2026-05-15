@@ -21,11 +21,11 @@
     "@vercel/analytics": "^2.0.1",
     "budoux": "^0.8.2",
     "lucide-react": "^0.554.0",
-    "next": "^15.3.0",
+    "next": "^15.5.18",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "resend": "^6.12.2",
-    "sanitize-html": "^2.17.3",
+    "sanitize-html": "^2.17.4",
     "sharp": "^0.34.5"
   },
   "overrides": {
