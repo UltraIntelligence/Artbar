@@ -10,6 +10,7 @@
     "check:seo": "tsx scripts/seo-smoke-check.ts",
     "check:performance": "tsx scripts/performance-smoke-check.ts",
     "check:security": "tsx scripts/security-smoke-check.ts",
+    "check:docs": "tsx scripts/docs-smoke-check.ts",
     "generate:images": "tsx scripts/generate-site-images.ts",
     "generate:images:dry": "tsx scripts/generate-site-images.ts --dry-run",
     "generate:images:revision": "tsx scripts/generate-site-images.ts --needs-revision",

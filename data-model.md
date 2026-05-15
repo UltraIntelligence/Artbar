@@ -2,7 +2,9 @@
 
 ## Domain overview
 
-Artbar Tokyo is a **marketing website** for a bilingual (English/Japanese) paint-and-sip studio business: schedules and booking point to external flows; the site itself is **content + presentation**. There is **no database** in this repository. The canonical “domain” is a **single JSON-shaped document** (`ContentData` in `types.ts`) loaded from `data/content.ts`, optionally **overwritten per browser** via `localStorage` after edits in `/admin`. **Server routes** (`app/api/*`) are **stateless**: they call Google Gemini for text or image generation and return JSON; they do not persist user data.
+Artbar Tokyo is a **marketing website** for a bilingual (English/Japanese) paint-and-sip studio business: schedules and booking point to external flows; most of the site is **content + presentation**. The baseline content still ships as a single JSON-shaped document (`ContentData` in `types.ts`) from `data/content.ts`, which keeps SEO metadata, sitemap generation, and build-time defaults reliable.
+
+The live product also has a **Supabase-backed Japanese copy publishing layer**. Staff use `/copy-admin` to save draft/published Japanese copy; public routes read the published payload through server helpers and `/api/copy-public`.
 
 A second, **code-only** layer exists for **theme landing pages** (`/themes/[slug]`): long-form copy and layout live in `views/ThemeDetail.tsx` (`THEME_CONFIG`), not in `ContentData`—see [Theme slug pages](#theme-slug-pages) below.
 
@@ -28,10 +30,9 @@ Embedded testimonials also appear under `site.home.testimonials.items` (same `Te
 
 | Plane | Source | Who reads it | Typical use |
 |-------|--------|----------------|---------------|
-| **Shipped defaults** | `defaultContent` from `data/content.ts` (built into the bundle) | Server Components, `generateMetadata`, `app/sitemap.ts` | SEO title/description for blog posts; URLs in sitemap |
-| **Runtime (per browser)** | `deepMerge(defaultContent, localStorage)` in `ContentProvider` | Client components under `useContent()` | Everything users see after hydration; includes `/admin` edits |
-
-There is **no sync** from runtime back to the repo or to the server bundle. Treat “production truth” for SEO as **git** unless you change how metadata is resolved.
+| **Shipped defaults** | `defaultContent` from `data/content.ts` (built into the bundle) | Server Components, metadata, sitemap, fallback UI | SEO/build-time defaults; safe fallback when the copy backend is unavailable |
+| **Published Japanese copy** | Supabase row read by `lib/copy/store.ts`, merged by `lib/copy/resolve.ts` | `app/layout.tsx`, `/api/copy-public`, `/api/blog-post/[slug]`, `ContentProvider` retry path | Live Japanese copy managed through `/copy-admin`; server layout merges it for Japanese visitors when configured |
+Treat `data/content.ts` as the durable SEO/build fallback and `/copy-admin`/Supabase as the live Japanese publishing surface.
 
 ---
 
@@ -41,7 +42,7 @@ There is **no sync** from runtime back to the repo or to the server bundle. Trea
 |--------|---------|------------|----------------|
 | **ContentData** | Root aggregate for all site content + theme tokens | `en`, `jp`, `images`, `theme`, shared arrays | `types.ts` (`ContentData`), `data/content.ts` (`defaultContent`), runtime merge in `context/ContentContext.tsx` |
 | **SiteContent** | Per-language marketing copy (nav, home sections, page-specific blocks) | Nested `nav`, `home`, `footer`, `teamBuilding`, `privateParties`, `blogPage`, etc. | `types.ts` (`SiteContent`), `data/content.ts` (`en` / `jp`) |
-| **ThemeConfig** | Admin-editable font stacks + Tailwind class strings for typography scale | `fonts.heading`, `fonts.body`, `typography.*` | `types.ts`, `data/content.ts` → `theme`; consumed by `components/ThemeInjector.tsx` |
+| **ThemeConfig** | Code/content-defined font stacks + Tailwind class strings for typography scale | `fonts.heading`, `fonts.body`, `typography.*` | `types.ts`, `data/content.ts` → `theme`; consumed by `components/ThemeInjector.tsx` |
 | **Instructor** | Staff profile for `/instructors` | `id`, `name`, `roleEn`/`roleJp`, `descEn`/`descJp`, `languages`, `profileImage`, `artworkImage` | `types.ts`; bios in `constants.ts` (`INSTRUCTOR_ROWS` → `INSTRUCTORS`); image slugs in `INSTRUCTOR_IDS` + `GI.instructors` (`data/generated-image-paths.ts`); merged in `data/content.ts` |
 | **Location** | Studio / franchise location | `id`, `nameEn`/`nameJp`, addresses, `accessEn`/`accessJp`, `image` | `types.ts`, `constants.ts` (`LOCATIONS`), `data/content.ts` |
 | **BlogPost** | Journal article | `id`, `slug`, `published`, `titleEn`/`titleJp`, `contentEn`/`contentJp` (HTML), `excerpt*`, `author*`, `date`, `tags`, `image` | `types.ts`, `data/content.ts` `blog`; list UI `views/BlogList.tsx` |
@@ -52,7 +53,6 @@ There is **no sync** from runtime back to the repo or to the server bundle. Trea
 | **Popular theme (home)** | Carousel/grid items on home “Popular Themes” | `title`, `desc`, `image` per item | `constants.ts` (`POPULAR_THEMES`), wired into `data/content.ts` under `site.home.themes.items` |
 | **Theme slug page** | SEO landing page per paint theme | URL `slug` → rich `ThemeContent` (hero, intro, examples, CTAs) | **Not** in `ContentData` — `views/ThemeDetail.tsx` (`THEME_CONFIG`); metadata titles in `app/themes/[slug]/page.tsx` (`THEME_TITLES`) |
 | **Pet sketch session** | Ephemeral user upload → generated line art | Client: `image` / `generatedImage` Data URLs; API: `imageBase64` in/out | `components/PetSketcher.tsx`, `app/api/generate-sketch/route.ts`; **no persistence** |
-| **AI text assist** | Prompt in → model text out | `prompt` / `text` | `app/api/ai-text/route.ts`; used from `views/Admin.tsx`, `views/Locations.tsx` |
 
 Supporting **navigation** types (`NavLink`, etc.) exist in `types.ts` but are not persisted as separate collections.
 
@@ -75,24 +75,25 @@ Supporting **navigation** types (`NavLink`, etc.) exist in `types.ts` but are no
 
 ### ContentData (whole document)
 
-- **Create:** `defaultContent` in `data/content.ts` (and imported constants) is the initial state; `ContentProvider` initializes state from that (`context/ContentContext.tsx`).
-- **Update:** `/admin` mutates a local copy and calls `updateContent`, which **writes JSON** to `localStorage` key `artbar_content_v5`. On load, `deepMerge(defaultContent, parsed)` fills missing keys from **current** defaults.
-- **Delete:** `resetContent()` clears `localStorage` and resets React state to `defaultContent`.
+- **Create:** `defaultContent` in `data/content.ts` (and imported constants) is the default tree. `app/layout.tsx` can merge published Japanese copy from Supabase before handing content to `ContentProvider`.
+- **Update:** `/copy-admin` saves Japanese draft/published copy in Supabase. `/api/copy-public` returns the merged published tree for client retries when Japanese copy was not fetched on the first server render. English defaults and shared content are changed in code.
+- **Delete / reset:** `/copy-admin` can roll back to the previous published Japanese payload. Shipped default removals happen through code/content changes.
 
 ### BlogPost
 
-- **Create/Update/Delete:** Through Admin UI (`views/Admin.tsx`) editing `content.blog` array; persisted with the rest of `ContentData`.
+- **Create/Update/Delete:** Blog posts ship from `data/content.ts`. There is no current in-product blog editor documented here.
 - **Visibility:** `published === false` hides posts from `views/BlogList.tsx` (`filter`).
-- **Side effects:** `app/sitemap.ts` and `app/blog/[slug]/page.tsx` `generateMetadata` use **`defaultContent` from `data/content.ts` only**, not `localStorage`—see [Edge cases](#edge-cases-and-gotchas).
+- **Runtime lookup:** `views/BlogPost.tsx` may fetch `/api/blog-post/[slug]`, which merges published Japanese copy before returning the post body for that slug.
+- **Side effects:** `app/sitemap.ts` and `app/blog/[slug]/page.tsx` `generateMetadata` use **`defaultContent` from `data/content.ts`**—see [Edge cases](#edge-cases-and-gotchas).
 
 ### Instructor, Location, Testimonial, MediaItem, FaqItem
 
-- **Create/Update/Delete:** Via Admin sections that edit nested paths on `ContentData`; same localStorage persistence.
-- **Defaults:** Often seeded from `constants.ts` in `data/content.ts`; admins can override in memory.
+- **Create/Update/Delete:** Defaults are changed through code/content updates, usually in `constants.ts` and `data/content.ts`.
+- **Defaults:** These values seed the public site at build/runtime fallback; `/copy-admin` is for Japanese copy publishing, not a full editor for every shared list.
 
 ### ThemeConfig (fonts + typography classes)
 
-- **Update:** Admin edits `content.theme`; `ThemeInjector` applies CSS variables and optional Google Fonts links (`components/ThemeInjector.tsx`).
+- **Update:** Change `content.theme` in `data/content.ts`; `ThemeInjector` applies CSS variables and optional Google Fonts links (`components/ThemeInjector.tsx`).
 
 ### Theme slug pages (`THEME_CONFIG`)
 
@@ -109,7 +110,7 @@ themeItem.title.toLowerCase().replace(/ /g, '-').replace('!', '')
 That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). Therefore:
 
 - **`THEME_CONFIG` keys must match** the slug produced from the **current** theme titles in content (EN/JP titles are the same for these items in practice; the slug uses whatever is in `items[].title` for the active build).
-- Renaming a theme title in `/admin` without adding a matching key in `views/ThemeDetail.tsx` → `ThemeDetail` **falls back** to `THEME_CONFIG['japan-inspired']` (`views/ThemeDetail.tsx`), so users may see the **wrong** theme’s copy while the URL slug stays wrong for SEO.
+- Renaming a theme title in content without adding a matching key in `views/ThemeDetail.tsx` → `ThemeDetail` **falls back** to `THEME_CONFIG['japan-inspired']` (`views/ThemeDetail.tsx`), so users may see the **wrong** theme’s copy while the URL slug stays wrong for SEO.
 - Titles like `"Kids!"` become `kids` (bang stripped). Special characters beyond spaces/`!` are **not** normalized—avoid punctuation in titles or extend the slug helper.
 - **Example mismatch:** `constants.ts` uses the title `"Texture Painting"`, which slugifies to `texture-painting`, but `THEME_CONFIG` uses the key `texture-art`. That link resolves to the **fallback** page, not the texture theme—fix by aligning title ↔ key or adding a `texture-painting` config entry.
 
@@ -120,7 +121,7 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 
 - **Imagery:** Hero, four example paintings, and the “experience” block use `THEME_PAGE_IMAGES` in `data/generated-image-paths.ts` (JPEGs under `public/media/generated/`, ids like `theme-{slug}-hero`, `theme-{slug}-example-1` … `-4`, `theme-{slug}-experience`). Prompts are in `data/theme-page-image-prompts.ts` and merged into `scripts/image-manifest.ts`; regenerate with `npm run generate:images:theme-pages`.
 
-### Pet sketch / AI text
+### Pet sketch
 
 - **Create:** Each request is independent; no server-side storage. Client holds images in React state until navigation away.
 
@@ -131,21 +132,29 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 - **`ContentData` must include both `en` and `jp`** for type satisfaction; runtime merge may patch partial objects.
 - **`BlogPost.slug` must be unique** among posts for correct routing and “find by slug” in `views/BlogPost.tsx`.
 - **`BlogPost.published`:** Listing and sitemap generation **intended** for published-only; implementation split between client list (`BlogList`) and build-time sitemap (`app/sitemap.ts`).
-- **`deepMerge`:** Empty arrays in saved JSON **do not** override defaults—non-empty arrays replace. **Object** keys merge recursively.
-- **API routes** expect `GEMINI_API_KEY` in the environment (`app/api/generate-sketch/route.ts`, `app/api/ai-text/route.ts`; image model override via `GEMINI_IMAGE_MODEL` per `lib/gemini-image-config.ts`).
+- **`deepMergeTemplate`:** Missing or `null` saved values preserve defaults. **Object** keys merge recursively. Arrays must be arrays; override arrays control the resulting length, so empty arrays produce empty arrays.
+- **API routes** expect `GEMINI_API_KEY` in the environment (`app/api/generate-sketch/route.ts`; image model override via `GEMINI_IMAGE_MODEL` per `lib/gemini-image-config.ts`).
 - **Asset URLs:** Public files must live under `public/`; `GI` (`data/generated-image-paths.ts`) maps to `/media/generated/...` and `/media/instructors/...` (see `INSTRUCTOR_IDS`).
-- **Home hero images:** `views/Home.tsx` falls back to `SITE_IMAGES.hero.home` from `constants.ts` when `content.images.hero.home` is empty or still a **toolandtea.com** placeholder URL—editing only one path can look “stuck.”
+- **Home hero images:** `views/Home.tsx` falls back to `SITE_IMAGES.hero.home` from `constants.ts` when `content.images.hero.home` is empty or still a **toolandtea.com** placeholder URL--editing only one path can look "stuck."
 
 ---
 
-## API contracts (stateless)
+## API contracts
 
-| Route | Request body | Success response | Env / config |
-|-------|----------------|------------------|--------------|
-| `POST /api/generate-sketch` | `{ imageBase64: string }` | `{ imageBase64, mimeType }` | `GEMINI_API_KEY`; optional `GEMINI_IMAGE_MODEL` (`lib/gemini-image-config.ts`) |
-| `POST /api/ai-text` | `{ prompt: string }` | `{ text: string }` | `GEMINI_API_KEY`; model fixed in route (`gemini-2.0-flash`) |
+| Route | Purpose | Notes |
+|-------|---------|-------|
+| `POST /api/generate-sketch` | Paint Your Pet upload → Gemini sketch image | Requires `GEMINI_API_KEY`; optional `GEMINI_IMAGE_MODEL`; request size/rate limits apply |
+| `POST /api/contact` | Customer contact form → staff email | Requires `RESEND_API_KEY`; validates required customer fields and rate limits submissions |
+| `GET /api/copy-public` | Public Japanese copy feed | Reads published Supabase copy when configured, merges it into content, returns `content` + `jpCopy` with no-store caching |
+| `POST /api/copy-admin/login` | Copy admin login | Requires `COPY_ADMIN_PASSWORD`, `COPY_ADMIN_SESSION_SECRET`, and Supabase config |
+| `POST /api/copy-admin/logout` | Copy admin logout | Clears the copy-admin session cookie |
+| `POST /api/copy-admin/draft` | Save Japanese copy draft | Authenticated, same-origin admin mutation; writes draft payload to Supabase |
+| `POST /api/copy-admin/publish` | Publish draft Japanese copy | Authenticated, same-origin admin mutation; promotes draft to published and revalidates the copy cache |
+| `POST /api/copy-admin/rollback` | Restore previous published Japanese copy | Authenticated, same-origin admin mutation; uses the previous published Supabase payload |
+| `GET /api/blog-post/[slug]` | Runtime blog post lookup | Reads published Japanese copy, merges content, returns the published post for the slug |
+| `POST /api/csp-report` | Browser Content Security Policy reports | Rate-limited log endpoint; sanitizes incoming report values |
 
-No sessions, quotas, or user IDs—only the Gemini call.
+These routes are still light product plumbing, not a booking/account system. Customer bookings and payments remain outside this repo.
 
 ---
 
@@ -153,11 +162,11 @@ No sessions, quotas, or user IDs—only the Gemini call.
 
 | Goal | Edit |
 |------|------|
-| Copy / wording (EN or JP) for pages | `data/content.ts` under `en` / `jp`, or `/admin` (local only) |
-| Shared lists (instructors, locations, blog, FAQs) | Same; defaults often originate in `constants.ts` |
-| New blog post in production SEO/sitemap | **Commit** changes to `data/content.ts` (and redeploy)—localStorage does not update server metadata |
+| Copy / wording (EN or JP) for pages | `data/content.ts` for shipped defaults; `/copy-admin` for live published Japanese copy |
+| Shared lists (instructors, locations, blog, FAQs) | Code/content changes; defaults often originate in `constants.ts` |
+| New blog post in production SEO/sitemap | **Commit** changes to `data/content.ts` and redeploy |
 | New `/themes/...` landing page | Add `THEME_CONFIG` entry + `THEME_TITLES` + ensure home theme **titles** slugify to that key |
-| Fonts / typography scale | `content.theme` / Admin, consumed by `components/ThemeInjector.tsx` |
+| Fonts / typography scale | `content.theme` in `data/content.ts`, consumed by `components/ThemeInjector.tsx` |
 | Generated marketing images paths | `data/generated-image-paths.ts` (and assets under `public/media/generated/`) |
 | Instructor list + photos | `INSTRUCTOR_IDS` + `INSTRUCTOR_ROWS` in `constants.ts`; JPEGs under `public/media/instructors/`; `scripts/image-manifest.ts` derives instructor slots from `INSTRUCTOR_IDS` |
 | Global layout, nav shell | `app/layout.tsx`, `components/Navbar.tsx`, `components/Footer.tsx` |
@@ -166,10 +175,8 @@ No sessions, quotas, or user IDs—only the Gemini call.
 
 ## Edge cases and gotchas
 
-- **SSR vs admin/localStorage:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`, while the article body on `/blog/[slug]` uses **`content` from context** (merged with localStorage). Edits in `/admin` can **diverge** from OG tags and sitemap until code/content is redeployed or defaults are updated.
-- **Stale `localStorage`:** Old keys can block new defaults (e.g. empty `images.hero.video`); **reset** in admin or clear `artbar_content_v5` (see project docs).
+- **Shipped blog data vs runtime JP copy:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`; the article body can refresh through `/api/blog-post/[slug]` and merge published Japanese copy. Publish important SEO-facing blog changes through `data/content.ts`.
 - **Theme slug drift:** Home links are **`/themes/${slugFromTitle}`** (`views/Home.tsx`). If the slug is **missing** from `THEME_CONFIG`, `ThemeDetail` still renders using the **Japan-Inspired** fallback—broken routing is subtle (wrong content, bad SEO), not necessarily a visible error page.
-- **No auth on `/admin`:** Anyone with the URL can edit **client-side** content for that browser only; not a secure CMS.
 - **No booking/user entities:** Sessions, tickets, and users are **out of scope** for this repo—copy may reference them, but no types exist.
 - **Structured data:** `views/BlogPost.tsx` embeds Article JSON-LD; `views/Home.tsx` embeds Organization JSON-LD—**not** centralized in a dedicated `components/SEO.tsx` in this repo (AGENTS/CLAUDE may still mention a legacy path).
 
@@ -181,13 +188,12 @@ No sessions, quotas, or user IDs—only the Gemini call.
 |--------|----------------|
 | Schema | `types.ts` |
 | Default content | `data/content.ts`, `constants.ts` |
-| Runtime content + persistence | `context/ContentContext.tsx` |
-| Admin editor | `views/Admin.tsx` |
+| Runtime content + publishing | `app/layout.tsx`, `context/ContentContext.tsx`, `lib/copy/store.ts`, `lib/copy/resolve.ts` |
+| Copy admin | `/copy-admin` routes/views for published JP copy |
 | Theme slug SEO pages | `views/ThemeDetail.tsx`, `app/themes/[slug]/page.tsx` |
 | Blog | `views/BlogList.tsx`, `views/BlogPost.tsx`, `app/blog/**` |
 | Sitemap | `app/sitemap.ts` |
 | Gemini image | `app/api/generate-sketch/route.ts`, `lib/gemini-image-config.ts` |
-| Gemini text | `app/api/ai-text/route.ts` |
 
 ---
 
@@ -196,6 +202,6 @@ No sessions, quotas, or user IDs—only the Gemini call.
 | Term | Meaning here |
 |------|----------------|
 | **SiteContent** | One language’s full tree of UI strings (`en` or `jp`). |
-| **ThemeConfig** | Admin-editable **typography / fonts** (`content.theme`), not paint “themes.” |
+| **ThemeConfig** | Code/content-defined **typography / fonts** (`content.theme`), not paint “themes.” |
 | **Paint theme / slug page** | SEO page under `/themes/[slug]`; copy lives in `ThemeDetail.tsx`, not `ContentData`. |
-| **deepMerge** | Client-side merge of saved JSON onto `defaultContent`; preserves defaults when saved data omits keys; empty arrays keep defaults. |
+| **deepMergeTemplate** | Merge helper for copy/default payloads; missing or `null` saved values preserve defaults, objects merge recursively, and override arrays control the resulting array length. |
