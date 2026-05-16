@@ -430,39 +430,6 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Themes Section — moved high on mobile so customers reach bookable sessions sooner */}
-      <section
-        id="popular-themes"
-        className="scroll-mt-28 py-16 md:scroll-mt-32 md:py-32 bg-artbar-bg"
-      >
-        <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
-            <div>
-              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
-              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
-                <JpText>{site.home.themes.subtitle}</JpText>
-              </p>
-            </div>
-            <Button
-                variant="taupe"
-                size="cta"
-                onClick={() => {
-                  trackBookingClick('home_themes');
-                  window.location.href = ARTBAR_BOOKING_URL;
-                }}
-                className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
-            >
-              <JpText>{site.home.themes.cta}</JpText>
-            </Button>
-          </div>
-
-          <PopularThemesGrid
-            items={site.home.themes.items}
-            className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
-          />
-        </div>
-      </section>
-
       {/* Concept Section - Refined for better balance */}
       <section className="pt-16 pb-24 md:pt-24 md:pb-64 bg-artbar-bg overflow-hidden relative grain">
         <div ref={conceptReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
@@ -620,6 +587,39 @@ export const Home: React.FC = () => {
               <ArrowRight size={18} className="shrink-0" aria-hidden />
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Themes Section — after trust-building context so choosing a session feels natural */}
+      <section
+        id="popular-themes"
+        className="scroll-mt-28 py-16 md:scroll-mt-32 md:py-32 bg-artbar-bg"
+      >
+        <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
+            <div>
+              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
+              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
+                <JpText>{site.home.themes.subtitle}</JpText>
+              </p>
+            </div>
+            <Button
+                variant="taupe"
+                size="cta"
+                onClick={() => {
+                  trackBookingClick('home_themes');
+                  window.location.href = ARTBAR_BOOKING_URL;
+                }}
+                className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
+            >
+              <JpText>{site.home.themes.cta}</JpText>
+            </Button>
+          </div>
+
+          <PopularThemesGrid
+            items={site.home.themes.items}
+            className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
+          />
         </div>
       </section>
 
