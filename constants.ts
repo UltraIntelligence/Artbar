@@ -8,9 +8,6 @@ function attachInstructorPhotos(row: InstructorRow): Instructor {
   return { ...row, profileImage: photos.profile, artworkImage: photos.artwork };
 }
 
-// Helper for the new placeholder format (non-generated fallbacks only)
-const getPh = (w: number, h: number) => `https://www.toolandtea.com/placeholder.svg?height=${h}&width=${w}`;
-
 /**
  * Tiny base64 placeholder for hero images — shows a dark blurred hint instantly while the real
  * image loads, removing the "blank → pop-in" flash.  Use with `<Image placeholder="blur" blurDataURL={HERO_BLUR_DATA_URL} …/>`.

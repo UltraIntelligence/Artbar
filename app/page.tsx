@@ -2,6 +2,9 @@ import { defaultContent } from '@/data/content';
 import { PageJsonLd } from '@/components/PageJsonLd';
 import { Home } from '@/views/Home';
 import { HERO_HOME_VIDEO_DESKTOP, HERO_HOME_VIDEO_MOBILE } from '@/constants';
+import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
@@ -27,29 +30,55 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
   const c = defaultContent[lang];
   const title =
     lang === 'jp'
       ? `${c.home.hero.title}${c.home.hero.titleHighlight}`
       : 'Artbar Tokyo | Paint & Sip Studio';
   const description = cleanCopy(c.home.hero.subtitle);
+  const desktopHero = mediaAssetUrl(publishedMedia, 'home.hero.desktop', HERO_HOME_VIDEO_DESKTOP);
+  const mobileHero = mediaAssetUrl(publishedMedia, 'home.hero.mobile', HERO_HOME_VIDEO_MOBILE);
+  const isVideo = (src: string) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(src);
 
   return (
     <>
-      <link
-        rel="preload"
-        as="video"
-        href={HERO_HOME_VIDEO_DESKTOP}
-        type="video/mp4"
-        media="(min-width: 768px)"
-      />
-      <link
-        rel="preload"
-        as="video"
-        href={HERO_HOME_VIDEO_MOBILE}
-        type="video/mp4"
-        media="(max-width: 767px)"
-      />
+      {isVideo(desktopHero) ? (
+        <link
+          rel="preload"
+          as="video"
+          href={desktopHero}
+          type="video/mp4"
+          media="(min-width: 768px)"
+        />
+      ) : (
+        <link
+          rel="preload"
+          as="image"
+          imageSrcSet={nextImageSrcSet(desktopHero)}
+          imageSizes="100vw"
+          media="(min-width: 768px)"
+          fetchPriority="high"
+        />
+      )}
+      {isVideo(mobileHero) ? (
+        <link
+          rel="preload"
+          as="video"
+          href={mobileHero}
+          type="video/mp4"
+          media="(max-width: 767px)"
+        />
+      ) : (
+        <link
+          rel="preload"
+          as="image"
+          imageSrcSet={nextImageSrcSet(mobileHero)}
+          imageSizes="100vw"
+          media="(max-width: 767px)"
+          fetchPriority="high"
+        />
+      )}
       <PageJsonLd path="/" lang={lang} name={title} description={description} />
       <Home />
     </>

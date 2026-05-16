@@ -65,7 +65,6 @@ export default async function GuidesPage() {
   return (
     <main className="grain min-h-screen bg-artbar-bg pt-36 pb-20">
       <PageJsonLd path="/guides" lang={lang} name={copy.title} description={copy.description} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }} />
 
       <div className="mx-auto max-w-[1280px] px-6 md:px-10">

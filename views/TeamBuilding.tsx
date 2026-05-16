@@ -159,7 +159,9 @@ export const TeamBuilding: React.FC = () => {
               {site.teamBuilding.activities.items.map((act, i) => {
                  const icons = [Puzzle, Users, Palette];
                  const Icon = icons[i] || Puzzle;
-                 const activityImage = TEAM_BUILDING_ACTIVITY_IMAGES[i] ?? TEAM_BUILDING_ACTIVITY_IMAGES[0];
+                 const activityImage = encodeURI(
+                    act.image || TEAM_BUILDING_ACTIVITY_IMAGES[i] || TEAM_BUILDING_ACTIVITY_IMAGES[0]
+                 );
                  return (
                     <div key={i} className="group relative h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden cursor-pointer">
                         <Image 
@@ -232,7 +234,7 @@ export const TeamBuilding: React.FC = () => {
                <div ref={scrollRef} className="flex overflow-x-auto gap-8 pb-4 hide-scrollbar snap-x snap-mandatory touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                   {teamTestimonials.map((t, i) => (
                     <div key={i} className="flex-shrink-0 w-[300px] md:w-[500px] snap-start">
-                       <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed mb-8 font-light italic">"<JpText>{t.text}</JpText>"</p>
+                       <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed mb-8 font-light italic">&ldquo;<JpText>{t.text}</JpText>&rdquo;</p>
                        <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-artbar-taupe rounded-full flex items-center justify-center text-white font-heading font-bold text-lg">{t.author.charAt(0)}</div>
                           <p className="font-heading font-bold text-artbar-navy text-sm uppercase tracking-wider"><JpText>{t.author}</JpText></p>

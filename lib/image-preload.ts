@@ -9,6 +9,10 @@ const DEVICE_SIZES = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
 const QUALITY = 75;
 
 export function nextImageSrcSet(src: string): string {
+  if (process.env.NODE_ENV === 'development') {
+    return `${encodeURI(src)} 1x`;
+  }
+
   return DEVICE_SIZES.map(
     (w) => `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${QUALITY} ${w}w`
   ).join(', ');

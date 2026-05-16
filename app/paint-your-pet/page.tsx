@@ -41,7 +41,6 @@ export default async function PaintYourPetPage() {
   return (
     <>
       <PageJsonLd path="/paint-your-pet" lang={lang} name={title} description={description} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(serviceJsonLd) }} />
       <PaintYourPet />
     </>

@@ -120,19 +120,20 @@ export const Home: React.FC = () => {
   const hasConceptVideo = Boolean(heroVideoDesktop || heroImages.videoMobile?.trim());
 
   const encMediaSrc = (path: string) => (path.includes(" ") ? encodeURI(path) : path);
+  const isVideoMedia = (path: string) => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(path);
+  const isGifMedia = (path: string) => /\.gif(\?|$)/i.test(path);
+  const usableHeroMedia = (path: string) => path && !path.includes("toolandtea.com");
 
   const rawHeroHome = (heroImages.home ?? "").trim();
-  const heroBgSrc =
-    rawHeroHome && !rawHeroHome.includes("toolandtea.com") ? rawHeroHome : SITE_IMAGES.hero.home;
-  const heroBgIsVideo = /\.mp4(\?|$)/i.test(heroBgSrc);
-  const heroBgUrl = encMediaSrc(heroBgSrc);
+  const heroBgDesktopSrc = usableHeroMedia(rawHeroHome) ? rawHeroHome : SITE_IMAGES.hero.home;
+  const heroBgDesktopIsVideo = isVideoMedia(heroBgDesktopSrc);
+  const heroBgDesktopUrl = encMediaSrc(heroBgDesktopSrc);
 
   const rawHeroHomeMobile = (heroImages.homeMobile ?? "").trim();
-  const heroBgMobileSrc = heroBgIsVideo
-    ? rawHeroHomeMobile && !rawHeroHomeMobile.includes("toolandtea.com")
-      ? rawHeroHomeMobile
-      : SITE_IMAGES.hero.homeMobile ?? heroBgSrc
-    : heroBgSrc;
+  const heroBgMobileSrc = usableHeroMedia(rawHeroHomeMobile)
+    ? rawHeroHomeMobile
+    : SITE_IMAGES.hero.homeMobile ?? heroBgDesktopSrc;
+  const heroBgMobileIsVideo = isVideoMedia(heroBgMobileSrc);
   const heroBgMobileUrl = encMediaSrc(heroBgMobileSrc);
 
   const conceptVideoDesktopUrl = encMediaSrc(heroVideoDesktop || heroVideoMobile);
@@ -143,7 +144,7 @@ export const Home: React.FC = () => {
   const heroMobilePreload = mdUp ? 'none' : 'auto';
   const conceptDesktopPreload = conceptVideoLazy.near && mdUp ? 'auto' : 'none';
   const conceptMobilePreload = conceptVideoLazy.near && !mdUp ? 'auto' : 'none';
-  const heroDesktopSrc = hasMounted && mdUp ? heroBgUrl : undefined;
+  const heroDesktopSrc = hasMounted && mdUp ? heroBgDesktopUrl : undefined;
   const heroMobileSrc = hasMounted && !mdUp ? heroBgMobileUrl : undefined;
   const conceptDesktopSrc =
     hasMounted && conceptVideoLazy.near && mdUp ? conceptVideoDesktopUrl : undefined;
@@ -222,9 +223,8 @@ export const Home: React.FC = () => {
         >
           <div className="absolute inset-0 z-0">
             <div className="relative isolate h-full w-full min-h-full min-w-full">
-              {heroBgIsVideo ? (
-                <>
-                  {/* Videos stay fully opaque; loading overlay covers them — `opacity-0` on video breaks autoplay/`playing` in Chrome. */}
+              <>
+                {heroBgDesktopIsVideo ? (
                   <video
                     autoPlay
                     muted
@@ -235,6 +235,19 @@ export const Home: React.FC = () => {
                     className="absolute inset-0 z-[1] hidden h-full w-full object-cover object-[center_19%] md:block"
                     aria-hidden
                   />
+                ) : (
+                  <Image
+	                    src={heroBgDesktopSrc}
+	                    alt={heroImageAlt}
+	                    fill
+	                    sizes="100vw"
+	                    unoptimized={isGifMedia(heroBgDesktopSrc)}
+	                    className={`hidden object-cover object-[center_19%] md:block ${
+                      isGifMedia(heroBgDesktopSrc) ? '' : 'hero-bg-motion'
+                    }`}
+                  />
+                )}
+                {heroBgMobileIsVideo ? (
                   <video
                     autoPlay
                     muted
@@ -245,20 +258,19 @@ export const Home: React.FC = () => {
                     className="absolute inset-0 z-[1] h-full w-full object-cover object-[center_19%] md:hidden"
                     aria-hidden
                   />
-                </>
-              ) : (
-                <Image
-                  src={heroBgSrc}
-                  alt={heroImageAlt}
-                  fill
-                  priority
-                  sizes="100vw"
-                  unoptimized={heroBgSrc.toLowerCase().endsWith('.gif')}
-                  className={`object-cover object-[center_19%] ${
-                    heroBgSrc.toLowerCase().endsWith('.gif') ? '' : 'hero-bg-motion'
-                  }`}
-                />
-              )}
+                ) : (
+                  <Image
+	                    src={heroBgMobileSrc}
+	                    alt={heroImageAlt}
+	                    fill
+	                    sizes="100vw"
+	                    unoptimized={isGifMedia(heroBgMobileSrc)}
+	                    className={`object-cover object-[center_19%] md:hidden ${
+                      isGifMedia(heroBgMobileSrc) ? '' : 'hero-bg-motion'
+                    }`}
+                  />
+                )}
+              </>
             </div>
           </div>
           {/* Two-layer wash — render immediately so copy is legible over navy plate while video loads */}

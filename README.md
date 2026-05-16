@@ -10,34 +10,54 @@ Bilingual Next.js marketing site for Artbar Tokyo, including Japanese-first publ
    npm install
    ```
 
-2. Create `.env.local` with the needed server-side keys:
-
-   ```bash
-   GEMINI_API_KEY=your_gemini_api_key_here
-   RESEND_API_KEY=your_resend_api_key_here
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-   COPY_ADMIN_PASSWORD=your_shared_copy_admin_password
-   COPY_ADMIN_SESSION_SECRET=long_random_secret_for_cookie_signing
-   ```
-
-3. Start development:
+2. Start development:
 
    ```bash
    npm run dev
    ```
 
-4. Open `http://localhost:3000`.
+3. Open `http://localhost:3000`.
+
+For the public site, no local keys are required. Add `.env.local` only when testing server-side features:
+
+```bash
+# Paint Your Pet sketch generation
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Contact form email sending
+RESEND_API_KEY=your_resend_api_key_here
+
+# Copy admin publishing
+SUPABASE_URL=your_supabase_project_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+COPY_ADMIN_PASSWORD=your_shared_copy_admin_password
+COPY_ADMIN_SESSION_SECRET=long_random_secret_for_cookie_signing
+```
+
+## Staff Admin Guide
+
+- Go to `/copy-admin` to update Japanese site copy.
+- Go to `/copy-admin/images` to manage site images.
+- Use preview/review screens before publishing changes.
+- Do not run image generation unless you mean to create new AI images. Use `npm run generate:images:dry` first to preview what would be changed.
 
 ## Useful Checks
 
 ```bash
+npm run check
+```
+
+Or run checks one by one:
+
+```bash
 npm run build
 npm run lint
+npm run typecheck
 npm run check:seo
 npm run check:security
 npm run check:performance
 npm run check:docs
+npm run check:media-slots
 ```
 
 ## Notes

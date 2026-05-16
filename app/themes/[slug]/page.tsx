@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import { THEME_PAGE_IMAGES, THEME_PAGE_SLUGS, type ThemePageSlug } from '@/data/generated-image-paths';
 import { getCanonicalThemeSlug, getThemeContent, hasThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { buildServiceJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
@@ -38,7 +40,12 @@ export default async function ThemeDetailPage({ params }: Props) {
   const lang = await getRequestLang();
 
   const resolvedSlug = resolveThemeContentSlug(slug);
-  const heroImage = THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero;
+  const publishedMedia = await getPublishedMediaMap();
+  const heroImage = mediaAssetUrl(
+    publishedMedia,
+    `themes.${resolvedSlug}.hero`,
+    THEME_PAGE_IMAGES[resolvedSlug as ThemePageSlug]?.hero ?? '',
+  );
   const theme = getThemeContent(resolvedSlug, lang);
   const routeLocale = siteLanguageToRouteLocale(lang);
   const themeUrl = publicUrlForPath(`/themes/${getCanonicalThemeSlug(slug)}`, routeLocale);
@@ -65,12 +72,10 @@ export default async function ThemeDetailPage({ params }: Props) {
   return (
     <>
       <PageJsonLd path={canonicalPath} lang={lang} name={theme.seoTitle} description={theme.seoDesc} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(serviceJsonLd) }}
