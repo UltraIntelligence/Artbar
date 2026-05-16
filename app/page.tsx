@@ -1,6 +1,7 @@
 import { defaultContent } from '@/data/content';
 import { PageJsonLd } from '@/components/PageJsonLd';
 import { Home } from '@/views/Home';
+import { HERO_HOME_VIDEO_DESKTOP, HERO_HOME_VIDEO_MOBILE } from '@/constants';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
@@ -35,6 +36,20 @@ export default async function HomePage() {
 
   return (
     <>
+      <link
+        rel="preload"
+        as="video"
+        href={HERO_HOME_VIDEO_DESKTOP}
+        type="video/mp4"
+        media="(min-width: 768px)"
+      />
+      <link
+        rel="preload"
+        as="video"
+        href={HERO_HOME_VIDEO_MOBILE}
+        type="video/mp4"
+        media="(max-width: 767px)"
+      />
       <PageJsonLd path="/" lang={lang} name={title} description={description} />
       <Home />
     </>

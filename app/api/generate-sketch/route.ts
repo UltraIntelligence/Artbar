@@ -4,8 +4,22 @@ import { geminiImageGenerationConfig, resolveGeminiImageModel } from '@/lib/gemi
 import { checkRateLimit } from '@/lib/rate-limit';
 
 const REQUEST_TIMEOUT_MS = 45_000;
+const MAX_IMAGE_BASE64_LENGTH = 12_000_000;
+const MAX_JSON_BODY_LENGTH = 12_500_000;
 
 type DetectedImageType = 'jpeg' | 'png' | 'webp';
+
+class BodyTooLargeError extends Error {
+  constructor() {
+    super('Request body is too large.');
+  }
+}
+
+class InvalidJsonBodyError extends Error {
+  constructor() {
+    super('Request body must be valid JSON.');
+  }
+}
 
 function detectImageType(buf: Buffer): DetectedImageType | null {
   if (buf.length < 12) return null;
@@ -21,6 +35,39 @@ function detectImageType(buf: Buffer): DetectedImageType | null {
   return null;
 }
 
+async function readBoundedJsonBody(req: NextRequest): Promise<unknown> {
+  const reader = req.body?.getReader();
+  if (!reader) {
+    throw new InvalidJsonBodyError();
+  }
+
+  const decoder = new TextDecoder();
+  let totalBytes = 0;
+  const chunks: string[] = [];
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    totalBytes += value.byteLength;
+    if (totalBytes > MAX_JSON_BODY_LENGTH) {
+      await reader.cancel().catch(() => undefined);
+      throw new BodyTooLargeError();
+    }
+
+    chunks.push(decoder.decode(value, { stream: true }));
+  }
+
+  chunks.push(decoder.decode());
+  const bodyText = chunks.join('');
+
+  try {
+    return JSON.parse(bodyText);
+  } catch {
+    throw new InvalidJsonBodyError();
+  }
+}
+
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
   const { allowed } = await checkRateLimit('generate-sketch', ip, 5, 60);
@@ -28,8 +75,23 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
   }
 
+  const contentLength = req.headers.get('content-length');
+  const parsedContentLength = contentLength ? Number(contentLength) : 0;
+  if (
+    Number.isFinite(parsedContentLength) &&
+    parsedContentLength > MAX_JSON_BODY_LENGTH
+  ) {
+    return NextResponse.json(
+      { error: 'Image is too large. Please try a smaller photo.' },
+      { status: 413 }
+    );
+  }
+
   try {
-    const { imageBase64 } = await req.json();
+    const body = await readBoundedJsonBody(req);
+    const imageBase64 = typeof body === 'object' && body !== null
+      ? (body as { imageBase64?: unknown }).imageBase64
+      : undefined;
 
     if (!process.env.GEMINI_API_KEY) {
       console.error('Missing GEMINI_API_KEY for /api/generate-sketch');
@@ -40,7 +102,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'imageBase64 required' }, { status: 400 });
     }
 
-    if (imageBase64.length > 12_000_000) {
+    if (imageBase64.length > MAX_IMAGE_BASE64_LENGTH) {
       return NextResponse.json({ error: 'Image is too large. Please try a smaller photo.' }, { status: 413 });
     }
 
@@ -111,6 +173,13 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Sketch route failed', error);
+    if (error instanceof BodyTooLargeError) {
+      return NextResponse.json({ error: 'Image is too large. Please try a smaller photo.' }, { status: 413 });
+    }
+    if (error instanceof InvalidJsonBodyError) {
+      return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+    }
+
     const message = error instanceof Error ? error.message : '';
     const errorStatus = typeof error === 'object' && error !== null ? (error as { status?: number }).status : undefined;
     const status =
