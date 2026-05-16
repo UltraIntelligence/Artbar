@@ -25,14 +25,26 @@ const OPTICAL_SCALE: Record<string, number> = {
   Netflix: 0.92,
 };
 
+const COMPACT_OPTICAL_SCALE: Record<string, number> = {
+  Apple: 1.08,
+  GE: 1.12,
+  Toyota: 0.98,
+  Adidas: 1.08,
+  Spotify: 1.08,
+  'Coca-Cola': 0.98,
+  Netflix: 0.98,
+  Amazon: 0.94,
+  Google: 0.94,
+};
+
 export function PartnerLogo({ name, url, size = 'default' }: PartnerLogoEntry) {
   const [failed, setFailed] = useState(false);
   const hasUrl = Boolean(url?.trim());
-  const scale = OPTICAL_SCALE[name];
   const isCompact = size === 'compact';
+  const scale = isCompact ? COMPACT_OPTICAL_SCALE[name] ?? OPTICAL_SCALE[name] : OPTICAL_SCALE[name];
 
   return (
-    <div className={`group flex w-full items-center justify-center ${isCompact ? 'h-7 sm:h-10 md:h-16 lg:h-20' : 'h-10 sm:h-12 md:h-16 lg:h-20'}`}>
+    <div className={`group flex w-full items-center justify-center ${isCompact ? 'h-9 sm:h-11 md:h-16 lg:h-20' : 'h-10 sm:h-12 md:h-16 lg:h-20'}`}>
       {hasUrl && !failed ? (
         <img
           src={url}
@@ -40,7 +52,7 @@ export function PartnerLogo({ name, url, size = 'default' }: PartnerLogoEntry) {
           loading="lazy"
           decoding="async"
           style={scale ? { transform: `scale(${scale})` } : undefined}
-          className={`block h-full w-auto origin-center object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 ${isCompact ? 'max-h-7 max-w-[6.75rem] sm:max-h-10 sm:max-w-[8rem] md:max-h-full md:max-w-full' : 'max-w-full'}`}
+          className={`block h-full w-auto origin-center object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 ${isCompact ? 'max-h-8 max-w-[7.25rem] sm:max-h-10 sm:max-w-[8rem] md:max-h-full md:max-w-full' : 'max-w-full'}`}
           onError={() => setFailed(true)}
         />
       ) : (
