@@ -3,6 +3,8 @@ import { PageJsonLd } from '@/components/PageJsonLd';
 import { PrivateParties } from '@/views/PrivateParties';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
@@ -25,9 +27,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function PrivatePartiesPage() {
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
   const c = defaultContent[lang];
   const title = `${c.privateParties.hero.title} ${c.privateParties.hero.titleHighlight}`.trim();
   const description = cleanCopy(c.privateParties.hero.subtitle);
+  const heroImage = mediaAssetUrl(
+    publishedMedia,
+    'privateParties.occasions.1',
+    GI.privateOccasions.birthday,
+  );
 
   return (
     <>
@@ -35,7 +43,7 @@ export default async function PrivatePartiesPage() {
       <link
         rel="preload"
         as="image"
-        imageSrcSet={nextImageSrcSet(GI.privateOccasions.birthday)}
+        imageSrcSet={nextImageSrcSet(heroImage)}
         imageSizes="(max-width: 1200px) 100vw, 80vw"
         fetchPriority="high"
       />

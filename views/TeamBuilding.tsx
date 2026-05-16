@@ -159,7 +159,7 @@ export const TeamBuilding: React.FC = () => {
               {site.teamBuilding.activities.items.map((act, i) => {
                  const icons = [Puzzle, Users, Palette];
                  const Icon = icons[i] || Puzzle;
-                 const activityImage = TEAM_BUILDING_ACTIVITY_IMAGES[i] ?? TEAM_BUILDING_ACTIVITY_IMAGES[0];
+                 const activityImage = act.image || TEAM_BUILDING_ACTIVITY_IMAGES[i] || TEAM_BUILDING_ACTIVITY_IMAGES[0];
                  return (
                     <div key={i} className="group relative h-[400px] md:h-[500px] rounded-[2.5rem] overflow-hidden cursor-pointer">
                         <Image 

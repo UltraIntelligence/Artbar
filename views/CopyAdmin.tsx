@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo, useState, useTransition } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { COPY_ADMIN_SECTIONS } from '@/lib/copy/defaults';
 import type { CopyEditorState, JapaneseCopyPayload } from '@/lib/copy/types';
@@ -291,6 +292,12 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
             <p className="mt-3 text-sm leading-6 text-artbar-gray">
               Edit by page here, then check the public site in another window for layout context.
             </p>
+            <Link
+              href="/copy-admin/images"
+              className="mt-5 inline-flex min-h-[2.5rem] items-center justify-center rounded-full border-2 border-artbar-navy px-5 py-2.5 font-heading text-sm font-bold tracking-wide text-artbar-navy transition hover:bg-gray-50"
+            >
+              Replace Site Images
+            </Link>
 
             <div className="mt-6 space-y-2">
               {COPY_ADMIN_SECTIONS.map((section) => (

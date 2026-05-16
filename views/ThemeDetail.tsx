@@ -8,6 +8,7 @@ import { stripJpSentinel } from '../lib/jp-attr';
 import { PopularThemesGrid } from '../components/PopularThemesGrid';
 import { pickDiscoveryThemes } from '../lib/theme-slugs';
 import { THEME_PAGE_IMAGES } from '../data/generated-image-paths';
+import { mediaAssetUrl } from '../lib/media/resolve';
 import {
   getPh,
   getThemeContent,
@@ -26,7 +27,7 @@ export const ThemeDetail: React.FC = () => {
   const rawSlug = (params.slug as string) || '';
   const resolvedSlug = resolveThemeContentSlug(rawSlug);
   const router = useRouter();
-  const { site, lang, jpCopy } = useContent();
+  const { site, lang, jpCopy, media } = useContent();
   const theme = getThemeContent(resolvedSlug, lang);
   const themePageCopy = jpCopy.themePages[resolvedSlug];
   const localizedTheme =
@@ -58,6 +59,17 @@ export const ThemeDetail: React.FC = () => {
         }
       : theme;
   const pageImages = THEME_PAGE_IMAGES[resolvedSlug as keyof typeof THEME_PAGE_IMAGES];
+  const themeImages = {
+    hero: mediaAssetUrl(media, `themes.${resolvedSlug}.hero`, pageImages?.hero ?? ''),
+    examples: (pageImages?.examples ?? []).map((image, index) =>
+      mediaAssetUrl(media, `themes.${resolvedSlug}.example.${index + 1}`, image)
+    ),
+    experience: mediaAssetUrl(
+      media,
+      `themes.${resolvedSlug}.experience`,
+      pageImages?.experience ?? '',
+    ),
+  };
 
   const intro = useScrollReveal();
   const gallery = useScrollReveal();
@@ -72,7 +84,7 @@ export const ThemeDetail: React.FC = () => {
   /** Strip JP `<wbr>` line-break markers when the title leaks into attribute-only
    *  contexts (alt text, placeholder URLs) — they're rendering hints, not content. */
   const titleAsText = stripJpSentinel(localizedTheme.title.replace(/<wbr\s*\/?>/gi, ''));
-  const heroSrc = pageImages?.hero ?? getPh(1920, 1080, titleAsText);
+  const heroSrc = themeImages.hero || getPh(1920, 1080, titleAsText);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -219,7 +231,7 @@ export const ThemeDetail: React.FC = () => {
               <div key={i} className="group flex flex-col items-center">
                 <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
                   <Image
-                    src={pageImages?.examples[i] ?? ex.image}
+                    src={themeImages.examples[i] ?? ex.image}
                     alt={stripJpSentinel(ex.title)}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -245,7 +257,7 @@ export const ThemeDetail: React.FC = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl order-2 lg:order-1">
               <Image
-                src={pageImages?.experience ?? getPh(1000, 750, 'Studio Atmosphere')}
+                src={themeImages.experience || getPh(1000, 750, 'Studio Atmosphere')}
                 alt={lang === 'en' ? 'Artbar Atmosphere' : stripJpSentinel(jpCopy.ui.themeDetail.atmosphereImageAlt)}
                 fill
                 className="object-cover"

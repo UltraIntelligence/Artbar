@@ -5,6 +5,8 @@ import {
   buildResolvedJapaneseCopy,
   mergePublishedIntoContent,
 } from '@/lib/copy/resolve';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
 import { trimBlogBodiesForPath } from '@/lib/content-payload';
 
@@ -18,13 +20,15 @@ export const revalidate = 0;
  * EN→JP toggle path.
  */
 export async function GET(request: NextRequest) {
-  const published =
-    (await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 })) ??
-    DEFAULT_JAPANESE_COPY_PAYLOAD;
+  const [publishedPayload, publishedMedia] = await Promise.all([
+    getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }),
+    getPublishedMediaMap(),
+  ]);
+  const published = publishedPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
 
   const currentPath = request.nextUrl.searchParams.get('path');
   const content = trimBlogBodiesForPath(
-    segmentJpDeep(mergePublishedIntoContent(published)),
+    mergeMediaIntoContent(segmentJpDeep(mergePublishedIntoContent(published)), publishedMedia),
     currentPath,
   );
   const jpCopy = segmentJpDeep(buildResolvedJapaneseCopy(published));

@@ -6,6 +6,8 @@ import {
   LOCATION_DEFAULT_PRICE_RANGE,
 } from '@/constants';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { buildLocalBusinessJsonLd, safeJsonLd } from '@/lib/jsonld';
@@ -28,11 +30,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Preload the first two location images (above the fold on most viewports)
-const PRELOAD_LOCATION_IMAGES = LOCATIONS.slice(0, 2).map((loc) => loc.image);
-
 export default async function LocationsPage() {
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
   const title = lang === 'jp' ? 'スタジオアクセス' : 'Our Locations';
   const description =
     lang === 'jp'
@@ -43,16 +43,24 @@ export default async function LocationsPage() {
   const schemaLang = routeLocale === 'ja' ? 'ja' : 'en';
   const locationsJsonLd = {
     '@context': 'https://schema.org',
-    '@graph': LOCATIONS.map((loc) =>
-      buildLocalBusinessJsonLd({
-        location: loc,
+    '@graph': LOCATIONS.map((loc) => {
+      const location = {
+        ...loc,
+        image: mediaAssetUrl(publishedMedia, `locations.${loc.id}`, loc.image),
+      };
+      return buildLocalBusinessJsonLd({
+        location,
         pageUrl: locationsUrl,
         lang: schemaLang,
         openingHours: loc.openingHours ?? LOCATION_DEFAULT_OPENING_HOURS,
         priceRange: loc.priceRange ?? LOCATION_DEFAULT_PRICE_RANGE,
-      })
-    ),
+      });
+    }),
   };
+  // Preload the first two location images (above the fold on most viewports)
+  const preloadLocationImages = LOCATIONS.slice(0, 2).map((loc) =>
+    mediaAssetUrl(publishedMedia, `locations.${loc.id}`, loc.image)
+  );
 
   return (
     <>
@@ -62,7 +70,7 @@ export default async function LocationsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(locationsJsonLd) }}
       />
-      {PRELOAD_LOCATION_IMAGES.map((src) => (
+      {preloadLocationImages.map((src) => (
         <link
           key={src}
           rel="preload"

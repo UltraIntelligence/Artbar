@@ -8,6 +8,8 @@ import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 import { isBlogPostAvailableForLanguage } from '@/lib/blog-language';
 import { metaDescription } from '@/lib/seo-text';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,11 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getPostBySlug(slug);
   if (!post) return { title: 'Blog | Artbar Tokyo' };
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
+  const postImage = mediaAssetUrl(publishedMedia, `blog.${post.slug}.cover`, post.image);
   const title = lang === 'jp' ? post.titleJp : post.titleEn;
   const isIndexable = isBlogPostAvailableForLanguage(post, lang);
   const hasEnglishVersion = isBlogPostAvailableForLanguage(post, 'en');
   const description = metaDescription(lang === 'jp' ? post.excerptJp : post.excerptEn, lang === 'jp' ? 110 : 155);
-  const twitterImage = encodeURI(post.image ?? '/og-image.png');
+  const twitterImage = encodeURI(postImage || '/og-image.png');
   return {
     title,
     description,
@@ -52,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: 'article',
-      images: post.image ? [{ url: post.image }] : undefined,
+      images: postImage ? [{ url: postImage }] : undefined,
     }),
   };
 }
@@ -62,6 +66,8 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(slug);
   if (!post) notFound();
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
+  const postImage = mediaAssetUrl(publishedMedia, `blog.${post.slug}.cover`, post.image);
   const headline = lang === 'jp' ? post.titleJp : post.titleEn;
   const authorName = lang === 'jp' ? post.authorJp : post.authorEn;
   const routeLocale = siteLanguageToRouteLocale(lang);
@@ -76,7 +82,7 @@ export default async function BlogPostPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline,
-    ...(post.image && { image: `${SITE_URL}${post.image}` }),
+    ...(postImage && { image: postImage.startsWith('http') ? postImage : `${SITE_URL}${postImage}` }),
     datePublished: isoDate,
     dateModified: isoDate,
     author: { '@type': 'Person', name: authorName },
@@ -111,11 +117,11 @@ export default async function BlogPostPage({ params }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
-      {post.image && (
+      {postImage && (
         <link
           rel="preload"
           as="image"
-          imageSrcSet={nextImageSrcSet(post.image)}
+          imageSrcSet={nextImageSrcSet(postImage)}
           imageSizes="100vw"
           fetchPriority="high"
         />

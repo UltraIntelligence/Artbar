@@ -12,6 +12,8 @@ import { getLocationBySlug, getLocationPageSlugs, locationPath } from '@/lib/loc
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 import { buildLocalBusinessJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -59,12 +61,15 @@ export default async function LocationDetailPage({ params }: Props) {
   const path = locationPath(location.id);
   const url = publicUrlForPath(path, routeLocale);
   const { name, address, access, description } = locationCopy(location, lang);
+  const publishedMedia = await getPublishedMediaMap();
+  const locationImage = mediaAssetUrl(publishedMedia, `locations.${location.id}`, location.image);
+  const locationWithMedia = { ...location, image: locationImage };
 
   const locationJsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
       buildLocalBusinessJsonLd({
-        location,
+        location: locationWithMedia,
         pageUrl: url,
         lang: schemaLang,
         openingHours: location.openingHours ?? LOCATION_DEFAULT_OPENING_HOURS,
@@ -99,7 +104,7 @@ export default async function LocationDetailPage({ params }: Props) {
       <link
         rel="preload"
         as="image"
-        imageSrcSet={nextImageSrcSet(location.image)}
+        imageSrcSet={nextImageSrcSet(locationImage)}
         imageSizes="(max-width: 1024px) 100vw, 50vw"
         fetchPriority="high"
       />
@@ -151,7 +156,7 @@ export default async function LocationDetailPage({ params }: Props) {
 
         <div className="relative aspect-[4/5] overflow-hidden rounded-lg bg-white shadow-xl">
           <Image
-            src={location.image}
+            src={locationImage}
             alt={name}
             fill
             priority

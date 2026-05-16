@@ -32,9 +32,9 @@ export default async function CopyAdminLoginPage({ searchParams }: LoginPageProp
     <div className="flex min-h-screen items-center justify-center bg-artbar-bg px-4 py-12">
       <div className="w-full max-w-md rounded-[2rem] border border-artbar-light-taupe/20 bg-white p-8 shadow-sm">
         <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">Private</p>
-        <h1 className="mt-3 font-heading text-3xl font-bold text-artbar-navy">Japanese Copy Login</h1>
+        <h1 className="mt-3 font-heading text-3xl font-bold text-artbar-navy">Site Admin Login</h1>
         <p className="mt-3 text-sm leading-6 text-artbar-gray">
-          This editor is for the Artbar team only. Use the shared password to open the Japanese copy tool.
+          This editor is for the Artbar team only. Use the shared password to open the copy and image tools.
         </p>
         {error ? (
           <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">{error}</p>
@@ -51,7 +51,7 @@ export default async function CopyAdminLoginPage({ searchParams }: LoginPageProp
             />
           </label>
           <Button type="submit" variant="taupe" size="cta" className="w-full">
-            Open Copy Editor
+            Open Site Admin
           </Button>
         </form>
       </div>

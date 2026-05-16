@@ -20,6 +20,8 @@ import {
   buildResolvedJapaneseCopy,
   mergePublishedIntoContent,
 } from '@/lib/copy/resolve';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
 import { buildOrganizationJsonLd, buildWebsiteJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { trimBlogBodiesForPath } from '@/lib/content-payload';
@@ -80,10 +82,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // We track whether the Supabase fetch actually returned data (vs falling back to
   // DEFAULT_JAPANESE_COPY_PAYLOAD on timeout/error). If it fell back, the client
   // should still attempt a runtime fetch to recover fresh published copy.
-  const supabaseJpPayload =
-    initialLang === 'jp' ? await getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }) : null;
+  const [supabaseJpPayload, publishedMedia] = await Promise.all([
+    initialLang === 'jp' ? getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }) : null,
+    getPublishedMediaMap(),
+  ]);
   const publishedPayload = supabaseJpPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
-  const initialContent = segmentJpDeep(mergePublishedIntoContent(publishedPayload));
+  const initialContent = mergeMediaIntoContent(
+    segmentJpDeep(mergePublishedIntoContent(publishedPayload)),
+    publishedMedia,
+  );
   const requestPathname = headersList.get(ROUTE_PATHNAME_HEADER);
   const trimmedInitialContent = trimBlogBodiesForPath(initialContent, requestPathname);
   const initialJpCopy = segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload));
@@ -102,6 +109,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           initialLang={initialLang}
           initialContent={trimmedInitialContent}
           initialJpCopy={initialJpCopy}
+          initialMedia={publishedMedia}
           initialHasFetchedRuntimeJp={initialHasFetchedRuntimeJp}
         >
           <ThemeInjector />

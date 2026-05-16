@@ -196,7 +196,7 @@ export interface SiteContent {
     activities: {
       title: string;
       subtitle: string;
-      items: { title: string; desc: string; link: string }[];
+      items: { title: string; desc: string; link: string; image?: string }[];
     };
     specialty: {
       badge: string;

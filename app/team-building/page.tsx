@@ -3,6 +3,8 @@ import { PageJsonLd } from '@/components/PageJsonLd';
 import { TeamBuilding } from '@/views/TeamBuilding';
 import { GI } from '@/data/generated-image-paths';
 import { nextImageSrcSet } from '@/lib/image-preload';
+import { getPublishedMediaMap } from '@/lib/media/store';
+import { mediaAssetUrl } from '@/lib/media/resolve';
 import type { Metadata } from 'next';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 
@@ -25,9 +27,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function TeamBuildingPage() {
   const lang = await getRequestLang();
+  const publishedMedia = await getPublishedMediaMap();
   const c = defaultContent[lang];
   const title = `${c.teamBuilding.hero.title} ${c.teamBuilding.hero.titleHighlight}`.trim();
   const description = cleanCopy(c.teamBuilding.hero.subtitle);
+  const heroImage = mediaAssetUrl(publishedMedia, 'teamBuilding.hero', GI.heroTeamBuilding);
 
   return (
     <>
@@ -35,7 +39,7 @@ export default async function TeamBuildingPage() {
       <link
         rel="preload"
         as="image"
-        imageSrcSet={nextImageSrcSet(GI.heroTeamBuilding)}
+        imageSrcSet={nextImageSrcSet(heroImage)}
         imageSizes="100vw"
         fetchPriority="high"
       />

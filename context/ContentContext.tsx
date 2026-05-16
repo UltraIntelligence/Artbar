@@ -6,6 +6,8 @@ import { ContentData, SiteContent } from '../types';
 import { type SiteLanguage, setLangCookieClient } from '../lib/language';
 import { routeLocaleFromPathname, routeLocaleToSiteLanguage, switchLocaleHref } from '../lib/locale-routing';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
+import { mergeMediaIntoContent } from '@/lib/media/resolve';
+import type { PublishedMediaMap } from '@/lib/media/types';
 
 type Language = SiteLanguage;
 
@@ -15,6 +17,7 @@ interface ContentContextType {
   content: ContentData;
   site: SiteContent; // Shortcut for content[lang]
   jpCopy: ResolvedJapaneseCopy;
+  media: PublishedMediaMap;
 }
 
 interface PublishedJpResponse {
@@ -38,6 +41,7 @@ export const ContentProvider: React.FC<{
   initialLang: Language;
   initialContent: ContentData;
   initialJpCopy: ResolvedJapaneseCopy;
+  initialMedia: PublishedMediaMap;
   /** True when the server already fetched fresh published JP copy from Supabase.
    *  When false (EN visitors, or JP visitors whose Supabase fetch timed out),
    *  the client retries via /api/copy-public on first JP render. */
@@ -47,6 +51,7 @@ export const ContentProvider: React.FC<{
   initialLang,
   initialContent,
   initialJpCopy,
+  initialMedia,
   initialHasFetchedRuntimeJp,
 }) => {
   const pathname = usePathname();
@@ -54,6 +59,7 @@ export const ContentProvider: React.FC<{
   const [lang, setLang] = useState<Language>(initialLang);
   const [content, setContent] = useState<ContentData>(initialContent);
   const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(initialJpCopy);
+  const [media] = useState<PublishedMediaMap>(initialMedia);
   const [hasFetchedRuntimeJp, setHasFetchedRuntimeJp] = useState<boolean>(initialHasFetchedRuntimeJp);
 
   useEffect(() => {
@@ -84,7 +90,7 @@ export const ContentProvider: React.FC<{
         const data = (await response.json()) as PublishedJpResponse;
         if (!data?.content || !data?.jpCopy) return;
 
-        setContent(data.content);
+        setContent(mergeMediaIntoContent(data.content, media));
         setJpCopy(data.jpCopy);
         setHasFetchedRuntimeJp(true);
       } catch (error) {
@@ -97,7 +103,7 @@ export const ContentProvider: React.FC<{
     void loadPublishedCopy();
 
     return () => controller.abort();
-  }, [lang, hasFetchedRuntimeJp]);
+  }, [lang, hasFetchedRuntimeJp, media, pathname]);
 
   const toggleLang = () => {
     const next: Language = lang === 'en' ? 'jp' : 'en';
@@ -117,6 +123,7 @@ export const ContentProvider: React.FC<{
       content,
       site,
       jpCopy,
+      media,
     }}>
       {children}
     </ContentContext.Provider>
