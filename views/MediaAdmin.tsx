@@ -83,7 +83,7 @@ const loadBrowserImage = (file: File) =>
     image.src = url;
   });
 
-const canvasToBlob = (canvas: HTMLCanvasElement, quality: number) =>
+const canvasToBlob = (canvas: HTMLCanvasElement, mimeType: string, quality: number) =>
   new Promise<Blob>((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
@@ -93,10 +93,13 @@ const canvasToBlob = (canvas: HTMLCanvasElement, quality: number) =>
         }
         resolve(blob);
       },
-      'image/jpeg',
+      mimeType,
       quality,
     );
   });
+
+const shouldPreserveTransparency = (file: File) =>
+  ['image/png', 'image/webp', 'image/avif'].includes(file.type) || /\.(png|webp|avif)$/i.test(file.name);
 
 async function prepareUploadFile(file: File): Promise<{ file: File; wasCompressed: boolean }> {
   const serverReady =
@@ -122,20 +125,25 @@ async function prepareUploadFile(file: File): Promise<{ file: File; wasCompresse
   if (!context) {
     throw new Error('Your browser could not prepare that image. Please try a different file.');
   }
+  const targetMimeType = shouldPreserveTransparency(file) ? 'image/webp' : 'image/jpeg';
+  const targetExtension = targetMimeType === 'image/webp' ? '.webp' : '.jpg';
 
   for (let attempt = 0; attempt < 8; attempt += 1) {
     canvas.width = width;
     canvas.height = height;
-    context.fillStyle = '#ffffff';
-    context.fillRect(0, 0, width, height);
+    context.clearRect(0, 0, width, height);
+    if (targetMimeType === 'image/jpeg') {
+      context.fillStyle = '#ffffff';
+      context.fillRect(0, 0, width, height);
+    }
     context.drawImage(image, 0, 0, width, height);
 
     const quality = Math.max(0.62, 0.86 - attempt * 0.08);
-    const blob = await canvasToBlob(canvas, quality);
+    const blob = await canvasToBlob(canvas, targetMimeType, quality);
     if (blob.size <= MAX_FUNCTION_UPLOAD_BYTES) {
       return {
-        file: new File([blob], replaceExtension(file.name || 'site-image', '.jpg'), {
-          type: 'image/jpeg',
+        file: new File([blob], replaceExtension(file.name || 'site-image', targetExtension), {
+          type: targetMimeType,
           lastModified: Date.now(),
         }),
         wasCompressed: true,

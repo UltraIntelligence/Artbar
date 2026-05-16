@@ -237,13 +237,12 @@ export const Home: React.FC = () => {
                   />
                 ) : (
                   <Image
-                    src={heroBgDesktopSrc}
-                    alt={heroImageAlt}
-                    fill
-                    priority
-                    sizes="100vw"
-                    unoptimized={isGifMedia(heroBgDesktopSrc)}
-                    className={`hidden object-cover object-[center_19%] md:block ${
+	                    src={heroBgDesktopSrc}
+	                    alt={heroImageAlt}
+	                    fill
+	                    sizes="100vw"
+	                    unoptimized={isGifMedia(heroBgDesktopSrc)}
+	                    className={`hidden object-cover object-[center_19%] md:block ${
                       isGifMedia(heroBgDesktopSrc) ? '' : 'hero-bg-motion'
                     }`}
                   />
@@ -261,13 +260,12 @@ export const Home: React.FC = () => {
                   />
                 ) : (
                   <Image
-                    src={heroBgMobileSrc}
-                    alt={heroImageAlt}
-                    fill
-                    priority
-                    sizes="100vw"
-                    unoptimized={isGifMedia(heroBgMobileSrc)}
-                    className={`object-cover object-[center_19%] md:hidden ${
+	                    src={heroBgMobileSrc}
+	                    alt={heroImageAlt}
+	                    fill
+	                    sizes="100vw"
+	                    unoptimized={isGifMedia(heroBgMobileSrc)}
+	                    className={`object-cover object-[center_19%] md:hidden ${
                       isGifMedia(heroBgMobileSrc) ? '' : 'hero-bg-motion'
                     }`}
                   />
