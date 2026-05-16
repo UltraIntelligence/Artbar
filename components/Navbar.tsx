@@ -61,7 +61,7 @@ export const Navbar: React.FC = () => {
     const active = isActive;
 
     if (isMobile) {
-        return `text-xl font-heading font-bold leading-snug ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe sm:text-2xl`;
+        return `flex min-h-[44px] items-center text-xl font-heading font-bold leading-snug ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe sm:text-2xl`;
     }
 
     // Shrink JP text size slightly (13px vs 15px) to prevent wrapping
@@ -194,7 +194,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={handleMobileLanguageToggle}
-              className="text-base font-heading font-bold text-artbar-navy text-left flex items-center gap-2 sm:text-lg"
+              className="flex min-h-[44px] items-center gap-2 text-left text-base font-heading font-bold text-artbar-navy sm:text-lg"
             >
               <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
             </button>
