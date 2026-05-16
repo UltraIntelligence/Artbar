@@ -15,16 +15,16 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    let pageKey: string | undefined;
-    if (request.headers.get('content-type')?.includes('application/json')) {
-      let body: { pageKey?: unknown } | null;
-      try {
-        body = await request.json() as { pageKey?: unknown } | null;
-      } catch {
-        return NextResponse.json({ error: 'Request body must be valid JSON.' }, { status: 400 });
-      }
-      pageKey = typeof body?.pageKey === 'string' ? body.pageKey : undefined;
+    if (!request.headers.get('content-type')?.includes('application/json')) {
+      return NextResponse.json({ error: 'Request body must be valid JSON.' }, { status: 400 });
     }
+    let body: { pageKey?: unknown } | null;
+    try {
+      body = await request.json() as { pageKey?: unknown } | null;
+    } catch {
+      return NextResponse.json({ error: 'Request body must be valid JSON.' }, { status: 400 });
+    }
+    const pageKey = typeof body?.pageKey === 'string' ? body.pageKey : undefined;
     return NextResponse.json(await publishDraftMediaAssets({ pageKey }));
   } catch (error) {
     return NextResponse.json(

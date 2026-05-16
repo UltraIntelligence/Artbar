@@ -278,7 +278,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
     try {
       const nextState = await postJson<MediaEditorState>(
         '/api/media-admin/publish',
-        scope === 'page' ? { pageKey: activePage?.pageKey } : undefined,
+        scope === 'page' ? { pageKey: activePage?.pageKey } : {},
       );
       setState(nextState);
       setStatus(scope === 'page' ? 'Published this page. Customers now see those images.' : 'Published all image drafts. Customer pages now use the live images.');
