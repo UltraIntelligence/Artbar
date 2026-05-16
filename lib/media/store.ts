@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { createClient } from '@supabase/supabase-js';
 import { revalidateTag, unstable_cache } from 'next/cache';
 import { MEDIA_SLOTS } from './slots';
@@ -19,6 +20,7 @@ type MediaOverrideRow = {
   draft_asset: unknown | null;
   published_asset: unknown | null;
   previous_published_asset: unknown | null;
+  publish_batch_id: string | null;
   created_at: string;
   updated_at: string;
   published_at: string | null;
@@ -103,6 +105,7 @@ function normalizeMediaRecord(row: MediaOverrideRow): MediaOverrideRecord {
     draftAsset: normalizeMediaAsset(row.draft_asset),
     publishedAsset: normalizeMediaAsset(row.published_asset),
     previousPublishedAsset: normalizeMediaAsset(row.previous_published_asset),
+    publishBatchId: row.publish_batch_id,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     publishedAt: row.published_at,
@@ -126,7 +129,9 @@ async function readMediaRecords(
 
   const { data, error } = await supabase
     .from(MEDIA_TABLE)
-    .select('slot_key, draft_asset, published_asset, previous_published_asset, created_at, updated_at, published_at')
+    .select(
+      'slot_key, draft_asset, published_asset, previous_published_asset, publish_batch_id, created_at, updated_at, published_at',
+    )
     .order('slot_key', { ascending: true });
 
   if (error) {
@@ -169,6 +174,11 @@ export async function getPublishedMediaMap(): Promise<PublishedMediaMap> {
 export async function getMediaEditorState(): Promise<MediaEditorState> {
   const mediaRecords = await readMediaRecords({ throwOnError: true });
   const records = new Map(mediaRecords.map((record) => [record.slotKey, record]));
+  const latestPublishBatchId =
+    mediaRecords
+      .filter((record) => record.publishBatchId && record.publishedAt)
+      .sort((first, second) => String(second.publishedAt).localeCompare(String(first.publishedAt)))[0]
+      ?.publishBatchId ?? null;
   const publishedMedia = Object.fromEntries(
     mediaRecords
       .filter((record) => record.publishedAsset)
@@ -194,7 +204,10 @@ export async function getMediaEditorState(): Promise<MediaEditorState> {
       slot,
       draftAsset,
       publishedAsset,
-      previousPublishedAsset: record?.previousPublishedAsset ?? null,
+      previousPublishedAsset:
+        latestPublishBatchId && record?.publishBatchId === latestPublishBatchId
+          ? record?.previousPublishedAsset ?? null
+          : null,
       fallbackAsset: {
         url: slot.fallbackUrl,
         alt: slot.label,
@@ -246,25 +259,47 @@ export async function saveDraftMediaAsset(slotKey: string, asset: MediaAsset) {
     throw new Error('Media storage is not configured.');
   }
 
-  const existing = (await readMediaRecords({ throwOnError: true })).find(
-    (record) => record.slotKey === slotKey,
-  );
   const now = new Date().toISOString();
 
-  const { error } = await supabase.from(MEDIA_TABLE).upsert(
-    {
-      slot_key: slotKey,
-      draft_asset: asset,
-      published_asset: existing?.publishedAsset ?? null,
-      previous_published_asset: existing?.previousPublishedAsset ?? null,
-      updated_at: now,
-      published_at: existing?.publishedAt ?? null,
-    },
-    { onConflict: 'slot_key' },
-  );
+  const updateDraft = () =>
+    supabase
+      .from(MEDIA_TABLE)
+      .update({
+        draft_asset: asset,
+        updated_at: now,
+      })
+      .eq('slot_key', slotKey)
+      .select('slot_key');
 
-  if (error) {
-    console.error('[media-store] failed to save draft media asset', error);
+  const { data: updatedRows, error: updateError } = await updateDraft();
+
+  if (updateError) {
+    console.error('[media-store] failed to save draft media asset', updateError);
+    throw new Error('Failed to save the draft image.');
+  }
+
+  if ((updatedRows ?? []).length > 0) {
+    return asset;
+  }
+
+  const { error: insertError } = await supabase.from(MEDIA_TABLE).insert({
+    slot_key: slotKey,
+    draft_asset: asset,
+    updated_at: now,
+  });
+
+  if (insertError) {
+    if (insertError.code === '23505') {
+      const { error: retryError } = await updateDraft();
+      if (!retryError) {
+        return asset;
+      }
+
+      console.error('[media-store] failed to save draft media asset after retry', retryError);
+      throw new Error('Failed to save the draft image.');
+    }
+
+    console.error('[media-store] failed to save draft media asset', insertError);
     throw new Error('Failed to save the draft image.');
   }
 
@@ -285,11 +320,13 @@ export async function publishDraftMediaAssets() {
   }
 
   const now = new Date().toISOString();
+  const publishBatchId = randomUUID();
   const rows = records.map((record) => ({
     slot_key: record.slotKey,
     draft_asset: record.draftAsset,
     published_asset: record.draftAsset,
     previous_published_asset: record.publishedAsset,
+    publish_batch_id: publishBatchId,
     updated_at: now,
     published_at: now,
   }));
@@ -310,8 +347,19 @@ export async function rollbackPublishedMediaAssets() {
     throw new Error('Media storage is not configured.');
   }
 
-  const records = (await readMediaRecords({ throwOnError: true })).filter(
+  const allRecords = await readMediaRecords({ throwOnError: true });
+  const latestPublishBatchId =
+    allRecords
+      .filter((record) => record.publishBatchId && record.publishedAt)
+      .sort((first, second) => String(second.publishedAt).localeCompare(String(first.publishedAt)))[0]
+      ?.publishBatchId ?? null;
+  if (!latestPublishBatchId) {
+    throw new Error('No previous published images are available to roll back.');
+  }
+
+  const records = allRecords.filter(
     (record) =>
+      record.publishBatchId === latestPublishBatchId &&
       record.previousPublishedAsset &&
       !areSameMediaAssets(record.previousPublishedAsset, record.publishedAsset),
   );
@@ -320,6 +368,7 @@ export async function rollbackPublishedMediaAssets() {
   }
 
   const now = new Date().toISOString();
+  const rollbackBatchId = randomUUID();
   const rows = records.map((record) => {
     const previous = record.previousPublishedAsset as MediaAsset;
     return {
@@ -327,6 +376,7 @@ export async function rollbackPublishedMediaAssets() {
       draft_asset: previous,
       published_asset: previous,
       previous_published_asset: record.publishedAsset,
+      publish_batch_id: rollbackBatchId,
       updated_at: now,
       published_at: now,
     };

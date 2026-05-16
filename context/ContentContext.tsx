@@ -6,7 +6,6 @@ import { ContentData, SiteContent } from '../types';
 import { type SiteLanguage, setLangCookieClient } from '../lib/language';
 import { routeLocaleFromPathname, routeLocaleToSiteLanguage, switchLocaleHref } from '../lib/locale-routing';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
-import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import type { PublishedMediaMap } from '@/lib/media/types';
 
 type Language = SiteLanguage;
@@ -90,7 +89,7 @@ export const ContentProvider: React.FC<{
         const data = (await response.json()) as PublishedJpResponse;
         if (!data?.content || !data?.jpCopy) return;
 
-        setContent(mergeMediaIntoContent(data.content, media));
+        setContent(data.content);
         setJpCopy(data.jpCopy);
         setHasFetchedRuntimeJp(true);
       } catch (error) {
@@ -103,7 +102,7 @@ export const ContentProvider: React.FC<{
     void loadPublishedCopy();
 
     return () => controller.abort();
-  }, [lang, hasFetchedRuntimeJp, media, pathname]);
+  }, [lang, hasFetchedRuntimeJp, pathname]);
 
   const toggleLang = () => {
     const next: Language = lang === 'en' ? 'jp' : 'en';

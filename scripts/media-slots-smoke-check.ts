@@ -1,18 +1,13 @@
-import { MEDIA_SLOTS } from '@/lib/media/slots';
+import { IMAGE_UPLOAD_MIME_TYPES, MEDIA_SLOTS } from '@/lib/media/slots';
 
-const IMAGE_UPLOAD_MIME_TYPES = new Set([
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/avif',
-]);
+const IMAGE_UPLOAD_MIME_TYPE_SET: ReadonlySet<string> = new Set(IMAGE_UPLOAD_MIME_TYPES);
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
 }
 
 function isValidUrl(url: string) {
-  return url.startsWith('/') || /^https?:\/\//.test(url);
+  return (url.startsWith('/') && !url.startsWith('//')) || /^https?:\/\//.test(url);
 }
 
 const seenKeys = new Set<string>();
@@ -29,16 +24,16 @@ for (const slot of MEDIA_SLOTS) {
   assert(isValidUrl(slot.fallbackUrl), `Media slot ${slot.key} has an invalid fallback URL: ${slot.fallbackUrl}`);
   assert(slot.acceptedMimeTypes.length > 0, `Media slot ${slot.key} is missing accepted MIME types.`);
   assert(
-    slot.acceptedMimeTypes.length === IMAGE_UPLOAD_MIME_TYPES.size,
+    slot.acceptedMimeTypes.length === IMAGE_UPLOAD_MIME_TYPE_SET.size,
     `Media slot ${slot.key} must accept the full image-only MIME set.`
   );
   for (const mimeType of slot.acceptedMimeTypes) {
     assert(
-      IMAGE_UPLOAD_MIME_TYPES.has(mimeType),
+      IMAGE_UPLOAD_MIME_TYPE_SET.has(mimeType),
       `Media slot ${slot.key} accepts unsupported MIME type: ${mimeType}`
     );
   }
-  for (const mimeType of IMAGE_UPLOAD_MIME_TYPES) {
+  for (const mimeType of IMAGE_UPLOAD_MIME_TYPE_SET) {
     assert(
       slot.acceptedMimeTypes.includes(mimeType),
       `Media slot ${slot.key} is missing accepted MIME type: ${mimeType}`

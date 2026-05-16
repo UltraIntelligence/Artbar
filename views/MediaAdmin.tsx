@@ -60,6 +60,7 @@ const Preview = ({
   label: string;
 }) => {
   const url = asset?.url;
+  const imageUrl = url ? encodeURI(url) : '';
 
   return (
     <div className="min-w-0 space-y-2">
@@ -67,7 +68,7 @@ const Preview = ({
       <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-gray-200 bg-artbar-bg">
         {url && !isVideoUrl(url) ? (
           <Image
-            src={url}
+            src={imageUrl}
             alt={asset?.alt || label}
             fill
             sizes="(min-width: 1024px) 240px, 50vw"

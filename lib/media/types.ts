@@ -54,6 +54,7 @@ export interface MediaOverrideRecord {
   draftAsset: MediaAsset | null;
   publishedAsset: MediaAsset | null;
   previousPublishedAsset: MediaAsset | null;
+  publishBatchId: string | null;
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;

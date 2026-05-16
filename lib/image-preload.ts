@@ -10,7 +10,7 @@ const QUALITY = 75;
 
 export function nextImageSrcSet(src: string): string {
   if (process.env.NODE_ENV === 'development') {
-    return `${src} 1x`;
+    return `${encodeURI(src)} 1x`;
   }
 
   return DEVICE_SIZES.map(

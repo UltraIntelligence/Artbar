@@ -3,6 +3,7 @@ create table if not exists public.site_media_overrides (
   draft_asset jsonb,
   published_asset jsonb,
   previous_published_asset jsonb,
+  publish_batch_id text,
   created_at timestamptz not null default timezone('utc', now()),
   updated_at timestamptz not null default timezone('utc', now()),
   published_at timestamptz
@@ -23,7 +24,7 @@ values (
   'artbar-site-media',
   'artbar-site-media',
   true,
-  10485760,
+  31457280,
   array[
     'image/jpeg',
     'image/png',

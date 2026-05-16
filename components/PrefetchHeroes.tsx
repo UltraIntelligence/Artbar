@@ -18,7 +18,7 @@ export function PrefetchHeroes({ srcs }: { srcs: string[] }) {
         link.as = 'image';
         link.href =
           process.env.NODE_ENV === 'development'
-            ? src
+            ? encodeURI(src)
             : `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=75`;
         document.head.appendChild(link);
       }

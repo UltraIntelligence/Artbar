@@ -80,15 +80,17 @@ export async function POST(request: NextRequest) {
     const uploadId = randomUUID();
     const slotPath = sanitizePathSegment(slot.key);
 
-    for (const processedFile of processed.files) {
-      const storagePath = `${slotPath}/${uploadId}/${processedFile.key}.${processedFile.extension}`;
-      const publicUrl = await uploadProcessedMediaFile(
-        storagePath,
-        processedFile.buffer,
-        processedFile.mimeType ?? 'application/octet-stream',
-      );
-      assignUploadedFileUrls(processed.asset, processedFile.key, storagePath, publicUrl);
-    }
+    await Promise.all(
+      processed.files.map(async (processedFile) => {
+        const storagePath = `${slotPath}/${uploadId}/${processedFile.key}.${processedFile.extension}`;
+        const publicUrl = await uploadProcessedMediaFile(
+          storagePath,
+          processedFile.buffer,
+          processedFile.mimeType ?? 'application/octet-stream',
+        );
+        assignUploadedFileUrls(processed.asset, processedFile.key, storagePath, publicUrl);
+      }),
+    );
 
     const asset = await saveDraftMediaAsset(slot.key, processed.asset);
     return NextResponse.json({

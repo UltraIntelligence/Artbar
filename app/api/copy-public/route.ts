@@ -13,6 +13,13 @@ import { trimBlogBodiesForPath } from '@/lib/content-payload';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), timeoutMs)),
+  ]);
+}
+
 /**
  * Returns the merged content tree + resolved JP copy with BudouX phrase chunks
  * pre-segmented (joined by U+200B sentinel). Client `JpText` splits on the
@@ -22,7 +29,7 @@ export const revalidate = 0;
 export async function GET(request: NextRequest) {
   const [publishedPayload, publishedMedia] = await Promise.all([
     getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }),
-    getPublishedMediaMap(),
+    withTimeout(getPublishedMediaMap(), 4000, {}),
   ]);
   const published = publishedPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
 

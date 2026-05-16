@@ -6,7 +6,7 @@ export function mediaAssetUrl(
   slotKey: string,
   fallback: string,
 ) {
-  return media?.[slotKey]?.url || fallback;
+  return encodeURI(media?.[slotKey]?.url || fallback);
 }
 
 export function mergeMediaIntoContent(content: ContentData, media: PublishedMediaMap): ContentData {

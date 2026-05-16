@@ -81,6 +81,10 @@ const themeTitleBySlug = new Map(
 const themePageSlots = THEME_PAGE_SLUGS.flatMap((slug) => {
   const add = page(`themes/${slug}`, `Theme: ${themeTitleBySlug.get(slug) ?? slug}`);
   const images = THEME_PAGE_IMAGES[slug];
+  if (!images) {
+    return [];
+  }
+
   return [
     add(
       `themes.${slug}.hero`,
