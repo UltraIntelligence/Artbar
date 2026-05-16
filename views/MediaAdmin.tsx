@@ -60,7 +60,7 @@ const Preview = ({
   label: string;
 }) => {
   const url = asset?.url;
-  const imageUrl = url ? encodeURI(url) : '';
+  const imageUrl = url || '';
 
   return (
     <div className="min-w-0 space-y-2">
