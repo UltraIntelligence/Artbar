@@ -69,7 +69,14 @@ function parseArgs() {
   const themePagesOnly = argv.includes('--theme-pages');
   let id: string | undefined;
   for (const a of argv) {
-    if (a.startsWith('--id=')) id = a.slice('--id='.length);
+    if (a.startsWith('--id=')) {
+      const parsedId = a.slice('--id='.length).trim();
+      if (!parsedId) {
+        console.error('Invalid option: --id must include a non-empty manifest id.');
+        process.exit(1);
+      }
+      id = parsedId;
+    }
   }
   return { dryRun, id, needsRevisionOnly, themePagesOnly };
 }
