@@ -5,6 +5,7 @@ import { useState } from 'react';
 export type PartnerLogoEntry = {
   name: string;
   url: string;
+  size?: 'default' | 'compact';
 };
 
 /**
@@ -24,13 +25,14 @@ const OPTICAL_SCALE: Record<string, number> = {
   Netflix: 0.92,
 };
 
-export function PartnerLogo({ name, url }: PartnerLogoEntry) {
+export function PartnerLogo({ name, url, size = 'default' }: PartnerLogoEntry) {
   const [failed, setFailed] = useState(false);
   const hasUrl = Boolean(url?.trim());
   const scale = OPTICAL_SCALE[name];
+  const isCompact = size === 'compact';
 
   return (
-    <div className="group flex h-10 w-full items-center justify-center sm:h-12 md:h-16 lg:h-20">
+    <div className={`group flex w-full items-center justify-center ${isCompact ? 'h-7 sm:h-10 md:h-16 lg:h-20' : 'h-10 sm:h-12 md:h-16 lg:h-20'}`}>
       {hasUrl && !failed ? (
         <img
           src={url}
@@ -38,7 +40,7 @@ export function PartnerLogo({ name, url }: PartnerLogoEntry) {
           loading="lazy"
           decoding="async"
           style={scale ? { transform: `scale(${scale})` } : undefined}
-          className="block h-full w-auto max-w-full origin-center object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100"
+          className={`block h-full w-auto origin-center object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 ${isCompact ? 'max-h-7 max-w-[6.75rem] sm:max-h-10 sm:max-w-[8rem] md:max-h-full md:max-w-full' : 'max-w-full'}`}
           onError={() => setFailed(true)}
         />
       ) : (
