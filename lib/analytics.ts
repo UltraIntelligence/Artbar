@@ -3,6 +3,8 @@ import { track } from '@vercel/analytics';
 export type BookingClickLocation =
   | 'nav_schedule'
   | 'nav_book_button'
+  | 'mobile_menu_book_button'
+  | 'mobile_sticky_book_button'
   | 'footer'
   | 'home_hero'
   | 'home_themes'

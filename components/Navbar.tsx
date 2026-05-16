@@ -3,12 +3,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Globe } from 'lucide-react';
+import { CalendarDays, Globe, Menu, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
 import { ARTBAR_BOOKING_URL } from '../constants';
 import { localizeHrefForLanguage, stripLocalePrefix } from '../lib/locale-routing';
-import { trackBookingClick } from '../lib/analytics';
+import { trackBookingClick, type BookingClickLocation } from '../lib/analytics';
+
+type NavLink = {
+  name: string;
+  path: string;
+  external?: boolean;
+};
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +41,7 @@ export const Navbar: React.FC = () => {
   const isHeroNavLayout = isHome && !scrolled;
   const isTransparent = isHeroNavLayout && !isOpen;
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: site.nav.instructors, path: '/instructors' },
     { name: site.nav.teamBuilding, path: '/team-building' },
     { name: site.nav.privateParties, path: '/private-parties' },
@@ -51,8 +57,8 @@ export const Navbar: React.FC = () => {
     return barePathname === link.path;
   };
 
-  const getLinkActiveClass = (link: any, isActive: boolean, isMobile: boolean = false) => {
-    let active = isActive;
+  const getLinkActiveClass = (link: NavLink, isActive: boolean, isMobile: boolean = false) => {
+    const active = isActive;
 
     if (isMobile) {
         return `text-xl font-heading font-bold leading-snug ${active ? 'text-artbar-taupe' : 'text-artbar-navy'} hover:text-artbar-taupe sm:text-2xl`;
@@ -69,8 +75,8 @@ export const Navbar: React.FC = () => {
     }
   };
 
-  const handleBookClick = () => {
-      trackBookingClick('nav_book_button');
+  const handleBookClick = (source: BookingClickLocation = 'nav_book_button') => {
+      trackBookingClick(source);
       window.location.href = ARTBAR_BOOKING_URL;
       setIsOpen(false);
   };
@@ -90,7 +96,10 @@ export const Navbar: React.FC = () => {
 
   const mobileBarTransition = 'duration-300 ease-out';
 
+  const showMobileStickyCta = !isOpen && scrolled;
+
   return (
+    <>
     <nav
       className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-[background-color,box-shadow] ${mobileBarTransition} ${
         isTransparent ? 'bg-transparent shadow-none' : 'bg-artbar-bg/95 backdrop-blur-md shadow-sm'
@@ -128,7 +137,7 @@ export const Navbar: React.FC = () => {
           </button>
 
           <button
-            onClick={handleBookClick}
+            onClick={() => handleBookClick('nav_book_button')}
             className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
           >
             {site.nav.book}
@@ -159,6 +168,15 @@ export const Navbar: React.FC = () => {
           inert={!isOpen}
         >
           <div className="flex flex-col gap-3.5 sm:gap-4">
+            <button
+              type="button"
+              onClick={() => handleBookClick('mobile_menu_book_button')}
+              className="mb-2 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-base font-bold tracking-wide text-artbar-navy shadow-lg transition-transform active:scale-[0.98] sm:text-lg"
+            >
+              <CalendarDays size={18} className="shrink-0" aria-hidden />
+              {site.nav.book}
+            </button>
+
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -184,5 +202,24 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
     </nav>
+
+    <div
+      className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom,0px))] pt-3 transition-all duration-300 ease-out xl:hidden ${
+        showMobileStickyCta ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
+      }`}
+      aria-hidden={!showMobileStickyCta}
+    >
+      <div className="mx-auto max-w-sm rounded-full border border-white/70 bg-artbar-bg/95 p-1.5 shadow-[0_14px_45px_-14px_rgba(5,55,97,0.55)] backdrop-blur-md">
+        <button
+          type="button"
+          onClick={() => handleBookClick('mobile_sticky_book_button')}
+          className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-sm font-bold tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.98]"
+        >
+          <CalendarDays size={17} className="shrink-0" aria-hidden />
+          {site.nav.book}
+        </button>
+      </div>
+    </div>
+    </>
   );
 };

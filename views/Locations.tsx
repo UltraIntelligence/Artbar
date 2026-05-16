@@ -12,8 +12,6 @@ import { trackBookingClick } from '../lib/analytics';
 import type { Location } from '../types';
 import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
 
-const SHOW_LOCATION_DIRECTIONS = false;
-
 export const Locations: React.FC = () => {
   const { lang, content, site, jpCopy } = useContent();
   const operatingReveal = useScrollReveal();
@@ -117,33 +115,27 @@ function LocationCard({
                     </h2>
                  </div>
 
-                 {(SHOW_LOCATION_DIRECTIONS || isFranchise) && (
-                   <div className="flex flex-wrap gap-2 md:gap-3 mb-8">
-                      {SHOW_LOCATION_DIRECTIONS && (
-                        <a
-                          href={directionsUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-gray-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-200 md:text-sm"
-                        >
-                          <Navigation size={12} className="md:w-3.5 md:h-3.5" /> <JpText>{lang === 'en' ? 'Directions' : jpCopy.ui.locations.directions}</JpText>
-                        </a>
-                      )}
-
-                      {isFranchise && (
-                        <a
-                          href={bookingUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() => trackBookingClick(`location_${loc.id}`)}
-                          className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-artbar-taupe bg-white px-5 py-3 text-xs font-bold uppercase tracking-wide text-artbar-taupe transition-colors hover:bg-artbar-taupe hover:text-white md:text-sm"
-                        >
-                          <CalendarDays size={12} className="md:w-3.5 md:h-3.5" />
-                          <JpText>{lang === 'en' ? 'Book Now' : '予約する'}</JpText>
-                        </a>
-                      )}
-                   </div>
-                 )}
+                 <div className="flex flex-col gap-2 mb-8 sm:flex-row sm:flex-wrap md:gap-3">
+                    <a
+                      href={bookingUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => trackBookingClick(`location_${loc.id}`)}
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-artbar-taupe px-5 pt-3 pb-2 text-xs font-bold uppercase tracking-wide text-artbar-navy shadow-sm transition-transform active:scale-[0.98] md:text-sm"
+                    >
+                      <CalendarDays size={14} className="shrink-0 md:w-4 md:h-4" aria-hidden />
+                      <JpText>{lang === 'en' ? 'Book This Studio' : 'このスタジオを予約'}</JpText>
+                    </a>
+                    <a
+                      href={directionsUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-artbar-light-taupe bg-white px-5 pt-3 pb-2 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-50 md:text-sm"
+                    >
+                      <Navigation size={14} className="shrink-0 md:w-4 md:h-4" aria-hidden />
+                      <JpText>{lang === 'en' ? 'Open in Maps' : jpCopy.ui.locations.directions}</JpText>
+                    </a>
+                 </div>
 
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">

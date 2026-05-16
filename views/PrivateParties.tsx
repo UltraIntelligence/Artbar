@@ -26,9 +26,9 @@ export const PrivateParties: React.FC = () => {
   const topHeroSrc = privateParties.occasions[0]?.image ?? '';
 
   return (
-    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-28 md:pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="relative w-full max-w-5xl mx-auto mb-12 h-[40vh] min-h-[220px] rounded-[2.5rem] overflow-hidden md:mb-16 bg-artbar-bg">
+        <div className="relative w-full max-w-5xl mx-auto mb-8 h-[30vh] min-h-[200px] rounded-[2.5rem] overflow-hidden md:mb-16 md:h-[40vh] bg-artbar-bg">
           <Image
             key={topHeroSrc || 'private-parties-hero'}
             src={topHeroSrc}
@@ -52,6 +52,14 @@ export const PrivateParties: React.FC = () => {
           <p className="text-lg md:text-2xl text-artbar-gray leading-relaxed font-light">
             <JpText>{privateParties.hero.subtitle}</JpText>
           </p>
+          <Button
+            variant="taupe"
+            size="cta"
+            onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+            className="mt-8 w-full max-w-xs shadow-xl sm:w-auto"
+          >
+            <JpText>{privateParties.specialtyInquiry.cta}</JpText>
+          </Button>
         </div>
 
         <div
