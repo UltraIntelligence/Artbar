@@ -16,10 +16,13 @@ assert(
   'Home page must import both hero MP4 constants from @/constants.'
 );
 
-const linkBlocks = homePage.match(/<link\b[\s\S]*?\/>/g) ?? [];
+const normalizedHomePage = homePage.replace(/\s+/g, ' ');
+const linkBlocks = normalizedHomePage.match(/<link\b.*?\/>/g) ?? [];
 
 function hasLinkBlock(requiredParts: string[]): boolean {
-  return linkBlocks.some((block) => requiredParts.every((part) => block.includes(part)));
+  return linkBlocks.some((block) =>
+    requiredParts.every((part) => block.includes(part.replace(/\s+/g, ' ')))
+  );
 }
 
 assert(

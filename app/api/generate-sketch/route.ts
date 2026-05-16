@@ -43,7 +43,7 @@ async function readBoundedJsonBody(req: NextRequest): Promise<unknown> {
 
   const decoder = new TextDecoder();
   let totalBytes = 0;
-  let bodyText = '';
+  const chunks: string[] = [];
 
   while (true) {
     const { done, value } = await reader.read();
@@ -51,13 +51,15 @@ async function readBoundedJsonBody(req: NextRequest): Promise<unknown> {
 
     totalBytes += value.byteLength;
     if (totalBytes > MAX_JSON_BODY_LENGTH) {
+      await reader.cancel().catch(() => undefined);
       throw new BodyTooLargeError();
     }
 
-    bodyText += decoder.decode(value, { stream: true });
+    chunks.push(decoder.decode(value, { stream: true }));
   }
 
-  bodyText += decoder.decode();
+  chunks.push(decoder.decode());
+  const bodyText = chunks.join('');
 
   try {
     return JSON.parse(bodyText);
