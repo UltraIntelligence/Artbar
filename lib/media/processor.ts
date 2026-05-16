@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import type { MediaAsset, MediaAssetFile, MediaSlot, MediaVariantSpec } from './types';
 
-const MAX_UPLOAD_BYTES = 30 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 const ORIGINAL_PREVIEW_WIDTH = 2400;
 const ORIGINAL_PREVIEW_QUALITY = 86;
 
@@ -18,7 +18,7 @@ export interface ProcessedMediaAsset {
 
 function assertSupportedUpload(buffer: Buffer, sourceMimeType: string, slot: MediaSlot) {
   if (buffer.byteLength > MAX_UPLOAD_BYTES) {
-    throw new Error('That image is too large. Please upload an image under 30MB.');
+    throw new Error('That image is still too large. Please upload an image under 4MB.');
   }
 
   if (sourceMimeType === 'image/svg+xml') {

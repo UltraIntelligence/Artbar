@@ -2,8 +2,8 @@ import type { LucideIcon } from 'lucide-react';
 import {
   MapPin, Sparkles, Paintbrush, Wind, Wine, Heart,
   CheckCircle, GlassWater, Coffee,
-  Palette, Sun, Moon, Star, Users, Camera, Gift,
-  Layers, Lightbulb, Droplets, Zap, Wand2,
+  Palette, Sun, Moon, Camera,
+  Layers, Droplets, Zap, Wand2,
   Cloud, Flower, User, Smile, Hammer, Mic2, Trophy, Music, Truck,
 } from 'lucide-react';
 import { THEME_JP } from './theme-details-jp-strings';

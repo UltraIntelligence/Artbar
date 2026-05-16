@@ -79,6 +79,7 @@ export interface MediaEditorPageState {
 export interface MediaEditorState {
   pages: MediaEditorPageState[];
   publishedMedia: PublishedMediaMap;
+  isConfigured: boolean;
 }
 
 export type PublishedMediaMap = Record<string, MediaAsset>;

@@ -15,7 +15,9 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    return NextResponse.json(await publishDraftMediaAssets());
+    const body = await request.json().catch(() => null) as { pageKey?: unknown } | null;
+    const pageKey = typeof body?.pageKey === 'string' ? body.pageKey : undefined;
+    return NextResponse.json(await publishDraftMediaAssets({ pageKey }));
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to publish image changes.' },

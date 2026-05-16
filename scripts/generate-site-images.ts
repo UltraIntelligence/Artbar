@@ -57,6 +57,13 @@ const THEME_PAGE_MANIFEST_ID = /^theme-.+-(hero|experience|example-[1-4])$/;
 
 function parseArgs() {
   const argv = process.argv.slice(2);
+  const allowedExactArgs = new Set(['--dry-run', '--needs-revision', '--theme-pages']);
+  const unknownArgs = argv.filter((a) => !allowedExactArgs.has(a) && !a.startsWith('--id='));
+  if (unknownArgs.length) {
+    console.error(`Unknown option${unknownArgs.length > 1 ? 's' : ''}: ${unknownArgs.join(', ')}`);
+    console.error('Allowed options: --dry-run, --id=<manifest-id>, --needs-revision, --theme-pages');
+    process.exit(1);
+  }
   const dryRun = argv.includes('--dry-run');
   const needsRevisionOnly = argv.includes('--needs-revision');
   const themePagesOnly = argv.includes('--theme-pages');

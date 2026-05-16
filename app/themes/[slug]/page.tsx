@@ -72,12 +72,10 @@ export default async function ThemeDetailPage({ params }: Props) {
   return (
     <>
       <PageJsonLd path={canonicalPath} lang={lang} name={theme.seoTitle} description={theme.seoDesc} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(serviceJsonLd) }}

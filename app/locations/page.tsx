@@ -65,7 +65,6 @@ export default async function LocationsPage() {
   return (
     <>
       <PageJsonLd path="/locations" lang={lang} name={title} description={description} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(locationsJsonLd) }}

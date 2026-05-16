@@ -57,7 +57,6 @@ export default async function BlogPage() {
   return (
     <>
       <PageJsonLd path="/blog" lang={lang} name={title} description={c.blogPage.subtitle} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(blogJsonLd) }} />
       <BlogList />
     </>

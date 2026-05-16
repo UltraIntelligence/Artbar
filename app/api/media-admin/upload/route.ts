@@ -15,6 +15,8 @@ import type { MediaAsset } from '@/lib/media/types';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const MAX_FUNCTION_UPLOAD_BYTES = 4 * 1024 * 1024;
+
 function sanitizePathSegment(value: string) {
   return value.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase();
 }
@@ -66,6 +68,13 @@ export async function POST(request: NextRequest) {
 
     if (!(file instanceof File)) {
       return NextResponse.json({ error: 'Please choose an image to upload.' }, { status: 400 });
+    }
+
+    if (file.size > MAX_FUNCTION_UPLOAD_BYTES) {
+      return NextResponse.json(
+        { error: 'That image is still too large. Please choose a smaller image or export it under 4MB.' },
+        { status: 413 },
+      );
     }
 
     const uploadedAt = new Date().toISOString();

@@ -171,8 +171,32 @@ export async function getPublishedMediaMap(): Promise<PublishedMediaMap> {
   return readCachedPublishedMediaMap().catch(() => ({}));
 }
 
+async function isMediaBucketConfigured() {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) {
+    return false;
+  }
+
+  const { error } = await supabase.storage.getBucket(MEDIA_BUCKET);
+  if (error) {
+    console.error('[media-store] failed to verify media storage bucket', error);
+    return false;
+  }
+  return true;
+}
+
 export async function getMediaEditorState(): Promise<MediaEditorState> {
-  const mediaRecords = await readMediaRecords({ throwOnError: true });
+  let mediaRecords: MediaOverrideRecord[] = [];
+  let isConfigured = isMediaBackendConfigured();
+  if (isConfigured) {
+    try {
+      mediaRecords = await readMediaRecords({ throwOnError: true });
+      isConfigured = await isMediaBucketConfigured();
+    } catch (error) {
+      console.error('[media-store] media backend health check failed', error);
+      isConfigured = false;
+    }
+  }
   const records = new Map(mediaRecords.map((record) => [record.slotKey, record]));
   const latestPublishBatchId =
     mediaRecords
@@ -184,7 +208,6 @@ export async function getMediaEditorState(): Promise<MediaEditorState> {
       .filter((record) => record.publishedAsset)
       .map((record) => [record.slotKey, record.publishedAsset as MediaAsset]),
   );
-  const isConfigured = isMediaBackendConfigured();
   const pages = new Map<string, MediaEditorPageState>();
 
   for (const slot of MEDIA_SLOTS) {
@@ -230,6 +253,7 @@ export async function getMediaEditorState(): Promise<MediaEditorState> {
   return {
     pages: Array.from(pages.values()),
     publishedMedia,
+    isConfigured,
   };
 }
 
@@ -306,14 +330,24 @@ export async function saveDraftMediaAsset(slotKey: string, asset: MediaAsset) {
   return asset;
 }
 
-export async function publishDraftMediaAssets() {
+export async function publishDraftMediaAssets(options: { pageKey?: string } = {}) {
   const supabase = getSupabaseAdmin();
   if (!supabase) {
     throw new Error('Media storage is not configured.');
   }
 
+  const pageSlotKeys = options.pageKey
+    ? new Set(MEDIA_SLOTS.filter((slot) => slot.pageKey === options.pageKey).map((slot) => slot.key))
+    : null;
+  if (options.pageKey && pageSlotKeys?.size === 0) {
+    throw new Error('That image page was not found.');
+  }
+
   const records = (await readMediaRecords({ throwOnError: true })).filter(
-    (record) => record.draftAsset && !areSameMediaAssets(record.draftAsset, record.publishedAsset),
+    (record) =>
+      (!pageSlotKeys || pageSlotKeys.has(record.slotKey)) &&
+      record.draftAsset &&
+      !areSameMediaAssets(record.draftAsset, record.publishedAsset),
   );
   if (records.length === 0) {
     return getMediaEditorState();
@@ -335,6 +369,47 @@ export async function publishDraftMediaAssets() {
   if (error) {
     console.error('[media-store] failed to publish media assets', error);
     throw new Error('Failed to publish image changes.');
+  }
+
+  revalidateTag(PUBLISHED_MEDIA_CACHE_TAG);
+  return getMediaEditorState();
+}
+
+export async function resetMediaSlotToDefault(slotKey: string) {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) {
+    throw new Error('Media storage is not configured.');
+  }
+
+  const slot = MEDIA_SLOTS.find((slotItem) => slotItem.key === slotKey);
+  if (!slot) {
+    throw new Error('That image slot was not found.');
+  }
+
+  const record = (await readMediaRecords({ throwOnError: true })).find(
+    (item) => item.slotKey === slotKey,
+  );
+  if (!record?.draftAsset && !record?.publishedAsset) {
+    return getMediaEditorState();
+  }
+
+  const now = new Date().toISOString();
+  const { error } = await supabase.from(MEDIA_TABLE).upsert(
+    {
+      slot_key: slotKey,
+      draft_asset: null,
+      published_asset: null,
+      previous_published_asset: record.publishedAsset,
+      publish_batch_id: randomUUID(),
+      updated_at: now,
+      published_at: now,
+    },
+    { onConflict: 'slot_key' },
+  );
+
+  if (error) {
+    console.error('[media-store] failed to reset media slot', error);
+    throw new Error('Failed to reset that image.');
   }
 
   revalidateTag(PUBLISHED_MEDIA_CACHE_TAG);

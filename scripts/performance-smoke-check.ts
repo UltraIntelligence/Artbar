@@ -18,6 +18,7 @@ assert(
 
 const normalizedHomePage = homePage.replace(/\s+/g, ' ');
 const linkBlocks = normalizedHomePage.match(/<link\b.*?\/>/g) ?? [];
+const conditionalBlocks = normalizedHomePage.match(/\{isVideo\((desktopHero|mobileHero)\)[\s\S]*?\)\}/g) ?? [];
 
 function hasLinkBlock(requiredParts: string[]): boolean {
   return linkBlocks.some((block) =>
@@ -26,25 +27,24 @@ function hasLinkBlock(requiredParts: string[]): boolean {
 }
 
 assert(
-  hasLinkBlock([
-    'rel="preload"',
-    'as="video"',
-    'href={HERO_HOME_VIDEO_DESKTOP}',
-    'type="video/mp4"',
-    'media="(min-width: 768px)"',
-  ]),
-  'Desktop hero video preload must use the imported desktop constant and desktop media scope.'
+  homePage.includes('getPublishedMediaMap') &&
+    homePage.includes("mediaAssetUrl(publishedMedia, 'home.hero.desktop', HERO_HOME_VIDEO_DESKTOP)") &&
+    homePage.includes("mediaAssetUrl(publishedMedia, 'home.hero.mobile', HERO_HOME_VIDEO_MOBILE)"),
+  'Home hero preloads must resolve published media overrides before falling back to bundled MP4s.'
 );
 
 assert(
-  hasLinkBlock([
-    'rel="preload"',
-    'as="video"',
-    'href={HERO_HOME_VIDEO_MOBILE}',
-    'type="video/mp4"',
-    'media="(max-width: 767px)"',
-  ]),
-  'Mobile hero video preload must use the imported mobile constant and mobile media scope.'
+  conditionalBlocks.some((block) => block.includes('isVideo(desktopHero)')) &&
+    hasLinkBlock(['rel="preload"', 'as="video"', 'href={desktopHero}', 'media="(min-width: 768px)"']) &&
+    hasLinkBlock(['rel="preload"', 'as="image"', 'imageSrcSet={nextImageSrcSet(desktopHero)}', 'media="(min-width: 768px)"']),
+  'Desktop hero preload must support both video fallback and uploaded image overrides.'
+);
+
+assert(
+  conditionalBlocks.some((block) => block.includes('isVideo(mobileHero)')) &&
+    hasLinkBlock(['rel="preload"', 'as="video"', 'href={mobileHero}', 'media="(max-width: 767px)"']) &&
+    hasLinkBlock(['rel="preload"', 'as="image"', 'imageSrcSet={nextImageSrcSet(mobileHero)}', 'media="(max-width: 767px)"']),
+  'Mobile hero preload must support both video fallback and uploaded image overrides.'
 );
 
 console.log('Performance smoke check passed.');

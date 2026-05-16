@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run check:docs && npm run check:seo && npm run check:security && npm run check:performance && npm run check:media-slots && npm run build",
     "check:seo": "tsx scripts/seo-smoke-check.ts",
     "check:performance": "tsx scripts/performance-smoke-check.ts",
     "check:security": "tsx scripts/security-smoke-check.ts",

@@ -119,7 +119,6 @@ export default async function GuideDetailPage({ params }: Props) {
   return (
     <main className="grain min-h-screen bg-artbar-bg pb-20">
       <PageJsonLd path={path} lang={lang} name={copy.title} description={copy.description} />
-      {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(guideJsonLd) }} />
       <link
         rel="preload"

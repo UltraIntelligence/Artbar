@@ -351,7 +351,25 @@ export interface SiteContent {
 export interface ContentData {
   en: SiteContent;
   jp: SiteContent;
-  images: Record<string, any>;
+  images: {
+    logoDark: string;
+    logoLight: string;
+    hero: {
+      home: string;
+      homeMobile: string;
+      teamBuilding: string;
+      video?: string;
+      videoMobile?: string;
+    };
+    concept: {
+      main: string;
+      detail: string;
+      video?: string;
+      videoMobile?: string;
+    };
+    features: Record<string, string>;
+    cta: string;
+  };
   instructors: Instructor[];
   locations: Location[];
   media: MediaItem[];

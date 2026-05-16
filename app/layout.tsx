@@ -100,7 +100,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
       {/* suppressHydrationWarning: extensions (e.g. ColorZilla) may inject attrs on body before hydrate */}
       <body suppressHydrationWarning>
-        {/* eslint-disable-next-line react/no-danger -- JSON-LD is static server-generated data, not user input */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}

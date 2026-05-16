@@ -14,7 +14,9 @@ type UploadResponse = {
   state: MediaEditorState;
 };
 
-const MAX_UPLOAD_BYTES = 30 * 1024 * 1024;
+const MAX_SOURCE_UPLOAD_BYTES = 30 * 1024 * 1024;
+const MAX_FUNCTION_UPLOAD_BYTES = 4 * 1024 * 1024;
+const MAX_BROWSER_IMAGE_DIMENSION = 2400;
 
 const isVideoUrl = (url?: string | null) => Boolean(url?.split('?')[0]?.toLowerCase().match(/\.(mp4|webm|mov|m4v)$/));
 
@@ -43,13 +45,108 @@ const getRecommendedSize = (slotState: MediaEditorSlotState) => {
   return sized.length > 0 ? sized.join(' / ') : 'Flexible size';
 };
 
-async function postJson<T>(url: string) {
-  const response = await fetch(url, { method: 'POST' });
+async function postJson<T>(url: string, body?: Record<string, unknown>) {
+  const response = await fetch(url, {
+    method: 'POST',
+    ...(body
+      ? {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        }
+      : {}),
+  });
   if (!response.ok) {
     const payload = await response.json().catch(() => ({}));
     throw new Error(payload.error || 'Request failed.');
   }
   return response.json() as Promise<T>;
+}
+
+const replaceExtension = (name: string, extension: string) =>
+  name.replace(/\.[a-z0-9]+$/i, '') + extension;
+
+const canTryBrowserImage = (file: File) =>
+  file.type.startsWith('image/') || /\.(jpe?g|png|webp|avif|heic|heif)$/i.test(file.name);
+
+const loadBrowserImage = (file: File) =>
+  new Promise<HTMLImageElement>((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const image = new window.Image();
+    image.onload = () => {
+      URL.revokeObjectURL(url);
+      resolve(image);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('That image could not be prepared in this browser. Please try a JPG, PNG, WebP, or AVIF file.'));
+    };
+    image.src = url;
+  });
+
+const canvasToBlob = (canvas: HTMLCanvasElement, quality: number) =>
+  new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          reject(new Error('That image could not be prepared. Please try a different file.'));
+          return;
+        }
+        resolve(blob);
+      },
+      'image/jpeg',
+      quality,
+    );
+  });
+
+async function prepareUploadFile(file: File): Promise<{ file: File; wasCompressed: boolean }> {
+  const serverReady =
+    file.size <= MAX_FUNCTION_UPLOAD_BYTES &&
+    ['image/jpeg', 'image/png', 'image/webp', 'image/avif'].includes(file.type);
+  if (serverReady) {
+    return { file, wasCompressed: false };
+  }
+
+  if (!canTryBrowserImage(file)) {
+    throw new Error('Please choose a JPG, PNG, WebP, or AVIF image.');
+  }
+
+  const image = await loadBrowserImage(file);
+  const scale = Math.min(
+    1,
+    MAX_BROWSER_IMAGE_DIMENSION / Math.max(image.naturalWidth || image.width, image.naturalHeight || image.height),
+  );
+  let width = Math.max(1, Math.round((image.naturalWidth || image.width) * scale));
+  let height = Math.max(1, Math.round((image.naturalHeight || image.height) * scale));
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (!context) {
+    throw new Error('Your browser could not prepare that image. Please try a different file.');
+  }
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    canvas.width = width;
+    canvas.height = height;
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, width, height);
+    context.drawImage(image, 0, 0, width, height);
+
+    const quality = Math.max(0.62, 0.86 - attempt * 0.08);
+    const blob = await canvasToBlob(canvas, quality);
+    if (blob.size <= MAX_FUNCTION_UPLOAD_BYTES) {
+      return {
+        file: new File([blob], replaceExtension(file.name || 'site-image', '.jpg'), {
+          type: 'image/jpeg',
+          lastModified: Date.now(),
+        }),
+        wasCompressed: true,
+      };
+    }
+
+    width = Math.max(1, Math.round(width * 0.82));
+    height = Math.max(1, Math.round(height * 0.82));
+  }
+
+  throw new Error('That image is too large for the website uploader. Please export it under 4MB and try again.');
 }
 
 const Preview = ({
@@ -106,8 +203,9 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
     [activePageKey, state.pages],
   );
 
-  const isConfigured = state.pages.some((page) => page.slots.some((slotState) => slotState.isConfigured));
+  const isConfigured = state.isConfigured;
   const hasDirtyImages = state.pages.some((page) => page.slots.some((slotState) => slotState.isDirty));
+  const activePageHasDirtyImages = Boolean(activePage?.slots.some((slotState) => slotState.isDirty));
   const hasRollbackImages = state.pages.some((page) =>
     page.slots.some((slotState) => Boolean(slotState.previousPublishedAsset)),
   );
@@ -116,24 +214,26 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
   const handleUpload = async (slotState: MediaEditorSlotState, file: File | undefined) => {
     if (!file) return;
 
-    if (file.size > MAX_UPLOAD_BYTES) {
+    if (file.size > MAX_SOURCE_UPLOAD_BYTES) {
       setStatus('That image is over 30MB. Please choose a smaller JPEG, PNG, WebP, or AVIF file.');
       return;
     }
 
-    if (!slotState.slot.acceptedMimeTypes.includes(file.type)) {
-      setStatus('Please choose a JPEG, PNG, WebP, or AVIF image.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('slotKey', slotState.slot.key);
-    formData.append('alt', slotState.slot.label);
-    formData.append('file', file);
-
     setPending(slotState.slot.key);
-    setStatus(`Uploading ${slotState.slot.label}...`);
+    setStatus(`Preparing ${slotState.slot.label}...`);
     try {
+      const prepared = await prepareUploadFile(file);
+      const formData = new FormData();
+      formData.append('slotKey', slotState.slot.key);
+      formData.append('alt', slotState.slot.label);
+      formData.append('file', prepared.file);
+
+      setStatus(
+        prepared.wasCompressed
+          ? `Prepared image (${formatBytes(file.size)} to ${formatBytes(prepared.file.size)}). Uploading...`
+          : `Uploading ${slotState.slot.label}...`,
+      );
+
       const response = await fetch('/api/media-admin/upload', {
         method: 'POST',
         body: formData,
@@ -154,20 +254,53 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
     }
   };
 
-  const handlePublish = async () => {
-    if (!hasDirtyImages) {
+  const handlePublish = async (scope: 'page' | 'all') => {
+    if (scope === 'page' && !activePageHasDirtyImages) {
+      setStatus('Nothing new to publish on this page.');
+      return;
+    }
+
+    if (scope === 'all' && !hasDirtyImages) {
       setStatus('Nothing new to publish. The draft images already match the live site.');
       return;
     }
 
-    setPending('publish');
-    setStatus('Publishing image drafts...');
+    setPending(scope === 'page' ? 'publish-page' : 'publish-all');
+    setStatus(scope === 'page' ? `Publishing ${activePage?.pageLabel ?? 'this page'} images...` : 'Publishing all image drafts...');
     try {
-      const nextState = await postJson<MediaEditorState>('/api/media-admin/publish');
+      const nextState = await postJson<MediaEditorState>(
+        '/api/media-admin/publish',
+        scope === 'page' ? { pageKey: activePage?.pageKey } : undefined,
+      );
       setState(nextState);
-      setStatus('Published image drafts. Customer pages now use the live images.');
+      setStatus(scope === 'page' ? 'Published this page. Customers now see those images.' : 'Published all image drafts. Customer pages now use the live images.');
     } catch (error) {
       setStatus(error instanceof Error ? error.message : 'Publish failed.');
+    } finally {
+      setPending(null);
+    }
+  };
+
+  const handleResetSlot = async (slotState: MediaEditorSlotState) => {
+    if (!slotState.publishedAsset && !slotState.draftAsset) {
+      setStatus('That image is already using the default.');
+      return;
+    }
+
+    if (!window.confirm(`Reset ${slotState.slot.label} back to the default site image?`)) {
+      return;
+    }
+
+    setPending(`reset:${slotState.slot.key}`);
+    setStatus(`Resetting ${slotState.slot.label}...`);
+    try {
+      const nextState = await postJson<MediaEditorState>('/api/media-admin/reset', {
+        slotKey: slotState.slot.key,
+      });
+      setState(nextState);
+      setStatus(`${slotState.slot.label} was reset to the default image.`);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Reset failed.');
     } finally {
       setPending(null);
     }
@@ -255,7 +388,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
                 </p>
                 {!isConfigured ? (
                   <p className="mt-3 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                    Media storage is not configured yet, so image actions are disabled.
+                    Media storage is not ready yet. Check Supabase URL, service role key, the media table, and the storage bucket before staff upload images.
                   </p>
                 ) : null}
               </div>
@@ -264,10 +397,18 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
                 <Button
                   type="button"
                   variant="taupe"
-                  onClick={handlePublish}
+                  onClick={() => handlePublish('page')}
+                  disabled={isBusy || !isConfigured || !activePageHasDirtyImages}
+                >
+                  Publish This Page
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => handlePublish('all')}
                   disabled={isBusy || !isConfigured || !hasDirtyImages}
                 >
-                  Publish Images
+                  Publish All Drafts
                 </Button>
                 <Button
                   type="button"
@@ -283,7 +424,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
                   </Button>
                 </form>
                 <p className="basis-full text-xs leading-5 text-artbar-gray">
-                  Upload first, then publish once. Draft images stay off the live site until then.
+                  Upload first, then publish. Use Publish This Page when only one page is ready.
                 </p>
               </div>
             </div>
@@ -332,7 +473,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
                             fileInputs.current[slotState.slot.key] = node;
                           }}
                           type="file"
-                          accept={slotState.slot.acceptedMimeTypes.join(',')}
+                          accept="image/*"
                           className="hidden"
                           onChange={(event) => handleUpload(slotState, event.target.files?.[0])}
                         />
@@ -344,6 +485,15 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
                           disabled={isBusy || !slotState.isConfigured}
                         >
                           {slotPending ? 'Uploading...' : 'Replace'}
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleResetSlot(slotState)}
+                          disabled={isBusy || !slotState.isConfigured || (!slotState.publishedAsset && !slotState.draftAsset)}
+                        >
+                          {pending === `reset:${slotState.slot.key}` ? 'Resetting...' : 'Reset Default'}
                         </Button>
                         {slotState.isDirty ? (
                           <span className="rounded-full bg-artbar-taupe px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
