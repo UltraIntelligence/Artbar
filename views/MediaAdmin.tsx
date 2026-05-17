@@ -341,7 +341,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
     <div className="min-h-screen bg-artbar-bg">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-6 px-4 py-6 md:px-8 lg:flex-row">
         <aside className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[20rem] lg:shrink-0">
-          <div className="rounded-[2rem] border border-artbar-light-taupe/20 bg-white p-5 shadow-sm">
+          <div className="flex flex-col rounded-[2rem] border border-artbar-light-taupe/20 bg-white p-5 shadow-sm lg:max-h-[calc(100vh-3rem)]">
             <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">Image Admin</p>
             <h1 className="mt-3 font-heading text-3xl font-bold text-artbar-navy">Site Images</h1>
             <p className="mt-3 text-sm leading-6 text-artbar-gray">
@@ -354,7 +354,7 @@ export const MediaAdmin: React.FC<MediaAdminProps> = ({ initialState }) => {
               Back to Copy Editor
             </Link>
 
-            <div className="mt-6 space-y-2">
+            <div className="mt-6 min-h-0 space-y-2 lg:flex-1 lg:overflow-y-auto lg:pr-1">
               {state.pages.map((page) => {
                 const pageHasDraft = page.slots.some((slotState) => slotState.isDirty);
                 return (
