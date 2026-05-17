@@ -51,8 +51,8 @@ const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
 const SHOW_HERO_LINE_CTA = false;
 
 /**
- * Square face crops for the concept social strip. Sourced from Unsplash, optimized
- * to ~5 KB JPEGs at 192px and self-hosted to avoid third-party RTTs.
+ * Square guest-photo crops for the concept social strip. Keep these curated so
+ * the homepage only shows public-friendly faces that crop cleanly in circles.
  */
 const CONCEPT_SOCIAL_AVATAR_URLS = [
   '/media/testimonials/avatar-1.jpg',
