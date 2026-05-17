@@ -55,12 +55,12 @@ const SHOW_HERO_LINE_CTA = false;
  * the homepage only shows public-friendly faces that crop cleanly in circles.
  */
 const CONCEPT_SOCIAL_AVATAR_URLS = [
-  '/media/testimonials/avatar-1.jpg',
-  '/media/testimonials/avatar-2.jpg',
-  '/media/testimonials/avatar-3.jpg',
-  '/media/testimonials/avatar-4.jpg',
-  '/media/testimonials/avatar-5.jpg',
-  '/media/testimonials/avatar-6.jpg',
+  '/media/testimonials/avatar-20260517-1.jpg',
+  '/media/testimonials/avatar-20260517-2.jpg',
+  '/media/testimonials/avatar-20260517-3.jpg',
+  '/media/testimonials/avatar-20260517-4.jpg',
+  '/media/testimonials/avatar-20260517-5.jpg',
+  '/media/testimonials/avatar-20260517-6.jpg',
 ] as const;
 
 export const Home: React.FC = () => {
