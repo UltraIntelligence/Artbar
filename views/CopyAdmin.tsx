@@ -161,7 +161,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
     return section.paths.some(({ path }) => !jsonEqual(getAtPath(draft, path), getAtPath(savedDraft, path)));
   };
 
-  const handleSaveDraft = (message: string) => {
+  const handleSaveDraft = () => {
     const locale = activeLocale;
     const localeLabel = getLocaleLabel(locale);
     const draftToSave = runtimeState[locale].draft;
@@ -177,7 +177,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
           draft: data.draft,
           savedDraft: data.draft,
         }));
-        setStatus(`${localeLabel}: ${message} Customers will not see this until you publish.`);
+        setStatus(`${localeLabel}: Draft saved. Customers will not see this until you publish.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Draft save failed.');
       }
@@ -446,7 +446,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => handleSaveDraft(`${selectedSection.title} draft saved.`)}
+                  onClick={handleSaveDraft}
                   disabled={isPending || !isConfigured}
                 >
                   Save Draft
