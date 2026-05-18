@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
@@ -91,6 +92,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       ? segmentJpDeep(buildResolvedCopy(initialLang, publishedPayload))
       : buildResolvedCopy(initialLang, publishedPayload);
   const initialHasFetchedRuntimeCopy = supabasePayload !== null;
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
@@ -112,6 +114,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
         <Analytics />
+        {gaId ? <GoogleAnalytics gaId={gaId} /> : null}
       </body>
     </html>
   );
