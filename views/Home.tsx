@@ -64,7 +64,7 @@ const CONCEPT_SOCIAL_AVATAR_URLS = [
 ] as const;
 
 export const Home: React.FC = () => {
-  const { content, site, lang, jpCopy } = useContent();
+  const { content, site, lang, localizedCopy } = useContent();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const theme = content.theme.typography;
@@ -199,20 +199,20 @@ export const Home: React.FC = () => {
   };
 
 
-  const meetRegularsHeading = lang === 'en' ? 'Meet Our Regulars' : jpCopy.ui.home.meetRegularsHeading;
-  const bookTeamBuildingCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
-  const bilingualLine1 = 'Professional Bilingual';
-  const bilingualLine2 = 'Instruction Available';
-  const bilingualJpLine1 = jpCopy.ui.home.bilingualLine1;
-  const bilingualJpLine2 = jpCopy.ui.home.bilingualLine2;
-  const mediaCoverageLabel = lang === 'en' ? 'Media Coverage' : jpCopy.ui.home.mediaCoverageLabel;
-  const asSeenInHeading = lang === 'en' ? 'As Seen In' : jpCopy.ui.home.asSeenInHeading;
-  const heroImageAlt = lang === 'en' ? 'Artbar Experience' : stripJpSentinel(jpCopy.ui.home.heroImageAlt);
-  const conceptImageAlt = lang === 'en' ? 'Artbar Lifestyle' : stripJpSentinel(jpCopy.ui.home.conceptImageAlt);
-  const ctaImageAlt = lang === 'en' ? 'Artbar Studio' : stripJpSentinel(jpCopy.ui.home.ctaImageAlt);
-  const conceptVideoCta = lang === 'en' ? 'Watch the full video on YouTube' : stripJpSentinel(jpCopy.ui.home.conceptVideoCta);
-  const previousTestimonialLabel = lang === 'en' ? 'Previous testimonial' : stripJpSentinel(jpCopy.ui.home.previousTestimonial);
-  const nextTestimonialLabel = lang === 'en' ? 'Next testimonial' : stripJpSentinel(jpCopy.ui.home.nextTestimonial);
+  const homeUiCopy = localizedCopy.ui.home;
+  const meetRegularsHeading = homeUiCopy.meetRegularsHeading;
+  const bookTeamBuildingCta = homeUiCopy.bookTeamBuildingCta;
+  const bilingualLine1 = homeUiCopy.bilingualLine1;
+  const bilingualLine2 = homeUiCopy.bilingualLine2;
+  const mediaCoverageLabel = homeUiCopy.mediaCoverageLabel;
+  const asSeenInHeading = homeUiCopy.asSeenInHeading;
+  const heroImageAlt = stripJpSentinel(homeUiCopy.heroImageAlt);
+  const conceptImageAlt = stripJpSentinel(homeUiCopy.conceptImageAlt);
+  const ctaImageAlt = stripJpSentinel(homeUiCopy.ctaImageAlt);
+  const conceptVideoCta = stripJpSentinel(homeUiCopy.conceptVideoCta);
+  const previousTestimonialLabel = stripJpSentinel(homeUiCopy.previousTestimonial);
+  const nextTestimonialLabel = stripJpSentinel(homeUiCopy.nextTestimonial);
+  const storiesLabel = homeUiCopy.storiesLabel;
 
   return (
     <div className="w-full bg-artbar-bg">
@@ -558,8 +558,8 @@ export const Home: React.FC = () => {
                           </>
                         ) : (
                           <>
-                            <span className="normal-case tracking-normal"><JpText>{bilingualJpLine1}</JpText></span>
-                            <span className="normal-case tracking-normal"><JpText>{bilingualJpLine2}</JpText></span>
+                            <span className="normal-case tracking-normal"><JpText>{bilingualLine1}</JpText></span>
+                            <span className="normal-case tracking-normal"><JpText>{bilingualLine2}</JpText></span>
                           </>
                         )}
                      </div>
@@ -789,7 +789,7 @@ export const Home: React.FC = () => {
 
                 <div className="flex min-w-[5.5rem] flex-col items-center justify-center px-2 sm:min-w-[6.5rem] sm:px-4">
                   <span className="font-heading text-[9px] font-bold uppercase tracking-[0.25em] text-artbar-taupe/90">
-                    <JpText>{lang === 'en' ? 'Stories' : jpCopy.ui.home.storiesLabel}</JpText>
+                    <JpText>{storiesLabel}</JpText>
                   </span>
                   <p className="font-heading text-lg font-heavy tabular-nums leading-none text-artbar-navy md:text-xl">
                     <span className="text-artbar-navy">{activeIndex + 1}</span>

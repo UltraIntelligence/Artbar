@@ -36,9 +36,12 @@ COPY_ADMIN_SESSION_SECRET=long_random_secret_for_cookie_signing
 
 ## Staff Admin Guide
 
-- Go to `/copy-admin` to update Japanese site copy.
+- Go to `/copy-admin` to update English or Japanese site copy.
+- Use the language tabs to choose English or Japanese before editing.
+- Save Draft keeps changes private.
+- Preview opens the public language route in a new tab.
+- Publish makes the selected language visible to customers.
 - Go to `/copy-admin/images` to manage site images.
-- Use preview/review screens before publishing changes.
 - Do not run image generation unless you mean to create new AI images. Use `npm run generate:images:dry` first to preview what would be changed.
 
 ## Useful Checks
@@ -63,6 +66,6 @@ npm run check:media-slots
 ## Notes
 
 - Public content is mostly static in `data/content.ts`.
-- Japanese runtime copy can be published through `/copy-admin`.
+- English and Japanese runtime copy can be published through `/copy-admin`.
 - The Paint Your Pet sketch route uses `GEMINI_API_KEY` server-side only.
 - Production deployment is Vercel-backed.

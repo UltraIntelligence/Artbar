@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
-import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
-import {
-  buildResolvedJapaneseCopy,
-  mergePublishedIntoContent,
-} from '@/lib/copy/resolve';
+import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
+import { getPublishedCopyPayload, parseCopyLocale } from '@/lib/copy/store';
 import { getPublishedMediaMap } from '@/lib/media/store';
-import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
-import { trimBlogBodiesForPath } from '@/lib/content-payload';
+import { buildPublicCopyPayload } from '@/lib/copy/public-payload';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -21,27 +16,22 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Pr
 }
 
 /**
- * Returns the merged content tree + resolved JP copy with BudouX phrase chunks
- * pre-segmented (joined by U+200B sentinel). Client `JpText` splits on the
- * sentinel — no client-side BudouX. Used by `ContentContext` for the runtime
- * EN→JP toggle path.
+ * Returns the merged content tree + resolved localized copy. Japanese responses
+ * include BudouX phrase chunks pre-segmented with the U+200B sentinel for the
+ * runtime language toggle path.
  */
 export async function GET(request: NextRequest) {
+  const locale = parseCopyLocale(request.nextUrl.searchParams.get('locale'));
   const [publishedPayload, publishedMedia] = await Promise.all([
-    getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }),
+    getPublishedCopyPayload(locale, { timeoutMs: 4000 }),
     withTimeout(getPublishedMediaMap(), 4000, {}),
   ]);
-  const published = publishedPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
+  const published = publishedPayload ?? DEFAULT_COPY_PAYLOADS[locale];
 
   const currentPath = request.nextUrl.searchParams.get('path');
-  const content = trimBlogBodiesForPath(
-    mergeMediaIntoContent(segmentJpDeep(mergePublishedIntoContent(published)), publishedMedia),
-    currentPath,
-  );
-  const jpCopy = segmentJpDeep(buildResolvedJapaneseCopy(published));
 
   return NextResponse.json(
-    { content, jpCopy },
+    buildPublicCopyPayload(locale, published, publishedMedia, currentPath, segmentJpDeep),
     {
       headers: {
         'Cache-Control': 'no-store, max-age=0',

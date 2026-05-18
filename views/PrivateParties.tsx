@@ -11,15 +11,16 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { Check, Clock, Wine, Palette, Utensils, Sparkles } from 'lucide-react';
 
 export const PrivateParties: React.FC = () => {
-  const { site, lang, jpCopy } = useContent();
+  const { site, lang, localizedCopy } = useContent();
   const { privateParties } = site;
   const occasionsReveal = useScrollReveal();
   const pricingReveal = useScrollReveal();
   const capacityReveal = useScrollReveal();
   const timelineReveal = useScrollReveal();
 
-  const maxGuestsLabel = lang === 'en' ? 'Max Guests' : jpCopy.ui.privateParties.maxGuestsLabel;
-  const priceSuffix = lang === 'en' ? '/ person (tax inc)' : jpCopy.ui.privateParties.priceSuffix;
+  const maxGuestsLabel = localizedCopy.ui.privateParties.maxGuestsLabel;
+  const priceSuffix = localizedCopy.ui.privateParties.priceSuffix;
+  const heroImageAlt = stripJpSentinel(localizedCopy.ui.privateParties.heroImageAlt);
   const standardLabel = lang === 'en' ? 'Standard' : 'スタンダード';
   const specialtyInquiry = privateParties.specialtyInquiry;
 
@@ -32,7 +33,7 @@ export const PrivateParties: React.FC = () => {
           <Image
             key={topHeroSrc || 'private-parties-hero'}
             src={topHeroSrc}
-            alt={lang === 'en' ? 'Private party at Artbar Tokyo' : stripJpSentinel(jpCopy.ui.privateParties.heroImageAlt)}
+            alt={heroImageAlt}
             fill
             priority
             placeholder="blur"
@@ -227,7 +228,7 @@ export const PrivateParties: React.FC = () => {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-             {jpCopy.privatePartyCapacityRows.map((loc, i) => (
+             {localizedCopy.privatePartyCapacityRows.map((loc, i) => (
                <div key={i} className={`p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
                   <span className="text-3xl md:text-4xl font-heading font-bold mb-2">{loc.cap}</span>
                   <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4"><JpText>{maxGuestsLabel}</JpText></span>

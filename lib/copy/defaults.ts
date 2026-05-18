@@ -5,11 +5,14 @@ import {
   TEAM_BUILDING_LOGISTICS_ROWS,
 } from '@/constants';
 import { defaultContent } from '@/data/content';
+import { THEME_CONFIG } from '@/data/theme-details';
 import { THEME_JP } from '@/data/theme-details-jp-strings';
-import type { JapaneseCopyPayload } from '@/lib/copy/types';
+import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
+import type { CopyLocale, JapaneseCopyPayload, LocalizedCopyPayload } from '@/lib/copy/types';
+
+export { COPY_LOCALES } from '@/lib/copy/types';
 
 export const COPY_TABLE = 'site_copy_locales';
-export const COPY_LOCALE = 'jp';
 export const COPY_ADMIN_PATH = '/copy-admin';
 export const COPY_ADMIN_COOKIE = 'artbar_copy_admin';
 export const COPY_ADMIN_SESSION_MAX_AGE = 60 * 60 * 12;
@@ -120,6 +123,11 @@ export const DEFAULT_JAPANESE_UI_COPY = {
     theExperience: '体験について',
     guestFavorite: 'ゲスト人気',
     bilingualSessions: 'ソーシャル・ペインティング枠',
+    bilingualSessionsBySlug: {
+      'japan-inspired': '日本の思い出を作品に',
+      kids: 'バイリンガル・ソーシャルセッション',
+      'paint-your-pet': 'ペット好き同士で楽しむ特別なアート',
+    },
     expertGuidance: '丁寧なステップ指導',
     community: 'コミュニティ',
     whatToExpect: '体験に含まれるもの',
@@ -220,28 +228,317 @@ export const DEFAULT_JAPANESE_UI_COPY = {
   },
 } satisfies JapaneseCopyPayload['ui'];
 
-export const DEFAULT_JAPANESE_COPY_PAYLOAD: JapaneseCopyPayload = {
-  site: structuredClone(defaultContent.jp),
+export const DEFAULT_ENGLISH_UI_COPY = {
+  navbar: {
+    switchToJapanese: 'Japanese',
+    switchToEnglish: 'English',
+    compactJapanese: 'JP',
+    compactEnglish: 'EN',
+  },
+  footer: {
+    faq: 'FAQ',
+    careers: 'Careers',
+    emailLabel: 'Email Artbar Tokyo',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+    logoAlt: 'Artbar Tokyo',
+  },
+  home: {
+    meetRegularsHeading: 'Meet Our Regulars',
+    bookTeamBuildingCta: 'Book Team Building',
+    bilingualLine1: 'Professional Bilingual',
+    bilingualLine2: 'Instruction Available',
+    mediaCoverageLabel: 'Media Coverage',
+    asSeenInHeading: 'As Seen In',
+    heroLoading: 'Loading hero',
+    storiesLabel: 'Stories',
+    heroImageAlt: 'Artbar Experience',
+    conceptImageAlt: 'Artbar Lifestyle',
+    ctaImageAlt: 'Artbar Studio',
+    conceptVideoCta: 'Watch the full video on YouTube',
+    previousTestimonial: 'Previous testimonial',
+    nextTestimonial: 'Next testimonial',
+  },
+  contact: {
+    subjectOptions: [
+      { value: '', label: 'Select a subject...' },
+      { value: 'general', label: 'General Inquiry' },
+      { value: 'booking', label: 'Booking' },
+      { value: 'private', label: 'Private Party' },
+      { value: 'instructor', label: 'Instructor Inquiry' },
+      { value: 'cancellation', label: 'Cancellation' },
+      { value: 'other', label: 'Other' },
+    ],
+    subjectLabel: 'Subject (required)',
+    nameLabel: 'Name (required)',
+    namePlaceholder: 'Artbar Taro',
+    emailLabel: 'Email (required)',
+    emailPlaceholder: 'hello@example.com',
+    phoneLabel: 'Phone (required)',
+    messageLabel: 'Message',
+    messagePlaceholder: 'How can we help you?',
+    send: 'Send Message',
+    sent: 'Message sent! We will get back to you soon.',
+    failed: 'Failed to send. Please try again or email us directly.',
+  },
+  locations: {
+    intro: 'Find your nearest studio. Each location offers a unique atmosphere for your creative journey.',
+    directions: 'Open in Maps',
+    aiLoaded: 'AI information loaded',
+    aiSummary: 'AI Summary',
+    aiError: 'AI summary is unavailable right now.',
+    mapsInsightsTitle: 'Maps Insights',
+    sourcePrefix: 'Source',
+    locationAddressLabel: 'Location Address',
+    transitAccessLabel: 'Transit Access',
+  },
+  press: {
+    scrollLeft: 'Scroll left',
+    scrollRight: 'Scroll right',
+  },
+  privateParties: {
+    maxGuestsLabel: 'Max Guests',
+    priceSuffix: '/ person (tax inc)',
+    heroImageAlt: 'Private party at Artbar Tokyo',
+  },
+  teamBuilding: {
+    heroImageAlt: 'Team building art session at Artbar Tokyo',
+    specialtyChips: ['Candle Making', 'Resin Art', 'Alcohol Ink'],
+    previousTestimonial: 'Previous testimonial',
+    nextTestimonial: 'Next testimonial',
+  },
+  blogList: {
+    comingSoon: 'Coming Soon...',
+  },
+  blogPost: {
+    articleNotFoundTitle: 'Article not found',
+    articleNotFoundCta: 'Back to Journal',
+    shareLabel: 'Share this story',
+    facebookShareLabel: 'Share on Facebook',
+    xShareLabel: 'Share on X',
+    linkedinShareLabel: 'Share on LinkedIn',
+    moreFromJournal: 'More from the Journal',
+    readStory: 'Read Story',
+  },
+  notFound: {
+    title: 'Page Not Found',
+    body: 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.',
+    cta: 'Back to Home',
+  },
+  themeDetail: {
+    atmosphereImageAlt: 'Artbar Atmosphere',
+    viewSchedule: 'View Schedule',
+    inspiration: 'Inspiration',
+    examplePaintings: 'Example Paintings',
+    exampleBlurb: 'A glimpse into our {{name}} paint and sip art classes',
+    theExperience: 'THE EXPERIENCE',
+    guestFavorite: 'Guest Favorite',
+    bilingualSessions: 'Social Painting Sessions',
+    bilingualSessionsBySlug: {
+      'japan-inspired': 'Create your own memories of Japan',
+      kids: 'Bilingual Social Sessions',
+      'paint-your-pet': 'Meaningful art with fellow pet lovers!',
+    },
+    expertGuidance: 'Expert Step-by-Step Guidance',
+    community: 'Community',
+    whatToExpect: 'What to expect',
+    whatToExpectSub: 'Everything you need to complete your artwork in Tokyo is included. No hidden fees.',
+    bilingualArtClass: 'Bilingual art class',
+    perfectForGifting: 'Perfect for gifting',
+    viewUpcoming: 'View Upcoming Schedule',
+    discoverMore: 'Discover More Styles',
+    discoverSub: 'From fluid art to impressionist gardens, find your next creative escape at Artbar Tokyo.',
+    allCategories: 'All Theme Categories',
+  },
+  paintYourPet: {
+    headerBadge: 'Artbar Original Program',
+    originalPhoto: 'Original Photo',
+    canvasSketch: 'Canvas Sketch',
+    professionalSketchNote: '*Our artists prepare a professional sketch like this on your canvas before you arrive!',
+    howItWorks: 'How Artbar works',
+    priceLabel: 'Price',
+    sketchTitle: 'Magic Sketch Preview',
+    sketchIntro: 'Upload a photo of your pet to see how our AI envisions a simple canvas sketch.',
+    uploadCta: 'Click to Upload Photo',
+    uploadFormats: 'JPG, PNG, HEIC, AVIF',
+    uploadAriaLabel: 'Upload pet photo',
+    originalPetAlt: 'Original Pet',
+    aiSketchAlt: 'AI Sketch',
+    sketching: 'Sketching...',
+    generateLineArt: 'Generate Line Art',
+    sketchPlaceholder: 'Sketch will appear here',
+    saveSketch: 'Save sketch',
+    likeThisVersionTitle: 'Like this version?',
+    likeThisVersionBody: 'Send it to Artbar with your class details so the team can match it to the right student and class day.',
+    classUseTitle: 'Use this sketch for your Paint Your Pet class',
+    classUseBody:
+      'Fill in the class details below, then press the main button. We will package the sketch with a clear reference, save the files, and open an email to Artbar so it is easy for you to send.',
+    studentNameLabel: 'Student name',
+    studentNamePlaceholder: 'e.g. Alex Tanaka',
+    studentEmailLabel: 'Student email',
+    studentEmailPlaceholder: 'e.g. alex@example.com',
+    petNameLabel: 'Pet name',
+    petNamePlaceholder: 'e.g. Luna',
+    classDateLabel: 'Class date',
+    locationLabel: 'Studio or location',
+    locationPlaceholder: 'e.g. Ginza',
+    notesLabel: 'Notes for Artbar',
+    notesPlaceholder: 'e.g. Booking under a different name, two pets, special note',
+    optionalLabel: 'optional',
+    referenceLabel: 'Searchable reference',
+    copyReference: 'Copy',
+    referenceHelp:
+      'This same reference is used in the file name, the email subject, and the handoff notes so the team can find the right student fast.',
+    preparingPackage: 'Preparing your package...',
+    useForClass: 'Yes, use this for my class',
+    prepareEmailPackage: 'Prepare email package',
+    saveClassDetails: 'Save class details',
+    packageFooter:
+      'This package is prepared for you to send from your own email. We save the sketch, save the class details, and open a ready-made email to {email}.',
+    clearAndStartOver: 'Clear and start over',
+    defaultStudentName: 'Guest',
+    defaultPetName: 'Pet',
+    dateTbd: 'DATE-TBD',
+    notProvided: 'Not provided',
+    none: 'None',
+    classSummaryTitle: 'Paint Your Pet class handoff',
+    classSummaryReference: 'Reference',
+    classSummaryStudentName: 'Student name',
+    classSummaryStudentEmail: 'Student email',
+    classSummaryPetName: 'Pet name',
+    classSummaryClassDate: 'Class date',
+    classSummaryLocation: 'Studio/location',
+    classSummaryNotes: 'Notes',
+    classSummarySketchFile: 'Sketch file',
+    classSummaryDestinationInbox: 'Destination inbox',
+    emailGreeting: 'Hi Artbar team,',
+    emailIntro: "I'd like to use this sketch for my Paint Your Pet class.",
+    emailAttached: 'I have attached the sketch file.',
+    emailThanks: 'Thank you!',
+    packageReady:
+      'Your sketch package is ready. We saved the sketch, saved the class details file, and opened a ready-to-send email to Artbar Tokyo.',
+    invalidNeedSketch: 'Please generate a sketch first.',
+    invalidStudentName: 'Please add the student name.',
+    invalidStudentEmail: 'Please add the student email.',
+    invalidStudentEmailFormat: 'Please add a valid student email.',
+    invalidPetName: 'Please add the pet name.',
+    invalidClassDate: 'Please add the class date.',
+    uploadInvalidType: 'Please upload a photo file such as JPG or PNG.',
+    uploadTooLarge: 'That photo is too large. Please choose one under 15MB.',
+    uploadReadError: 'We could not read that photo. Please try a JPG or PNG image.',
+    uploadDifferentImage: 'We could not read that photo. Please try a different image.',
+    uploadDecodeError: 'This photo format is not decoding cleanly here. Please try a JPG or PNG version.',
+    uploadInvalidImage: 'That photo looks invalid. Please try a different image.',
+    browserPrepareError: 'Your browser could not prepare this image. Please try again.',
+    photoReady: 'Photo ready.',
+    photoConverted: 'Photo converted for smoother sketch generation.',
+    sketchCreateError: 'We could not create the sketch right now.',
+    sketchIncomplete: 'The sketch came back incomplete. Please try again.',
+    sketchTimeout: 'The sketch took too long. Please try again with a simpler or smaller photo.',
+    genericError: 'Something went wrong. Please try again.',
+    preparingMessage: 'Preparing your sketch package...',
+    referenceCopiedPrefix: 'Reference copied',
+    referencePrefix: 'Reference',
+    classDetailsSaved: 'Class details saved as a text file for backup.',
+  },
+} satisfies JapaneseCopyPayload['ui'];
+
+function buildThemeCopyFromConfig(): Record<string, ThemeJpStrings> {
+  return Object.entries(THEME_CONFIG).reduce<Record<string, ThemeJpStrings>>((acc, [slug, theme]) => {
+    const copy: ThemeJpStrings = {
+      title: theme.title,
+      heroBadge: theme.heroBadge,
+      heroSub: theme.heroSub,
+      introTitle: theme.introTitle,
+      introDesc: theme.introDesc,
+      quickFeatures: theme.quickFeatures.map((item) => ({
+        title: item.title,
+        desc: item.desc,
+      })),
+      examples: theme.examples.map((item) => ({
+        title: item.title,
+      })),
+      expectTitle: theme.expectTitle,
+      expectDesc: theme.expectDesc,
+      perfectTitle: theme.perfectTitle,
+      perfectFor: [...theme.perfectFor],
+      whatYouGet: theme.whatYouGet.map((item) => ({
+        text: item.text,
+        sub: item.sub,
+      })),
+      ctaTitle: theme.ctaTitle,
+      ctaSub: theme.ctaSub,
+      seoTitle: theme.seoTitle,
+      seoDesc: theme.seoDesc,
+    };
+
+    if (theme.exampleBlurb !== undefined) {
+      copy.exampleBlurb = theme.exampleBlurb;
+    }
+
+    acc[slug] = copy;
+    return acc;
+  }, {});
+}
+
+const buildEnglishCopyPayload = (): JapaneseCopyPayload => ({
+  site: structuredClone(defaultContent.en),
   instructors: defaultContent.instructors.map((item) => ({
     id: item.id,
-    roleJp: item.roleJp,
-    descJp: item.descJp,
+    role: item.roleEn,
+    desc: item.descEn,
   })),
   locations: defaultContent.locations.map((item) => ({
     id: item.id,
-    nameJp: item.nameJp,
-    addressJp: item.addressJp,
-    accessJp: item.accessJp,
+    name: item.nameEn,
+    address: item.addressEn,
+    access: item.accessEn,
+  })),
+  faqs: structuredClone(defaultContent.faqs),
+  teamBuildingTestimonials: structuredClone(defaultContent.teamBuildingTestimonials),
+  blog: defaultContent.blog.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    title: item.titleEn,
+    excerpt: item.excerptEn,
+    content: item.contentEn,
+    author: item.authorEn,
+  })),
+  themePages: buildThemeCopyFromConfig(),
+  locationShortLabels: LOCATION_SHORT_LABELS.map((item) => item.en),
+  teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item) => ({
+    name: item.name.en,
+    cap: item.cap.en,
+  })),
+  privatePartyCapacityRows: PRIVATE_PARTY_CAPACITY_ROWS.map((item) => ({
+    name: item.name.en,
+    desc: item.desc.en,
+  })),
+  ui: structuredClone(DEFAULT_ENGLISH_UI_COPY),
+});
+
+const buildJapaneseCopyPayload = (): JapaneseCopyPayload => ({
+  site: structuredClone(defaultContent.jp),
+  instructors: defaultContent.instructors.map((item) => ({
+    id: item.id,
+    role: item.roleJp,
+    desc: item.descJp,
+  })),
+  locations: defaultContent.locations.map((item) => ({
+    id: item.id,
+    name: item.nameJp,
+    address: item.addressJp,
+    access: item.accessJp,
   })),
   faqs: structuredClone(FAQS_JP),
   teamBuildingTestimonials: structuredClone(defaultContent.teamBuildingTestimonials),
   blog: defaultContent.blog.map((item) => ({
     id: item.id,
     slug: item.slug,
-    titleJp: item.titleJp,
-    excerptJp: item.excerptJp,
-    contentJp: item.contentJp,
-    authorJp: item.authorJp,
+    title: item.titleJp,
+    excerpt: item.excerptJp,
+    content: item.contentJp,
+    author: item.authorJp,
   })),
   themePages: structuredClone(THEME_JP),
   locationShortLabels: LOCATION_SHORT_LABELS.map((item) => item.jp),
@@ -254,7 +551,14 @@ export const DEFAULT_JAPANESE_COPY_PAYLOAD: JapaneseCopyPayload = {
     desc: item.desc.jp,
   })),
   ui: structuredClone(DEFAULT_JAPANESE_UI_COPY),
-};
+});
+
+export const DEFAULT_COPY_PAYLOADS = {
+  en: buildEnglishCopyPayload(),
+  jp: buildJapaneseCopyPayload(),
+} satisfies Record<CopyLocale, LocalizedCopyPayload>;
+
+export const DEFAULT_JAPANESE_COPY_PAYLOAD = DEFAULT_COPY_PAYLOADS.jp;
 
 export const COPY_ADMIN_SECTIONS = [
   {
@@ -367,6 +671,35 @@ export const COPY_ADMIN_SECTIONS = [
     paths: [{ path: ['ui', 'notFound'], title: '404 Page Copy' }],
   },
 ] as const;
+
+export const COPY_ADMIN_FIELD_LABELS: Record<string, string> = {
+  'site.nav.book': 'Main booking button',
+  'site.nav.schedule': 'Schedule link',
+  'site.nav.instructors': 'Instructors link',
+  'site.nav.teamBuilding': 'Team Building link',
+  'site.nav.privateParties': 'Private Parties link',
+  'site.nav.locations': 'Locations link',
+  'site.nav.contact': 'Contact link',
+  'site.nav.blog': 'Journal link',
+  'site.footer.tagline': 'Footer tagline',
+  'site.home.hero.badge': 'Home hero badge',
+  'site.home.hero.title': 'Home hero headline',
+  'site.home.hero.titleHighlight': 'Home hero highlighted headline',
+  'site.home.hero.subtitle': 'Home hero supporting line',
+  'site.home.hero.ctaSchedule': 'Hero button: Schedule',
+  'site.home.hero.ctaLineChat': 'Hero button: Line chat',
+  'site.home.hero.ctaFindPainting': 'Hero button: Find painting',
+  'site.home.concept.title': 'Home concept headline',
+  'site.home.concept.p1': 'Home concept paragraph',
+  'site.home.themes.title': 'Popular Themes headline',
+  'site.home.themes.subtitle': 'Popular Themes intro',
+  'site.home.cta.title': 'Bottom CTA headline',
+  'site.home.cta.subtitle': 'Bottom CTA text',
+  'site.teamBuilding.hero.title': 'Team Building hero headline',
+  'site.privateParties.hero.title': 'Private Parties hero headline',
+  'site.contactPage.title': 'Contact page headline',
+  'site.blogPage.title': 'Journal page headline',
+};
 
 export function deepMergeTemplate<T>(template: T, override: unknown): T {
   if (override === undefined || override === null) {

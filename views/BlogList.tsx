@@ -12,7 +12,7 @@ import { isBlogPostAvailableForLanguage } from '../lib/blog-language';
 import { SEO_GUIDES, guideCopy, guidePath, guidePrimaryIntent } from '../data/seo-guides';
 import { ArrowRight, BookOpen, Calendar, User } from 'lucide-react';
 export const BlogList: React.FC = () => {
-  const { content, site, lang, jpCopy } = useContent();
+  const { content, site, lang, localizedCopy } = useContent();
   const posts = content.blog.filter(p => isBlogPostAvailableForLanguage(p, lang));
   const gridReveal = useScrollReveal();
 
@@ -129,7 +129,7 @@ export const BlogList: React.FC = () => {
 
         {posts.length === 0 && (
           <div className="text-center py-20 opacity-50">
-            <p className="text-xl font-heading font-bold text-artbar-navy"><JpText>{lang === 'en' ? 'Coming Soon...' : jpCopy.ui.blogList.comingSoon}</JpText></p>
+            <p className="text-xl font-heading font-bold text-artbar-navy"><JpText>{localizedCopy.ui.blogList.comingSoon}</JpText></p>
           </div>
         )}
 

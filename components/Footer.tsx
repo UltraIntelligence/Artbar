@@ -27,7 +27,7 @@ const TikTokIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
 );
 
 export const Footer: React.FC = () => {
-  const { site, lang, jpCopy } = useContent();
+  const { site, lang, localizedCopy } = useContent();
   const currentYear = new Date().getFullYear();
   const socialIconClass = 'flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/10 text-white shadow-sm transition-all hover:bg-artbar-taupe';
   const footerLinkClass = 'inline-flex min-h-[44px] min-w-[44px] items-center py-2 hover:text-white hover:translate-x-1 transition-all';
@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={socialIconClass}
-                  aria-label={lang === 'en' ? 'Instagram' : stripJpSentinel(jpCopy.ui.footer.instagramLabel)}
+                  aria-label={stripJpSentinel(localizedCopy.ui.footer.instagramLabel)}
                 >
                   <Instagram size={18} />
                 </a>
@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={socialIconClass}
-                  aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.footer.facebookLabel)}
+                  aria-label={stripJpSentinel(localizedCopy.ui.footer.facebookLabel)}
                 >
                   <Facebook size={18} />
                 </a>
@@ -87,7 +87,7 @@ export const Footer: React.FC = () => {
                 <a
                   href="mailto:tokyo@artbar.co.jp"
                   className={socialIconClass}
-                  aria-label={lang === 'en' ? 'Email Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.emailLabel)}
+                  aria-label={stripJpSentinel(localizedCopy.ui.footer.emailLabel)}
                 >
                   <Mail size={18} />
                 </a>
@@ -128,8 +128,8 @@ export const Footer: React.FC = () => {
               <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.support}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{site.nav.contact}</JpText></Link></li>
-                <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{lang === 'en' ? 'FAQ' : jpCopy.ui.footer.faq}</JpText></Link></li>
-                <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{lang === 'en' ? 'Careers' : jpCopy.ui.footer.careers}</JpText></Link></li>
+                <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{localizedCopy.ui.footer.faq}</JpText></Link></li>
+                <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{localizedCopy.ui.footer.careers}</JpText></Link></li>
               </ul>
             </div>
           </div>

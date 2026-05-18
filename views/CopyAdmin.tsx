@@ -1,12 +1,19 @@
 'use client';
 
-import React, { useMemo, useState, useTransition } from 'react';
+import React, { useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import { COPY_ADMIN_SECTIONS } from '@/lib/copy/defaults';
-import type { CopyEditorState, JapaneseCopyPayload } from '@/lib/copy/types';
+import { COPY_ADMIN_FIELD_LABELS, COPY_ADMIN_SECTIONS } from '@/lib/copy/defaults';
+import type {
+  CopyEditorState,
+  CopyLocale,
+  LocalizedCopyPayload,
+  LocaleCopyEditorState,
+} from '@/lib/copy/types';
 
 type CopyAdminProps = CopyEditorState;
+type LocalEditorRuntimeState = LocaleCopyEditorState & { savedDraft: LocalizedCopyPayload };
+type CopyAdminRuntimeState = Record<CopyLocale, LocalEditorRuntimeState>;
 
 const getAtPath = (obj: unknown, path: ReadonlyArray<string>) =>
   path.reduce<unknown>((current, key) => {
@@ -75,6 +82,7 @@ const getTextareaRows = (value: string) => {
 };
 
 const jsonEqual = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+const getLocaleLabel = (locale: CopyLocale) => (locale === 'en' ? 'English' : 'Japanese');
 
 async function postJson<T>(url: string, body?: Record<string, unknown>) {
   const response = await fetch(url, {
@@ -92,31 +100,60 @@ async function postJson<T>(url: string, body?: Record<string, unknown>) {
 }
 
 export const CopyAdmin: React.FC<CopyAdminProps> = ({
-  draft: initialDraft,
-  published: initialPublished,
-  previousPublished,
+  locales,
   isConfigured,
 }) => {
-  const [draft, setDraft] = useState(initialDraft);
-  const [savedDraft, setSavedDraft] = useState(initialDraft);
-  const [published, setPublished] = useState(initialPublished);
-  const [previousLive, setPreviousLive] = useState(previousPublished);
+  const [runtimeState, setRuntimeState] = useState<CopyAdminRuntimeState>(() => ({
+    en: {
+      ...locales.en,
+      savedDraft: locales.en.draft,
+    },
+    jp: {
+      ...locales.jp,
+      savedDraft: locales.jp.draft,
+    },
+  }));
+  const [activeLocale, setActiveLocale] = useState<CopyLocale>('en');
   const [activeSection, setActiveSection] = useState<string>(COPY_ADMIN_SECTIONS[0]?.id ?? 'shared');
+  const [showAdvancedPaths, setShowAdvancedPaths] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  const activeState = runtimeState[activeLocale];
+  const { draft, savedDraft, published, previousPublished: previousLive } = activeState;
+  const activeLocaleLabel = getLocaleLabel(activeLocale);
+  const previewHref = activeLocale === 'en' ? '/en' : '/';
 
   const selectedSection = useMemo(
     () => COPY_ADMIN_SECTIONS.find((section) => section.id === activeSection) ?? COPY_ADMIN_SECTIONS[0],
     [activeSection],
   );
 
+  useEffect(() => {
+    setStatus(null);
+  }, [activeLocale]);
+
+  const updateLocaleState = (
+    locale: CopyLocale,
+    updater: (current: LocalEditorRuntimeState) => LocalEditorRuntimeState,
+  ) => {
+    setRuntimeState((current) => ({
+      ...current,
+      [locale]: updater(current[locale]),
+    }));
+  };
+
+  const updateActiveLocaleState = (updater: (current: LocalEditorRuntimeState) => LocalEditorRuntimeState) => {
+    updateLocaleState(activeLocale, updater);
+  };
+
   const hasUnsavedChanges = !jsonEqual(draft, savedDraft);
   const hasUnpublishedChanges = !jsonEqual(savedDraft, published);
   const copyStateMessage = hasUnsavedChanges
-    ? 'You have edits on this screen that are not saved yet. Save draft first.'
+    ? `${activeLocaleLabel} has edits on this screen that are not saved yet. Save draft first.`
     : hasUnpublishedChanges
-      ? 'Saved draft is ready. Customers will not see it until you publish.'
-      : 'Everything saved is already live for customers.';
+      ? `${activeLocaleLabel} saved draft is ready. Customers will not see it until you publish.`
+      : `Everything saved for ${activeLocaleLabel} is already live for customers.`;
 
   const sectionHasUnsavedChanges = (sectionId: string) => {
     const section = COPY_ADMIN_SECTIONS.find((item) => item.id === sectionId);
@@ -124,13 +161,23 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
     return section.paths.some(({ path }) => !jsonEqual(getAtPath(draft, path), getAtPath(savedDraft, path)));
   };
 
-  const handleSaveDraft = (message: string) => {
+  const handleSaveDraft = () => {
+    const locale = activeLocale;
+    const localeLabel = getLocaleLabel(locale);
+    const draftToSave = runtimeState[locale].draft;
+
     startTransition(async () => {
       try {
-        const data = await postJson<{ draft: JapaneseCopyPayload }>('/api/copy-admin/draft', { draft });
-        setDraft(data.draft);
-        setSavedDraft(data.draft);
-        setStatus(`${message} Customers will not see this until you publish.`);
+        const data = await postJson<{ draft: LocalizedCopyPayload }>(
+          `/api/copy-admin/draft?locale=${locale}`,
+          { draft: draftToSave },
+        );
+        updateLocaleState(locale, (current) => ({
+          ...current,
+          draft: data.draft,
+          savedDraft: data.draft,
+        }));
+        setStatus(`${localeLabel}: Draft saved. Customers will not see this until you publish.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Draft save failed.');
       }
@@ -138,28 +185,37 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
   };
 
   const handlePublish = () => {
-    if (hasUnsavedChanges) {
-      setStatus('Save the draft first. Then publish it to make it visible to customers.');
+    const locale = activeLocale;
+    const localeLabel = getLocaleLabel(locale);
+    const state = runtimeState[locale];
+    const localeHasUnsavedChanges = !jsonEqual(state.draft, state.savedDraft);
+    const localeHasUnpublishedChanges = !jsonEqual(state.savedDraft, state.published);
+
+    if (localeHasUnsavedChanges) {
+      setStatus(`Save the ${localeLabel} draft first. Then publish it to make it visible to customers.`);
       return;
     }
 
-    if (!hasUnpublishedChanges) {
-      setStatus('Nothing new to publish. The saved draft already matches the live website.');
+    if (!localeHasUnpublishedChanges) {
+      setStatus(`Nothing new to publish for ${localeLabel}. The saved draft already matches the live website.`);
       return;
     }
 
     startTransition(async () => {
       try {
         const data = await postJson<{
-          draft: JapaneseCopyPayload;
-          published: JapaneseCopyPayload;
-          previousPublished: JapaneseCopyPayload | null;
-        }>('/api/copy-admin/publish');
-        setDraft(data.draft);
-        setSavedDraft(data.draft);
-        setPublished(data.published);
-        setPreviousLive(data.previousPublished);
-        setStatus('Published to the website. Customers can now see these Japanese copy changes.');
+          draft: LocalizedCopyPayload;
+          published: LocalizedCopyPayload;
+          previousPublished: LocalizedCopyPayload | null;
+        }>(`/api/copy-admin/publish?locale=${locale}`);
+        updateLocaleState(locale, (current) => ({
+          ...current,
+          draft: data.draft,
+          savedDraft: data.draft,
+          published: data.published,
+          previousPublished: data.previousPublished,
+        }));
+        setStatus(`Published ${localeLabel} copy to the website. Customers can now see these changes.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Publish failed.');
       }
@@ -167,27 +223,34 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
   };
 
   const handleRollback = () => {
-    if (!previousLive) {
-      setStatus('There is no previous live version to roll back to yet.');
+    const locale = activeLocale;
+    const localeLabel = getLocaleLabel(locale);
+    const state = runtimeState[locale];
+
+    if (!state.previousPublished) {
+      setStatus(`There is no previous live ${localeLabel} version to roll back to yet.`);
       return;
     }
 
-    if (!window.confirm('Roll the live Japanese site back to the previous publish?')) {
+    if (!window.confirm(`Roll the live ${localeLabel} site back to the previous publish?`)) {
       return;
     }
 
     startTransition(async () => {
       try {
         const data = await postJson<{
-          draft: JapaneseCopyPayload;
-          published: JapaneseCopyPayload;
-          previousPublished: JapaneseCopyPayload | null;
-        }>('/api/copy-admin/rollback');
-        setDraft(data.draft);
-        setSavedDraft(data.draft);
-        setPublished(data.published);
-        setPreviousLive(data.previousPublished);
-        setStatus('Rolled the live Japanese site back to the previous publish.');
+          draft: LocalizedCopyPayload;
+          published: LocalizedCopyPayload;
+          previousPublished: LocalizedCopyPayload | null;
+        }>(`/api/copy-admin/rollback?locale=${locale}`);
+        updateLocaleState(locale, (current) => ({
+          ...current,
+          draft: data.draft,
+          savedDraft: data.draft,
+          published: data.published,
+          previousPublished: data.previousPublished,
+        }));
+        setStatus(`Rolled the live ${localeLabel} site back to the previous publish.`);
       } catch (error) {
         setStatus(error instanceof Error ? error.message : 'Rollback failed.');
       }
@@ -196,12 +259,15 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
 
   const renderNode = (draftNode: unknown, publishedNode: unknown, path: ReadonlyArray<string>, depth = 0): React.ReactNode => {
     if (typeof draftNode === 'string') {
-      const label = humanizeKey(path[path.length - 1] || 'Value');
+      const technicalPath = path.join('.');
+      const label = COPY_ADMIN_FIELD_LABELS[technicalPath] ?? humanizeKey(path[path.length - 1] || 'Value');
       const isLockedRoutingId = path[path.length - 1] === 'slug';
+      const isReadOnly = isLockedRoutingId || isPending;
       return (
         <div key={path.join('.')} className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="space-y-2">
             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-artbar-taupe">{label}</p>
+            {showAdvancedPaths ? <p className="text-[10px] uppercase tracking-[0.16em] text-artbar-gray">{technicalPath}</p> : null}
             <div className="rounded-xl bg-artbar-bg px-4 py-3 text-sm leading-6 text-artbar-navy whitespace-pre-wrap">
               {typeof publishedNode === 'string' && publishedNode.length > 0 ? publishedNode : '—'}
             </div>
@@ -210,22 +276,27 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
           <div className="space-y-2">
             <textarea
               value={draftNode}
-              readOnly={isLockedRoutingId}
+              readOnly={isReadOnly}
               rows={getTextareaRows(draftNode)}
               onChange={(event) => {
-                if (isLockedRoutingId) {
+                if (isReadOnly) {
                   return;
                 }
-                setDraft((current) => setAtPath(current, path, event.target.value) as JapaneseCopyPayload);
+                updateActiveLocaleState((current) => ({
+                  ...current,
+                  draft: setAtPath(current.draft, path, event.target.value) as LocalizedCopyPayload,
+                }));
               }}
               className={`w-full rounded-xl border border-gray-200 px-4 py-3 text-sm leading-6 text-artbar-navy outline-none transition focus:border-artbar-taupe focus:ring-2 focus:ring-artbar-taupe/15 ${
-                isLockedRoutingId ? 'bg-artbar-bg/70 text-artbar-gray' : ''
+                isReadOnly ? 'bg-artbar-bg/70 text-artbar-gray' : ''
               }`}
             />
             <p className="text-xs text-artbar-gray">
               {isLockedRoutingId
                 ? 'Locked routing ID. This is not shown to customers.'
-                : 'Draft. Press Enter anywhere you want a real line break.'}
+                : isPending
+                  ? 'Please wait while this update finishes.'
+                  : 'Draft. Press Enter anywhere you want a real line break.'}
             </p>
           </div>
         </div>
@@ -287,11 +358,32 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
       <div className="mx-auto flex max-w-[1600px] flex-col gap-6 px-4 py-6 md:px-8 lg:flex-row">
         <aside className="lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-[20rem] lg:shrink-0">
           <div className="rounded-[2rem] border border-artbar-light-taupe/20 bg-white p-5 shadow-sm">
-            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">Copy Admin</p>
-            <h1 className="mt-3 font-heading text-3xl font-bold text-artbar-navy">Japanese Copy Editor</h1>
-            <p className="mt-3 text-sm leading-6 text-artbar-gray">
-              Edit by page here, then check the public site in another window for layout context.
+            <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">
+              Site Admin
             </p>
+            <h1 className="mt-3 font-heading text-3xl font-bold text-artbar-navy">
+              Site Copy Admin
+            </h1>
+            <p className="mt-3 text-sm leading-6 text-artbar-gray">
+              Choose a language, edit by page, save a draft, then publish when the wording is ready for customers.
+            </p>
+            <div className="mt-5 grid grid-cols-2 gap-2 rounded-full bg-artbar-bg p-1">
+              {(['en', 'jp'] as const).map((locale) => (
+                <button
+                  key={locale}
+                  type="button"
+                  onClick={() => setActiveLocale(locale)}
+                  disabled={isPending}
+                  className={`rounded-full px-4 py-2 text-sm font-bold transition ${
+                    activeLocale === locale
+                      ? 'bg-artbar-navy text-white shadow-sm'
+                      : 'text-artbar-navy hover:bg-white'
+                  } ${isPending ? 'cursor-not-allowed opacity-60' : ''}`}
+                >
+                  {locale === 'en' ? 'English' : 'Japanese'}
+                </button>
+              ))}
+            </div>
             <Link
               href="/copy-admin/images"
               className="mt-5 inline-flex min-h-[2.5rem] items-center justify-center rounded-full border-2 border-artbar-navy px-5 py-2.5 font-heading text-sm font-bold tracking-wide text-artbar-navy transition hover:bg-gray-50"
@@ -330,7 +422,16 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
             <div className="flex flex-col gap-4 border-b border-gray-100 pb-5 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-artbar-taupe">{selectedSection.title}</p>
-                <h2 className="mt-2 font-heading text-3xl font-bold text-artbar-navy">Live vs draft</h2>
+                <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <h2 className="font-heading text-3xl font-bold text-artbar-navy">Live vs draft</h2>
+                  <button
+                    type="button"
+                    onClick={() => setShowAdvancedPaths((current) => !current)}
+                    className="inline-flex min-h-[2rem] w-fit items-center justify-center rounded-full border border-gray-200 px-3 py-1 text-xs font-bold text-artbar-navy transition hover:bg-artbar-bg"
+                  >
+                    {showAdvancedPaths ? 'Hide technical paths' : 'Advanced'}
+                  </button>
+                </div>
                 <p className="mt-2 text-sm text-artbar-gray">
                   Left side is what customers see now. Right side is the draft you are editing.
                 </p>
@@ -345,18 +446,10 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => handleSaveDraft(`${selectedSection.title} draft saved.`)}
+                  onClick={handleSaveDraft}
                   disabled={isPending || !isConfigured}
                 >
                   Save Draft
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => handleSaveDraft('Saved the full Japanese draft.')}
-                  disabled={isPending || !isConfigured}
-                >
-                  Save All Drafts
                 </Button>
                 <Button
                   type="button"
@@ -374,6 +467,13 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                 >
                   Roll Back
                 </Button>
+                <Link
+                  href={previewHref}
+                  target="_blank"
+                  className="inline-flex min-h-[2.5rem] items-center justify-center rounded-full border-2 border-artbar-navy px-5 py-2.5 font-heading text-sm font-bold tracking-wide text-artbar-navy transition hover:bg-gray-50"
+                >
+                  {`Preview ${activeLocaleLabel}`}
+                </Link>
                 <form action="/api/copy-admin/logout" method="post">
                   <Button type="submit" variant="outline" disabled={isPending}>
                     Log Out
@@ -400,7 +500,9 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                   <section key={path.join('.')} className="space-y-4">
                     <div className="border-b border-gray-100 pb-3">
                       <h3 className="font-heading text-2xl font-bold text-artbar-navy">{title}</h3>
-                      <p className="mt-1 text-xs uppercase tracking-[0.18em] text-artbar-gray">{path.join(' / ')}</p>
+                      {showAdvancedPaths ? (
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-artbar-gray">{path.join(' / ')}</p>
+                      ) : null}
                     </div>
                     {renderNode(draftNode, publishedNode, path)}
                   </section>

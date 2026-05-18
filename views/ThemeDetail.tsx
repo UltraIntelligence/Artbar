@@ -27,11 +27,11 @@ export const ThemeDetail: React.FC = () => {
   const rawSlug = (params.slug as string) || '';
   const resolvedSlug = resolveThemeContentSlug(rawSlug);
   const router = useRouter();
-  const { site, lang, jpCopy, media } = useContent();
+  const { site, lang, localizedCopy, media } = useContent();
   const theme = getThemeContent(resolvedSlug, lang);
-  const themePageCopy = jpCopy.themePages[resolvedSlug];
+  const themePageCopy = localizedCopy.themePages[resolvedSlug];
   const localizedTheme =
-    lang === 'jp' && themePageCopy
+    themePageCopy
       ? {
           ...theme,
           title: themePageCopy.title,
@@ -52,6 +52,11 @@ export const ThemeDetail: React.FC = () => {
           expectDesc: themePageCopy.expectDesc,
           perfectTitle: themePageCopy.perfectTitle,
           perfectFor: themePageCopy.perfectFor,
+          whatYouGet: theme.whatYouGet.map((item, index) => ({
+            ...item,
+            text: themePageCopy.whatYouGet[index]?.text ?? item.text,
+            sub: themePageCopy.whatYouGet[index]?.sub ?? item.sub,
+          })),
           ctaTitle: themePageCopy.ctaTitle,
           ctaSub: themePageCopy.ctaSub,
           seoTitle: themePageCopy.seoTitle,
@@ -95,33 +100,24 @@ export const ThemeDetail: React.FC = () => {
       .replace(' Classes', '');
 
   const ui = {
-    viewSchedule: lang === 'en' ? 'View Schedule' : jpCopy.ui.themeDetail.viewSchedule,
-    inspiration: lang === 'en' ? 'Inspiration' : jpCopy.ui.themeDetail.inspiration,
-    examplePaintings: lang === 'en' ? 'Example Paintings' : jpCopy.ui.themeDetail.examplePaintings,
+    viewSchedule: localizedCopy.ui.themeDetail.viewSchedule,
+    inspiration: localizedCopy.ui.themeDetail.inspiration,
+    examplePaintings: localizedCopy.ui.themeDetail.examplePaintings,
     exampleBlurb: (name: string) =>
       localizedTheme.exampleBlurb ??
-      (lang === 'en'
-        ? `A glimpse into our ${name} paint and sip art classes`
-        : jpCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name)),
-    theExperience: lang === 'en' ? 'THE EXPERIENCE' : jpCopy.ui.themeDetail.theExperience,
-    guestFavorite: lang === 'en' ? 'Guest Favorite' : jpCopy.ui.themeDetail.guestFavorite,
+      localizedCopy.ui.themeDetail.exampleBlurb.replace(/\{\{name\}\}/g, name),
+    theExperience: localizedCopy.ui.themeDetail.theExperience,
+    guestFavorite: localizedCopy.ui.themeDetail.guestFavorite,
     bilingualSessions:
-      lang === 'en'
-        ? ({
-            'japan-inspired': 'Create your own memories of Japan',
-            kids: 'Bilingual Social Sessions',
-            'paint-your-pet': 'Meaningful art with fellow pet lovers!',
-          }[resolvedSlug] ?? 'Social Painting Sessions')
-        : jpCopy.ui.themeDetail.bilingualSessions,
-    expertGuidance: lang === 'en' ? 'Expert Step-by-Step Guidance' : jpCopy.ui.themeDetail.expertGuidance,
-    community: lang === 'en' ? 'The Community' : jpCopy.ui.themeDetail.community,
-    viewUpcoming: lang === 'en' ? 'View Upcoming Schedule' : jpCopy.ui.themeDetail.viewUpcoming,
-    discoverMore: lang === 'en' ? 'Discover More Styles' : jpCopy.ui.themeDetail.discoverMore,
-    discoverSub:
-      lang === 'en'
-        ? 'From fluid art to impressionist gardens, find your next creative escape at Artbar Tokyo.'
-        : jpCopy.ui.themeDetail.discoverSub,
-    allCategories: lang === 'en' ? 'All Theme Categories' : jpCopy.ui.themeDetail.allCategories,
+      localizedCopy.ui.themeDetail.bilingualSessionsBySlug[
+        resolvedSlug as keyof typeof localizedCopy.ui.themeDetail.bilingualSessionsBySlug
+      ] ?? localizedCopy.ui.themeDetail.bilingualSessions,
+    expertGuidance: localizedCopy.ui.themeDetail.expertGuidance,
+    community: localizedCopy.ui.themeDetail.community,
+    viewUpcoming: localizedCopy.ui.themeDetail.viewUpcoming,
+    discoverMore: localizedCopy.ui.themeDetail.discoverMore,
+    discoverSub: localizedCopy.ui.themeDetail.discoverSub,
+    allCategories: localizedCopy.ui.themeDetail.allCategories,
   };
 
   return (
@@ -258,7 +254,7 @@ export const ThemeDetail: React.FC = () => {
             <div className="relative aspect-[4/3] rounded-[3rem] overflow-hidden shadow-2xl order-2 lg:order-1">
               <Image
                 src={themeImages.experience || getPh(1000, 750, 'Studio Atmosphere')}
-                alt={lang === 'en' ? 'Artbar Atmosphere' : stripJpSentinel(jpCopy.ui.themeDetail.atmosphereImageAlt)}
+                alt={stripJpSentinel(localizedCopy.ui.themeDetail.atmosphereImageAlt)}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

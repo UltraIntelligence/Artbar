@@ -15,21 +15,30 @@ interface ContentContextType {
   toggleLang: () => void;
   content: ContentData;
   site: SiteContent; // Shortcut for content[lang]
+  localizedCopy: ResolvedJapaneseCopy;
   jpCopy: ResolvedJapaneseCopy;
   media: PublishedMediaMap;
 }
 
-interface PublishedJpResponse {
+interface PublishedCopyResponse {
   content: ContentData;
-  jpCopy: ResolvedJapaneseCopy;
+  localizedCopy: ResolvedJapaneseCopy;
 }
+
+type RuntimeCopyState = {
+  content: ContentData;
+  localizedCopy: ResolvedJapaneseCopy;
+  hasFetched: boolean;
+};
+
+type RuntimeCopyByLang = Record<Language, Record<string, RuntimeCopyState | undefined>>;
 
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 /**
- * ContentProvider is a pure consumer — initial content + JP copy are merged and
- * BudouX-segmented server-side in `app/layout.tsx`. The runtime EN→JP toggle
- * fetches `/api/copy-public`, which also returns merged + segmented data.
+ * ContentProvider is a pure consumer — initial content + localized copy are merged
+ * server-side in `app/layout.tsx`. The runtime language toggle fetches
+ * `/api/copy-public`, which returns merged data for the active language.
  *
  * Nothing in this client module imports `data/content` or `lib/copy/resolve`,
  * so neither defaultContent nor BudouX ends up in the client bundle.
@@ -39,27 +48,45 @@ export const ContentProvider: React.FC<{
   /** From server (cookie + Accept-Language) so first paint matches the browser. */
   initialLang: Language;
   initialContent: ContentData;
-  initialJpCopy: ResolvedJapaneseCopy;
+  initialLocalizedCopy: ResolvedJapaneseCopy;
   initialMedia: PublishedMediaMap;
-  /** True when the server already fetched fresh published JP copy from Supabase.
-   *  When false (EN visitors, or JP visitors whose Supabase fetch timed out),
-   *  the client retries via /api/copy-public on first JP render. */
-  initialHasFetchedRuntimeJp: boolean;
+  /** True when the server already fetched fresh published copy from Supabase.
+   *  When false, the client retries via /api/copy-public on first render. */
+  initialHasFetchedRuntimeCopy: boolean;
 }> = ({
   children,
   initialLang,
   initialContent,
-  initialJpCopy,
+  initialLocalizedCopy,
   initialMedia,
-  initialHasFetchedRuntimeJp,
+  initialHasFetchedRuntimeCopy,
 }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [lang, setLang] = useState<Language>(initialLang);
   const [content, setContent] = useState<ContentData>(initialContent);
-  const [jpCopy, setJpCopy] = useState<ResolvedJapaneseCopy>(initialJpCopy);
+  const [localizedCopy, setLocalizedCopy] = useState<ResolvedJapaneseCopy>(initialLocalizedCopy);
   const [media] = useState<PublishedMediaMap>(initialMedia);
-  const [hasFetchedRuntimeJp, setHasFetchedRuntimeJp] = useState<boolean>(initialHasFetchedRuntimeJp);
+  const [runtimeByLang, setRuntimeByLang] = useState<RuntimeCopyByLang>(() => ({
+    en: initialLang === 'en'
+      ? {
+        [pathname]: {
+          content: initialContent,
+          localizedCopy: initialLocalizedCopy,
+          hasFetched: initialHasFetchedRuntimeCopy,
+        },
+      }
+      : {},
+    jp: initialLang === 'jp'
+      ? {
+        [pathname]: {
+          content: initialContent,
+          localizedCopy: initialLocalizedCopy,
+          hasFetched: initialHasFetchedRuntimeCopy,
+        },
+      }
+      : {},
+  }));
 
   useEffect(() => {
     document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
@@ -68,11 +95,20 @@ export const ContentProvider: React.FC<{
   useEffect(() => {
     // Bare public URLs are intentionally Japanese; `/en` is the explicit English route.
     const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
+    const cachedRuntime = runtimeByLang[routeLang][pathname];
+
     setLang(routeLang);
-  }, [pathname]);
+    if (cachedRuntime) {
+      setContent(cachedRuntime.content);
+      setLocalizedCopy(cachedRuntime.localizedCopy);
+    }
+  }, [pathname, runtimeByLang]);
 
   useEffect(() => {
-    if (lang !== 'jp' || hasFetchedRuntimeJp) {
+    const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
+    const activeRuntime = runtimeByLang[lang][pathname];
+
+    if (lang !== routeLang || activeRuntime?.hasFetched) {
       return;
     }
 
@@ -80,21 +116,34 @@ export const ContentProvider: React.FC<{
 
     const loadPublishedCopy = async () => {
       try {
-        const response = await fetch(`/api/copy-public?path=${encodeURIComponent(pathname)}`, {
-          cache: 'no-store',
-          signal: controller.signal,
-        });
+        const response = await fetch(
+          `/api/copy-public?locale=${encodeURIComponent(lang)}&path=${encodeURIComponent(pathname)}`,
+          {
+            cache: 'no-store',
+            signal: controller.signal,
+          },
+        );
         if (!response.ok) return;
 
-        const data = (await response.json()) as PublishedJpResponse;
-        if (!data?.content || !data?.jpCopy) return;
+        const data = (await response.json()) as PublishedCopyResponse;
+        if (!data?.content || !data?.localizedCopy) return;
 
         setContent(data.content);
-        setJpCopy(data.jpCopy);
-        setHasFetchedRuntimeJp(true);
+        setLocalizedCopy(data.localizedCopy);
+        setRuntimeByLang((current) => ({
+          ...current,
+          [lang]: {
+            ...current[lang],
+            [pathname]: {
+              content: data.content,
+              localizedCopy: data.localizedCopy,
+              hasFetched: true,
+            },
+          },
+        }));
       } catch (error) {
         if (!controller.signal.aborted) {
-          console.error('[copy-public] failed to load published Japanese copy', error);
+          console.error('[copy-public] failed to load published copy', error);
         }
       }
     };
@@ -102,7 +151,7 @@ export const ContentProvider: React.FC<{
     void loadPublishedCopy();
 
     return () => controller.abort();
-  }, [lang, hasFetchedRuntimeJp, pathname]);
+  }, [lang, pathname, runtimeByLang]);
 
   const toggleLang = () => {
     const next: Language = lang === 'en' ? 'jp' : 'en';
@@ -121,7 +170,8 @@ export const ContentProvider: React.FC<{
       toggleLang,
       content,
       site,
-      jpCopy,
+      localizedCopy,
+      jpCopy: localizedCopy,
       media,
     }}>
       {children}

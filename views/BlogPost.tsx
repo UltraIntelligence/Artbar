@@ -15,7 +15,8 @@ import type { BlogPost as BlogPostData } from '../types';
 export const BlogPost: React.FC = () => {
   const params = useParams();
   const slug = params.slug as string;
-  const { content, lang, site, jpCopy } = useContent();
+  const { content, lang, site, localizedCopy } = useContent();
+  const blogPostCopy = localizedCopy.ui.blogPost;
   const [fetchedPost, setFetchedPost] = useState<BlogPostData | null>(null);
   const proseReveal = useScrollReveal();
   const moreReveal = useScrollReveal();
@@ -61,8 +62,8 @@ export const BlogPost: React.FC = () => {
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-artbar-bg">
-        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{lang === 'en' ? 'Article Not Found' : jpCopy.ui.blogPost.articleNotFoundTitle}</JpText></h1>
-        <Link href={blogHref} className="text-artbar-taupe hover:underline"><JpText>{lang === 'en' ? 'Back to Journal' : jpCopy.ui.blogPost.articleNotFoundCta}</JpText></Link>
+        <h1 className="text-4xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{blogPostCopy.articleNotFoundTitle}</JpText></h1>
+        <Link href={blogHref} className="text-artbar-taupe hover:underline"><JpText>{blogPostCopy.articleNotFoundCta}</JpText></Link>
       </div>
     );
   }
@@ -72,7 +73,7 @@ export const BlogPost: React.FC = () => {
   const author = lang === 'en' ? post.authorEn : post.authorJp;
   const shareUrl = publicUrlForPath(`/blog/${slug}`, siteLanguageToRouteLocale(lang));
   const shareTitle = encodeURIComponent(titleForAttr);
-  const shareLabel = lang === 'en' ? 'Share this story' : jpCopy.ui.blogPost.shareLabel;
+  const shareLabel = blogPostCopy.shareLabel;
 
   return (
     <div className="grain relative bg-artbar-bg min-h-screen pb-20">
@@ -151,7 +152,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#3b5998] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'Facebook' : stripJpSentinel(jpCopy.ui.blogPost.facebookShareLabel)}
+                aria-label={stripJpSentinel(blogPostCopy.facebookShareLabel)}
               >
                 <Facebook size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -160,7 +161,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#1DA1F2] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'X' : stripJpSentinel(jpCopy.ui.blogPost.xShareLabel)}
+                aria-label={stripJpSentinel(blogPostCopy.xShareLabel)}
               >
                 <Twitter size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -169,7 +170,7 @@ export const BlogPost: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center text-[#0077B5] hover:opacity-80 transition-opacity shadow-sm"
-                aria-label={lang === 'en' ? 'LinkedIn' : stripJpSentinel(jpCopy.ui.blogPost.linkedinShareLabel)}
+                aria-label={stripJpSentinel(blogPostCopy.linkedinShareLabel)}
               >
                 <Linkedin size={20} className="text-current" strokeWidth={2} />
               </a>
@@ -181,7 +182,7 @@ export const BlogPost: React.FC = () => {
 
       <section className="max-w-[1000px] mx-auto px-6 mt-20">
         <h3 className="font-heading font-bold text-2xl text-artbar-navy mb-8 text-center">
-          <JpText>{lang === 'en' ? 'More from the Journal' : jpCopy.ui.blogPost.moreFromJournal}</JpText>
+          <JpText>{blogPostCopy.moreFromJournal}</JpText>
         </h3>
         <div
           ref={moreReveal.ref}
@@ -210,7 +211,7 @@ export const BlogPost: React.FC = () => {
                     <JpText>{lang === 'en' ? p.titleEn : p.titleJp}</JpText>
                   </h4>
                   <span className="text-sm text-artbar-taupe font-bold uppercase tracking-wider">
-                    <JpText>{lang === 'en' ? 'Read Story' : jpCopy.ui.blogPost.readStory}</JpText>
+                    <JpText>{blogPostCopy.readStory}</JpText>
                   </span>
                 </div>
               </Link>
