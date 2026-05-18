@@ -9,6 +9,7 @@ import type {
   CopyLocale,
   CopyEditorState,
   CopyRecord,
+  LocalizedCopyPayload,
   ResolvedCopyBundle,
 } from '@/lib/copy/types';
 import {
@@ -55,6 +56,14 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T | nul
 }
 
 const publishedCopyCacheTag = (locale: CopyLocale) => `artbar-published-${locale}-copy`;
+
+type CopyRecordWrite = {
+  draft_payload: LocalizedCopyPayload;
+  published_payload: LocalizedCopyPayload;
+  previous_published_payload: LocalizedCopyPayload | null;
+  updated_at: string;
+  published_at: string | null;
+};
 
 const readPublishedCopyRecord = (locale: CopyLocale) =>
   unstable_cache(
@@ -166,6 +175,51 @@ export async function getCopyEditorState(): Promise<CopyEditorState> {
   };
 }
 
+async function writeCopyRecord(
+  supabase: NonNullable<ReturnType<typeof getSupabaseAdmin>>,
+  locale: CopyLocale,
+  existing: CopyRecord | null,
+  payload: CopyRecordWrite,
+  failureMessage: string,
+) {
+  if (!existing) {
+    const { error } = await supabase.from(COPY_TABLE).insert({
+      locale,
+      ...payload,
+    });
+
+    if (error) {
+      console.error('[copy-store] failed to create copy record', error);
+      throw new Error(
+        error.code === '23505'
+          ? 'Copy was changed in another tab. Refresh and try again.'
+          : failureMessage,
+      );
+    }
+    return;
+  }
+
+  const versionedUpdate = supabase
+    .from(COPY_TABLE)
+    .update(payload)
+    .eq('locale', locale);
+
+  const query = existing.updated_at
+    ? versionedUpdate.eq('updated_at', existing.updated_at)
+    : versionedUpdate.is('updated_at', null);
+
+  const { data, error } = await query.select('locale').maybeSingle();
+
+  if (error) {
+    console.error('[copy-store] failed to update copy record', error);
+    throw new Error(failureMessage);
+  }
+
+  if (!data) {
+    throw new Error('Copy was changed in another tab. Refresh and try again.');
+  }
+}
+
 export async function saveDraftPayload(locale: CopyLocale, payload: unknown) {
   const supabase = getSupabaseAdmin();
   if (!supabase) {
@@ -177,22 +231,19 @@ export async function saveDraftPayload(locale: CopyLocale, payload: unknown) {
   const normalizedPayload = normalizeCopyPayload(locale, payload);
   const published = existing?.published_payload ?? DEFAULT_COPY_PAYLOADS[locale];
 
-  const { error } = await supabase.from(COPY_TABLE).upsert(
+  await writeCopyRecord(
+    supabase,
+    locale,
+    existing,
     {
-      locale,
       draft_payload: normalizedPayload,
       published_payload: published,
       previous_published_payload: existing?.previous_published_payload ?? null,
       updated_at: now,
       published_at: existing?.published_at ?? null,
     },
-    { onConflict: 'locale' },
+    'Failed to save draft copy.',
   );
-
-  if (error) {
-    console.error('[copy-store] failed to save draft payload', error);
-    throw new Error('Failed to save draft copy.');
-  }
 
   return normalizedPayload;
 }
@@ -208,22 +259,19 @@ export async function publishDraftPayload(locale: CopyLocale) {
   const draft = existing?.draft_payload ?? DEFAULT_COPY_PAYLOADS[locale];
   const published = existing?.published_payload ?? DEFAULT_COPY_PAYLOADS[locale];
 
-  const { error } = await supabase.from(COPY_TABLE).upsert(
+  await writeCopyRecord(
+    supabase,
+    locale,
+    existing,
     {
-      locale,
       draft_payload: draft,
       published_payload: draft,
       previous_published_payload: published,
       updated_at: now,
       published_at: now,
     },
-    { onConflict: 'locale' },
+    `Failed to publish ${locale} copy.`,
   );
-
-  if (error) {
-    console.error('[copy-store] failed to publish draft payload', error);
-    throw new Error(`Failed to publish ${locale} copy.`);
-  }
 
   revalidateTag(publishedCopyCacheTag(locale));
 
@@ -249,22 +297,19 @@ export async function rollbackPublishedPayload(locale: CopyLocale) {
   const currentPublished = existing?.published_payload ?? DEFAULT_COPY_PAYLOADS[locale];
   const now = new Date().toISOString();
 
-  const { error } = await supabase.from(COPY_TABLE).upsert(
+  await writeCopyRecord(
+    supabase,
+    locale,
+    existing,
     {
-      locale,
       draft_payload: previous,
       published_payload: previous,
       previous_published_payload: currentPublished,
       updated_at: now,
       published_at: now,
     },
-    { onConflict: 'locale' },
+    `Failed to roll back ${locale} copy.`,
   );
-
-  if (error) {
-    console.error('[copy-store] failed to roll back payload', error);
-    throw new Error(`Failed to roll back ${locale} copy.`);
-  }
 
   revalidateTag(publishedCopyCacheTag(locale));
 
