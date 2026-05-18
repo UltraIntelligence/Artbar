@@ -21,7 +21,7 @@ export const Contact: React.FC = () => {
     message: '',
     company: '', // honeypot — must stay empty
   });
-  const { content, site, lang, localizedCopy } = useContent();
+  const { site, lang, localizedCopy } = useContent();
   const mainReveal = useScrollReveal();
 
   const updateField = (field: keyof typeof form) => (
@@ -63,7 +63,7 @@ export const Contact: React.FC = () => {
     value: item.value,
     label: stripJpSentinel(item.label),
   }));
-  const faqs = lang === 'jp' ? localizedCopy.faqs : content.faqs;
+  const faqs = localizedCopy.faqs;
   const sendingLabels = {
     en: 'Sending…',
     jp: '送信中…',

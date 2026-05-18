@@ -36,7 +36,7 @@ export const TeamBuilding: React.FC = () => {
   const teamHeroSrc = content.images.hero.teamBuilding;
   const bookTeamCta = localizedCopy.ui.home.bookTeamBuildingCta;
   const logisticsRows = localizedCopy.teamBuildingLogisticsRows;
-  const teamTestimonials = lang === 'jp' ? localizedCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
+  const teamTestimonials = localizedCopy.teamBuildingTestimonials;
   const heroImageAlt = stripJpSentinel(localizedCopy.ui.teamBuilding.heroImageAlt);
   const previousTestimonialLabel = stripJpSentinel(localizedCopy.ui.teamBuilding.previousTestimonial);
   const nextTestimonialLabel = stripJpSentinel(localizedCopy.ui.teamBuilding.nextTestimonial);

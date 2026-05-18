@@ -10,10 +10,11 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
 import { trackBookingClick } from '../lib/analytics';
 import type { Location } from '../types';
-import type { ResolvedJapaneseCopy } from '@/lib/copy/types';
+import type { JapaneseUiCopy } from '@/lib/copy/types';
 
 export const Locations: React.FC = () => {
-  const { lang, content, site, jpCopy } = useContent();
+  const { lang, content, site, localizedCopy } = useContent();
+  const locationCopy = localizedCopy.ui.locations;
   const operatingReveal = useScrollReveal();
 
   return (
@@ -24,10 +25,7 @@ export const Locations: React.FC = () => {
         <div className="text-center mb-12 md:mb-20">
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-4"><JpText>{site.nav.locations}</JpText></h1>
           <p className="text-artbar-gray text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            <JpText>{lang === 'en'
-              ? "Find your nearest studio. Each location offers a unique atmosphere for your creative journey."
-              : jpCopy.ui.locations.intro
-            }</JpText>
+            <JpText>{locationCopy.intro}</JpText>
           </p>
         </div>
 
@@ -37,7 +35,7 @@ export const Locations: React.FC = () => {
               key={loc.id}
               loc={loc}
               lang={lang}
-              jpCopy={jpCopy}
+              locationCopy={locationCopy}
             />
           ))}
         </div>
@@ -74,11 +72,11 @@ export const Locations: React.FC = () => {
 function LocationCard({
   loc,
   lang,
-  jpCopy,
+  locationCopy,
 }: {
   loc: Location;
   lang: 'en' | 'jp';
-  jpCopy: ResolvedJapaneseCopy;
+  locationCopy: JapaneseUiCopy['locations'];
 }) {
   const reveal = useScrollReveal();
   const isFranchise = loc.isFranchise === true;
@@ -133,20 +131,20 @@ function LocationCard({
                       className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full border border-artbar-light-taupe bg-white px-5 pt-3 pb-2 text-xs font-bold uppercase tracking-wide text-artbar-navy transition-colors hover:bg-gray-50 md:text-sm"
                     >
                       <Navigation size={14} className="shrink-0 md:w-4 md:h-4" aria-hidden />
-                      <JpText>{lang === 'en' ? 'Open in Maps' : jpCopy.ui.locations.directions}</JpText>
+                      <JpText>{locationCopy.directions}</JpText>
                     </a>
                  </div>
 
                  {/* Address & Access */}
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{lang === 'en' ? 'Location Address' : jpCopy.ui.locations.locationAddressLabel}</JpText></span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{locationCopy.locationAddressLabel}</JpText></span>
                         <p className="font-medium text-artbar-navy leading-relaxed text-sm">
                            <JpText>{lang === 'en' ? loc.addressEn : loc.addressJp}</JpText>
                         </p>
                     </div>
                     <div>
-                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{lang === 'en' ? 'Transit Access' : jpCopy.ui.locations.transitAccessLabel}</JpText></span>
+                        <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{locationCopy.transitAccessLabel}</JpText></span>
                         <p className="font-medium text-artbar-gray leading-relaxed text-sm whitespace-pre-line">
                            <JpText>{lang === 'en' ? loc.accessEn : loc.accessJp}</JpText>
                         </p>

@@ -8,7 +8,7 @@ import { useContent } from '../context/ContentContext';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
 
 export const NotFound: React.FC = () => {
-  const { lang, jpCopy } = useContent();
+  const { lang, localizedCopy } = useContent();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -17,12 +17,9 @@ export const NotFound: React.FC = () => {
   }, []);
 
   const copy = {
-    title: lang === 'en' ? 'Page Not Found' : jpCopy.ui.notFound.title,
-    body:
-      lang === 'en'
-        ? 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.'
-        : jpCopy.ui.notFound.body,
-    cta: lang === 'en' ? 'Back to Home' : jpCopy.ui.notFound.cta,
+    title: localizedCopy.ui.notFound.title,
+    body: localizedCopy.ui.notFound.body,
+    cta: localizedCopy.ui.notFound.cta,
   };
 
   return (

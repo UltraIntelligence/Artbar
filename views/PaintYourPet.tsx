@@ -12,8 +12,9 @@ import { CheckCircle, Upload, ArrowRight } from 'lucide-react';
 import { ARTBAR_BOOKING_URL } from '../constants';
 import { trackBookingClick } from '../lib/analytics';
 export const PaintYourPet: React.FC = () => {
-  const { site, lang, jpCopy } = useContent();
+  const { site, localizedCopy } = useContent();
   const content = site.paintYourPet;
+  const petCopy = localizedCopy.ui.paintYourPet;
   const examplesReveal = useScrollReveal();
   const petReveal = useScrollReveal();
   const infoReveal = useScrollReveal();
@@ -24,7 +25,7 @@ export const PaintYourPet: React.FC = () => {
         
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{lang === 'en' ? 'Artbar Original Program' : jpCopy.ui.paintYourPet.headerBadge}</JpText></span>
+          <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{petCopy.headerBadge}</JpText></span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{content.title}</JpText></h1>
           <p className="text-lg md:text-xl text-artbar-gray max-w-3xl mx-auto leading-relaxed">
             <JpText>{content.desc}</JpText>
@@ -36,33 +37,31 @@ export const PaintYourPet: React.FC = () => {
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[-3deg]">
                  <Image
                    src="/media/petbefore.jpg"
-                   alt={lang === 'en' ? 'Original pet photo' : stripJpSentinel(jpCopy.ui.paintYourPet.originalPhoto)}
+                   alt={stripJpSentinel(petCopy.originalPhoto)}
                    fill
                    className="object-cover"
                    sizes="(max-width: 768px) 256px, 320px"
                  />
                  <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
-                    <span className="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-artbar-navy"><JpText>{lang === 'en' ? 'Original Photo' : jpCopy.ui.paintYourPet.originalPhoto}</JpText></span>
+                    <span className="bg-white/90 px-3 py-1 rounded-full text-xs font-bold text-artbar-navy"><JpText>{petCopy.originalPhoto}</JpText></span>
                  </div>
               </div>
               <ArrowRight size={32} className="text-artbar-taupe shrink-0 rotate-90 md:rotate-0" />
               <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-[2rem] overflow-hidden shadow-lg border-4 border-white rotate-[3deg] bg-white">
                  <Image
                    src="/media/petafter.png"
-                   alt={lang === 'en' ? 'Pet sketch on canvas' : stripJpSentinel(jpCopy.ui.paintYourPet.canvasSketch)}
+                   alt={stripJpSentinel(petCopy.canvasSketch)}
                    fill
                    className="object-cover"
                    sizes="(max-width: 768px) 256px, 320px"
                  />
                  <div className="absolute bottom-4 left-0 right-0 text-center pointer-events-none">
-                    <span className="bg-artbar-navy px-3 py-1 rounded-full text-xs font-bold text-white"><JpText>{lang === 'en' ? 'Canvas Sketch' : jpCopy.ui.paintYourPet.canvasSketch}</JpText></span>
+                    <span className="bg-artbar-navy px-3 py-1 rounded-full text-xs font-bold text-white"><JpText>{petCopy.canvasSketch}</JpText></span>
                  </div>
               </div>
            </div>
            <p className="mt-8 text-artbar-gray text-base md:text-lg italic max-w-md mx-auto">
-              <JpText>{lang === 'en'
-                ? "*Our artists prepare a professional sketch like this on your canvas before you arrive!"
-                : jpCopy.ui.paintYourPet.professionalSketchNote}</JpText>
+              <JpText>{petCopy.professionalSketchNote}</JpText>
            </p>
         </div>
 
@@ -79,7 +78,7 @@ export const PaintYourPet: React.FC = () => {
                         <Upload size={140} />
                     </div>
                     <h3 className="text-3xl font-heading font-bold mb-8 relative z-10">
-                      <JpText>{lang === 'en' ? 'How Artbar works' : jpCopy.ui.paintYourPet.howItWorks}</JpText>
+                      <JpText>{petCopy.howItWorks}</JpText>
                     </h3>
                     <div className="space-y-8 relative z-10 flex-grow">
                         {content.steps.map((step, i) => (
@@ -98,7 +97,7 @@ export const PaintYourPet: React.FC = () => {
            {/* Right Column: Pricing */}
            <div className="h-full">
                <div className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-lg h-full flex flex-col">
-                   <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-2 block"><JpText>{lang === 'en' ? 'Price' : jpCopy.ui.paintYourPet.priceLabel}</JpText></span>
+                   <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-2 block"><JpText>{petCopy.priceLabel}</JpText></span>
                    <div className="mb-8">
                      <div className="text-5xl font-heading font-heavy text-artbar-navy">{content.pricing.price}</div>
                      <p className="mt-2 text-sm text-artbar-gray"><JpText>{content.pricing.priceNote}</JpText></p>

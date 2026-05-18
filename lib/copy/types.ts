@@ -133,6 +133,11 @@ export interface JapaneseUiCopy {
     theExperience: string;
     guestFavorite: string;
     bilingualSessions: string;
+    bilingualSessionsBySlug: {
+      'japan-inspired': string;
+      kids: string;
+      'paint-your-pet': string;
+    };
     expertGuidance: string;
     community: string;
     whatToExpect: string;

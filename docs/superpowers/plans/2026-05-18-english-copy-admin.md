@@ -4,6 +4,8 @@
 
 **Goal:** Let Artbar staff edit, preview, save, publish, and roll back English site wording through the same friendly copy-admin workflow already used for Japanese.
 
+**Status:** Completed on branch `codex/english-copy-admin`. The final implementation went beyond the first draft by wiring all reviewed English customer-facing copy surfaces to the active-language copy object and adding regression coverage for the areas most likely to drift.
+
 **Architecture:** Keep `data/content.ts` as the shipped fallback/default source, and use the existing Supabase table `site_copy_locales` for one copy record per language: `en` and `jp`. Generalize the current Japanese-only copy store into locale-aware functions, then make `/copy-admin` a language-tabbed "Site Copy Admin" that hides technical paths by default and publishes one language at a time.
 
 **Tech Stack:** Next.js 15 App Router, React 19, TypeScript, Supabase service-role access, Tailwind CSS v4, existing smoke-check scripts with `tsx`.

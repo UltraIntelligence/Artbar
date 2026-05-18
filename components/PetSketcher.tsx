@@ -20,9 +20,9 @@ import { useContent } from '../context/ContentContext';
 type HandoffState = 'idle' | 'packaging' | 'ready';
 
 export const PetSketcher: React.FC = () => {
-  const { lang, jpCopy } = useContent();
-  const copy = jpCopy.ui.paintYourPet;
-  const text = (en: string, jp: string) => (lang === 'en' ? en : jp);
+  const { localizedCopy } = useContent();
+  const copy = localizedCopy.ui.paintYourPet;
+  const text = (_fallback: string, localized: string) => localized;
   const [image, setImage] = useState<string | null>(null);
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -289,11 +289,7 @@ ${text('Thank you!', copy.emailThanks)}`;
       window.clearTimeout(timeout);
       const payload = await res.json();
       if (!res.ok) {
-        throw new Error(
-          lang === 'en'
-            ? payload?.error || 'We could not create the sketch right now.'
-            : copy.sketchCreateError
-        );
+        throw new Error(payload?.error || copy.sketchCreateError);
       }
       if (!payload?.imageBase64 || !payload?.mimeType) {
         throw new Error(text('The sketch came back incomplete. Please try again.', copy.sketchIncomplete));

@@ -17,7 +17,7 @@ import {
 import { getPublishedCopyPayload } from '@/lib/copy/store';
 import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
 import {
-  buildResolvedJapaneseCopy,
+  buildResolvedCopy,
   mergePublishedLocaleIntoContent,
 } from '@/lib/copy/resolve';
 import { getPublishedMediaMap } from '@/lib/media/store';
@@ -88,8 +88,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const trimmedInitialContent = trimBlogBodiesForPath(initialContent, requestPathname);
   const initialLocalizedCopy =
     initialLang === 'jp'
-      ? segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload))
-      : buildResolvedJapaneseCopy(publishedPayload);
+      ? segmentJpDeep(buildResolvedCopy(initialLang, publishedPayload))
+      : buildResolvedCopy(initialLang, publishedPayload);
   const initialHasFetchedRuntimeCopy = supabasePayload !== null;
 
   return (

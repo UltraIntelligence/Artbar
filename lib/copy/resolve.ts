@@ -312,7 +312,7 @@ export function mergePublishedIntoContent(payload: JapaneseCopyPayload): Content
   return mergePublishedLocaleIntoContent('jp', payload);
 }
 
-export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): ResolvedJapaneseCopy {
+export function buildResolvedCopy(locale: CopyLocale, payload: LocalizedCopyPayload): ResolvedJapaneseCopy {
   const legacyTeamBuildingRows = payload.teamBuildingLogisticsRows.length === TEAM_BUILDING_LOGISTICS_ROWS.length - 1;
   const daikanyamaIndex = TEAM_BUILDING_LOGISTICS_ROWS.findIndex(
     (item) => item.name.en === 'Artbar Daikanyama',
@@ -332,7 +332,7 @@ export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): Resolve
     themePages: payload.themePages,
     locationShortLabels: LOCATION_SHORT_LABELS.map((item, index) => ({
       ...item,
-      jp: payload.locationShortLabels[index] ?? item.jp,
+      [locale]: payload.locationShortLabels[index] ?? item[locale],
     })),
     teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item, index) => {
       const payloadRow = getTeamBuildingLogisticsPayloadRow(index);
@@ -341,11 +341,11 @@ export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): Resolve
         ...item,
         name: {
           ...item.name,
-          jp: payloadRow?.name ?? item.name.jp,
+          [locale]: payloadRow?.name ?? item.name[locale],
         },
         cap: {
           ...item.cap,
-          jp: payloadRow?.cap ?? item.cap.jp,
+          [locale]: payloadRow?.cap ?? item.cap[locale],
         },
       };
     }),
@@ -353,13 +353,17 @@ export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): Resolve
       ...item,
       name: {
         ...item.name,
-        jp: payload.privatePartyCapacityRows[index]?.name ?? item.name.jp,
+        [locale]: payload.privatePartyCapacityRows[index]?.name ?? item.name[locale],
       },
       desc: {
         ...item.desc,
-        jp: payload.privatePartyCapacityRows[index]?.desc ?? item.desc.jp,
+        [locale]: payload.privatePartyCapacityRows[index]?.desc ?? item.desc[locale],
       },
     })),
     ui: payload.ui,
   };
+}
+
+export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): ResolvedJapaneseCopy {
+  return buildResolvedCopy('jp', payload);
 }

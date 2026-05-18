@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
 import { getPublishedCopyPayload, parseCopyLocale } from '@/lib/copy/store';
 import {
-  buildResolvedJapaneseCopy,
+  buildResolvedCopy,
   mergePublishedLocaleIntoContent,
 } from '@/lib/copy/resolve';
 import { getPublishedMediaMap } from '@/lib/media/store';
@@ -44,8 +44,8 @@ export async function GET(request: NextRequest) {
   );
   const localizedCopy =
     locale === 'jp'
-      ? segmentJpDeep(buildResolvedJapaneseCopy(published))
-      : buildResolvedJapaneseCopy(published);
+      ? segmentJpDeep(buildResolvedCopy(locale, published))
+      : buildResolvedCopy(locale, published);
 
   return NextResponse.json(
     { locale, content, localizedCopy, jpCopy: localizedCopy },

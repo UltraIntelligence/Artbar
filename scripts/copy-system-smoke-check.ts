@@ -4,6 +4,7 @@ import {
   DEFAULT_COPY_PAYLOADS,
 } from '../lib/copy/defaults';
 import {
+  buildResolvedCopy,
   mergePublishedLocaleIntoContent,
   normalizeCopyPayload,
 } from '../lib/copy/resolve';
@@ -124,6 +125,67 @@ for (const locale of COPY_LOCALES) {
       );
     }
   }
+
+  const editedPayload = structuredClone(payload);
+  editedPayload.faqs[0] = {
+    question: `${locale} edited FAQ question`,
+    answer: `${locale} edited FAQ answer`,
+  };
+  editedPayload.teamBuildingTestimonials[0] = {
+    ...editedPayload.teamBuildingTestimonials[0],
+    text: `${locale} edited team testimonial`,
+    author: `${locale} edited team author`,
+  };
+  editedPayload.teamBuildingLogisticsRows[0] = {
+    name: `${locale} edited logistics studio`,
+    cap: `${locale} edited logistics capacity`,
+  };
+  editedPayload.privatePartyCapacityRows[0] = {
+    name: `${locale} edited party capacity`,
+    desc: `${locale} edited party description`,
+  };
+  editedPayload.themePages['japan-inspired'] = {
+    ...editedPayload.themePages['japan-inspired'],
+    title: `${locale} edited theme title`,
+    introTitle: `${locale} edited theme intro`,
+  };
+
+  const resolved = buildResolvedCopy(locale, normalizeCopyPayload(locale, editedPayload));
+  assert.equal(
+    resolved.faqs[0]?.question,
+    `${locale} edited FAQ question`,
+    `${locale} FAQ edits resolve for public pages`,
+  );
+  assert.equal(
+    resolved.teamBuildingTestimonials[0]?.text,
+    `${locale} edited team testimonial`,
+    `${locale} team testimonial edits resolve for public pages`,
+  );
+  assert.equal(
+    resolved.teamBuildingLogisticsRows[0]?.name[locale],
+    `${locale} edited logistics studio`,
+    `${locale} logistics card name writes to active language`,
+  );
+  assert.equal(
+    resolved.teamBuildingLogisticsRows[0]?.cap[locale],
+    `${locale} edited logistics capacity`,
+    `${locale} logistics card capacity writes to active language`,
+  );
+  assert.equal(
+    resolved.privatePartyCapacityRows[0]?.name[locale],
+    `${locale} edited party capacity`,
+    `${locale} private party capacity name writes to active language`,
+  );
+  assert.equal(
+    resolved.privatePartyCapacityRows[0]?.desc[locale],
+    `${locale} edited party description`,
+    `${locale} private party capacity description writes to active language`,
+  );
+  assert.equal(
+    resolved.themePages['japan-inspired']?.title,
+    `${locale} edited theme title`,
+    `${locale} theme detail edits resolve for public pages`,
+  );
 }
 
 console.log('Copy system smoke check passed.');
