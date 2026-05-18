@@ -7,6 +7,8 @@
     { "source": "/event-schedule/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": true },
     { "source": "/events-schedule", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/events-schedule/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": true },
+    { "source": "/schedule", "destination": "https://booking.artbar.co.jp", "permanent": true },
+    { "source": "/schedule/(.*)", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/art-in-bloom-クリス・パイレートが語るアートの旅路-a-creative-journey-i", "destination": "/blog/chris-pyrate-interview", "permanent": true },
     { "source": "/event-location", "destination": "/locations", "permanent": true },
     { "source": "/event-location/artbar-yokohama-motomachi", "destination": "/locations/yokohama", "permanent": true },
@@ -20,6 +22,11 @@
     { "source": "/harajuku", "destination": "/locations/harajuku", "permanent": true },
     { "source": "/ginza", "destination": "/locations/ginza", "permanent": true },
     { "source": "/yokohama", "destination": "/locations/yokohama", "permanent": true },
+    { "source": "/product-category/ginza", "destination": "/locations/ginza", "permanent": true },
+    { "source": "/product-category/daikanyama", "destination": "/locations/daikanyama", "permanent": true },
+    { "source": "/product-category/harajuku", "destination": "/locations/harajuku", "permanent": true },
+    { "source": "/product-category/yokohama", "destination": "/locations/yokohama", "permanent": true },
+    { "source": "/product-category/(.*)", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/paint-and-sip-tokyo", "destination": "/guides/paint-and-sip-tokyo", "permanent": true },
     { "source": "/tokyo-rainy-day-date", "destination": "/guides/tokyo-rainy-day-date", "permanent": true },
     { "source": "/rainy-day-date-tokyo", "destination": "/guides/tokyo-rainy-day-date", "permanent": true },
@@ -36,7 +43,8 @@
     { "source": "/contact-en", "destination": "/en/contact", "permanent": true },
     { "source": "/contact-en/", "destination": "/en/contact", "permanent": true },
     { "source": "/category/:slug", "destination": "/blog", "permanent": true },
-    { "source": "/:year(\\d{4})/:month(\\d{2})/:slug", "destination": "/blog/:slug", "permanent": true }
+    { "source": "/:year(\\d{4})/:month(\\d{2})/:slug", "destination": "/blog/:slug", "permanent": true },
+    { "source": "/wp-sitemap.xml", "destination": "/sitemap.xml", "permanent": true }
   ],
   "headers": [
     {

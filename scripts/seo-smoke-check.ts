@@ -104,6 +104,8 @@ function checkRedirects() {
     '/event-schedule/(.*)',
     '/events-schedule',
     '/events-schedule/(.*)',
+    '/schedule',
+    '/schedule/(.*)',
     '/art-in-bloom-クリス・パイレートが語るアートの旅路-a-creative-journey-i',
     '/event-location',
     '/event-location/artbar-yokohama-motomachi',
@@ -117,6 +119,11 @@ function checkRedirects() {
     '/harajuku',
     '/ginza',
     '/yokohama',
+    '/product-category/ginza',
+    '/product-category/daikanyama',
+    '/product-category/harajuku',
+    '/product-category/yokohama',
+    '/product-category/(.*)',
     '/paint-and-sip-tokyo',
     '/tokyo-rainy-day-date',
     '/rainy-day-date-tokyo',
@@ -127,20 +134,26 @@ function checkRedirects() {
     '/tokyo-art-classes',
     '/private-paint-and-sip-tokyo',
     '/paint-your-pet-tokyo',
+    '/wp-sitemap.xml',
   ]) {
     assert(ruleBySource.get(source)?.permanent === true, `Legacy redirect should be permanent: ${source}`);
   }
 
+  assert(ruleBySource.get('/schedule')?.destination === 'https://booking.artbar.co.jp', '/schedule should consolidate to the booking schedule');
+  assert(ruleBySource.get('/schedule/(.*)')?.destination === 'https://booking.artbar.co.jp', '/schedule/* should consolidate to the booking schedule');
   assert(ruleBySource.get('/event-location')?.destination === '/locations', '/event-location should consolidate to /locations');
   assert(ruleBySource.get('/events/guest-teacher-class-chris-03142025')?.destination === '/blog/chris-pyrate-interview', 'Chris Pyrate event URL should consolidate to the current blog article');
   assert(ruleBySource.get('/event-location/artbar-yokohama-motomachi')?.destination === '/locations/yokohama', 'Yokohama event-location URL should consolidate to the Yokohama location page');
   assert(ruleBySource.get('/event-location/new-art-bar-ginza')?.destination === '/locations/ginza', 'Ginza event-location URL should consolidate to the Ginza location page');
   assert(ruleBySource.get('/event-location/(.*)')?.destination === '/locations', '/event-location/* should consolidate to /locations');
   assert(ruleBySource.get('/daikanyama')?.destination === '/locations/daikanyama', '/daikanyama should consolidate to the Daikanyama location page');
+  assert(ruleBySource.get('/product-category/ginza')?.destination === '/locations/ginza', '/product-category/ginza should consolidate to the Ginza location page');
+  assert(ruleBySource.get('/product-category/(.*)')?.destination === 'https://booking.artbar.co.jp', '/product-category/* should consolidate to the booking schedule');
   assert(ruleBySource.get('/paint-and-sip-tokyo')?.destination === '/guides/paint-and-sip-tokyo', '/paint-and-sip-tokyo should consolidate to the paint-and-sip guide');
   assert(ruleBySource.get('/tokyo-rainy-day-date')?.destination === '/guides/tokyo-rainy-day-date', '/tokyo-rainy-day-date should consolidate to the rainy day date guide');
   assert(ruleBySource.get('/tokyo-art-experience')?.destination === '/guides/tokyo-art-experience', '/tokyo-art-experience should consolidate to the art experience guide');
   assert(ruleBySource.get('/tokyo-art-workshop')?.destination === '/guides/tokyo-art-workshop', '/tokyo-art-workshop should consolidate to the art workshop guide');
+  assert(ruleBySource.get('/wp-sitemap.xml')?.destination === '/sitemap.xml', 'Dead WordPress sitemap should consolidate to the current sitemap');
 }
 
 function checkJsonLdHelpers() {

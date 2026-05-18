@@ -6,6 +6,7 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 const homePage = readFileSync(join(process.cwd(), 'app/page.tsx'), 'utf8');
+const homeView = readFileSync(join(process.cwd(), 'views/Home.tsx'), 'utf8');
 
 const constantsImport = homePage.match(/import\s*\{([\s\S]*?)\}\s*from\s*['"]@\/constants['"]/);
 const importedConstants = constantsImport?.[1] ?? '';
@@ -45,6 +46,12 @@ assert(
     hasLinkBlock(['rel="preload"', 'as="video"', 'href={mobileHero}', 'media="(max-width: 767px)"']) &&
     hasLinkBlock(['rel="preload"', 'as="image"', 'imageSrcSet={nextImageSrcSet(mobileHero)}', 'media="(max-width: 767px)"']),
   'Mobile hero preload must support both video fallback and uploaded image overrides.'
+);
+
+assert(
+  homeView.includes('CONCEPT_SOCIAL_AVATAR_URLS.map') &&
+    /<img[\s\S]*?key=\{src\}[\s\S]*?loading="lazy"[\s\S]*?decoding="async"/.test(homeView),
+  'Below-fold concept social avatars must lazy-load so they do not compete with the hero on first paint.'
 );
 
 console.log('Performance smoke check passed.');

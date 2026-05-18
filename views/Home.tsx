@@ -525,6 +525,7 @@ export const Home: React.FC = () => {
                           alt=""
                           width={96}
                           height={96}
+                          loading="lazy"
                           decoding="async"
                           className="h-14 w-14 shrink-0 rounded-full border-[3px] border-white object-cover shadow-xl md:h-24 md:w-24 md:border-[6px]"
                         />
