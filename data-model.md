@@ -87,7 +87,7 @@ Supporting **navigation** types (`NavLink`, etc.) exist in `types.ts` but are no
 
 - **Create/Update/Delete:** Blog posts ship from `data/content.ts`. There is no current in-product blog editor documented here.
 - **Visibility:** `published === false` hides posts from `views/BlogList.tsx` (`filter`).
-- **Runtime lookup:** `views/BlogPost.tsx` may fetch `/api/blog-post/[slug]`, which merges published copy for the active language before returning the post body for that slug.
+- **Runtime lookup:** `views/BlogPost.tsx` may fetch `/api/blog-post/[slug]`, which still uses the Japanese published-copy path before returning the post body for that slug. Main layout and `/api/copy-public` are language-aware; this route needs a separate update before it can read English published copy too.
 - **Side effects:** `app/sitemap.ts` and `app/blog/[slug]/page.tsx` `generateMetadata` use **`defaultContent` from `data/content.ts`**—see [Edge cases](#edge-cases-and-gotchas).
 
 ### Instructor, Location, Testimonial, MediaItem, FaqItem
@@ -155,7 +155,7 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 | `POST /api/copy-admin/draft` | Save selected language copy draft | Authenticated, same-origin admin mutation; writes draft payload to Supabase |
 | `POST /api/copy-admin/publish` | Publish selected language copy draft | Authenticated, same-origin admin mutation; promotes draft to published and revalidates the copy cache |
 | `POST /api/copy-admin/rollback` | Restore previous published copy | Authenticated, same-origin admin mutation; uses the previous published Supabase payload for the selected language |
-| `GET /api/blog-post/[slug]` | Runtime blog post lookup | Reads published copy for the active language, merges content, returns the published post for the slug |
+| `GET /api/blog-post/[slug]` | Runtime blog post lookup | Still reads the Japanese published-copy path, merges content, and returns the published post for the slug |
 | `POST /api/csp-report` | Browser Content Security Policy reports | Rate-limited log endpoint; sanitizes incoming report values |
 
 These routes are still light product plumbing, not a booking/account system. Customer bookings and payments remain outside this repo.
@@ -179,7 +179,7 @@ These routes are still light product plumbing, not a booking/account system. Cus
 
 ## Edge cases and gotchas
 
-- **Shipped blog data vs runtime copy:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`; the article body can refresh through `/api/blog-post/[slug]` and merge published active-language copy. Publish important SEO-facing blog changes through `data/content.ts`.
+- **Shipped blog data vs runtime copy:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`; the article body can refresh through `/api/blog-post/[slug]`, but that route still merges the Japanese published-copy path unless/until it is separately updated for English. Publish important SEO-facing blog changes through `data/content.ts`.
 - **Theme slug drift:** Home links are **`/themes/${slugFromTitle}`** (`views/Home.tsx`). If the slug is **missing** from `THEME_CONFIG`, `ThemeDetail` still renders using the **Japan-Inspired** fallback—broken routing is subtle (wrong content, bad SEO), not necessarily a visible error page.
 - **No booking/user entities:** Sessions, tickets, and users are **out of scope** for this repo—copy may reference them, but no types exist.
 - **Structured data:** `views/BlogPost.tsx` embeds Article JSON-LD; `views/Home.tsx` embeds Organization JSON-LD—**not** centralized in a dedicated `components/SEO.tsx` in this repo (AGENTS/CLAUDE may still mention a legacy path).
