@@ -26,16 +26,71 @@ const LEGACY_THEME_SLUGS: Record<string, string> = {
   'texture-painting': 'texture-art',
 };
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
 function getRawJapaneseThemeItems(payload: unknown): JapaneseThemeItem[] | null {
-  if (typeof payload !== 'object' || payload === null) return null;
+  if (!isRecord(payload)) return null;
   const site = (payload as { site?: unknown }).site;
-  if (typeof site !== 'object' || site === null) return null;
+  if (!isRecord(site)) return null;
   const home = (site as { home?: unknown }).home;
-  if (typeof home !== 'object' || home === null) return null;
+  if (!isRecord(home)) return null;
   const themes = (home as { themes?: unknown }).themes;
-  if (typeof themes !== 'object' || themes === null) return null;
+  if (!isRecord(themes)) return null;
   const items = (themes as { items?: unknown }).items;
   return Array.isArray(items) ? (items as JapaneseThemeItem[]) : null;
+}
+
+function migrateLegacyField(
+  item: Record<string, unknown>,
+  legacyKey: string,
+  neutralKey: string,
+): void {
+  if (typeof item[neutralKey] === 'string') return;
+  if (typeof item[legacyKey] === 'string') {
+    item[neutralKey] = item[legacyKey];
+  }
+}
+
+function migrateLegacyJapaneseArrayFields(
+  payload: Record<string, unknown>,
+  arrayKey: string,
+  fields: Array<[legacyKey: string, neutralKey: string]>,
+): void {
+  const items = payload[arrayKey];
+  if (!Array.isArray(items)) return;
+
+  for (const item of items) {
+    if (!isRecord(item)) continue;
+    for (const [legacyKey, neutralKey] of fields) {
+      migrateLegacyField(item, legacyKey, neutralKey);
+    }
+  }
+}
+
+function migrateLegacyJapaneseFieldNames(payload: unknown): unknown {
+  if (!isRecord(payload)) return payload;
+
+  const migrated = structuredClone(payload) as Record<string, unknown>;
+
+  migrateLegacyJapaneseArrayFields(migrated, 'instructors', [
+    ['roleJp', 'role'],
+    ['descJp', 'desc'],
+  ]);
+  migrateLegacyJapaneseArrayFields(migrated, 'locations', [
+    ['nameJp', 'name'],
+    ['addressJp', 'address'],
+    ['accessJp', 'access'],
+  ]);
+  migrateLegacyJapaneseArrayFields(migrated, 'blog', [
+    ['titleJp', 'title'],
+    ['excerptJp', 'excerpt'],
+    ['contentJp', 'content'],
+    ['authorJp', 'author'],
+  ]);
+
+  return migrated;
 }
 
 function shouldMigrateJapaneseThemeItems(
@@ -155,8 +210,9 @@ function migrateLegacyTeamBuildingLogisticsRows(payload: JapaneseCopyPayload): v
 }
 
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
-  const rawThemeItems = getRawJapaneseThemeItems(payload);
-  const normalized = deepMergeTemplate(DEFAULT_COPY_PAYLOADS.jp, payload);
+  const migratedPayload = migrateLegacyJapaneseFieldNames(payload);
+  const rawThemeItems = getRawJapaneseThemeItems(migratedPayload);
+  const normalized = deepMergeTemplate(DEFAULT_COPY_PAYLOADS.jp, migratedPayload);
 
   // Older published JP copy records still contain English text for a few public
   // page headings. Upgrade only exact legacy English values so admin-edited JP
