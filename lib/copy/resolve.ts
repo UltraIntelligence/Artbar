@@ -8,12 +8,14 @@ import {
 } from '@/constants';
 import { defaultContent } from '@/data/content';
 import {
-  DEFAULT_JAPANESE_COPY_PAYLOAD,
+  DEFAULT_COPY_PAYLOADS,
   deepMergeTemplate,
 } from '@/lib/copy/defaults';
 import { sanitizeBlogHtml } from '@/lib/blog-html';
 import type {
+  CopyLocale,
   JapaneseCopyPayload,
+  LocalizedCopyPayload,
   ResolvedJapaneseCopy,
 } from '@/lib/copy/types';
 import type { ContentData } from '@/types';
@@ -154,7 +156,7 @@ function migrateLegacyTeamBuildingLogisticsRows(payload: JapaneseCopyPayload): v
 
 export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayload {
   const rawThemeItems = getRawJapaneseThemeItems(payload);
-  const normalized = deepMergeTemplate(DEFAULT_JAPANESE_COPY_PAYLOAD, payload);
+  const normalized = deepMergeTemplate(DEFAULT_COPY_PAYLOADS.jp, payload);
 
   // Older published JP copy records still contain English text for a few public
   // page headings. Upgrade only exact legacy English values so admin-edited JP
@@ -182,56 +184,76 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
 
   normalized.blog = normalized.blog.map((item) => ({
     ...item,
-    contentJp: sanitizeBlogHtml(item.contentJp),
+    content: sanitizeBlogHtml(item.content),
   }));
 
   return normalized;
 }
 
-export function mergePublishedIntoContent(payload: JapaneseCopyPayload): ContentData {
+export function normalizeCopyPayload(locale: CopyLocale, payload: unknown): LocalizedCopyPayload {
+  if (locale === 'jp') {
+    return normalizeJapaneseCopyPayload(payload);
+  }
+
+  const template = DEFAULT_COPY_PAYLOADS[locale];
+  const normalized = deepMergeTemplate(template, payload);
+
+  normalized.blog = normalized.blog.map((item) => ({
+    ...item,
+    content: sanitizeBlogHtml(item.content),
+  }));
+
+  return normalized;
+}
+
+export function mergePublishedLocaleIntoContent(
+  locale: CopyLocale,
+  payload: LocalizedCopyPayload,
+): ContentData {
   const content = structuredClone(defaultContent);
-  content.jp = deepMergeTemplate(defaultContent.jp, payload.site);
+  content[locale] = deepMergeTemplate(defaultContent[locale], payload.site);
 
-  const instructorsById = new Map(payload.instructors.map((item) => [item.id, item]));
   content.instructors = content.instructors.map((item) => {
-    const copy = instructorsById.get(item.id);
-    return copy
-      ? {
-          ...item,
-          roleJp: copy.roleJp,
-          descJp: copy.descJp,
-        }
-      : item;
+    const copy = payload.instructors.find((candidate) => candidate.id === item.id);
+    if (!copy) return item;
+    return locale === 'en'
+      ? { ...item, roleEn: copy.role, descEn: copy.desc }
+      : { ...item, roleJp: copy.role, descJp: copy.desc };
   });
 
-  const locationsById = new Map(payload.locations.map((item) => [item.id, item]));
   content.locations = content.locations.map((item) => {
-    const copy = locationsById.get(item.id);
-    return copy
-      ? {
-          ...item,
-          nameJp: copy.nameJp,
-          addressJp: copy.addressJp,
-          accessJp: copy.accessJp,
-        }
-      : item;
+    const copy = payload.locations.find((candidate) => candidate.id === item.id);
+    if (!copy) return item;
+    return locale === 'en'
+      ? { ...item, nameEn: copy.name, addressEn: copy.address, accessEn: copy.access }
+      : { ...item, nameJp: copy.name, addressJp: copy.address, accessJp: copy.access };
   });
 
-  const blogById = new Map(payload.blog.map((item) => [item.id, item]));
   content.blog = content.blog.map((item) => {
-    const copy = blogById.get(item.id);
-    return copy
+    const copy = payload.blog.find((candidate) => candidate.id === item.id);
+    if (!copy) return item;
+    return locale === 'en'
       ? {
           ...item,
-          titleJp: copy.titleJp,
-          excerptJp: copy.excerptJp,
-          contentJp: sanitizeBlogHtml(copy.contentJp),
-          authorJp: copy.authorJp,
+          titleEn: copy.title,
+          excerptEn: copy.excerpt,
+          contentEn: sanitizeBlogHtml(copy.content),
+          authorEn: copy.author,
         }
-      : item;
+      : {
+          ...item,
+          titleJp: copy.title,
+          excerptJp: copy.excerpt,
+          contentJp: sanitizeBlogHtml(copy.content),
+          authorJp: copy.author,
+        };
   });
 
   return content;
+}
+
+export function mergePublishedIntoContent(payload: JapaneseCopyPayload): ContentData {
+  return mergePublishedLocaleIntoContent('jp', payload);
 }
 
 export function buildResolvedJapaneseCopy(payload: JapaneseCopyPayload): ResolvedJapaneseCopy {
