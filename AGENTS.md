@@ -37,7 +37,7 @@ No test framework is configured.
 ### Content & i18n system
 
 `ContentContext` (`context/ContentContext.tsx`) provides bilingual content via React Context:
-- `useContent()` hook returns `{ lang, toggleLang, content, site, jpCopy, media }`
+- `useContent()` hook returns `{ lang, toggleLang, content, site, localizedCopy, jpCopy, media }`; `localizedCopy` is the active language copy, and `jpCopy` remains only as a compatibility alias.
 - `site` is a shortcut for `content[lang]` (either `content.en` or `content.jp`)
 - **Initial language:** Root layout passes `initialLang` to `ContentProvider` from cookie `artbar_lang` or `Accept-Language` (`lib/language.ts`). Middleware sets the cookie on first visit when absent. `toggleLang` persists the cookie.
 - Content schema is defined in `types.ts` — `ContentData` is the root type, `SiteContent` holds per-language strings

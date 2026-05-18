@@ -269,24 +269,27 @@ export function mergePublishedLocaleIntoContent(
   const content = structuredClone(defaultContent);
   content[locale] = deepMergeTemplate(defaultContent[locale], payload.site);
 
+  const instructorsById = new Map(payload.instructors.map((item) => [item.id, item]));
   content.instructors = content.instructors.map((item) => {
-    const copy = payload.instructors.find((candidate) => candidate.id === item.id);
+    const copy = instructorsById.get(item.id);
     if (!copy) return item;
     return locale === 'en'
       ? { ...item, roleEn: copy.role, descEn: copy.desc }
       : { ...item, roleJp: copy.role, descJp: copy.desc };
   });
 
+  const locationsById = new Map(payload.locations.map((item) => [item.id, item]));
   content.locations = content.locations.map((item) => {
-    const copy = payload.locations.find((candidate) => candidate.id === item.id);
+    const copy = locationsById.get(item.id);
     if (!copy) return item;
     return locale === 'en'
       ? { ...item, nameEn: copy.name, addressEn: copy.address, accessEn: copy.access }
       : { ...item, nameJp: copy.name, addressJp: copy.address, accessJp: copy.access };
   });
 
+  const blogById = new Map(payload.blog.map((item) => [item.id, item]));
   content.blog = content.blog.map((item) => {
-    const copy = payload.blog.find((candidate) => candidate.id === item.id);
+    const copy = blogById.get(item.id);
     if (!copy) return item;
     return locale === 'en'
       ? {
