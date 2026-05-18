@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
-import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
+import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
+import { getPublishedCopyPayload, parseCopyLocale } from '@/lib/copy/store';
 import {
   buildResolvedJapaneseCopy,
-  mergePublishedIntoContent,
+  mergePublishedLocaleIntoContent,
 } from '@/lib/copy/resolve';
 import { getPublishedMediaMap } from '@/lib/media/store';
 import { mergeMediaIntoContent } from '@/lib/media/resolve';
@@ -27,21 +27,29 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Pr
  * EN→JP toggle path.
  */
 export async function GET(request: NextRequest) {
+  const locale = parseCopyLocale(request.nextUrl.searchParams.get('locale'));
   const [publishedPayload, publishedMedia] = await Promise.all([
-    getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }),
+    getPublishedCopyPayload(locale, { timeoutMs: 4000 }),
     withTimeout(getPublishedMediaMap(), 4000, {}),
   ]);
-  const published = publishedPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
+  const published = publishedPayload ?? DEFAULT_COPY_PAYLOADS[locale];
 
   const currentPath = request.nextUrl.searchParams.get('path');
+  const mergedContent = mergeMediaIntoContent(
+    mergePublishedLocaleIntoContent(locale, published),
+    publishedMedia,
+  );
   const content = trimBlogBodiesForPath(
-    mergeMediaIntoContent(segmentJpDeep(mergePublishedIntoContent(published)), publishedMedia),
+    locale === 'jp' ? segmentJpDeep(mergedContent) : mergedContent,
     currentPath,
   );
-  const jpCopy = segmentJpDeep(buildResolvedJapaneseCopy(published));
+  const localizedCopy =
+    locale === 'jp'
+      ? segmentJpDeep(buildResolvedJapaneseCopy(published))
+      : buildResolvedJapaneseCopy(published);
 
   return NextResponse.json(
-    { content, jpCopy },
+    { locale, content, localizedCopy, jpCopy: localizedCopy },
     {
       headers: {
         'Cache-Control': 'no-store, max-age=0',

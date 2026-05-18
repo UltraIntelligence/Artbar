@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminRequestAuthenticated } from '@/lib/copy/session';
-import { publishDraftPayload } from '@/lib/copy/store';
+import { parseCopyLocale, publishDraftPayload } from '@/lib/copy/store';
 import { forbiddenMutationResponse, isSameOriginMutation } from '@/lib/copy/request-security';
 
 export async function POST(request: NextRequest) {
@@ -13,7 +13,8 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    return NextResponse.json(await publishDraftPayload());
+    const locale = parseCopyLocale(request.nextUrl.searchParams.get('locale'));
+    return NextResponse.json({ locale, ...(await publishDraftPayload(locale)) });
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to publish draft.' },
