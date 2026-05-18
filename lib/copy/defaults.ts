@@ -8,7 +8,9 @@ import { defaultContent } from '@/data/content';
 import { THEME_CONFIG } from '@/data/theme-details';
 import { THEME_JP } from '@/data/theme-details-jp-strings';
 import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
-import type { JapaneseCopyPayload } from '@/lib/copy/types';
+import type { CopyLocale, JapaneseCopyPayload, LocalizedCopyPayload } from '@/lib/copy/types';
+
+export { COPY_LOCALES } from '@/lib/copy/types';
 
 export const COPY_TABLE = 'site_copy_locales';
 export const COPY_ADMIN_PATH = '/copy-admin';
@@ -551,12 +553,10 @@ const buildJapaneseCopyPayload = (): JapaneseCopyPayload => ({
   ui: structuredClone(DEFAULT_JAPANESE_UI_COPY),
 });
 
-export const COPY_LOCALES = ['en', 'jp'] as const;
-
 export const DEFAULT_COPY_PAYLOADS = {
   en: buildEnglishCopyPayload(),
   jp: buildJapaneseCopyPayload(),
-} satisfies Record<(typeof COPY_LOCALES)[number], JapaneseCopyPayload>;
+} satisfies Record<CopyLocale, LocalizedCopyPayload>;
 
 export const DEFAULT_JAPANESE_COPY_PAYLOAD = DEFAULT_COPY_PAYLOADS.jp;
 

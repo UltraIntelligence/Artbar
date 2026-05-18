@@ -3,6 +3,7 @@ import {
   COPY_LOCALES,
   DEFAULT_COPY_PAYLOADS,
 } from '../lib/copy/defaults';
+import { defaultContent } from '../data/content';
 import { buildPublicCopyPayload } from '../lib/copy/public-payload';
 import {
   buildResolvedCopy,
@@ -27,6 +28,25 @@ assert.equal(parseCopyMutationLocale(null), 'jp');
 assert.equal(parseCopyMutationLocale('en'), 'en');
 assert.equal(parseCopyMutationLocale('jp'), 'jp');
 assert.equal(parseCopyMutationLocale('fr'), null);
+
+const preservedJapaneseAdminEdit = normalizeCopyPayload('jp', {
+  site: {
+    pressPage: {
+      title: 'Media Coverage',
+    },
+  },
+  faqs: defaultContent.faqs,
+});
+assert.equal(
+  preservedJapaneseAdminEdit.site.pressPage.title,
+  'Media Coverage',
+  'Japanese normalization preserves admin edits that match old English fallback text',
+);
+assert.equal(
+  preservedJapaneseAdminEdit.faqs[0]?.question,
+  defaultContent.faqs[0]?.question,
+  'Japanese normalization preserves FAQ edits that match old English fallback text',
+);
 
 const hasText = (value: string | undefined) =>
   typeof value === 'string' && value.trim().length > 0;

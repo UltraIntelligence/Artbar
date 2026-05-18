@@ -31,7 +31,7 @@ type RuntimeCopyState = {
   hasFetched: boolean;
 };
 
-type RuntimeCopyByLang = Record<Language, RuntimeCopyState | null>;
+type RuntimeCopyByLang = Record<Language, Record<string, RuntimeCopyState | undefined>>;
 
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
@@ -70,18 +70,22 @@ export const ContentProvider: React.FC<{
   const [runtimeByLang, setRuntimeByLang] = useState<RuntimeCopyByLang>(() => ({
     en: initialLang === 'en'
       ? {
+        [pathname]: {
           content: initialContent,
           localizedCopy: initialLocalizedCopy,
           hasFetched: initialHasFetchedRuntimeCopy,
-        }
-      : null,
+        },
+      }
+      : {},
     jp: initialLang === 'jp'
       ? {
+        [pathname]: {
           content: initialContent,
           localizedCopy: initialLocalizedCopy,
           hasFetched: initialHasFetchedRuntimeCopy,
-        }
-      : null,
+        },
+      }
+      : {},
   }));
 
   useEffect(() => {
@@ -91,7 +95,7 @@ export const ContentProvider: React.FC<{
   useEffect(() => {
     // Bare public URLs are intentionally Japanese; `/en` is the explicit English route.
     const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
-    const cachedRuntime = runtimeByLang[routeLang];
+    const cachedRuntime = runtimeByLang[routeLang][pathname];
 
     setLang(routeLang);
     if (cachedRuntime) {
@@ -102,7 +106,7 @@ export const ContentProvider: React.FC<{
 
   useEffect(() => {
     const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
-    const activeRuntime = runtimeByLang[lang];
+    const activeRuntime = runtimeByLang[lang][pathname];
 
     if (lang !== routeLang || activeRuntime?.hasFetched) {
       return;
@@ -129,9 +133,12 @@ export const ContentProvider: React.FC<{
         setRuntimeByLang((current) => ({
           ...current,
           [lang]: {
-            content: data.content,
-            localizedCopy: data.localizedCopy,
-            hasFetched: true,
+            ...current[lang],
+            [pathname]: {
+              content: data.content,
+              localizedCopy: data.localizedCopy,
+              hasFetched: true,
+            },
           },
         }));
       } catch (error) {

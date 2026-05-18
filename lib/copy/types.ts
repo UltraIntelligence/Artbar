@@ -1,7 +1,8 @@
 import type { ContentData, FaqItem, SiteContent, Testimonial } from '@/types';
 import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
 
-export type CopyLocale = 'en' | 'jp';
+export const COPY_LOCALES = ['en', 'jp'] as const;
+export type CopyLocale = (typeof COPY_LOCALES)[number];
 
 export interface LocalizedInstructorCopy {
   id: string;
