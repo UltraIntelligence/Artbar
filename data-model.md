@@ -4,7 +4,11 @@
 
 Artbar Tokyo is a **marketing website** for a bilingual (English/Japanese) paint-and-sip studio business: schedules and booking point to external flows; most of the site is **content + presentation**. The baseline content still ships as a single JSON-shaped document (`ContentData` in `types.ts`) from `data/content.ts`, which keeps SEO metadata, sitemap generation, and build-time defaults reliable.
 
-The live product also has a **Supabase-backed Japanese copy publishing layer**. Staff use `/copy-admin` to save draft/published Japanese copy; public routes read the published payload through server helpers and `/api/copy-public`.
+The live product also has a **Supabase-backed copy publishing layer**. Staff use `/copy-admin` to save draft/published English or Japanese copy; public routes read the selected language payload through server helpers and `/api/copy-public`.
+
+This is the completed bilingual version of the earlier Supabase-backed Japanese copy publishing layer.
+
+`site_copy_locales` stores one row per editable language. Current locale keys are `en` and `jp`. Each row has `draft_payload`, `published_payload`, `previous_published_payload`, and publish timestamps. Public pages merge the selected language payload over `data/content.ts` defaults.
 
 A second, **code-only** layer exists for **theme landing pages** (`/themes/[slug]`): long-form copy and layout live in `views/ThemeDetail.tsx` (`THEME_CONFIG`), not in `ContentData`—see [Theme slug pages](#theme-slug-pages) below.
 
@@ -31,8 +35,8 @@ Embedded testimonials also appear under `site.home.testimonials.items` (same `Te
 | Plane | Source | Who reads it | Typical use |
 |-------|--------|----------------|---------------|
 | **Shipped defaults** | `defaultContent` from `data/content.ts` (built into the bundle) | Server Components, metadata, sitemap, fallback UI | SEO/build-time defaults; safe fallback when the copy backend is unavailable |
-| **Published Japanese copy** | Supabase row read by `lib/copy/store.ts`, merged by `lib/copy/resolve.ts` | `app/layout.tsx`, `/api/copy-public`, `/api/blog-post/[slug]`, `ContentProvider` retry path | Live Japanese copy managed through `/copy-admin`; server layout merges it for Japanese visitors when configured |
-Treat `data/content.ts` as the durable SEO/build fallback and `/copy-admin`/Supabase as the live Japanese publishing surface.
+| **Published admin copy** | Supabase locale row read by `lib/copy/store.ts`, merged by `lib/copy/resolve.ts` | `app/layout.tsx`, `/api/copy-public`, `/api/blog-post/[slug]`, `ContentProvider` retry path | Live English/Japanese copy managed through `/copy-admin`; public pages merge the selected language when configured |
+Treat `data/content.ts` as the durable SEO/build fallback and `/copy-admin`/Supabase as the live language publishing surface.
 
 ---
 
@@ -75,21 +79,21 @@ Supporting **navigation** types (`NavLink`, etc.) exist in `types.ts` but are no
 
 ### ContentData (whole document)
 
-- **Create:** `defaultContent` in `data/content.ts` (and imported constants) is the default tree. `app/layout.tsx` can merge published Japanese copy from Supabase before handing content to `ContentProvider`.
-- **Update:** `/copy-admin` saves Japanese draft/published copy in Supabase. `/api/copy-public` returns the merged published tree for client retries when Japanese copy was not fetched on the first server render. English defaults and shared content are changed in code.
-- **Delete / reset:** `/copy-admin` can roll back to the previous published Japanese payload. Shipped default removals happen through code/content changes.
+- **Create:** `defaultContent` in `data/content.ts` (and imported constants) is the default tree. `app/layout.tsx` can merge published English or Japanese copy from Supabase before handing content to `ContentProvider`.
+- **Update:** `/copy-admin` saves English or Japanese draft/published copy in Supabase. `/api/copy-public` returns the selected language's merged published tree for client retries when copy was not fetched on the first server render. Shared content is still changed in code.
+- **Delete / reset:** `/copy-admin` can roll back to the previous published payload for the selected language. Shipped default removals happen through code/content changes.
 
 ### BlogPost
 
 - **Create/Update/Delete:** Blog posts ship from `data/content.ts`. There is no current in-product blog editor documented here.
 - **Visibility:** `published === false` hides posts from `views/BlogList.tsx` (`filter`).
-- **Runtime lookup:** `views/BlogPost.tsx` may fetch `/api/blog-post/[slug]`, which merges published Japanese copy before returning the post body for that slug.
+- **Runtime lookup:** `views/BlogPost.tsx` may fetch `/api/blog-post/[slug]`, which merges published copy for the active language before returning the post body for that slug.
 - **Side effects:** `app/sitemap.ts` and `app/blog/[slug]/page.tsx` `generateMetadata` use **`defaultContent` from `data/content.ts`**—see [Edge cases](#edge-cases-and-gotchas).
 
 ### Instructor, Location, Testimonial, MediaItem, FaqItem
 
 - **Create/Update/Delete:** Defaults are changed through code/content updates, usually in `constants.ts` and `data/content.ts`.
-- **Defaults:** These values seed the public site at build/runtime fallback; `/copy-admin` is for Japanese copy publishing, not a full editor for every shared list.
+- **Defaults:** These values seed the public site at build/runtime fallback; `/copy-admin` is for English/Japanese copy publishing, not a full editor for every shared list.
 
 ### ThemeConfig (fonts + typography classes)
 
@@ -145,13 +149,13 @@ That string is the **`slug` in the URL** (`/themes/japan-inspired`, etc.). There
 |-------|---------|-------|
 | `POST /api/generate-sketch` | Paint Your Pet upload → Gemini sketch image | Requires `GEMINI_API_KEY`; optional `GEMINI_IMAGE_MODEL`; request size/rate limits apply |
 | `POST /api/contact` | Customer contact form → staff email | Requires `RESEND_API_KEY`; validates required customer fields and rate limits submissions |
-| `GET /api/copy-public` | Public Japanese copy feed | Reads published Supabase copy when configured, merges it into content, returns `content` + `jpCopy` with no-store caching |
+| `GET /api/copy-public` | Public copy feed | Reads published Supabase copy for the requested language when configured, merges it into content, and returns the active language payload with no-store caching |
 | `POST /api/copy-admin/login` | Copy admin login | Requires `COPY_ADMIN_PASSWORD`, `COPY_ADMIN_SESSION_SECRET`, and Supabase config |
 | `POST /api/copy-admin/logout` | Copy admin logout | Clears the copy-admin session cookie |
-| `POST /api/copy-admin/draft` | Save Japanese copy draft | Authenticated, same-origin admin mutation; writes draft payload to Supabase |
-| `POST /api/copy-admin/publish` | Publish draft Japanese copy | Authenticated, same-origin admin mutation; promotes draft to published and revalidates the copy cache |
-| `POST /api/copy-admin/rollback` | Restore previous published Japanese copy | Authenticated, same-origin admin mutation; uses the previous published Supabase payload |
-| `GET /api/blog-post/[slug]` | Runtime blog post lookup | Reads published Japanese copy, merges content, returns the published post for the slug |
+| `POST /api/copy-admin/draft` | Save selected language copy draft | Authenticated, same-origin admin mutation; writes draft payload to Supabase |
+| `POST /api/copy-admin/publish` | Publish selected language copy draft | Authenticated, same-origin admin mutation; promotes draft to published and revalidates the copy cache |
+| `POST /api/copy-admin/rollback` | Restore previous published copy | Authenticated, same-origin admin mutation; uses the previous published Supabase payload for the selected language |
+| `GET /api/blog-post/[slug]` | Runtime blog post lookup | Reads published copy for the active language, merges content, returns the published post for the slug |
 | `POST /api/csp-report` | Browser Content Security Policy reports | Rate-limited log endpoint; sanitizes incoming report values |
 
 These routes are still light product plumbing, not a booking/account system. Customer bookings and payments remain outside this repo.
@@ -162,7 +166,7 @@ These routes are still light product plumbing, not a booking/account system. Cus
 
 | Goal | Edit |
 |------|------|
-| Copy / wording (EN or JP) for pages | `data/content.ts` for shipped defaults; `/copy-admin` for live published Japanese copy |
+| Copy / wording (EN or JP) for pages | `data/content.ts` for shipped defaults; `/copy-admin` for live published English/Japanese copy |
 | Shared lists (instructors, locations, blog, FAQs) | Code/content changes; defaults often originate in `constants.ts` |
 | New blog post in production SEO/sitemap | **Commit** changes to `data/content.ts` and redeploy |
 | New `/themes/...` landing page | Add `THEME_CONFIG` entry + `THEME_TITLES` + ensure home theme **titles** slugify to that key |
@@ -175,7 +179,7 @@ These routes are still light product plumbing, not a booking/account system. Cus
 
 ## Edge cases and gotchas
 
-- **Shipped blog data vs runtime JP copy:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`; the article body can refresh through `/api/blog-post/[slug]` and merge published Japanese copy. Publish important SEO-facing blog changes through `data/content.ts`.
+- **Shipped blog data vs runtime copy:** Blog **metadata** (`generateMetadata`) and **sitemap** use **shipped** `defaultContent`; the article body can refresh through `/api/blog-post/[slug]` and merge published active-language copy. Publish important SEO-facing blog changes through `data/content.ts`.
 - **Theme slug drift:** Home links are **`/themes/${slugFromTitle}`** (`views/Home.tsx`). If the slug is **missing** from `THEME_CONFIG`, `ThemeDetail` still renders using the **Japan-Inspired** fallback—broken routing is subtle (wrong content, bad SEO), not necessarily a visible error page.
 - **No booking/user entities:** Sessions, tickets, and users are **out of scope** for this repo—copy may reference them, but no types exist.
 - **Structured data:** `views/BlogPost.tsx` embeds Article JSON-LD; `views/Home.tsx` embeds Organization JSON-LD—**not** centralized in a dedicated `components/SEO.tsx` in this repo (AGENTS/CLAUDE may still mention a legacy path).
@@ -189,7 +193,7 @@ These routes are still light product plumbing, not a booking/account system. Cus
 | Schema | `types.ts` |
 | Default content | `data/content.ts`, `constants.ts` |
 | Runtime content + publishing | `app/layout.tsx`, `context/ContentContext.tsx`, `lib/copy/store.ts`, `lib/copy/resolve.ts` |
-| Copy admin | `/copy-admin` routes/views for published JP copy |
+| Copy admin | `/copy-admin` routes/views for published English/Japanese copy |
 | Theme slug SEO pages | `views/ThemeDetail.tsx`, `app/themes/[slug]/page.tsx` |
 | Blog | `views/BlogList.tsx`, `views/BlogPost.tsx`, `app/blog/**` |
 | Sitemap | `app/sitemap.ts` |
