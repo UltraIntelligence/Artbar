@@ -14,11 +14,11 @@ import {
   resolveInitialLanguage,
   resolveRouteLanguage,
 } from '@/lib/language';
-import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
-import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
+import { getPublishedCopyPayload } from '@/lib/copy/store';
+import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
 import {
   buildResolvedJapaneseCopy,
-  mergePublishedIntoContent,
+  mergePublishedLocaleIntoContent,
 } from '@/lib/copy/resolve';
 import { getPublishedMediaMap } from '@/lib/media/store';
 import { mergeMediaIntoContent } from '@/lib/media/resolve';
@@ -73,28 +73,24 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, headersList.get('accept-language'));
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 
-  // Build the merged content tree server-side. JP visitors get a Supabase fetch +
-  // BudouX segmentation; EN visitors skip the fetch and receive the static defaults
-  // (still segmented — defaultContent.jp leaks into both branches via the merge).
-  // Both branches hand ContentProvider a payload already shaped for direct render —
-  // no client-side merge, no client-side BudouX.
-  //
-  // We track whether the Supabase fetch actually returned data (vs falling back to
-  // DEFAULT_JAPANESE_COPY_PAYLOAD on timeout/error). If it fell back, the client
-  // should still attempt a runtime fetch to recover fresh published copy.
-  const [supabaseJpPayload, publishedMedia] = await Promise.all([
-    initialLang === 'jp' ? getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }) : null,
+  // Build the active language content tree server-side. Japanese content still
+  // gets BudouX segmentation before render; English receives the same locale-aware
+  // published-copy path without segmentation.
+  const [supabasePayload, publishedMedia] = await Promise.all([
+    getPublishedCopyPayload(initialLang, { timeoutMs: 4000 }),
     getPublishedMediaMap(),
   ]);
-  const publishedPayload = supabaseJpPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;
-  const initialContent = mergeMediaIntoContent(
-    segmentJpDeep(mergePublishedIntoContent(publishedPayload)),
-    publishedMedia,
-  );
+  const publishedPayload = supabasePayload ?? DEFAULT_COPY_PAYLOADS[initialLang];
+  const mergedContent = mergePublishedLocaleIntoContent(initialLang, publishedPayload);
+  const contentForLanguage = initialLang === 'jp' ? segmentJpDeep(mergedContent) : mergedContent;
+  const initialContent = mergeMediaIntoContent(contentForLanguage, publishedMedia);
   const requestPathname = headersList.get(ROUTE_PATHNAME_HEADER);
   const trimmedInitialContent = trimBlogBodiesForPath(initialContent, requestPathname);
-  const initialJpCopy = segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload));
-  const initialHasFetchedRuntimeJp = supabaseJpPayload !== null;
+  const initialLocalizedCopy =
+    initialLang === 'jp'
+      ? segmentJpDeep(buildResolvedJapaneseCopy(publishedPayload))
+      : buildResolvedJapaneseCopy(publishedPayload);
+  const initialHasFetchedRuntimeCopy = supabasePayload !== null;
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
@@ -107,9 +103,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ContentProvider
           initialLang={initialLang}
           initialContent={trimmedInitialContent}
-          initialJpCopy={initialJpCopy}
+          initialLocalizedCopy={initialLocalizedCopy}
           initialMedia={publishedMedia}
-          initialHasFetchedRuntimeJp={initialHasFetchedRuntimeJp}
+          initialHasFetchedRuntimeCopy={initialHasFetchedRuntimeCopy}
         >
           <ThemeInjector />
           <ScrollToTop />
