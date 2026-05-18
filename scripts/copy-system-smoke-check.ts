@@ -3,13 +3,30 @@ import {
   COPY_LOCALES,
   DEFAULT_COPY_PAYLOADS,
 } from '../lib/copy/defaults';
+import { buildPublicCopyPayload } from '../lib/copy/public-payload';
 import {
   buildResolvedCopy,
   mergePublishedLocaleIntoContent,
   normalizeCopyPayload,
 } from '../lib/copy/resolve';
+import {
+  parseCopyLocale,
+  parseCopyLocaleForMutation,
+  parseCopyMutationLocale,
+} from '../lib/copy/store';
 
 assert.deepEqual(COPY_LOCALES, ['en', 'jp']);
+assert.equal(parseCopyLocale('en'), 'en');
+assert.equal(parseCopyLocale('jp'), 'jp');
+assert.equal(parseCopyLocale('fr'), 'jp');
+assert.equal(parseCopyLocale(null), 'jp');
+assert.equal(parseCopyLocaleForMutation('en'), 'en');
+assert.equal(parseCopyLocaleForMutation('jp'), 'jp');
+assert.equal(parseCopyLocaleForMutation('fr'), null);
+assert.equal(parseCopyMutationLocale(null), 'jp');
+assert.equal(parseCopyMutationLocale('en'), 'en');
+assert.equal(parseCopyMutationLocale('jp'), 'jp');
+assert.equal(parseCopyMutationLocale('fr'), null);
 
 const hasText = (value: string | undefined) =>
   typeof value === 'string' && value.trim().length > 0;
@@ -187,5 +204,37 @@ for (const locale of COPY_LOCALES) {
     `${locale} theme detail edits resolve for public pages`,
   );
 }
+
+function assertPublicCopyPayloads() {
+  const identitySegment = <T>(value: T) => value;
+
+  for (const locale of COPY_LOCALES) {
+    const data = buildPublicCopyPayload(
+      locale,
+      DEFAULT_COPY_PAYLOADS[locale],
+      {},
+      `/${locale === 'en' ? 'en' : ''}`,
+      identitySegment,
+    );
+    assert.equal(data.locale, locale, `${locale} public copy payload keeps requested locale`);
+    assert.equal(
+      data.content[locale].nav.book,
+      DEFAULT_COPY_PAYLOADS[locale].site.nav.book,
+      `${locale} public copy payload returns active-language content`,
+    );
+    assert.equal(
+      data.localizedCopy.ui.footer.faq,
+      DEFAULT_COPY_PAYLOADS[locale].ui.footer.faq,
+      `${locale} public copy payload returns active-language UI copy`,
+    );
+    assert.equal(
+      data.jpCopy.ui.footer.faq,
+      data.localizedCopy.ui.footer.faq,
+      `${locale} public copy payload keeps jpCopy compatibility alias`,
+    );
+  }
+}
+
+assertPublicCopyPayloads();
 
 console.log('Copy system smoke check passed.');

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { isAdminRequestAuthenticated } from '@/lib/copy/session';
-import { parseCopyLocaleForMutation, rollbackPublishedPayload } from '@/lib/copy/store';
+import { parseCopyMutationLocale, rollbackPublishedPayload } from '@/lib/copy/store';
 import { forbiddenMutationResponse, isSameOriginMutation } from '@/lib/copy/request-security';
 
 export async function POST(request: NextRequest) {
@@ -13,8 +13,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const localeParam = request.nextUrl.searchParams.get('locale');
-    const locale = localeParam === null ? 'jp' : parseCopyLocaleForMutation(localeParam);
+    const locale = parseCopyMutationLocale(request.nextUrl.searchParams.get('locale'));
     if (!locale) {
       return NextResponse.json({ error: 'Invalid copy locale.' }, { status: 400 });
     }

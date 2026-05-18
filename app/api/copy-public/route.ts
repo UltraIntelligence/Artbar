@@ -1,14 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
 import { getPublishedCopyPayload, parseCopyLocale } from '@/lib/copy/store';
-import {
-  buildResolvedCopy,
-  mergePublishedLocaleIntoContent,
-} from '@/lib/copy/resolve';
 import { getPublishedMediaMap } from '@/lib/media/store';
-import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
-import { trimBlogBodiesForPath } from '@/lib/content-payload';
+import { buildPublicCopyPayload } from '@/lib/copy/public-payload';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -34,21 +29,9 @@ export async function GET(request: NextRequest) {
   const published = publishedPayload ?? DEFAULT_COPY_PAYLOADS[locale];
 
   const currentPath = request.nextUrl.searchParams.get('path');
-  const mergedContent = mergeMediaIntoContent(
-    mergePublishedLocaleIntoContent(locale, published),
-    publishedMedia,
-  );
-  const content = trimBlogBodiesForPath(
-    locale === 'jp' ? segmentJpDeep(mergedContent) : mergedContent,
-    currentPath,
-  );
-  const localizedCopy =
-    locale === 'jp'
-      ? segmentJpDeep(buildResolvedCopy(locale, published))
-      : buildResolvedCopy(locale, published);
 
   return NextResponse.json(
-    { locale, content, localizedCopy, jpCopy: localizedCopy },
+    buildPublicCopyPayload(locale, published, publishedMedia, currentPath, segmentJpDeep),
     {
       headers: {
         'Cache-Control': 'no-store, max-age=0',

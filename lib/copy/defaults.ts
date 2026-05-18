@@ -11,7 +11,6 @@ import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
 import type { JapaneseCopyPayload } from '@/lib/copy/types';
 
 export const COPY_TABLE = 'site_copy_locales';
-export const COPY_LOCALE = 'jp';
 export const COPY_ADMIN_PATH = '/copy-admin';
 export const COPY_ADMIN_COOKIE = 'artbar_copy_admin';
 export const COPY_ADMIN_SESSION_MAX_AGE = 60 * 60 * 12;
