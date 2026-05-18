@@ -15,20 +15,7 @@ const hasText = (value: string | undefined) =>
 
 for (const locale of COPY_LOCALES) {
   const payload = DEFAULT_COPY_PAYLOADS[locale];
-  assert.equal(payload.site.nav.book.length > 0, true, `${locale} nav book copy exists`);
-  assert.equal(
-    payload.instructors.some((instructor) => hasText(instructor.desc)),
-    true,
-    `${locale} instructor description copy exists`,
-  );
-  assert.equal(
-    payload.locations.some(
-      (location) =>
-        hasText(location.name) && hasText(location.address) && hasText(location.access),
-    ),
-    true,
-    `${locale} location name, address, and access copy exists`,
-  );
+  assert.equal(hasText(payload.site.nav.book), true, `${locale} nav book copy exists`);
 
   const normalized = normalizeCopyPayload(locale, {
     site: {
@@ -44,20 +31,99 @@ for (const locale of COPY_LOCALES) {
     locale === 'en' ? 'Reserve a Seat' : '予約する',
     `${locale} nav copy merges into public content`,
   );
+
+  for (const instructor of payload.instructors) {
+    const merged = content.instructors.find((item) => item.id === instructor.id);
+    assert.ok(merged, `${locale} instructor ${instructor.id} merges into public content`);
+    assert.equal(
+      hasText(instructor.role),
+      true,
+      `${locale} instructor ${instructor.id} role copy exists`,
+    );
+    assert.equal(
+      hasText(instructor.desc),
+      true,
+      `${locale} instructor ${instructor.id} description copy exists`,
+    );
+
+    if (locale === 'en') {
+      assert.equal(
+        merged.roleEn,
+        instructor.role,
+        `English instructor ${instructor.id} role writes to roleEn`,
+      );
+      assert.equal(
+        merged.descEn,
+        instructor.desc,
+        `English instructor ${instructor.id} description writes to descEn`,
+      );
+    } else {
+      assert.equal(
+        merged.roleJp,
+        instructor.role,
+        `Japanese instructor ${instructor.id} role writes to roleJp`,
+      );
+      assert.equal(
+        merged.descJp,
+        instructor.desc,
+        `Japanese instructor ${instructor.id} description writes to descJp`,
+      );
+    }
+  }
+
+  for (const location of payload.locations) {
+    const merged = content.locations.find((item) => item.id === location.id);
+    assert.ok(merged, `${locale} location ${location.id} merges into public content`);
+    assert.equal(
+      hasText(location.name),
+      true,
+      `${locale} location ${location.id} name copy exists`,
+    );
+    assert.equal(
+      hasText(location.address),
+      true,
+      `${locale} location ${location.id} address copy exists`,
+    );
+    assert.equal(
+      hasText(location.access),
+      true,
+      `${locale} location ${location.id} access copy exists`,
+    );
+
+    if (locale === 'en') {
+      assert.equal(
+        merged.nameEn,
+        location.name,
+        `English location ${location.id} name writes to nameEn`,
+      );
+      assert.equal(
+        merged.addressEn,
+        location.address,
+        `English location ${location.id} address writes to addressEn`,
+      );
+      assert.equal(
+        merged.accessEn,
+        location.access,
+        `English location ${location.id} access writes to accessEn`,
+      );
+    } else {
+      assert.equal(
+        merged.nameJp,
+        location.name,
+        `Japanese location ${location.id} name writes to nameJp`,
+      );
+      assert.equal(
+        merged.addressJp,
+        location.address,
+        `Japanese location ${location.id} address writes to addressJp`,
+      );
+      assert.equal(
+        merged.accessJp,
+        location.access,
+        `Japanese location ${location.id} access writes to accessJp`,
+      );
+    }
+  }
 }
-
-const english = mergePublishedLocaleIntoContent('en', DEFAULT_COPY_PAYLOADS.en);
-assert.equal(
-  english.instructors[0].descEn,
-  DEFAULT_COPY_PAYLOADS.en.instructors[0].desc,
-  'English instructor copy writes to descEn',
-);
-
-const japanese = mergePublishedLocaleIntoContent('jp', DEFAULT_COPY_PAYLOADS.jp);
-assert.equal(
-  japanese.instructors[0].descJp,
-  DEFAULT_COPY_PAYLOADS.jp.instructors[0].desc,
-  'Japanese instructor copy writes to descJp',
-);
 
 console.log('Copy system smoke check passed.');
