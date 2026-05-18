@@ -21,7 +21,7 @@ export const Contact: React.FC = () => {
     message: '',
     company: '', // honeypot — must stay empty
   });
-  const { content, site, lang, jpCopy } = useContent();
+  const { content, site, lang, localizedCopy } = useContent();
   const mainReveal = useScrollReveal();
 
   const updateField = (field: keyof typeof form) => (
@@ -58,34 +58,29 @@ export const Contact: React.FC = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const subjectLabelsEn = {
-    '': 'Select a subject...',
-    general: 'General Inquiry',
-    booking: 'Booking',
-    private: 'Private Party',
-    instructor: 'Instructor Inquiry',
-    cancellation: 'Cancellation',
-    other: 'Other',
-  } as const;
-  const subjects = jpCopy.ui.contact.subjectOptions.map((item) => ({
+  const contactCopy = localizedCopy.ui.contact;
+  const subjects = contactCopy.subjectOptions.map((item) => ({
     value: item.value,
-    en: subjectLabelsEn[item.value as keyof typeof subjectLabelsEn] ?? 'Other',
-    jp: item.label,
+    label: stripJpSentinel(item.label),
   }));
-  const faqs = lang === 'jp' ? jpCopy.faqs : content.faqs;
+  const faqs = lang === 'jp' ? localizedCopy.faqs : content.faqs;
+  const sendingLabels = {
+    en: 'Sending…',
+    jp: '送信中…',
+  } as const;
 
   const copy = {
-    subjectLabel: lang === 'en' ? 'Subject (required)' : jpCopy.ui.contact.subjectLabel,
-    nameLabel: lang === 'en' ? 'Name (required)' : jpCopy.ui.contact.nameLabel,
-    namePlaceholder: lang === 'en' ? 'Artbar Taro' : stripJpSentinel(jpCopy.ui.contact.namePlaceholder),
-    emailLabel: lang === 'en' ? 'Email (required)' : jpCopy.ui.contact.emailLabel,
-    emailPlaceholder: lang === 'en' ? 'hello@example.com' : stripJpSentinel(jpCopy.ui.contact.emailPlaceholder),
-    phoneLabel: lang === 'en' ? 'Phone (required)' : jpCopy.ui.contact.phoneLabel,
-    messageLabel: lang === 'en' ? 'Message' : jpCopy.ui.contact.messageLabel,
-    messagePh: lang === 'en' ? 'How can we help you?' : stripJpSentinel(jpCopy.ui.contact.messagePlaceholder),
-    send: lang === 'en' ? 'Send Message' : jpCopy.ui.contact.send,
-    sent: lang === 'en' ? 'Message sent! We will get back to you soon.' : jpCopy.ui.contact.sent,
-    failed: lang === 'en' ? 'Failed to send. Please try again or email us directly.' : jpCopy.ui.contact.failed,
+    subjectLabel: contactCopy.subjectLabel,
+    nameLabel: contactCopy.nameLabel,
+    namePlaceholder: stripJpSentinel(contactCopy.namePlaceholder),
+    emailLabel: contactCopy.emailLabel,
+    emailPlaceholder: stripJpSentinel(contactCopy.emailPlaceholder),
+    phoneLabel: contactCopy.phoneLabel,
+    messageLabel: contactCopy.messageLabel,
+    messagePh: stripJpSentinel(contactCopy.messagePlaceholder),
+    send: contactCopy.send,
+    sent: contactCopy.sent,
+    failed: contactCopy.failed,
   };
 
   return (
@@ -189,7 +184,7 @@ export const Contact: React.FC = () => {
                 >
                   {subjects.map((s, i) => (
                     <option key={s.value || 'placeholder'} value={s.value} disabled={i === 0 && s.value === ''}>
-                      {lang === 'en' ? s.en : s.jp}
+                      {s.label}
                     </option>
                   ))}
                 </select>
@@ -268,7 +263,7 @@ export const Contact: React.FC = () => {
                   className="w-full min-w-0 shadow-xl shadow-navy-900/10 md:w-auto md:min-w-[12.5rem] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   <span className="flex items-center gap-2">
-                    <JpText>{status === 'sending' ? (lang === 'en' ? 'Sending…' : '送信中…') : copy.send}</JpText> <Send size={18} />
+                    <JpText>{status === 'sending' ? sendingLabels[lang] : copy.send}</JpText> <Send size={18} />
                   </span>
                 </Button>
               </div>

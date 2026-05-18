@@ -89,7 +89,7 @@ function migrateLegacyStoredLogoUrls() {
 }
 
 export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) => {
-  const { content, lang, jpCopy } = useContent();
+  const { content, localizedCopy } = useContent();
   const configuredLogoUrl =
     variant === 'light' ? content.images.logoLight : content.images.logoDark;
   const fallbackLogoUrl = LOCAL_LOGO_URLS[variant];
@@ -112,7 +112,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', variant = 'dark' }) 
       {imgSrc ? (
         <img
           src={imgSrc}
-          alt={lang === 'en' ? 'Artbar Tokyo' : stripJpSentinel(jpCopy.ui.footer.logoAlt)}
+          alt={stripJpSentinel(localizedCopy.ui.footer.logoAlt)}
           className={imgClasses}
           onError={() => {
             if (imgSrc !== fallbackLogoUrl) {

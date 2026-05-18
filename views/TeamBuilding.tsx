@@ -13,7 +13,7 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 export const TeamBuilding: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { site, content, lang, jpCopy } = useContent();
+  const { site, content, lang, localizedCopy } = useContent();
   const socialReveal = useScrollReveal();
   const valueReveal = useScrollReveal();
   const activitiesReveal = useScrollReveal();
@@ -34,9 +34,12 @@ export const TeamBuilding: React.FC = () => {
   };
 
   const teamHeroSrc = content.images.hero.teamBuilding;
-  const bookTeamCta = lang === 'en' ? 'Book Team Building' : jpCopy.ui.home.bookTeamBuildingCta;
-  const logisticsRows = jpCopy.teamBuildingLogisticsRows;
-  const teamTestimonials = lang === 'jp' ? jpCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
+  const bookTeamCta = localizedCopy.ui.home.bookTeamBuildingCta;
+  const logisticsRows = localizedCopy.teamBuildingLogisticsRows;
+  const teamTestimonials = lang === 'jp' ? localizedCopy.teamBuildingTestimonials : content.teamBuildingTestimonials;
+  const heroImageAlt = stripJpSentinel(localizedCopy.ui.teamBuilding.heroImageAlt);
+  const previousTestimonialLabel = stripJpSentinel(localizedCopy.ui.teamBuilding.previousTestimonial);
+  const nextTestimonialLabel = stripJpSentinel(localizedCopy.ui.teamBuilding.nextTestimonial);
   const formatEnglishActivityTitle = (title: string) => {
     if (lang !== 'en') return title;
 
@@ -51,7 +54,7 @@ export const TeamBuilding: React.FC = () => {
         <Image
           key={teamHeroSrc}
           src={teamHeroSrc}
-          alt={lang === 'en' ? 'Team building art session at Artbar Tokyo' : stripJpSentinel(jpCopy.ui.teamBuilding.heroImageAlt)}
+          alt={heroImageAlt}
           fill
           priority
           placeholder="blur"
@@ -225,8 +228,8 @@ export const TeamBuilding: React.FC = () => {
             <div className="flex justify-between items-end mb-12 relative z-10">
                <h2 className="text-3xl md:text-4xl font-heading font-bold text-artbar-navy"><JpText>{site.teamBuilding.testimonials.title}</JpText></h2>
                <div className="hidden md:flex gap-2">
-                  <button type="button" onClick={() => scroll('left')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors" aria-label={lang === 'en' ? 'Previous' : stripJpSentinel(jpCopy.ui.teamBuilding.previousTestimonial)}><ChevronLeft size={20} /></button>
-                  <button type="button" onClick={() => scroll('right')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors" aria-label={lang === 'en' ? 'Next' : stripJpSentinel(jpCopy.ui.teamBuilding.nextTestimonial)}><ChevronRight size={20} /></button>
+                  <button type="button" onClick={() => scroll('left')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center hover:bg-artbar-bg text-artbar-navy transition-colors" aria-label={previousTestimonialLabel}><ChevronLeft size={20} /></button>
+                  <button type="button" onClick={() => scroll('right')} className="min-w-[44px] min-h-[44px] w-12 h-12 rounded-full bg-artbar-navy text-white flex items-center justify-center hover:bg-opacity-90 transition-colors" aria-label={nextTestimonialLabel}><ChevronRight size={20} /></button>
                </div>
             </div>
             
