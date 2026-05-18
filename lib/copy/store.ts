@@ -76,6 +76,10 @@ export function parseCopyLocale(value: unknown): CopyLocale {
   return value === 'en' || value === 'jp' ? value : 'jp';
 }
 
+export function parseCopyLocaleForMutation(value: unknown): CopyLocale | null {
+  return value === 'en' || value === 'jp' ? value : null;
+}
+
 async function readCopyRecord(locale: CopyLocale): Promise<CopyRecord | null> {
   const supabase = getSupabaseAdmin();
   if (!supabase) {

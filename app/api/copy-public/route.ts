@@ -21,10 +21,9 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Pr
 }
 
 /**
- * Returns the merged content tree + resolved JP copy with BudouX phrase chunks
- * pre-segmented (joined by U+200B sentinel). Client `JpText` splits on the
- * sentinel — no client-side BudouX. Used by `ContentContext` for the runtime
- * EN→JP toggle path.
+ * Returns the merged content tree + resolved localized copy. Japanese responses
+ * include BudouX phrase chunks pre-segmented with the U+200B sentinel for the
+ * runtime language toggle path.
  */
 export async function GET(request: NextRequest) {
   const locale = parseCopyLocale(request.nextUrl.searchParams.get('locale'));
