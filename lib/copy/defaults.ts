@@ -663,6 +663,35 @@ export const COPY_ADMIN_SECTIONS = [
   },
 ] as const;
 
+export const COPY_ADMIN_FIELD_LABELS: Record<string, string> = {
+  'site.nav.book': 'Main booking button',
+  'site.nav.schedule': 'Schedule link',
+  'site.nav.instructors': 'Instructors link',
+  'site.nav.teamBuilding': 'Team Building link',
+  'site.nav.privateParties': 'Private Parties link',
+  'site.nav.locations': 'Locations link',
+  'site.nav.contact': 'Contact link',
+  'site.nav.blog': 'Journal link',
+  'site.footer.tagline': 'Footer tagline',
+  'site.home.hero.badge': 'Home hero badge',
+  'site.home.hero.title': 'Home hero headline',
+  'site.home.hero.titleHighlight': 'Home hero highlighted headline',
+  'site.home.hero.subtitle': 'Home hero supporting line',
+  'site.home.hero.ctaSchedule': 'Hero button: Schedule',
+  'site.home.hero.ctaLineChat': 'Hero button: Line chat',
+  'site.home.hero.ctaFindPainting': 'Hero button: Find painting',
+  'site.home.concept.title': 'Home concept headline',
+  'site.home.concept.p1': 'Home concept paragraph',
+  'site.home.themes.title': 'Popular Themes headline',
+  'site.home.themes.subtitle': 'Popular Themes intro',
+  'site.home.cta.title': 'Bottom CTA headline',
+  'site.home.cta.subtitle': 'Bottom CTA text',
+  'site.teamBuilding.hero.title': 'Team Building hero headline',
+  'site.privateParties.hero.title': 'Private Parties hero headline',
+  'site.contactPage.title': 'Contact page headline',
+  'site.blogPage.title': 'Journal page headline',
+};
+
 export function deepMergeTemplate<T>(template: T, override: unknown): T {
   if (override === undefined || override === null) {
     return structuredClone(template);
