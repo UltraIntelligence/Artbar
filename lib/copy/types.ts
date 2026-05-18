@@ -1,34 +1,36 @@
 import type { ContentData, FaqItem, SiteContent, Testimonial } from '@/types';
 import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
 
-export interface JapaneseInstructorCopy {
+export type CopyLocale = 'en' | 'jp';
+
+export interface LocalizedInstructorCopy {
   id: string;
-  roleJp: string;
-  descJp: string;
+  role: string;
+  desc: string;
 }
 
-export interface JapaneseLocationCopy {
+export interface LocalizedLocationCopy {
   id: string;
-  nameJp: string;
-  addressJp: string;
-  accessJp: string;
+  name: string;
+  address: string;
+  access: string;
 }
 
-export interface JapaneseBlogCopy {
+export interface LocalizedBlogCopy {
   id: string;
   slug: string;
-  titleJp: string;
-  excerptJp: string;
-  contentJp: string;
-  authorJp: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
 }
 
-export interface JapaneseThemeLogisticsRowCopy {
+export interface LocalizedThemeLogisticsRowCopy {
   name: string;
   cap: string;
 }
 
-export interface JapanesePrivatePartyCapacityRowCopy {
+export interface LocalizedPrivatePartyCapacityRowCopy {
   name: string;
   desc: string;
 }
@@ -231,19 +233,21 @@ export interface JapaneseUiCopy {
   };
 }
 
-export interface JapaneseCopyPayload {
+export interface LocalizedCopyPayload {
   site: SiteContent;
-  instructors: JapaneseInstructorCopy[];
-  locations: JapaneseLocationCopy[];
+  instructors: LocalizedInstructorCopy[];
+  locations: LocalizedLocationCopy[];
   faqs: FaqItem[];
   teamBuildingTestimonials: Testimonial[];
-  blog: JapaneseBlogCopy[];
+  blog: LocalizedBlogCopy[];
   themePages: Record<string, ThemeJpStrings>;
   locationShortLabels: string[];
-  teamBuildingLogisticsRows: JapaneseThemeLogisticsRowCopy[];
-  privatePartyCapacityRows: JapanesePrivatePartyCapacityRowCopy[];
+  teamBuildingLogisticsRows: LocalizedThemeLogisticsRowCopy[];
+  privatePartyCapacityRows: LocalizedPrivatePartyCapacityRowCopy[];
   ui: JapaneseUiCopy;
 }
+
+export type JapaneseCopyPayload = LocalizedCopyPayload;
 
 export interface ResolvedJapaneseCopy {
   faqs: FaqItem[];
@@ -269,18 +273,22 @@ export interface ResolvedCopyBundle {
 }
 
 export interface CopyRecord {
-  locale: string;
-  draft_payload: JapaneseCopyPayload;
-  published_payload: JapaneseCopyPayload;
-  previous_published_payload: JapaneseCopyPayload | null;
+  locale: CopyLocale;
+  draft_payload: LocalizedCopyPayload;
+  published_payload: LocalizedCopyPayload;
+  previous_published_payload: LocalizedCopyPayload | null;
   created_at?: string;
   updated_at?: string;
   published_at?: string | null;
 }
 
+export interface LocaleCopyEditorState {
+  draft: LocalizedCopyPayload;
+  published: LocalizedCopyPayload;
+  previousPublished: LocalizedCopyPayload | null;
+}
+
 export interface CopyEditorState {
-  draft: JapaneseCopyPayload;
-  published: JapaneseCopyPayload;
-  previousPublished: JapaneseCopyPayload | null;
+  locales: Record<CopyLocale, LocaleCopyEditorState>;
   isConfigured: boolean;
 }

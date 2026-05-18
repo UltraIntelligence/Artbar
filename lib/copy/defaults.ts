@@ -5,7 +5,9 @@ import {
   TEAM_BUILDING_LOGISTICS_ROWS,
 } from '@/constants';
 import { defaultContent } from '@/data/content';
+import { THEME_CONFIG } from '@/data/theme-details';
 import { THEME_JP } from '@/data/theme-details-jp-strings';
+import type { ThemeJpStrings } from '@/data/theme-details-jp-strings';
 import type { JapaneseCopyPayload } from '@/lib/copy/types';
 
 export const COPY_TABLE = 'site_copy_locales';
@@ -220,28 +222,241 @@ export const DEFAULT_JAPANESE_UI_COPY = {
   },
 } satisfies JapaneseCopyPayload['ui'];
 
-export const DEFAULT_JAPANESE_COPY_PAYLOAD: JapaneseCopyPayload = {
-  site: structuredClone(defaultContent.jp),
+export const DEFAULT_ENGLISH_UI_COPY = {
+  navbar: {
+    switchToJapanese: 'Japanese',
+    switchToEnglish: 'English',
+    compactJapanese: 'JP',
+    compactEnglish: 'EN',
+  },
+  footer: {
+    faq: 'FAQ',
+    careers: 'Careers',
+    emailLabel: 'Email Artbar Tokyo',
+    instagramLabel: 'Instagram',
+    facebookLabel: 'Facebook',
+    logoAlt: 'Artbar Tokyo',
+  },
+  home: {
+    meetRegularsHeading: 'Meet Our Regulars',
+    bookTeamBuildingCta: 'Book Team Building',
+    bilingualLine1: 'Bilingual instruction available',
+    bilingualLine2: '(for many classes)',
+    mediaCoverageLabel: 'Media Coverage',
+    asSeenInHeading: 'As Seen In',
+    heroLoading: 'Loading hero',
+    storiesLabel: 'Stories',
+    heroImageAlt: 'Artbar Experience',
+    conceptImageAlt: 'Artbar Lifestyle',
+    ctaImageAlt: 'Artbar Studio',
+    conceptVideoCta: 'Watch the full video on YouTube',
+    previousTestimonial: 'Previous testimonial',
+    nextTestimonial: 'Next testimonial',
+  },
+  contact: {
+    subjectOptions: [
+      { value: '', label: 'Select a subject...' },
+      { value: 'general', label: 'General inquiry' },
+      { value: 'booking', label: 'Booking question' },
+      { value: 'private', label: 'Private party' },
+      { value: 'instructor', label: 'Instructor question' },
+      { value: 'cancellation', label: 'Cancellation' },
+      { value: 'other', label: 'Other' },
+    ],
+    subjectLabel: 'Subject (required)',
+    nameLabel: 'Name (required)',
+    namePlaceholder: 'Artbar Taro',
+    emailLabel: 'Email (required)',
+    emailPlaceholder: 'hello@example.com',
+    phoneLabel: 'Phone (required)',
+    messageLabel: 'Message',
+    messagePlaceholder: 'How can we help you?',
+    send: 'Send Message',
+    sent: 'Message sent! We will get back to you soon.',
+    failed: 'Failed to send. Please try again or email us directly.',
+  },
+  locations: {
+    intro: 'Find the studio closest to you. Each Artbar location offers its own atmosphere and creative experience.',
+    directions: 'Get Directions',
+    aiLoaded: 'AI information loaded',
+    aiSummary: 'AI Summary',
+    aiError: 'AI summary is unavailable right now.',
+    mapsInsightsTitle: 'Maps Insights',
+    sourcePrefix: 'Source',
+    locationAddressLabel: 'Location Address',
+    transitAccessLabel: 'Transit Access',
+  },
+  press: {
+    scrollLeft: 'Scroll left',
+    scrollRight: 'Scroll right',
+  },
+  privateParties: {
+    maxGuestsLabel: 'Max Guests',
+    priceSuffix: '/ person (tax inc)',
+    heroImageAlt: 'Private party at Artbar Tokyo',
+  },
+  teamBuilding: {
+    heroImageAlt: 'Team building art session at Artbar Tokyo',
+    specialtyChips: ['Candle Making', 'Resin Art', 'Alcohol Ink'],
+    previousTestimonial: 'Previous testimonial',
+    nextTestimonial: 'Next testimonial',
+  },
+  blogList: {
+    comingSoon: 'Coming Soon...',
+  },
+  blogPost: {
+    articleNotFoundTitle: 'Article not found',
+    articleNotFoundCta: 'Back to Journal',
+    shareLabel: 'Share this article',
+    facebookShareLabel: 'Share on Facebook',
+    xShareLabel: 'Share on X',
+    linkedinShareLabel: 'Share on LinkedIn',
+    moreFromJournal: 'More from the Journal',
+    readStory: 'Read story',
+  },
+  notFound: {
+    title: 'Page not found',
+    body: 'The page you are looking for may have been removed, renamed, or is temporarily unavailable.',
+    cta: 'Back home',
+  },
+  themeDetail: {
+    atmosphereImageAlt: 'Artbar atmosphere',
+    viewSchedule: 'View schedule',
+    inspiration: 'Inspiration',
+    examplePaintings: 'Example Paintings',
+    exampleBlurb: 'A sample of what you can create in our {{name}} paint and sip class.',
+    theExperience: 'The Experience',
+    guestFavorite: 'Guest favorite',
+    bilingualSessions: 'Social painting sessions',
+    expertGuidance: 'Step-by-step guidance',
+    community: 'Community',
+    whatToExpect: 'What to expect',
+    whatToExpectSub: 'Everything you need to complete your artwork in Tokyo is included. No hidden fees.',
+    bilingualArtClass: 'Bilingual art class',
+    perfectForGifting: 'Perfect for gifting',
+    viewUpcoming: 'View upcoming sessions',
+    discoverMore: 'Discover more styles',
+    discoverSub: 'From fluid art to impressionist gardens, find your next creative experience at Artbar Tokyo.',
+    allCategories: 'All themes',
+  },
+  paintYourPet: {
+    ...DEFAULT_JAPANESE_UI_COPY.paintYourPet,
+    headerBadge: 'Artbar original program',
+    originalPhoto: 'Original pet photo',
+    canvasSketch: 'Canvas pet sketch',
+    professionalSketchNote: 'An artist prepares a sketch like this on canvas before your class.',
+    howItWorks: 'How it works',
+    priceLabel: 'Price',
+    sketchTitle: 'Magic Sketch Preview',
+    sketchIntro: 'Upload a pet photo to preview a simple canvas sketch.',
+    uploadCta: 'Upload photo',
+    uploadFormats: 'JPG, PNG, HEIC, AVIF',
+    uploadAriaLabel: 'Upload pet photo',
+    originalPetAlt: 'Original pet photo',
+    aiSketchAlt: 'AI sketch',
+    sketching: 'Creating sketch...',
+    generateLineArt: 'Generate line art',
+    sketchPlaceholder: 'Your sketch will appear here',
+    saveSketch: 'Save sketch',
+  },
+} satisfies JapaneseCopyPayload['ui'];
+
+function buildThemeCopyFromConfig(): Record<string, ThemeJpStrings> {
+  return Object.entries(THEME_CONFIG).reduce<Record<string, ThemeJpStrings>>((acc, [slug, theme]) => {
+    const copy: ThemeJpStrings = {
+      title: theme.title,
+      heroBadge: theme.heroBadge,
+      heroSub: theme.heroSub,
+      introTitle: theme.introTitle,
+      introDesc: theme.introDesc,
+      quickFeatures: theme.quickFeatures.map((item) => ({
+        title: item.title,
+        desc: item.desc,
+      })),
+      examples: theme.examples.map((item) => ({
+        title: item.title,
+      })),
+      expectTitle: theme.expectTitle,
+      expectDesc: theme.expectDesc,
+      perfectTitle: theme.perfectTitle,
+      perfectFor: [...theme.perfectFor],
+      whatYouGet: theme.whatYouGet.map((item) => ({
+        text: item.text,
+        sub: item.sub,
+      })),
+      ctaTitle: theme.ctaTitle,
+      ctaSub: theme.ctaSub,
+      seoTitle: theme.seoTitle,
+      seoDesc: theme.seoDesc,
+    };
+
+    if (theme.exampleBlurb !== undefined) {
+      copy.exampleBlurb = theme.exampleBlurb;
+    }
+
+    acc[slug] = copy;
+    return acc;
+  }, {});
+}
+
+const buildEnglishCopyPayload = (): JapaneseCopyPayload => ({
+  site: structuredClone(defaultContent.en),
   instructors: defaultContent.instructors.map((item) => ({
     id: item.id,
-    roleJp: item.roleJp,
-    descJp: item.descJp,
+    role: item.roleEn,
+    desc: item.descEn,
   })),
   locations: defaultContent.locations.map((item) => ({
     id: item.id,
-    nameJp: item.nameJp,
-    addressJp: item.addressJp,
-    accessJp: item.accessJp,
+    name: item.nameEn,
+    address: item.addressEn,
+    access: item.accessEn,
+  })),
+  faqs: structuredClone(defaultContent.faqs),
+  teamBuildingTestimonials: structuredClone(defaultContent.teamBuildingTestimonials),
+  blog: defaultContent.blog.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    title: item.titleEn,
+    excerpt: item.excerptEn,
+    content: item.contentEn,
+    author: item.authorEn,
+  })),
+  themePages: buildThemeCopyFromConfig(),
+  locationShortLabels: LOCATION_SHORT_LABELS.map((item) => item.en),
+  teamBuildingLogisticsRows: TEAM_BUILDING_LOGISTICS_ROWS.map((item) => ({
+    name: item.name.en,
+    cap: item.cap.en,
+  })),
+  privatePartyCapacityRows: PRIVATE_PARTY_CAPACITY_ROWS.map((item) => ({
+    name: item.name.en,
+    desc: item.desc.en,
+  })),
+  ui: structuredClone(DEFAULT_ENGLISH_UI_COPY),
+});
+
+const buildJapaneseCopyPayload = (): JapaneseCopyPayload => ({
+  site: structuredClone(defaultContent.jp),
+  instructors: defaultContent.instructors.map((item) => ({
+    id: item.id,
+    role: item.roleJp,
+    desc: item.descJp,
+  })),
+  locations: defaultContent.locations.map((item) => ({
+    id: item.id,
+    name: item.nameJp,
+    address: item.addressJp,
+    access: item.accessJp,
   })),
   faqs: structuredClone(FAQS_JP),
   teamBuildingTestimonials: structuredClone(defaultContent.teamBuildingTestimonials),
   blog: defaultContent.blog.map((item) => ({
     id: item.id,
     slug: item.slug,
-    titleJp: item.titleJp,
-    excerptJp: item.excerptJp,
-    contentJp: item.contentJp,
-    authorJp: item.authorJp,
+    title: item.titleJp,
+    excerpt: item.excerptJp,
+    content: item.contentJp,
+    author: item.authorJp,
   })),
   themePages: structuredClone(THEME_JP),
   locationShortLabels: LOCATION_SHORT_LABELS.map((item) => item.jp),
@@ -254,7 +469,16 @@ export const DEFAULT_JAPANESE_COPY_PAYLOAD: JapaneseCopyPayload = {
     desc: item.desc.jp,
   })),
   ui: structuredClone(DEFAULT_JAPANESE_UI_COPY),
-};
+});
+
+export const COPY_LOCALES = ['en', 'jp'] as const;
+
+export const DEFAULT_COPY_PAYLOADS = {
+  en: buildEnglishCopyPayload(),
+  jp: buildJapaneseCopyPayload(),
+} satisfies Record<(typeof COPY_LOCALES)[number], JapaneseCopyPayload>;
+
+export const DEFAULT_JAPANESE_COPY_PAYLOAD = DEFAULT_COPY_PAYLOADS.jp;
 
 export const COPY_ADMIN_SECTIONS = [
   {
