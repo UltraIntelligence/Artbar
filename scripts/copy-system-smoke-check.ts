@@ -10,11 +10,25 @@ import {
 
 assert.deepEqual(COPY_LOCALES, ['en', 'jp']);
 
+const hasText = (value: string | undefined) =>
+  typeof value === 'string' && value.trim().length > 0;
+
 for (const locale of COPY_LOCALES) {
   const payload = DEFAULT_COPY_PAYLOADS[locale];
   assert.equal(payload.site.nav.book.length > 0, true, `${locale} nav book copy exists`);
-  assert.equal(payload.instructors.length > 0, true, `${locale} instructor copy exists`);
-  assert.equal(payload.locations.length > 0, true, `${locale} location copy exists`);
+  assert.equal(
+    payload.instructors.some((instructor) => hasText(instructor.desc)),
+    true,
+    `${locale} instructor description copy exists`,
+  );
+  assert.equal(
+    payload.locations.some(
+      (location) =>
+        hasText(location.name) && hasText(location.address) && hasText(location.access),
+    ),
+    true,
+    `${locale} location name, address, and access copy exists`,
+  );
 
   const normalized = normalizeCopyPayload(locale, {
     site: {
