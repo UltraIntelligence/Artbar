@@ -25,6 +25,14 @@ interface PublishedCopyResponse {
   localizedCopy: ResolvedJapaneseCopy;
 }
 
+type RuntimeCopyState = {
+  content: ContentData;
+  localizedCopy: ResolvedJapaneseCopy;
+  hasFetched: boolean;
+};
+
+type RuntimeCopyByLang = Record<Language, RuntimeCopyState | null>;
+
 const ContentContext = createContext<ContentContextType | undefined>(undefined);
 
 /**
@@ -59,7 +67,22 @@ export const ContentProvider: React.FC<{
   const [content, setContent] = useState<ContentData>(initialContent);
   const [localizedCopy, setLocalizedCopy] = useState<ResolvedJapaneseCopy>(initialLocalizedCopy);
   const [media] = useState<PublishedMediaMap>(initialMedia);
-  const [hasFetchedRuntimeCopy, setHasFetchedRuntimeCopy] = useState<boolean>(initialHasFetchedRuntimeCopy);
+  const [runtimeByLang, setRuntimeByLang] = useState<RuntimeCopyByLang>(() => ({
+    en: initialLang === 'en'
+      ? {
+          content: initialContent,
+          localizedCopy: initialLocalizedCopy,
+          hasFetched: initialHasFetchedRuntimeCopy,
+        }
+      : null,
+    jp: initialLang === 'jp'
+      ? {
+          content: initialContent,
+          localizedCopy: initialLocalizedCopy,
+          hasFetched: initialHasFetchedRuntimeCopy,
+        }
+      : null,
+  }));
 
   useEffect(() => {
     document.documentElement.lang = lang === 'jp' ? 'ja' : 'en';
@@ -68,12 +91,20 @@ export const ContentProvider: React.FC<{
   useEffect(() => {
     // Bare public URLs are intentionally Japanese; `/en` is the explicit English route.
     const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
+    const cachedRuntime = runtimeByLang[routeLang];
+
     setLang(routeLang);
-    setHasFetchedRuntimeCopy(routeLang === initialLang && initialHasFetchedRuntimeCopy);
-  }, [pathname, initialLang, initialHasFetchedRuntimeCopy]);
+    if (cachedRuntime) {
+      setContent(cachedRuntime.content);
+      setLocalizedCopy(cachedRuntime.localizedCopy);
+    }
+  }, [pathname, runtimeByLang]);
 
   useEffect(() => {
-    if (hasFetchedRuntimeCopy) {
+    const routeLang = routeLocaleToSiteLanguage(routeLocaleFromPathname(pathname));
+    const activeRuntime = runtimeByLang[lang];
+
+    if (lang !== routeLang || activeRuntime?.hasFetched) {
       return;
     }
 
@@ -95,7 +126,14 @@ export const ContentProvider: React.FC<{
 
         setContent(data.content);
         setLocalizedCopy(data.localizedCopy);
-        setHasFetchedRuntimeCopy(true);
+        setRuntimeByLang((current) => ({
+          ...current,
+          [lang]: {
+            content: data.content,
+            localizedCopy: data.localizedCopy,
+            hasFetched: true,
+          },
+        }));
       } catch (error) {
         if (!controller.signal.aborted) {
           console.error('[copy-public] failed to load published copy', error);
@@ -106,7 +144,7 @@ export const ContentProvider: React.FC<{
     void loadPublishedCopy();
 
     return () => controller.abort();
-  }, [lang, hasFetchedRuntimeCopy, pathname]);
+  }, [lang, pathname, runtimeByLang]);
 
   const toggleLang = () => {
     const next: Language = lang === 'en' ? 'jp' : 'en';
