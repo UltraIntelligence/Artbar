@@ -240,8 +240,8 @@ export const DEFAULT_ENGLISH_UI_COPY = {
   home: {
     meetRegularsHeading: 'Meet Our Regulars',
     bookTeamBuildingCta: 'Book Team Building',
-    bilingualLine1: 'Bilingual instruction available',
-    bilingualLine2: '(for many classes)',
+    bilingualLine1: 'Professional Bilingual',
+    bilingualLine2: 'Instruction Available',
     mediaCoverageLabel: 'Media Coverage',
     asSeenInHeading: 'As Seen In',
     heroLoading: 'Loading hero',
@@ -256,10 +256,10 @@ export const DEFAULT_ENGLISH_UI_COPY = {
   contact: {
     subjectOptions: [
       { value: '', label: 'Select a subject...' },
-      { value: 'general', label: 'General inquiry' },
-      { value: 'booking', label: 'Booking question' },
-      { value: 'private', label: 'Private party' },
-      { value: 'instructor', label: 'Instructor question' },
+      { value: 'general', label: 'General Inquiry' },
+      { value: 'booking', label: 'Booking' },
+      { value: 'private', label: 'Private Party' },
+      { value: 'instructor', label: 'Instructor Inquiry' },
       { value: 'cancellation', label: 'Cancellation' },
       { value: 'other', label: 'Other' },
     ],
