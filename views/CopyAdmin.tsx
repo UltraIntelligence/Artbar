@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState, useTransition } from 'react';
+import React, { useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { COPY_ADMIN_FIELD_LABELS, COPY_ADMIN_SECTIONS } from '@/lib/copy/defaults';
@@ -128,6 +128,10 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
     () => COPY_ADMIN_SECTIONS.find((section) => section.id === activeSection) ?? COPY_ADMIN_SECTIONS[0],
     [activeSection],
   );
+
+  useEffect(() => {
+    setStatus(null);
+  }, [activeLocale]);
 
   const updateLocaleState = (
     locale: CopyLocale,
@@ -258,6 +262,7 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
       const technicalPath = path.join('.');
       const label = COPY_ADMIN_FIELD_LABELS[technicalPath] ?? humanizeKey(path[path.length - 1] || 'Value');
       const isLockedRoutingId = path[path.length - 1] === 'slug';
+      const isReadOnly = isLockedRoutingId || isPending;
       return (
         <div key={path.join('.')} className="grid gap-4 rounded-2xl border border-gray-200 bg-white p-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
           <div className="space-y-2">
@@ -271,10 +276,10 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
           <div className="space-y-2">
             <textarea
               value={draftNode}
-              readOnly={isLockedRoutingId}
+              readOnly={isReadOnly}
               rows={getTextareaRows(draftNode)}
               onChange={(event) => {
-                if (isLockedRoutingId) {
+                if (isReadOnly) {
                   return;
                 }
                 updateActiveLocaleState((current) => ({
@@ -283,13 +288,15 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                 }));
               }}
               className={`w-full rounded-xl border border-gray-200 px-4 py-3 text-sm leading-6 text-artbar-navy outline-none transition focus:border-artbar-taupe focus:ring-2 focus:ring-artbar-taupe/15 ${
-                isLockedRoutingId ? 'bg-artbar-bg/70 text-artbar-gray' : ''
+                isReadOnly ? 'bg-artbar-bg/70 text-artbar-gray' : ''
               }`}
             />
             <p className="text-xs text-artbar-gray">
               {isLockedRoutingId
                 ? 'Locked routing ID. This is not shown to customers.'
-                : 'Draft. Press Enter anywhere you want a real line break.'}
+                : isPending
+                  ? 'Please wait while this update finishes.'
+                  : 'Draft. Press Enter anywhere you want a real line break.'}
             </p>
           </div>
         </div>
@@ -366,11 +373,12 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                   key={locale}
                   type="button"
                   onClick={() => setActiveLocale(locale)}
+                  disabled={isPending}
                   className={`rounded-full px-4 py-2 text-sm font-bold transition ${
                     activeLocale === locale
                       ? 'bg-artbar-navy text-white shadow-sm'
                       : 'text-artbar-navy hover:bg-white'
-                  }`}
+                  } ${isPending ? 'cursor-not-allowed opacity-60' : ''}`}
                 >
                   {locale === 'en' ? 'English' : 'Japanese'}
                 </button>
@@ -442,14 +450,6 @@ export const CopyAdmin: React.FC<CopyAdminProps> = ({
                   disabled={isPending || !isConfigured}
                 >
                   Save Draft
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => handleSaveDraft(`Saved the full ${activeLocaleLabel} draft.`)}
-                  disabled={isPending || !isConfigured}
-                >
-                  Save All Drafts
                 </Button>
                 <Button
                   type="button"
