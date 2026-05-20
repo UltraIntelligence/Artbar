@@ -27,7 +27,7 @@ export const BlogList: React.FC = () => {
           <p className="text-lg md:text-xl text-artbar-gray max-w-2xl mx-auto"><JpText>{site.blogPage.subtitle}</JpText></p>
         </header>
 
-        <section className="mb-16 rounded-lg bg-white p-6 shadow-sm md:p-8">
+        <section className="mb-16 rounded-[2rem] bg-white p-6 shadow-sm md:p-8">
           <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="mb-2 flex items-center gap-2 font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
@@ -51,7 +51,7 @@ export const BlogList: React.FC = () => {
                 <Link
                   key={guide.slug}
                   href={localizeHrefForLanguage(guidePath(guide.slug), lang)}
-                  className="group rounded-lg border border-black/5 bg-artbar-bg p-5 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
+                  className="group rounded-[2rem] border border-black/5 bg-artbar-bg p-5 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"
                 >
                   <p className="mb-2 font-heading text-xs font-bold uppercase tracking-wider text-artbar-taupe">
                     {guidePrimaryIntent(guide, lang)}
