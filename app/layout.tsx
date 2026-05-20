@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import './globals.css';
 import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
@@ -31,6 +31,7 @@ const siteJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [buildOrganizationJsonLd(), buildWebsiteJsonLd()],
 };
+const DEFAULT_GTM_ID = 'GTM-K8KPWT3H';
 
 const josefinSans = Josefin_Sans({
   subsets: ['latin'],
@@ -93,11 +94,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       : buildResolvedCopy(initialLang, publishedPayload);
   const initialHasFetchedRuntimeCopy = supabasePayload !== null;
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || DEFAULT_GTM_ID;
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
       {/* suppressHydrationWarning: extensions (e.g. ColorZilla) may inject attrs on body before hydrate */}
       <body suppressHydrationWarning>
+        <GoogleTagManager gtmId={gtmId} />
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
