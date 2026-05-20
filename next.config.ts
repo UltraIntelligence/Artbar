@@ -9,7 +9,7 @@ const CSP = [
   `default-src 'self'`,
   // Next.js boot scripts and JSON-LD blocks are inline. Keep inline scripts allowed for
   // static performance; only local dev needs eval for tooling.
-  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com`,
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com`,
   // Tailwind injects inline style attributes; Google Fonts CSS is loaded by ThemeInjector.
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `img-src 'self' data: blob: https:`,
@@ -17,7 +17,7 @@ const CSP = [
   `font-src 'self' data: https://fonts.gstatic.com`,
   // Supabase reads are server-side only today; keeping the host whitelisted keeps the door open
   // for the copy-admin UI if it ever fetches client-side.
-  `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net`,
+  `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com`,
   // Google Maps embed iframes on /locations.
   `frame-src https://www.google.com https://maps.google.com https://www.googletagmanager.com`,
   `frame-ancestors 'none'`,
