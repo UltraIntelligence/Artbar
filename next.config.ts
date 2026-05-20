@@ -17,7 +17,7 @@ const CSP = [
   `font-src 'self' data: https://fonts.gstatic.com`,
   // Supabase reads are server-side only today; keeping the host whitelisted keeps the door open
   // for the copy-admin UI if it ever fetches client-side.
-  `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com`,
+  `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.google.co.jp`,
   // Google Maps embed iframes on /locations.
   `frame-src https://www.google.com https://maps.google.com https://www.googletagmanager.com`,
   `frame-ancestors 'none'`,
