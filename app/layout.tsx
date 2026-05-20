@@ -94,7 +94,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       : buildResolvedCopy(initialLang, publishedPayload);
   const initialHasFetchedRuntimeCopy = supabasePayload !== null;
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID ?? DEFAULT_GTM_ID;
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || DEFAULT_GTM_ID;
 
   return (
     <html lang={htmlLang} className={josefinSans.variable} suppressHydrationWarning>
