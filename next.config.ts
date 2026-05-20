@@ -9,7 +9,7 @@ const CSP = [
   `default-src 'self'`,
   // Next.js boot scripts and JSON-LD blocks are inline. Keep inline scripts allowed for
   // static performance; only local dev needs eval for tooling.
-  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net`,
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com`,
   // Tailwind injects inline style attributes; Google Fonts CSS is loaded by ThemeInjector.
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `img-src 'self' data: blob: https:`,
