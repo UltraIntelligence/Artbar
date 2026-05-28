@@ -9,6 +9,8 @@
     { "source": "/events-schedule/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": true },
     { "source": "/schedule", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/schedule/(.*)", "destination": "https://booking.artbar.co.jp", "permanent": true },
+    { "source": "/checkout", "destination": "https://booking.artbar.co.jp", "permanent": true },
+    { "source": "/checkout/(.*)", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/art-in-bloom-クリス・パイレートが語るアートの旅路-a-creative-journey-i", "destination": "/blog/chris-pyrate-interview", "permanent": true },
     { "source": "/event-location", "destination": "/locations", "permanent": true },
     { "source": "/event-location/artbar-yokohama-motomachi", "destination": "/locations/yokohama", "permanent": true },
