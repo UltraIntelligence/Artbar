@@ -78,7 +78,7 @@ export function PartnerLogo({ name, url, width, height, size = 'default' }: Part
           loading="lazy"
           decoding="async"
           style={logoStyle}
-          className={`block h-full w-auto origin-center scale-[var(--partner-logo-mobile-scale)] object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:scale-[var(--partner-logo-mobile-scale)] group-hover:grayscale-0 group-hover:opacity-100 md:scale-[var(--partner-logo-desktop-scale)] md:group-hover:scale-[var(--partner-logo-desktop-scale)] ${imageSizeClass}`}
+          className={`block h-full w-auto origin-center scale-[var(--partner-logo-mobile-scale)] object-contain transition-all duration-500 filter grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 md:scale-[var(--partner-logo-desktop-scale)] ${imageSizeClass}`}
           onError={() => setFailed(true)}
         />
       ) : (
