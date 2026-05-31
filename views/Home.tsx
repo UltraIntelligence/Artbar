@@ -585,7 +585,7 @@ export const Home: React.FC = () => {
 
             <div className="mx-auto mb-10 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-8 sm:mb-12 sm:gap-x-8 sm:gap-y-10 md:mb-16 md:grid-cols-7 md:gap-x-10 md:gap-y-14 lg:mb-20 lg:gap-x-12 lg:gap-y-16">
               {PARTNER_LOGOS.map((logo, i) => (
-                <PartnerLogo key={i} name={logo.name} url={logo.url} size="compact" />
+                <PartnerLogo key={i} {...logo} size="compact" />
               ))}
             </div>
 

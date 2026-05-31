@@ -90,7 +90,6 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '**.supabase.co' },
       { protocol: 'https', hostname: 'artbar.co.jp' },
       { protocol: 'https', hostname: 'www.artbar.co.jp' },
-      { protocol: 'https', hostname: 'upload.wikimedia.org' },
     ],
     // Avoid Sharp-based optimization in dev — reduces crashes on macOS (malloc / bad free) when
     // assets 404 or during heavy Fast Refresh; production builds still optimize images.

@@ -86,22 +86,29 @@ export const TEAM_BUILDING_ACTIVITY_IMAGES = [
   GI.teamBuildingActivities.customWorkshop,
 ];
 
-/** Wikimedia Commons SVGs for partner marks. Home + team building. */
-export const PARTNER_LOGOS: { name: string; url: string }[] = [
-  { name: "Coca-Cola", url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" },
-  { name: "Amazon", url: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" },
-  { name: "Adidas", url: "https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" },
-  { name: "Google", url: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-  { name: "L'Oreal", url: "https://upload.wikimedia.org/wikipedia/commons/9/9d/L%27Or%C3%A9al_logo.svg" },
-  { name: "Nike", url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" },
-  { name: "Bloomberg", url: "https://upload.wikimedia.org/wikipedia/commons/5/56/Bloomberg_logo.svg" },
-  { name: "Spotify", url: "https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" },
-  { name: "Netflix", url: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" },
-  { name: "Morrison Foerster", url: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Morrison_and_Foerster_logo.svg" },
-  { name: "GE", url: "https://upload.wikimedia.org/wikipedia/commons/f/ff/General_Electric_logo.svg" },
-  { name: "LUMINE", url: "https://upload.wikimedia.org/wikipedia/commons/6/64/Lumine_logo.svg" },
-  { name: "Apple", url: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" },
-  { name: "Toyota", url: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Toyota_EU.svg" },
+export type PartnerLogoAsset = {
+  name: string;
+  url: string;
+  width: number;
+  height: number;
+};
+
+/** Self-hosted partner marks. Home + team building. */
+export const PARTNER_LOGOS: PartnerLogoAsset[] = [
+  { name: "Coca-Cola", url: "/brand/partners/coca-cola.svg", width: 615, height: 193 },
+  { name: "Amazon", url: "/brand/partners/amazon.svg", width: 603, height: 182 },
+  { name: "Adidas", url: "/brand/partners/adidas.svg", width: 725, height: 500 },
+  { name: "Google", url: "/brand/partners/google.svg", width: 272, height: 92 },
+  { name: "L'Oreal", url: "/brand/partners/loreal.svg", width: 800, height: 145 },
+  { name: "Nike", url: "/brand/partners/nike.svg", width: 1000, height: 356 },
+  { name: "Bloomberg", url: "/brand/partners/bloomberg.svg", width: 300, height: 60 },
+  { name: "Spotify", url: "/brand/partners/spotify.svg", width: 559, height: 168 },
+  { name: "Netflix", url: "/brand/partners/netflix.svg", width: 1024, height: 277 },
+  { name: "Morrison Foerster", url: "/brand/partners/morrison-foerster.svg", width: 265, height: 63 },
+  { name: "GE", url: "/brand/partners/ge.svg", width: 500, height: 500 },
+  { name: "LUMINE", url: "/brand/partners/lumine.svg", width: 180, height: 40 },
+  { name: "Apple", url: "/brand/partners/apple.svg", width: 814, height: 1000 },
+  { name: "Toyota", url: "/brand/partners/toyota.svg", width: 60, height: 39 },
 ];
 
 export const POPULAR_THEMES = [
