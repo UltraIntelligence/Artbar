@@ -134,6 +134,10 @@ function checkRedirects() {
     '/tokyo-art-classes',
     '/private-paint-and-sip-tokyo',
     '/paint-your-pet-tokyo',
+    '/location',
+    '/location/',
+    '/contact-ja',
+    '/contact-ja/',
     '/wp-sitemap.xml',
   ]) {
     assert(ruleBySource.get(source)?.permanent === true, `Legacy redirect should be permanent: ${source}`);
@@ -153,6 +157,10 @@ function checkRedirects() {
   assert(ruleBySource.get('/tokyo-rainy-day-date')?.destination === '/guides/tokyo-rainy-day-date', '/tokyo-rainy-day-date should consolidate to the rainy day date guide');
   assert(ruleBySource.get('/tokyo-art-experience')?.destination === '/guides/tokyo-art-experience', '/tokyo-art-experience should consolidate to the art experience guide');
   assert(ruleBySource.get('/tokyo-art-workshop')?.destination === '/guides/tokyo-art-workshop', '/tokyo-art-workshop should consolidate to the art workshop guide');
+  assert(ruleBySource.get('/location')?.destination === '/locations', '/location should consolidate to /locations');
+  assert(ruleBySource.get('/location/')?.destination === '/locations', '/location/ should consolidate to /locations');
+  assert(ruleBySource.get('/contact-ja')?.destination === '/contact', '/contact-ja should consolidate to /contact');
+  assert(ruleBySource.get('/contact-ja/')?.destination === '/contact', '/contact-ja/ should consolidate to /contact');
   assert(ruleBySource.get('/wp-sitemap.xml')?.destination === '/sitemap.xml', 'Dead WordPress sitemap should consolidate to the current sitemap');
 }
 
