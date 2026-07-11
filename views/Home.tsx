@@ -837,7 +837,7 @@ export const Home: React.FC = () => {
             {reviewWall.map((item, i) => (
               <figure
                 key={`${item.author}-${i}`}
-                className={`h-full min-h-[14rem] flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[0_16px_50px_-24px_rgba(5,55,97,0.25)] md:min-h-[16rem] md:p-7 ${i >= 4 ? 'hidden sm:flex' : 'flex'}`}
+                className={`h-full flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[0_16px_50px_-24px_rgba(5,55,97,0.25)] md:p-7 ${i >= 4 ? 'hidden sm:flex' : 'flex'}`}
               >
                 <StarRating size={12} className="mb-3" />
                 <blockquote className="flex-grow text-pretty text-sm leading-relaxed text-artbar-navy md:text-base">
