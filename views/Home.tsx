@@ -728,20 +728,18 @@ export const Home: React.FC = () => {
       {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
       <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
         <div className="mx-auto max-w-[1400px]">
-          <div className="mb-6 flex w-full items-center gap-3 sm:gap-4 md:mb-8">
-            <div className="h-px flex-grow bg-artbar-navy/10" />
-            <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-navy sm:px-6 md:px-8 md:text-xs">
+          {/* Same header pattern as sibling sections (h2 sectionTitle + bodyLarge lead) */}
+          <div className="mb-10 text-center md:mb-14">
+            <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
               <JpText>{meetRegularsHeading}</JpText>
+            </h2>
+            {/* Corporate context above the logos (HB 4-6) */}
+            <p className={`${theme.bodyLarge} mx-auto max-w-2xl leading-relaxed text-artbar-gray`}>
+              <JpText>{lang === 'jp'
+                ? '企業のチームビルディングや貸切イベントにも選ばれています。人数やご予算に合わせた法人向けプランをご用意しています。'
+                : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
             </p>
-            <div className="h-px flex-grow bg-artbar-navy/10" />
           </div>
-
-          {/* Corporate context above the logos (HB 4-6) */}
-          <p className="mx-auto mb-16 max-w-2xl text-center text-sm leading-relaxed text-artbar-gray md:mb-20 md:text-base">
-            <JpText>{lang === 'jp'
-              ? '企業のチームビルディングや貸切イベントにも選ばれています。人数やご予算に合わせた法人向けプランをご用意しています。'
-              : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
-          </p>
 
           {/* Five-wide, centered wrap on a narrower column so the marks breathe and the
               partial last row stays centered instead of hugging the left edge. */}
