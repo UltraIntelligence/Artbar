@@ -173,8 +173,9 @@ export const Navbar: React.FC = () => {
               onClick={() => handleBookClick('mobile_menu_book_button')}
               className="mb-2 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-base font-bold tracking-wide text-artbar-navy shadow-lg transition-transform active:scale-[0.98] sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
             >
-              {/* Optical alignment: Josefin sits low in its box, so a centered icon floats high */}
-              <CalendarDays size={18} className="shrink-0 translate-y-[1px]" aria-hidden />
+              {/* Optical alignment: Josefin's glyphs render high in the flex-centered line box,
+                  so the icon must rise to the text's measured ink center (baseline-probe verified) */}
+              <CalendarDays size={18} className="shrink-0 -translate-y-[2px]" aria-hidden />
               {site.nav.book}
             </button>
 
@@ -217,7 +218,7 @@ export const Navbar: React.FC = () => {
           className="inline-flex h-[46px] w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-0 text-center font-heading text-sm font-bold leading-none tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
         >
           <span className="inline-flex translate-y-px items-center gap-2 leading-none">
-            <CalendarDays size={17} className="shrink-0 translate-y-[1.5px]" aria-hidden />
+            <CalendarDays size={17} className="shrink-0 -translate-y-[2px]" aria-hidden />
             <span>{site.nav.book}</span>
           </span>
         </button>
