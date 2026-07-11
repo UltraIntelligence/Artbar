@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "normalize:logos": "node scripts/normalize-partner-logos.mjs",
     "check": "npm run lint && npm run typecheck && npm run check:docs && npm run check:seo && npm run check:security && npm run check:performance && npm run check:media-slots && npm run check:copy-system && npm run build",
     "check:seo": "tsx scripts/seo-smoke-check.ts",
     "check:performance": "tsx scripts/performance-smoke-check.ts",
