@@ -939,7 +939,7 @@ export const Home: React.FC = () => {
            <div className="relative z-10 px-8 py-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 text-center md:text-left">
               <div className="max-w-2xl">
                  <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-4 block"><JpText>{site.home.cta.badge}</JpText></span>
-                 <h2 className="text-3xl md:text-7xl font-heading font-heavy text-white mb-6 leading-tight">
+                 <h2 className="text-3xl md:text-6xl font-heading font-heavy text-white mb-6 leading-tight text-balance">
                    <JpText>{site.home.cta.title}</JpText>
                  </h2>
                  <p className="text-base md:text-xl text-artbar-light-taupe/90 font-light max-w-lg leading-relaxed">
