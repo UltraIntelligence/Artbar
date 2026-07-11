@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
 
-            <div className="md:col-span-5">
+            <div className="md:col-span-4">
               <div className="mb-8">
                 <Logo variant="light" />
               </div>
@@ -148,7 +148,7 @@ export const Footer: React.FC = () => {
               </ul>
             </div>
 
-            <div className="md:col-span-2">
+            <div className="md:col-span-3">
               <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{site.footer.explore}</JpText></h4>
               <ul className="space-y-3 text-artbar-light-taupe">
                 <li><a href={ARTBAR_BOOKING_URL} onClick={() => trackBookingClick('footer')} className={footerLinkClass}><JpText>{site.nav.schedule}</JpText></a></li>
