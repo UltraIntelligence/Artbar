@@ -106,7 +106,7 @@ export const Navbar: React.FC = () => {
       }`}
     >
       <div
-        className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-24 flex justify-between items-center ${
+        className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-12 2xl:px-24 flex justify-between items-center ${
           isHeroNavLayout ? 'py-6 md:py-10' : 'py-4'
         }`}
       >
@@ -115,7 +115,7 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Nav: Tighter spacing for Japanese (space-x-4 vs space-x-6) */}
-        <div className={`hidden xl:flex ${lang === 'jp' ? 'space-x-4' : 'space-x-6'} items-center`}>
+        <div className={`hidden xl:flex ${lang === 'jp' ? 'space-x-3 2xl:space-x-4' : 'space-x-6'} items-center`}>
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -131,14 +131,14 @@ export const Navbar: React.FC = () => {
           <button
              onClick={toggleLang}
              aria-label={lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
-             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8`}
+             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8 shrink-0 whitespace-nowrap`}
           >
              {lang === 'en' ? jpCopy.ui.navbar.compactJapanese : jpCopy.ui.navbar.compactEnglish}
           </button>
 
           <button
             onClick={() => handleBookClick('nav_book_button')}
-            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2 shrink-0 whitespace-nowrap"
           >
             {site.nav.book}
           </button>
