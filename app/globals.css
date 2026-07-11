@@ -176,6 +176,35 @@
   }
 }
 
+/* Press marquee — seamless auto-scrolling rail of media cards.
+   Track holds two copies of the list; translateX lands exactly on one
+   content period (half the track width minus half a gap) so the loop has
+   no jump. Edge mask fades cards into the white section at both sides. */
+.press-marquee {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+.press-marquee-track {
+  animation: press-marquee-scroll 80s linear infinite;
+  will-change: transform;
+}
+.press-marquee:hover .press-marquee-track,
+.press-marquee:focus-within .press-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes press-marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 0.75rem)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .press-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .press-marquee-track { animation: none; }
+}
+
 /* Scroll reveal */
 .reveal {
   opacity: 0;

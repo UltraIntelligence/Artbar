@@ -138,7 +138,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => handleBookClick('nav_book_button')}
-            className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2"
           >
             {site.nav.book}
           </button>
@@ -204,7 +204,7 @@ export const Navbar: React.FC = () => {
     </nav>
 
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom,0px))] pt-3 transition-all duration-300 ease-out xl:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom,0px))] pt-3 transition-[transform,opacity] duration-300 ease-out xl:hidden ${
         showMobileStickyCta ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
       aria-hidden={!showMobileStickyCta}
@@ -213,10 +213,12 @@ export const Navbar: React.FC = () => {
         <button
           type="button"
           onClick={() => handleBookClick('mobile_sticky_book_button')}
-          className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-sm font-bold tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.98]"
+          className="inline-flex h-[46px] w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-0 text-center font-heading text-sm font-bold leading-none tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.96]"
         >
-          <CalendarDays size={17} className="shrink-0" aria-hidden />
-          {site.nav.book}
+          <span className="inline-flex translate-y-px items-center gap-2 leading-none">
+            <CalendarDays size={17} className="shrink-0" aria-hidden />
+            <span>{site.nav.book}</span>
+          </span>
         </button>
       </div>
     </div>

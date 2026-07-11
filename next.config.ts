@@ -9,7 +9,8 @@ const CSP = [
   `default-src 'self'`,
   // Next.js boot scripts and JSON-LD blocks are inline. Keep inline scripts allowed for
   // static performance; only local dev needs eval for tooling.
-  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com`,
+  // painta.co serves embed.js, the auto-resize listener for the booking iframe widgets.
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://painta.co`,
   // Tailwind injects inline style attributes; Google Fonts CSS is loaded by ThemeInjector.
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `img-src 'self' data: blob: https:`,
@@ -18,8 +19,8 @@ const CSP = [
   // Supabase reads are server-side only today; keeping the host whitelisted keeps the door open
   // for the copy-admin UI if it ever fetches client-side.
   `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.google.co.jp`,
-  // Google Maps embed iframes on /locations.
-  `frame-src https://www.google.com https://maps.google.com https://www.googletagmanager.com`,
+  // Google Maps embed iframes on /locations; painta.co booking widgets on the home page.
+  `frame-src https://www.google.com https://maps.google.com https://www.googletagmanager.com https://painta.co`,
   `frame-ancestors 'none'`,
   `base-uri 'self'`,
   `form-action 'self'`,

@@ -389,12 +389,12 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         titleHighlight: "Paint & Sip Studios",
         subtitle:
           "Beginner friendly.\nCentrally located.\nUnforgettable.",
-        ctaSchedule: "Book Your Session",
+        ctaSchedule: "See dates and prices",
         ctaPrivate: "Private Events",
         ctaLineChat: "Chat With Us",
         ctaFindPainting: "Find Your Painting",
         ratingScore: "4.8",
-        ratingSource: "Average rating",
+        ratingSource: "across thousands of classes",
         guestsNumber: "101,000",
         guestsSuffix: "guests across Tokyo — and counting"
       },
@@ -419,7 +419,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
       themes: {
         title: "Popular Themes",
         subtitle: "From classic masterpieces to modern techniques, we have something for everyone.",
-        cta: "View Schedule",
+        cta: "See dates and prices",
         items: POPULAR_THEMES
       },
       features: {
@@ -692,25 +692,24 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
       press: "メディア掲載",
       contact: "お問い合わせ",
       gifts: "ギフト券",
-      book: "予約する",
+      book: "空き日程を見る",
       blog: "ジャーナル",
       paintYourPet: "ペットを描こう"
     },
     home: {
       hero: {
-        badge: "「10周年記念」",
-        title: "東京で一番愛されている",
-        titleHighlight: "ペイント＆シップスタジオ",
-        subtitle:
-          "初心者歓迎。東京各地で開催中。<wbr>やってみると、意外と簡単。<wbr>楽しさは、想像以上。",
-        ctaSchedule: "セッションを予約する",
+        badge: "10周年記念",
+        title: "ドリンク片手に楽しむ",
+        titleHighlight: "大人のアート体験",
+        subtitle: "初心者歓迎。ワインを飲みながら手ぶらで楽しめる、東京・横浜のペイント＆シップスタジオ。",
+        ctaSchedule: "空き日程と料金を見る",
         ctaPrivate: "プライベートイベント",
         ctaLineChat: "LINEで相談する",
         ctaFindPainting: "描きたい絵を探す",
         ratingScore: "4.8",
-        ratingSource: "平均評価",
+        ratingSource: "数千回のクラスから",
         guestsNumber: "101,000",
-        guestsSuffix: "「{{count}}名が体験済み。まだまだ増えています。」"
+        guestsSuffix: "これまでに{{count}}名が参加。まだまだ増えています。"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
@@ -718,22 +717,22 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         p1: "好きな絵を選んで、グラスを傾けて、自分のペースで描くだけ。\n経験不要。あとは来てみれば、わかります。",
         ratingLabel: "平均評価",
         guestsCount: "101,000",
-        guestsLabel: "{{count}}名が体験済み。まだまだ増えています。"
+        guestsLabel: "これまでに{{count}}名が参加。まだまだ増えています。"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",
-        subtitle: "アートの経験は一切不要. 真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。",
+        subtitle: "ワインを片手に、自由に描こう。真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。",
         steps: [
           { title: "予約", desc: "カレンダーから、心惹かれるテーマのセッションをお選びください。" },
           { title: "乾杯", desc: "スタジオではフリーフローのワインやコーヒーをご用意。エプロンをつけて、リラックスしたひとときを。" },
-          { title: "制作", desc: "インストラクターが丁寧にガイドします。初心者の方でも、驚くような作品に仕上がります。" },
+          { title: "制作", desc: "経験豊富なインストラクターがサポートするので、初めての方でも驚くような作品に仕上がります。" },
           { title: "完成", desc: "作品は10〜15日以内にご自宅へ配送。届いたらすぐ飾れます。" }
         ]
       },
       themes: {
         title: "人気のテーマ",
         subtitle: "古典的な名画の模写から、モダンなテクスチャーアートまで。多彩なプログラムをご用意しています。",
-        cta: "スケジュールを見る",
+        cta: "空き日程と料金を見る",
         items: POPULAR_THEMES_JP
       },
       features: {

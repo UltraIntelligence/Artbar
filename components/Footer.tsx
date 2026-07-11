@@ -26,6 +26,42 @@ const TikTokIcon: React.FC<{ size?: number }> = ({ size = 18 }) => (
   </svg>
 );
 
+// Plain-text studio directory for the footer — name + ward + nearest station.
+// The ward/station strings are curated here (LOCATIONS.access* is multi-line and
+// too verbose for a compact two-line entry) to boost relevance for location-based
+// search (渋谷 / 銀座 / 横浜 アート体験). Scoped to the four corporate Tokyo studios;
+// the Osaka entries in LOCATIONS are franchises. Each entry links to /locations.
+const FOOTER_STUDIOS = [
+  {
+    id: 'daikanyama',
+    nameEn: 'Daikanyama',
+    nameJp: '代官山',
+    metaEn: 'Shibuya, Tokyo · Tokyu Toyoko Line, Daikanyama Station',
+    metaJp: '渋谷区・東急東横線「代官山駅」',
+  },
+  {
+    id: 'harajuku',
+    nameEn: 'Cat Street Harajuku',
+    nameJp: 'キャットストリート原宿',
+    metaEn: 'Shibuya, Tokyo · JR Harajuku / Metro Meiji-jingumae Station',
+    metaJp: '渋谷区・JR「原宿駅」／東京メトロ「明治神宮前駅」',
+  },
+  {
+    id: 'ginza',
+    nameEn: 'Ginza',
+    nameJp: '銀座',
+    metaEn: 'Chuo, Tokyo · Tokyo Metro Ginza Station',
+    metaJp: '中央区・東京メトロ「銀座駅」',
+  },
+  {
+    id: 'yokohama',
+    nameEn: 'Yokohama Motomachi',
+    nameJp: '横浜元町',
+    metaEn: 'Naka, Yokohama · Minatomirai Line, Motomachi-Chukagai Station',
+    metaJp: '横浜市中区・みなとみらい線「元町・中華街駅」',
+  },
+] as const;
+
 export const Footer: React.FC = () => {
   const { site, lang, localizedCopy } = useContent();
   const currentYear = new Date().getFullYear();
@@ -132,6 +168,24 @@ export const Footer: React.FC = () => {
                 <li><Link href={href('/contact')} className={footerLinkClass}><JpText>{localizedCopy.ui.footer.careers}</JpText></Link></li>
               </ul>
             </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-10">
+            <h4 className="font-heading font-bold text-white text-lg mb-6"><JpText>{lang === 'en' ? 'Studios' : 'スタジオ'}</JpText></h4>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-5">
+              {FOOTER_STUDIOS.map((studio) => (
+                <li key={studio.id}>
+                  <Link href={href('/locations')} className="group block py-1">
+                    <span className="block text-artbar-light-taupe transition-colors group-hover:text-white">
+                      {lang === 'en' ? studio.nameEn : <JpText>{studio.nameJp}</JpText>}
+                    </span>
+                    <span className="mt-1 block text-sm font-light text-artbar-light-taupe/60">
+                      {lang === 'en' ? studio.metaEn : <JpText>{studio.metaJp}</JpText>}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="border-t border-white/10 pt-8 mt-8 flex flex-col gap-3 md:flex-row md:justify-between md:items-center text-xs text-artbar-light-taupe/60 font-light tracking-wide">

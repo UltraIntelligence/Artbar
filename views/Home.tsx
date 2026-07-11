@@ -2,16 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Script from 'next/script';
 import {
   Wine,
   Calendar,
   Palette,
   Heart,
+  Clock,
+  MapPin,
   ArrowRight,
   Quote,
   Play,
-  ChevronLeft,
-  ChevronRight,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
@@ -40,13 +41,6 @@ import { useMediaMinMd } from '../hooks/useMediaMinMd';
 import { useNearViewport } from '../hooks/useNearViewport';
 import { PrefetchHeroes } from '../components/PrefetchHeroes';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
-
-/**
- * Fixed carousel height (~Ida Don’s testimonial) so the page doesn’t jump between slides.
- * Taller copy scrolls inside the quote area.
- */
-const TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS =
-  'h-[31rem] min-h-[31rem] sm:h-[33rem] sm:min-h-[33rem] md:h-[37rem] md:min-h-[37rem] lg:h-[39rem] lg:min-h-[39rem]';
 
 const SHOW_HERO_LINE_CTA = false;
 
@@ -104,7 +98,7 @@ export const Home: React.FC = () => {
 
   /** Hero primary actions: fixed height + `leading-none` so the line box isn’t taller below the baseline (common JP/Latin mix). Inner row uses a tiny translate-y for optical center in the pill. */
   const heroCtaFrame =
-    'inline-flex items-center justify-center rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] py-0 text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide leading-none transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]';
+    'inline-flex items-center justify-center rounded-full px-7 sm:px-9 md:px-12 h-[3rem] sm:h-[3.35rem] md:h-[4rem] py-0 text-base sm:text-lg md:text-xl font-heading font-bold tracking-wide leading-none transition duration-200 hover:scale-[1.02] active:scale-[0.96]';
   const heroCtaInner =
     'inline-flex items-center translate-y-px gap-2.5 sm:translate-y-0.5';
 
@@ -151,46 +145,18 @@ export const Home: React.FC = () => {
   const conceptMobileSrc =
     hasMounted && conceptVideoLazy.near && !mdUp ? conceptVideoMobileUrl : undefined;
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-
   const carouselTestimonials = site.home.testimonials.carousel;
   const featuredTestimonials = site.home.testimonials.featured;
-  const activeCarouselTestimonial = carouselTestimonials[activeIndex];
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  useEffect(() => {
-    setActiveIndex(0);
-  }, [lang]);
-
-  useEffect(() => {
-    if (paused || carouselTestimonials.length === 0) return;
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % carouselTestimonials.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [carouselTestimonials.length, paused]);
-
-  useEffect(() => {
-    if (!paused) return;
-    const resume = setTimeout(() => setPaused(false), 12000);
-    return () => clearTimeout(resume);
-  }, [paused]);
-
-  const goPrevTestimonial = () => {
-    if (carouselTestimonials.length === 0) return;
-    setActiveIndex((prev) => (prev - 1 + carouselTestimonials.length) % carouselTestimonials.length);
-    setPaused(true);
-  };
-
-  const goNextTestimonial = () => {
-    if (carouselTestimonials.length === 0) return;
-    setActiveIndex((prev) => (prev + 1) % carouselTestimonials.length);
-    setPaused(true);
-  };
+  /** Review wall: short quotes not already in the featured band — dense proof, no carousel. */
+  const featuredAuthors = new Set(featuredTestimonials.map((t) => t.author));
+  const reviewWall = carouselTestimonials
+    .filter((t) => !featuredAuthors.has(t.author) && t.text.length <= 120)
+    .slice(0, 6);
 
   // Icon mapping helper
   const getStepIcon = (index: number) => {
@@ -200,26 +166,72 @@ export const Home: React.FC = () => {
 
 
   const homeUiCopy = localizedCopy.ui.home;
+  const heroCopy = site.home.hero;
+  /** First-visit info card (HB 4-2): answers price, duration, place, fit, and inclusions in plain text. */
+  const quickInfo =
+    lang === 'jp'
+      ? {
+          eyebrow: 'はじめての方へ',
+          title: 'すべて込みの、気軽なアート体験。',
+          priceLabel: '料金',
+          priceValue: '¥4,620〜',
+          priceNote: 'ドリンク・画材すべて込み',
+          items: [
+            { icon: Clock, label: '所要時間', value: '約2時間' },
+            { icon: MapPin, label: '開催エリア', value: '代官山・原宿・銀座・横浜' },
+            { icon: Palette, label: 'はじめての方', value: '初心者OK・手ぶらOK' },
+            { icon: Wine, label: '含まれるもの', value: 'ワイン・ドリンク・画材' },
+          ],
+        }
+      : {
+          eyebrow: 'Your first visit',
+          title: "Everything's included.",
+          priceLabel: 'Price',
+          priceValue: '¥4,620+',
+          priceNote: 'drinks & materials included',
+          items: [
+            { icon: Clock, label: 'Duration', value: 'Around 2 hours' },
+            { icon: MapPin, label: 'Studios', value: 'Daikanyama · Harajuku · Ginza · Yokohama' },
+            { icon: Palette, label: 'Who it’s for', value: 'Beginners welcome, nothing to bring' },
+            { icon: Wine, label: 'Included', value: 'Wine, drinks & art materials' },
+          ],
+        };
+  const upcomingSessions =
+    lang === 'jp'
+      ? {
+          title: '直近のセッション',
+          subtitle: '気になる日程を選んで、そのまま予約。空席があれば当日参加もOKです。',
+          allLink: 'すべての日程を見る',
+          iframeTitle: '今日・明日の空きセッション一覧',
+          laterIframeTitle: 'この先の開催セッション一覧',
+        }
+      : {
+          title: 'Coming up at Artbar',
+          subtitle: 'Pick a real session and book it — same-day spots are fine while seats last.',
+          allLink: 'See the full schedule',
+          iframeTitle: 'Artbar sessions today and tomorrow',
+          laterIframeTitle: 'Artbar sessions later this week',
+        };
+  const embedLocale = lang === 'jp' ? 'ja' : 'en';
+  /** Day after tomorrow in the studios' timezone, so the upcoming grid starts where the rails end. */
+  const upcomingFromDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo' }).format(
+    new Date(Date.now() + 2 * 86_400_000),
+  );
   const meetRegularsHeading = homeUiCopy.meetRegularsHeading;
   const bookTeamBuildingCta = homeUiCopy.bookTeamBuildingCta;
   const bilingualLine1 = homeUiCopy.bilingualLine1;
   const bilingualLine2 = homeUiCopy.bilingualLine2;
-  const mediaCoverageLabel = homeUiCopy.mediaCoverageLabel;
-  const asSeenInHeading = homeUiCopy.asSeenInHeading;
   const heroImageAlt = stripJpSentinel(homeUiCopy.heroImageAlt);
   const conceptImageAlt = stripJpSentinel(homeUiCopy.conceptImageAlt);
   const ctaImageAlt = stripJpSentinel(homeUiCopy.ctaImageAlt);
   const conceptVideoCta = stripJpSentinel(homeUiCopy.conceptVideoCta);
-  const previousTestimonialLabel = stripJpSentinel(homeUiCopy.previousTestimonial);
-  const nextTestimonialLabel = stripJpSentinel(homeUiCopy.nextTestimonial);
-  const storiesLabel = homeUiCopy.storiesLabel;
 
   return (
     <div className="w-full bg-artbar-bg">
       {/* Hero: extra min-height on small screens so all CTAs sit in the hero band; md+ stays one viewport */}
       <section className="relative z-[1] min-h-[100svh] w-full overflow-x-hidden overflow-y-auto md:min-h-0 md:h-[100svh] md:overflow-visible">
         <div
-          className="absolute inset-0 min-h-full md:min-h-[100svh] md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy"
+          className="absolute inset-0 min-h-full md:min-h-0 md:m-4 md:rounded-[var(--radius-section)] overflow-hidden bg-artbar-navy"
         >
           <div className="absolute inset-0 z-0">
             <div className="relative isolate h-full w-full min-h-full min-w-full">
@@ -297,9 +309,9 @@ export const Home: React.FC = () => {
                 }`}
               >
                 {lang === 'jp' ? (
-                  <span className="font-sans font-bold leading-none"><JpText>{site.home.hero.badge}</JpText></span>
+                  <span className="font-sans font-bold leading-none"><JpText>{heroCopy.badge}</JpText></span>
                 ) : (
-                  <JpText>{site.home.hero.badge}</JpText>
+                  <JpText>{heroCopy.badge}</JpText>
                 )}
               </span>
 
@@ -312,7 +324,7 @@ export const Home: React.FC = () => {
                     delayBase={600}
                     className="md:[&>svg]:w-5 md:[&>svg]:h-5"
                   />
-                  <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums"><JpText>{site.home.hero.ratingScore}</JpText></span>
+                  <span className="font-heading font-heavy text-white text-base md:text-xl tabular-nums"><JpText>{heroCopy.ratingScore}</JpText></span>
                   <span className="hidden text-white/40 text-lg sm:inline" aria-hidden>
                     ·
                   </span>
@@ -325,26 +337,28 @@ export const Home: React.FC = () => {
                   }`}
                 >
                   <JpText>{lang === 'jp'
-                    ? site.home.hero.guestsSuffix.replace(/\{\{count\}\}/g, guestCountFormatted)
-                    : `${guestCountFormatted}+ ${site.home.hero.guestsSuffix}`}</JpText>
+                    ? heroCopy.guestsSuffix.replace(/\{\{count\}\}/g, guestCountFormatted)
+                    : `${guestCountFormatted}+ ${heroCopy.guestsSuffix}`}</JpText>
                 </span>
               </div>
 
               <h1 className="font-heading font-heavy text-white tracking-tighter flex flex-col items-center gap-1.5 md:gap-3 px-1 max-w-[min(100%,52rem)] lg:max-w-[56rem]">
+                {/* Sentinels stripped: these spans are single fixed lines (whitespace-nowrap),
+                    and JpText's <wbr> would still break inside them. */}
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
-                  <JpText>{site.home.hero.title}</JpText>
+                  {stripJpSentinel(heroCopy.title)}
                 </span>
                 <span
                   className={`${heroTitleScale} block text-white leading-[0.92] md:leading-[0.94] ${lang === 'jp' ? 'text-center whitespace-nowrap' : ''}`}
                 >
-                  <JpText>{site.home.hero.titleHighlight}</JpText>
+                  {stripJpSentinel(heroCopy.titleHighlight)}
                 </span>
               </h1>
 
               <h2 className="text-white/85 font-light leading-relaxed max-w-2xl text-base sm:text-lg md:text-2xl lg:text-[1.7rem] px-2 whitespace-pre-line">
-                <JpText>{site.home.hero.subtitle.replace(/<wbr\s*\/?>/gi, '')}</JpText>
+                <JpText>{heroCopy.subtitle.replace(/<wbr\s*\/?>/gi, '')}</JpText>
               </h2>
 
               {/* Primary CTAs */}
@@ -355,10 +369,10 @@ export const Home: React.FC = () => {
                     window.location.href = ARTBAR_BOOKING_URL;
                   }}
                   variant="taupe"
-                  className={`${heroCtaFrame} w-full max-w-[20rem] !text-artbar-navy shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem]`}
+                  className={`${heroCtaFrame} w-full max-w-[20rem] !text-artbar-navy shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem] sm:max-w-none`}
                 >
                   <span className={heroCtaInner}>
-                    <JpText>{site.home.hero.ctaSchedule}</JpText>
+                    <JpText>{heroCopy.ctaSchedule}</JpText>
                     <ArrowRight size={16} className="shrink-0 text-artbar-navy" aria-hidden />
                   </span>
                 </Button>
@@ -392,11 +406,148 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured testimonials — overlap hero bottom to bridge into next section */}
-      <section className="relative z-[3] bg-transparent px-4 pb-10 md:px-10 md:pb-14">
+      {/* First-visit details (HB 4-2): a light, price-forward card answering the five first-visit questions. */}
+      <section className="relative z-[4] bg-artbar-bg px-4 pt-14 pb-2 md:px-10 md:pt-20 md:pb-4">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="mb-7 text-center md:mb-9">
+            <p className="font-heading text-[10px] font-bold uppercase tracking-[0.3em] text-artbar-taupe md:text-xs">
+              <JpText>{quickInfo.eyebrow}</JpText>
+            </p>
+            <h2 className="mt-3 font-heading text-3xl font-heavy leading-tight tracking-tight text-artbar-navy md:text-5xl">
+              <JpText>{quickInfo.title}</JpText>
+            </h2>
+          </div>
+
+          <div className="mx-auto max-w-5xl overflow-hidden rounded-[var(--radius-section)] bg-white shadow-[0_28px_80px_-32px_rgba(5,55,97,0.3)] md:grid md:grid-cols-[minmax(11rem,1fr)_minmax(0,3.4fr)]">
+            <div className="flex flex-col items-center justify-center gap-1 bg-artbar-navy px-6 py-7 text-center md:py-10">
+              <p className="font-heading text-[10px] font-bold uppercase tracking-[0.25em] text-artbar-taupe md:text-xs">
+                <JpText>{quickInfo.priceLabel}</JpText>
+              </p>
+              <p className="font-heading text-3xl font-heavy tabular-nums text-white md:text-4xl">
+                {quickInfo.priceValue}
+              </p>
+              <p className="text-xs leading-snug text-white/70"><JpText>{quickInfo.priceNote}</JpText></p>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4">
+              {quickInfo.items.map(({ icon: Icon, label, value }, i) => (
+                <div
+                  key={label}
+                  className={`flex flex-col items-center justify-start gap-2 border-artbar-navy/10 px-4 py-6 text-center md:py-8 ${i % 2 === 1 ? 'border-l' : ''} ${i >= 2 ? 'border-t md:border-t-0' : ''} ${i > 0 ? 'md:border-l' : ''}`}
+                >
+                  <Icon size={22} strokeWidth={1.6} className="text-artbar-taupe" aria-hidden />
+                  <p className="font-heading text-[10px] font-bold uppercase tracking-[0.16em] text-artbar-navy/60 md:text-xs">
+                    <JpText>{label}</JpText>
+                  </p>
+                  <p className="text-sm leading-snug text-artbar-navy"><JpText>{value}</JpText></p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Live sessions (HB 4-3): real bookable sessions from the booking system — today, tomorrow,
+          and upcoming rails via the painta embed. The column is locked to the embed's internal
+          geometry (976px max content, px-4/sm:px-6 gutters) so cards align with our heading, and
+          the section bg matches the embed body (#F3F3ED) so the iframe edges disappear.
+          painta.co/embed.js resizes the iframe to its content via postMessage; the h-* fallback
+          keeps the rails visible if the script never runs. */}
+      <section id="upcoming-sessions" className="scroll-mt-28 bg-[#F3F3ED] pt-14 pb-6 md:scroll-mt-32 md:pt-20 md:pb-10">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="mb-4 flex flex-col justify-between gap-3 md:mb-6 md:flex-row md:items-end">
+            <div>
+              <h2 className="font-heading text-3xl font-heavy leading-none tracking-tight text-artbar-navy md:text-6xl">
+                <JpText>{upcomingSessions.title}</JpText>
+              </h2>
+              <p className={`${theme.bodyLarge} mt-3 max-w-lg text-sm text-artbar-gray md:mt-4 md:text-xl`}>
+                <JpText>{upcomingSessions.subtitle}</JpText>
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                trackBookingClick('home_today_tomorrow');
+                window.location.href = ARTBAR_BOOKING_URL;
+              }}
+              className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 self-start font-heading text-sm font-bold tracking-wide text-artbar-navy underline decoration-artbar-taupe decoration-2 underline-offset-8 transition-colors hover:text-artbar-taupe md:self-auto md:text-base"
+            >
+              <JpText>{upcomingSessions.allLink}</JpText>
+              <ArrowRight size={16} className="shrink-0" aria-hidden />
+            </button>
+          </div>
+
+          {/* Two widgets instead of section=all: its upcoming rail repeats the same sessions the
+              today/tomorrow rails already show. Starting the second widget the day after
+              tomorrow (business timezone) keeps the rails and the grid disjoint. */}
+          <div className="-mx-4 sm:-mx-6">
+            {/* Fallback heights stay LOW on purpose: the embed body never shrinks below the iframe's
+                current height (its min-height mirrors the frame), so embed.js can only grow from
+                here to true content height. Oversized fallbacks become permanent dead space. */}
+            <iframe
+              data-painta-embed
+              src={`https://painta.co/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
+              title={stripJpSentinel(upcomingSessions.iframeTitle)}
+              loading="lazy"
+              className="block h-[520px] w-full border-0"
+            />
+            {/* No negative overlap: the today/tomorrow widget's bottom padding is
+                under 40px, so pulling this widget up clipped the last rail's card
+                corners. Let the two widgets sit flush — the natural padding reads as
+                a clean break between the urgent rails and the browse-ahead grid. */}
+            <iframe
+              data-painta-embed
+              src={`https://painta.co/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
+              title={stripJpSentinel(upcomingSessions.laterIframeTitle)}
+              loading="lazy"
+              className="block h-[640px] w-full border-0"
+            />
+          </div>
+        </div>
+        {/* afterInteractive (not lazyOnload): the listener must attach before the lazy iframe
+            finishes rendering, or the broadcaster's initial height message is missed. */}
+        <Script src="https://painta.co/embed.js" strategy="afterInteractive" />
+      </section>
+
+      {/* Popular sessions: make the bookable inspiration visible before longer proof sections. */}
+      <section
+        id="popular-themes"
+        className="scroll-mt-28 bg-artbar-bg py-16 md:scroll-mt-32 md:py-24"
+      >
+        <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
+            <div>
+              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
+              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
+                <JpText>{site.home.themes.subtitle}</JpText>
+              </p>
+            </div>
+            <Button
+              variant="taupe"
+              size="cta"
+              onClick={() => {
+                trackBookingClick('home_themes');
+                window.location.href = ARTBAR_BOOKING_URL;
+              }}
+              className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:w-auto"
+            >
+              <JpText>{site.home.themes.cta}</JpText>
+            </Button>
+          </div>
+
+          <PopularThemesGrid
+            items={site.home.themes.items}
+            compact
+            className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
+          />
+        </div>
+      </section>
+
+      {/* Featured testimonials: quote cards on the page background — separation comes from spacing, not a band. */}
+      <section className="relative z-[2] bg-artbar-bg px-4 pb-16 pt-2 md:px-10 md:pb-20 md:pt-4">
         <div
           ref={featuredTestimonialsReveal.ref}
-          className={`mx-auto max-w-[1400px] -mt-8 sm:-mt-12 md:-mt-28 lg:-mt-32 reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
+          className={`mx-auto max-w-[1400px] reveal ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
         >
           <div
             className={`grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8 reveal-stagger ${featuredTestimonialsReveal.isVisible ? 'visible' : ''}`}
@@ -406,8 +557,8 @@ export const Home: React.FC = () => {
                 key={index}
                 className="relative flex h-full flex-col rounded-[var(--radius-card)] border border-white/60 bg-white p-8 shadow-[0_24px_70px_-28px_rgba(5,55,97,0.35)] transition-all duration-300 hover:shadow-[0_28px_80px_-24px_rgba(5,55,97,0.35)] md:rounded-[var(--radius-section)] md:p-10"
               >
-                <div className="absolute right-6 top-6 text-artbar-taupe opacity-20 md:right-8 md:top-8">
-                  <Heart size={32} fill="currentColor" />
+                <div className="absolute right-6 top-6 text-artbar-taupe opacity-20 md:right-8 md:top-8" aria-hidden>
+                  <Quote size={32} fill="currentColor" strokeWidth={0} />
                 </div>
                 <StarRating size={14} className="mb-6" />
                 <p className="mb-8 flex-grow text-base font-light italic leading-relaxed text-artbar-navy md:text-lg">
@@ -443,7 +594,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Concept Section - Refined for better balance */}
-      <section className="pt-16 pb-24 md:pt-24 md:pb-64 bg-artbar-bg overflow-hidden relative grain">
+      <section className="pt-16 pb-20 md:pt-24 md:pb-28 bg-artbar-bg overflow-hidden relative grain">
         <div ref={conceptReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10 relative z-[2]">
           <div className={`flex flex-col items-center text-center reveal ${conceptReveal.isVisible ? 'visible' : ''}`}>
             
@@ -516,7 +667,7 @@ export const Home: React.FC = () => {
                </p>
 
                {/* Social Proof centered stats */}
-               <div className="flex flex-col items-center gap-8">
+               <div className="flex flex-col items-center gap-10 md:gap-12">
                   <div className="flex -space-x-5 md:-space-x-8">
                       {CONCEPT_SOCIAL_AVATAR_URLS.map((src) => (
                         <img
@@ -537,7 +688,7 @@ export const Home: React.FC = () => {
                       </div>
                   </div>
                   <div className="text-center">
-                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-3 tabular-nums">
+                     <p className="text-artbar-navy font-heading font-bold text-3xl md:text-5xl mb-4 md:mb-5 tabular-nums">
                        {enGuestConceptSplit ? (
                          <>
                            <span className="md:hidden"><JpText>{guestConceptLabel}</JpText></span>
@@ -571,24 +722,38 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Partner logos — white card containment (home only; team building page stays flush) */}
-      <section className="relative z-[2] px-3 pb-10 sm:px-4 sm:pb-12 md:px-10 md:pb-20 lg:pb-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex w-full flex-col items-center rounded-[var(--radius-feature)] border border-gray-100 bg-white p-6 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.12)] sm:p-10 md:p-14 md:shadow-[0_40px_120px_-30px_rgba(0,0,0,0.15)] lg:px-16 lg:py-20 xl:py-24">
-            <div className="mb-8 flex w-full items-center gap-3 sm:mb-12 sm:gap-4 md:mb-16 lg:mb-20">
-              <div className="h-px flex-grow bg-artbar-navy/10" />
-              <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-navy sm:px-6 md:px-8 md:text-xs">
-                <JpText>{meetRegularsHeading}</JpText>
-              </p>
-              <div className="h-px flex-grow bg-artbar-navy/10" />
-            </div>
+      {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
+      <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
+        <div className="mx-auto max-w-[1400px]">
+          <div className="mb-6 flex w-full items-center gap-3 sm:gap-4 md:mb-8">
+            <div className="h-px flex-grow bg-artbar-navy/10" />
+            <p className="shrink-0 px-4 text-center font-heading font-bold text-[10px] uppercase tracking-[0.4em] text-artbar-navy sm:px-6 md:px-8 md:text-xs">
+              <JpText>{meetRegularsHeading}</JpText>
+            </p>
+            <div className="h-px flex-grow bg-artbar-navy/10" />
+          </div>
 
-            <div className="mx-auto mb-10 grid w-full max-w-7xl grid-cols-2 items-center justify-items-center gap-x-6 gap-y-8 sm:mb-12 sm:gap-x-8 sm:gap-y-10 md:mb-16 md:grid-cols-7 md:gap-x-10 md:gap-y-14 lg:mb-20 lg:gap-x-12 lg:gap-y-16">
-              {PARTNER_LOGOS.map((logo, i) => (
-                <PartnerLogo key={i} {...logo} size="compact" />
-              ))}
-            </div>
+          {/* Corporate context above the logos (HB 4-6) */}
+          <p className="mx-auto mb-16 max-w-2xl text-center text-sm leading-relaxed text-artbar-gray md:mb-20 md:text-base">
+            <JpText>{lang === 'jp'
+              ? '企業のチームビルディングや貸切イベントにも選ばれています。人数やご予算に合わせた法人向けプランをご用意しています。'
+              : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
+          </p>
 
+          {/* Five-wide, centered wrap on a narrower column so the marks breathe and the
+              partial last row stays centered instead of hugging the left edge. */}
+          <div className="mx-auto mb-16 flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-12 md:mb-24 md:gap-x-12 md:gap-y-16">
+            {PARTNER_LOGOS.map((logo, i) => (
+              <div
+                key={i}
+                className="flex min-w-0 basis-[calc(33.333%-1.4rem)] justify-center sm:basis-[calc(25%-1.6rem)] md:basis-[calc(20%-2.5rem)]"
+              >
+                <PartnerLogo {...logo} size="compact" />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-center">
             <Button
               type="button"
               variant="taupe"
@@ -603,82 +768,43 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Themes Section — after trust-building context so choosing a session feels natural */}
-      <section
-        id="popular-themes"
-        className="scroll-mt-28 py-16 md:scroll-mt-32 md:py-32 bg-artbar-bg"
-      >
-        <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
-            <div>
-              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
-              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
-                <JpText>{site.home.themes.subtitle}</JpText>
-              </p>
+       {/* How it works + what's included — one service-explanation band instead of two identical cards */}
+       <section className="py-14 md:py-20 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+          <div ref={howItWorksReveal.ref}>
+            <div className={`text-center mb-10 md:mb-14 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
+               <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-5`}><JpText>{site.home.howItWorks.title}</JpText></h2>
+               <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
+                 <JpText>{site.home.howItWorks.subtitle}</JpText>
+               </p>
             </div>
-            <Button
-                variant="taupe"
-                size="cta"
-                onClick={() => {
-                  trackBookingClick('home_themes');
-                  window.location.href = ARTBAR_BOOKING_URL;
-                }}
-                className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:text-xs md:w-auto"
-            >
-              <JpText>{site.home.themes.cta}</JpText>
-            </Button>
-          </div>
 
-          <PopularThemesGrid
-            items={site.home.themes.items}
-            className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
-          />
-        </div>
-      </section>
-
-       {/* How It Works */}
-       <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
-        <div ref={howItWorksReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className={`text-center mb-12 md:mb-20 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
-             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-6`}><JpText>{site.home.howItWorks.title}</JpText></h2>
-             <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
-               <JpText>{site.home.howItWorks.subtitle}</JpText>
-             </p>
-          </div>
-
-          <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
-            {site.home.howItWorks.steps.map((step, index) => {
-              const Icon = getStepIcon(index);
-              return (
-                <div key={index} className="group relative bg-artbar-bg p-6 md:p-8 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] hover:bg-artbar-navy transition-all duration-300">
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-white text-artbar-taupe flex items-center justify-center mb-6 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
-                    <Icon size={24} className="md:w-7 md:h-7" />
+            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
+              {site.home.howItWorks.steps.map((step, index) => {
+                const Icon = getStepIcon(index);
+                return (
+                  <div key={index} className="group relative bg-artbar-bg p-6 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] hover:bg-artbar-navy transition-all duration-300">
+                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white text-artbar-taupe flex items-center justify-center mb-5 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
+                      <Icon size={22} className="md:w-6 md:h-6" />
+                    </div>
+                    <h3 className={`${theme.cardTitle} font-heading font-bold mb-2.5 text-artbar-navy group-hover:text-white transition-colors text-lg md:text-xl`}><JpText>{step.title}</JpText></h3>
+                    <p className={`${theme.body} text-artbar-gray group-hover:text-white/80 transition-colors leading-relaxed text-sm`}>
+                      <JpText>{step.desc}</JpText>
+                    </p>
                   </div>
-                  <h3 className={`${theme.cardTitle} font-heading font-bold mb-3 text-artbar-navy group-hover:text-white transition-colors text-lg md:text-2xl`}><JpText>{step.title}</JpText></h3>
-                  <p className={`${theme.body} text-artbar-gray group-hover:text-white/80 transition-colors leading-relaxed text-sm md:text-base`}>
-                    <JpText>{step.desc}</JpText>
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Features */}
-      <section className="py-16 md:py-32 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
-        <div ref={featuresReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
-           <div className={`text-center mb-12 md:mb-20 reveal ${featuresReveal.isVisible ? 'visible' : ''}`}>
-             <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-4`}><JpText>{site.home.features.title}</JpText></h2>
-             <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
-               <JpText>{site.home.features.subtitle}</JpText>
-             </p>
-           </div>
-           
-           <div className={`grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 reveal-stagger ${featuresReveal.isVisible ? 'visible' : ''}`}>
+          <div ref={featuresReveal.ref} className="mt-12 border-t border-artbar-navy/10 pt-10 md:mt-14 md:pt-12">
+            <p className={`mb-8 text-center font-heading text-[10px] font-bold uppercase tracking-[0.3em] text-artbar-taupe md:mb-10 md:text-xs reveal ${featuresReveal.isVisible ? 'visible' : ''}`}>
+              <JpText>{site.home.features.title}</JpText>
+            </p>
+            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 reveal-stagger ${featuresReveal.isVisible ? 'visible' : ''}`}>
               {site.home.features.items.map((feature, i) => (
                 <div key={i} className="flex flex-col items-center text-center group">
-                   <div className="w-full h-56 md:h-64 rounded-[var(--radius-card)] overflow-hidden mb-6 md:mb-8 shadow-sm relative">
+                   <div className="w-full h-44 md:h-52 rounded-[var(--radius-card)] overflow-hidden mb-5 md:mb-6 shadow-sm relative">
                       <Image
                         src={feature.image}
                         alt={stripJpSentinel(feature.title)}
@@ -688,188 +814,125 @@ export const Home: React.FC = () => {
                       />
                       <div className="absolute inset-0 bg-artbar-navy/10 group-hover:bg-transparent transition-colors"></div>
                    </div>
-                   <h3 className="text-xl md:text-2xl font-heading font-bold text-artbar-navy mb-3 md:mb-4"><JpText>{feature.title}</JpText></h3>
-                   <p className="text-artbar-gray leading-relaxed text-sm md:text-base">
+                   <h3 className="text-lg md:text-xl font-heading font-bold text-artbar-navy mb-2.5"><JpText>{feature.title}</JpText></h3>
+                   <p className="text-artbar-gray leading-relaxed text-sm">
                      <JpText>{feature.desc}</JpText>
                    </p>
                 </div>
               ))}
-           </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Testimonial carousel — full guest quotes (below Artbar Experience) */}
-      <section className="relative z-[2] bg-artbar-bg px-4 pb-24 pt-16 md:px-8 md:pb-36 md:pt-24 lg:px-12 lg:pt-28">
-        <div
-          ref={carouselTestimonialsReveal.ref}
-          className={`mx-auto max-w-[min(100%,52rem)] xl:max-w-6xl reveal ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}
-        >
-          <div className="mb-12 flex items-center gap-4 md:mb-16">
-            <div className="h-px flex-grow bg-artbar-navy/10" />
-            <h2 className="px-4 text-center font-heading text-xl font-heavy uppercase tracking-widest text-artbar-navy md:text-3xl lg:text-4xl">
+      {/* Guest reviews — dense wall of short quotes; the depth of proof, not one quote in a void */}
+      <section className="relative z-[2] bg-artbar-bg px-6 py-14 md:px-10 md:py-20">
+        <div ref={carouselTestimonialsReveal.ref} className="mx-auto max-w-[1400px]">
+          <div className={`mb-8 flex flex-col items-start justify-between gap-3 md:mb-10 md:flex-row md:items-end reveal ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}>
+            <h2 className="font-heading text-3xl font-heavy leading-none tracking-tight text-artbar-navy md:text-6xl">
               <JpText>{site.home.testimonials.title}</JpText>
             </h2>
-            <div className="h-px flex-grow bg-artbar-navy/10" />
+            <div className="flex items-center gap-2.5 md:gap-3">
+              <StarRating size={16} className="text-amber-400 md:[&>svg]:h-5 md:[&>svg]:w-5" />
+              <span className="font-heading text-xl font-heavy tabular-nums leading-none text-artbar-navy md:text-2xl">
+                {site.home.hero.ratingScore}
+              </span>
+              <span className="text-xs text-artbar-gray md:text-sm"><JpText>{site.home.hero.ratingSource}</JpText></span>
+            </div>
           </div>
 
-          <div
-            className={`relative isolate w-full overflow-hidden rounded-[var(--radius-feature)] border border-white/60 bg-white shadow-[0_32px_100px_-28px_rgba(5,55,97,0.22),0_0_0_1px_rgba(5,55,97,0.04)] ${TESTIMONIAL_CAROUSEL_CARD_HEIGHT_CLASS}`}
-          >
-            {activeCarouselTestimonial ? (
-              <div
-                key={activeIndex}
-                className="animate-testimonial-slide-in motion-reduce:animate-none flex h-full min-h-0 flex-col items-center px-5 pb-28 pt-8 text-center sm:px-10 sm:pb-32 sm:pt-10 md:px-14 md:pb-36 md:pt-12 lg:px-16"
+          <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-5 reveal-stagger ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}>
+            {reviewWall.map((item, i) => (
+              <figure
+                key={`${item.author}-${i}`}
+                className={`h-full min-h-[14rem] flex-col rounded-[var(--radius-card)] bg-white p-6 shadow-[0_16px_50px_-24px_rgba(5,55,97,0.25)] md:min-h-[16rem] md:p-7 ${i >= 4 ? 'hidden sm:flex' : 'flex'}`}
               >
-                <div className="mb-4 shrink-0 pt-2 md:mb-5 md:pt-3">
-                  <StarRating
-                    size={22}
-                    animated
-                    delayBase={100}
-                    className="justify-center text-amber-400 md:[&>svg]:h-6 md:[&>svg]:w-6"
-                  />
-                </div>
-
-                <div className="relative mx-auto mb-4 flex min-h-0 w-full max-w-3xl flex-1 flex-col justify-center overflow-y-auto overflow-x-hidden px-1 [-webkit-overflow-scrolling:touch] md:mb-5 md:max-w-4xl lg:max-w-5xl">
-                  <Quote
-                    size={48}
-                    className="pointer-events-none absolute left-0 top-0 text-artbar-taupe/[0.12] md:left-2 md:h-20 md:w-20"
-                    aria-hidden
-                  />
-                  <p className="relative z-10 text-pretty text-lg font-heading font-normal leading-[1.55] text-artbar-navy md:text-2xl md:leading-[1.55] lg:text-[1.65rem] lg:leading-[1.6] xl:text-3xl xl:leading-[1.5]">
-                    &ldquo;<JpText>{activeCarouselTestimonial.text}</JpText>&rdquo;
-                  </p>
-                  {activeCarouselTestimonial.date ? (
-                    <p className="mt-6 font-heading text-[11px] font-bold uppercase tracking-[0.2em] text-artbar-taupe md:mt-8 md:text-xs">
-                      <JpText>{activeCarouselTestimonial.date}</JpText>
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="flex shrink-0 flex-col items-center pb-1">
-                  {activeCarouselTestimonial.userImage ? (
-                    <img
-                      src={activeCarouselTestimonial.userImage}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      className="mb-3 h-12 w-12 rounded-full object-cover shadow-md ring-2 ring-artbar-bg md:h-14 md:w-14"
-                    />
-                  ) : (
-                    <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-artbar-bg to-artbar-bg/70 font-heading text-lg font-heavy text-artbar-navy shadow-inner ring-2 ring-white md:h-14 md:w-14 md:text-xl">
-                      {activeCarouselTestimonial.author.charAt(0)}
-                    </div>
-                  )}
-                  <p className="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-artbar-navy md:text-sm">
-                    <JpText>{activeCarouselTestimonial.author}</JpText>
-                  </p>
-                  {activeCarouselTestimonial.role ? (
-                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.12em] text-artbar-taupe md:text-xs">
-                      <JpText>{activeCarouselTestimonial.role}</JpText>
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            ) : null}
-
-            {/* Navigation: pill bar + elevated circular controls */}
-            <div className="absolute bottom-5 left-1/2 z-30 flex -translate-x-1/2 items-stretch gap-0 sm:bottom-7 md:bottom-8">
-              <div className="flex items-center gap-1 rounded-full border border-artbar-navy/10 bg-gradient-to-b from-white to-artbar-bg/40 p-1.5 pl-2 pr-2 shadow-[0_12px_40px_-12px_rgba(5,55,97,0.25)] backdrop-blur-md sm:gap-2 sm:p-2 sm:pl-3 sm:pr-3">
-                <button
-                  type="button"
-                  onClick={goPrevTestimonial}
-                  aria-label={previousTestimonialLabel}
-                  className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
-                >
-                  <ChevronLeft
-                    className="h-5 w-5 transition-transform group-hover:-translate-x-0.5 md:h-6 md:w-6"
-                    strokeWidth={2}
-                    aria-hidden
-                  />
-                </button>
-
-                <div className="flex min-w-[5.5rem] flex-col items-center justify-center px-2 sm:min-w-[6.5rem] sm:px-4">
-                  <span className="font-heading text-[9px] font-bold uppercase tracking-[0.25em] text-artbar-taupe/90">
-                    <JpText>{storiesLabel}</JpText>
+                <StarRating size={12} className="mb-3" />
+                <blockquote className="flex-grow text-pretty text-sm leading-relaxed text-artbar-navy md:text-base">
+                  &ldquo;<JpText>{item.text}</JpText>&rdquo;
+                </blockquote>
+                <figcaption className="mt-4 flex items-center justify-between gap-3">
+                  <span className="font-heading text-[10px] font-bold uppercase tracking-wide text-artbar-navy md:text-xs">
+                    <JpText>{item.author}</JpText>
                   </span>
-                  <p className="font-heading text-lg font-heavy tabular-nums leading-none text-artbar-navy md:text-xl">
-                    <span className="text-artbar-navy">{activeIndex + 1}</span>
-                    <span className="mx-1.5 text-artbar-taupe/50 md:mx-2">/</span>
-                    <span className="font-normal text-artbar-gray">{carouselTestimonials.length || '—'}</span>
-                  </p>
-                </div>
+                  {item.date ? (
+                    <span className="text-[10px] uppercase tracking-wider text-artbar-taupe md:text-xs"><JpText>{item.date}</JpText></span>
+                  ) : null}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <button
-                  type="button"
-                  onClick={goNextTestimonial}
-                  aria-label={nextTestimonialLabel}
-                  className="group flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-artbar-navy/10 bg-white text-artbar-navy shadow-sm transition-all duration-200 hover:border-artbar-taupe/50 hover:bg-artbar-taupe hover:text-white hover:shadow-md active:scale-95 md:h-12 md:w-12"
+      {/* Media coverage — full-card marquee (moved home from the retired /press page).
+          Auto-scrolls continuously so it's already in motion when scrolled into view;
+          pauses on hover. See .press-marquee in globals.css for the seamless loop. */}
+      <section id="media" className="scroll-mt-28 bg-white py-14 md:scroll-mt-32 md:py-20">
+        <div ref={asSeenInReveal.ref} className="mx-auto max-w-[1400px] px-6 md:px-10">
+          <div className={`text-center mb-8 md:mb-12 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
+            <h2 className="mb-4 font-heading text-3xl font-heavy tracking-tight text-artbar-navy md:text-5xl">
+              <JpText>{site.pressPage.title}</JpText>
+            </h2>
+            <p className="mx-auto max-w-3xl text-sm text-artbar-gray md:text-lg">
+              <JpText>{site.pressPage.subtitle}</JpText>
+            </p>
+          </div>
+
+          <div className={`reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
+            {/* Auto-scrolling marquee: two copies of the list drift left seamlessly,
+                pausing on hover so a card can be inspected. Reduced motion falls back
+                to a manually scrollable rail (see .press-marquee in globals.css). */}
+            <div className="press-marquee relative overflow-hidden">
+              <div className="press-marquee-track flex w-max gap-6 px-2 py-6">
+              {[...content.media, ...content.media].map((item, idx) => (
+                <div
+                  key={idx}
+                  aria-hidden={idx >= content.media.length}
+                  className="group/card relative h-[400px] w-[280px] flex-shrink-0 overflow-hidden rounded-[2rem] bg-gray-200 shadow-lg ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-2"
                 >
-                  <ChevronRight
-                    className="h-5 w-5 transition-transform group-hover:translate-x-0.5 md:h-6 md:w-6"
-                    strokeWidth={2}
-                    aria-hidden
+                  <img
+                    src={item.image || item.logo}
+                    alt={stripJpSentinel(item.outlet)}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
                   />
-                </button>
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/20 to-transparent"></div>
+
+                  <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                    <div className="absolute left-6 top-6 flex h-12 max-w-[120px] items-center justify-center rounded-xl bg-white/95 px-3 py-2 shadow-sm backdrop-blur-md">
+                      {item.logo ? (
+                        <img
+                          src={item.logo}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          className="h-full w-auto object-contain"
+                        />
+                      ) : (
+                        <span className="text-xs font-bold uppercase tracking-wider text-artbar-navy">{item.outlet.split(' ')[0]}</span>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 className="mb-2 font-heading text-2xl font-bold leading-tight drop-shadow-sm"><JpText>{item.outlet}</JpText></h3>
+                      <p className="inline-block rounded border border-white/20 bg-artbar-navy/50 px-2 py-1 font-mono text-sm opacity-80 backdrop-blur-sm">
+                        {item.date}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* As Seen In Section - GALLERY STYLE */}
-      <section className="py-24 md:py-48 bg-white">
-        <div ref={asSeenInReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
-          <div className={`text-center mb-16 md:mb-24 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
-             <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{mediaCoverageLabel}</JpText></span>
-             <h2 className="text-4xl md:text-7xl font-heading font-heavy text-artbar-navy tracking-tight"><JpText>{asSeenInHeading}</JpText></h2>
-          </div>
-          
-          <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 md:gap-10 reveal-stagger ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
-             {content.media.map((item, i) => (
-                <div key={i} className="group relative aspect-[4/5] rounded-[var(--radius-card)] overflow-hidden shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
-                   {/* Background Image (Main) */}
-                   {item.image ? (
-                     <Image
-                        src={item.image}
-                        alt={stripJpSentinel(item.outlet)}
-                        fill
-                        sizes="(min-width: 1280px) 220px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
-                        className="object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 opacity-60 group-hover:opacity-100"
-                     />
-                   ) : null}
-
-                   {/* Dark Gradient Overlay */}
-                   <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
-
-                   {/* Foreground Content */}
-                   <div className="absolute inset-0 p-6 flex flex-col justify-end items-center text-center">
-                      <div className="w-full bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-xl border border-white/50 transform transition-transform duration-500 group-hover:scale-105">
-                         <div className="relative h-10 md:h-12 w-full flex items-center justify-center mb-2">
-                            {item.logo ? (
-                               <Image
-                                 src={item.logo}
-                                 alt={stripJpSentinel(item.outlet)}
-                                 fill
-                                 sizes="(min-width: 768px) 140px, 110px"
-                                 className="object-contain"
-                               />
-                            ) : (
-                               <span className="text-[10px] font-bold text-artbar-navy uppercase tracking-widest"><JpText>{item.outlet}</JpText></span>
-                            )}
-                         </div>
-                         <span className="text-[10px] md:text-[11px] font-mono text-artbar-taupe font-bold tracking-widest block border-t border-gray-100 pt-2">
-                            {item.date}
-                         </span>
-                      </div>
-                   </div>
-                </div>
-             ))}
-          </div>
-        </div>
-      </section>
-
       {/* Bottom CTA */}
-      <section className="py-16 md:py-32 px-4 md:px-6">
+      <section className="py-14 md:py-24 px-4 md:px-6">
         <div ref={bottomCtaReveal.ref} className="max-w-[1400px] mx-auto">
         <div className={`bg-artbar-navy rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)] overflow-hidden relative shadow-2xl reveal ${bottomCtaReveal.isVisible ? 'visible' : ''}`}>
            <img 
@@ -881,7 +944,7 @@ export const Home: React.FC = () => {
            />
            <div className="absolute inset-0 bg-gradient-to-r from-artbar-navy/95 via-artbar-navy/80 to-artbar-navy/40"></div>
            
-           <div className="relative z-10 px-8 py-12 md:p-32 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 text-center md:text-left">
+           <div className="relative z-10 px-8 py-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 text-center md:text-left">
               <div className="max-w-2xl">
                  <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-4 block"><JpText>{site.home.cta.badge}</JpText></span>
                  <h2 className="text-3xl md:text-7xl font-heading font-heavy text-white mb-6 leading-tight">
