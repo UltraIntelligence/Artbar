@@ -786,9 +786,9 @@ export const Home: React.FC = () => {
                </p>
             </div>
 
-            <ol className={`grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 lg:pb-12 xl:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
+            <ol className={`grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
               {site.home.howItWorks.steps.map((step, index) => (
-                <li key={index} className={`group flex items-start gap-4 md:block ${index % 2 === 1 ? 'lg:translate-y-12' : ''}`}>
+                <li key={index} className="group flex items-start gap-4 md:block">
                   <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl shadow-sm md:h-auto md:w-full md:aspect-[4/3] lg:aspect-[4/5] md:rounded-[var(--radius-card)]">
                     <Image
                       src={HOW_IT_WORKS_IMAGES[index] ?? HOW_IT_WORKS_IMAGES[0]}
