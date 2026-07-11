@@ -74,7 +74,7 @@ export const Home: React.FC = () => {
   /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. `min(vw, vh)` clause shrinks the title on short viewports (e.g. landscape) so the headline doesn't dominate when there's no vertical room. */
   const heroTitleScale =
     lang === 'jp'
-      ? 'text-[clamp(1.5rem,min(7.4vw,6vh),1.9rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight'
+      ? 'text-[clamp(1.5rem,min(7.4vw,6vh),1.9rem)] sm:text-[3.75rem] md:text-[min(4.25rem,10vh)] lg:text-[min(5rem,10.5vh)] xl:text-[min(5.75rem,10.5vh)] 2xl:text-[min(6.25rem,11vh)] tracking-tight'
       : theme.heroTitle;
   const guestCountFormatted = formatGuestCountDisplay(lang);
   const guestConceptLabel = formatGuestConceptLabel(site.home.concept.guestsLabel, lang, guestCountFormatted);
@@ -298,9 +298,10 @@ export const Home: React.FC = () => {
           />
 
           <div
-            className="absolute inset-0 z-[3] flex min-h-full flex-col items-center justify-end pb-16 px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] text-center md:justify-center md:pb-20 md:min-h-[100svh] md:px-16 lg:px-20 md:pt-20 max-w-[1400px] mx-auto"
+            className="absolute inset-0 z-[3] flex min-h-full flex-col items-center justify-end pb-16 px-5 pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] text-center md:justify-start md:pb-20 md:min-h-[100svh] md:px-16 lg:px-20 md:pt-[6.75rem] max-w-[1400px] mx-auto"
           >
-            <div className="max-w-4xl flex w-full flex-col items-center gap-4 sm:gap-5 md:gap-7 lg:gap-8">
+            {/* md:my-auto = "safe center": centers when there's room, pins below the nav (pt-28) when the stack is taller than a short viewport, instead of riding under the transparent navbar */}
+            <div className="max-w-4xl flex w-full flex-col items-center gap-4 sm:gap-5 md:my-auto md:gap-7 lg:gap-8">
 
               {/* Badge — JP: `font-sans` inner; padding between earlier symmetric and the heavier top bias */}
               <span
