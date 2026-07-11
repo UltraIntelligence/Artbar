@@ -416,7 +416,7 @@ export const Home: React.FC = () => {
             <p className="font-heading text-[10px] font-bold uppercase tracking-[0.3em] text-artbar-taupe md:text-xs">
               <JpText>{quickInfo.eyebrow}</JpText>
             </p>
-            <h2 className="mt-3 font-heading text-3xl font-heavy leading-tight tracking-tight text-artbar-navy md:text-5xl">
+            <h2 className={`mt-3 font-heading font-heavy leading-tight tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
               <JpText>{quickInfo.title}</JpText>
             </h2>
           </div>
@@ -460,10 +460,10 @@ export const Home: React.FC = () => {
         <div className="mx-auto max-w-5xl px-6">
           <div className="mb-4 flex flex-col justify-between gap-3 md:mb-6 md:flex-row md:items-end">
             <div>
-              <h2 className="font-heading text-3xl font-heavy leading-none tracking-tight text-artbar-navy md:text-6xl">
+              <h2 className={`font-heading font-heavy leading-none tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
                 <JpText>{upcomingSessions.title}</JpText>
               </h2>
-              <p className={`${theme.bodyLarge} mt-3 max-w-lg text-sm text-artbar-gray md:mt-4 md:text-xl`}>
+              <p className={`${theme.bodyLarge} mt-3 max-w-lg text-artbar-gray md:mt-4`}>
                 <JpText>{upcomingSessions.subtitle}</JpText>
               </p>
             </div>
@@ -520,8 +520,8 @@ export const Home: React.FC = () => {
         <div ref={themesReveal.ref} className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className={`flex flex-col md:flex-row justify-between items-start md:items-center mb-12 md:mb-16 gap-6 reveal ${themesReveal.isVisible ? 'visible' : ''}`}>
             <div>
-              <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none"><JpText>{site.home.themes.title}</JpText></h2>
-              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg text-sm md:text-xl`}>
+              <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none`}><JpText>{site.home.themes.title}</JpText></h2>
+              <p className={`${theme.bodyLarge} text-artbar-gray max-w-lg`}>
                 <JpText>{site.home.themes.subtitle}</JpText>
               </p>
             </div>
@@ -781,7 +781,7 @@ export const Home: React.FC = () => {
           <div ref={howItWorksReveal.ref}>
             <div className={`text-center mb-10 md:mb-14 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
                <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-5`}><JpText>{site.home.howItWorks.title}</JpText></h2>
-               <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto text-sm md:text-xl`}>
+               <p className={`${theme.bodyLarge} text-artbar-gray max-w-2xl mx-auto`}>
                  <JpText>{site.home.howItWorks.subtitle}</JpText>
                </p>
             </div>
@@ -821,7 +821,7 @@ export const Home: React.FC = () => {
       <section className="relative z-[2] bg-artbar-bg px-6 py-14 md:px-10 md:py-20">
         <div ref={carouselTestimonialsReveal.ref} className="mx-auto max-w-[1400px]">
           <div className={`mb-8 flex flex-col items-start justify-between gap-3 md:mb-10 md:flex-row md:items-end reveal ${carouselTestimonialsReveal.isVisible ? 'visible' : ''}`}>
-            <h2 className="font-heading text-3xl font-heavy leading-none tracking-tight text-artbar-navy md:text-6xl">
+            <h2 className={`font-heading font-heavy leading-none tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
               <JpText>{site.home.testimonials.title}</JpText>
             </h2>
             <div className="flex items-center gap-2.5 md:gap-3">
@@ -863,10 +863,10 @@ export const Home: React.FC = () => {
       <section id="media" className="scroll-mt-28 bg-white py-14 md:scroll-mt-32 md:py-20">
         <div ref={asSeenInReveal.ref} className="mx-auto max-w-[1400px] px-6 md:px-10">
           <div className={`text-center mb-8 md:mb-12 reveal ${asSeenInReveal.isVisible ? 'visible' : ''}`}>
-            <h2 className="mb-4 font-heading text-3xl font-heavy tracking-tight text-artbar-navy md:text-5xl">
+            <h2 className={`mb-4 font-heading font-heavy tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
               <JpText>{site.pressPage.title}</JpText>
             </h2>
-            <p className="mx-auto max-w-3xl text-sm text-artbar-gray md:text-lg">
+            <p className={`${theme.bodyLarge} mx-auto max-w-3xl text-artbar-gray`}>
               <JpText>{site.pressPage.subtitle}</JpText>
             </p>
           </div>
@@ -939,7 +939,7 @@ export const Home: React.FC = () => {
            <div className="relative z-10 px-8 py-12 md:p-20 flex flex-col md:flex-row items-center justify-between gap-10 md:gap-12 text-center md:text-left">
               <div className="max-w-2xl">
                  <span className="text-artbar-taupe font-heading font-bold tracking-widest text-[10px] md:text-sm uppercase mb-4 block"><JpText>{site.home.cta.badge}</JpText></span>
-                 <h2 className="text-3xl md:text-6xl font-heading font-heavy text-white mb-6 leading-tight text-balance">
+                 <h2 className={`${theme.sectionTitle} font-heading font-heavy text-white mb-6 leading-tight text-balance`}>
                    <JpText>{site.home.cta.title}</JpText>
                  </h2>
                  <p className="text-base md:text-xl text-artbar-light-taupe/90 font-light max-w-lg leading-relaxed">
