@@ -141,6 +141,7 @@ function checkRedirects() {
     '/press',
     '/press/((?!.*\\.[a-zA-Z0-9]+$).*)',
     '/en/press',
+    '/en/press/((?!.*\\.[a-zA-Z0-9]+$).*)',
     '/wp-sitemap.xml',
   ]) {
     assert(ruleBySource.get(source)?.permanent === true, `Legacy redirect should be permanent: ${source}`);
@@ -168,6 +169,7 @@ function checkRedirects() {
   assert(ruleBySource.get('/press')?.destination === '/#media', '/press should consolidate to the home media section');
   assert(ruleBySource.get('/press/((?!.*\\.[a-zA-Z0-9]+$).*)')?.destination === '/#media', '/press/* pages should consolidate to the home media section');
   assert(ruleBySource.get('/en/press')?.destination === '/en#media', '/en/press should consolidate to the EN home media section');
+  assert(ruleBySource.get('/en/press/((?!.*\\.[a-zA-Z0-9]+$).*)')?.destination === '/en#media', '/en/press/* pages should consolidate to the EN home media section');
 }
 
 function checkJsonLdHelpers() {

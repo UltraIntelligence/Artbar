@@ -498,13 +498,18 @@ export const Home: React.FC = () => {
                 under 40px, so pulling this widget up clipped the last rail's card
                 corners. Let the two widgets sit flush — the natural padding reads as
                 a clean break between the urgent rails and the browse-ahead grid. */}
-            <iframe
-              data-painta-embed
-              src={`https://painta.co/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
-              title={stripJpSentinel(upcomingSessions.laterIframeTitle)}
-              loading="lazy"
-              className="block h-[640px] w-full border-0"
-            />
+            {/* hasMounted gate: `from` is derived from Date.now(), so SSR and client HTML
+                could disagree across the JST day boundary (hydration mismatch). Render
+                client-only — the iframe is lazy anyway. */}
+            {hasMounted && (
+              <iframe
+                data-painta-embed
+                src={`https://painta.co/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
+                title={stripJpSentinel(upcomingSessions.laterIframeTitle)}
+                loading="lazy"
+                className="block h-[640px] w-full border-0"
+              />
+            )}
           </div>
         </div>
         {/* afterInteractive (not lazyOnload): the listener must attach before the lazy iframe

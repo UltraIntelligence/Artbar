@@ -138,7 +138,7 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => handleBookClick('nav_book_button')}
-            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2 shrink-0 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-artbar-taupe/90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2 shrink-0 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
           >
             {site.nav.book}
           </button>

@@ -175,7 +175,7 @@ export const Footer: React.FC = () => {
             <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-5">
               {FOOTER_STUDIOS.map((studio) => (
                 <li key={studio.id}>
-                  <Link href={href('/locations')} className="group block py-1">
+                  <Link href={href(locationPath(studio.id))} className="group block py-1">
                     <span className="block text-artbar-light-taupe transition-colors group-hover:text-white">
                       {lang === 'en' ? studio.nameEn : <JpText>{studio.nameJp}</JpText>}
                     </span>

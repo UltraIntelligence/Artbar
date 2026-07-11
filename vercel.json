@@ -3,6 +3,7 @@
     { "source": "/press", "destination": "/#media", "permanent": true },
     { "source": "/press/((?!.*\\.[a-zA-Z0-9]+$).*)", "destination": "/#media", "permanent": true },
     { "source": "/en/press", "destination": "/en#media", "permanent": true },
+    { "source": "/en/press/((?!.*\\.[a-zA-Z0-9]+$).*)", "destination": "/en#media", "permanent": true },
     { "source": "/events", "destination": "https://booking.artbar.co.jp", "permanent": true },
     { "source": "/events/guest-teacher-class-chris-03142025", "destination": "/blog/chris-pyrate-interview", "permanent": true },
     { "source": "/events/(.*)", "destination": "https://booking.artbar.co.jp/$1", "permanent": true },
