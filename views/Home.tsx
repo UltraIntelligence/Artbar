@@ -954,17 +954,18 @@ export const Home: React.FC = () => {
                      trackBookingClick('home_bottom');
                      window.location.href = ARTBAR_BOOKING_URL;
                    }}
-                   className="w-full min-w-0 shadow-xl sm:w-auto sm:min-w-[12.5rem]"
+                   className="w-full min-w-0 whitespace-nowrap shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
-                   <JpText>{site.home.cta.btnBook}</JpText>
+                   {/* Sentinels stripped: JpText's <wbr> breaks even inside whitespace-nowrap */}
+                   {stripJpSentinel(site.home.cta.btnBook)}
                  </Button>
                  <Button
                    onClick={() => router.push(localizeHrefForLanguage('/contact', lang))}
                    variant="outlineWhite"
                    size="cta"
-                   className="w-full sm:w-auto sm:min-w-[12.5rem]"
+                   className="w-full whitespace-nowrap sm:w-auto sm:min-w-[12.5rem]"
                  >
-                   <JpText>{site.home.cta.btnContact}</JpText>
+                   {stripJpSentinel(site.home.cta.btnContact)}
                  </Button>
               </div>
            </div>
