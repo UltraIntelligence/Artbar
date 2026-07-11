@@ -138,6 +138,9 @@ function checkRedirects() {
     '/location/',
     '/contact-ja',
     '/contact-ja/',
+    '/press',
+    '/press/((?!.*\\.[a-z0-9]+$).*)',
+    '/en/press',
     '/wp-sitemap.xml',
   ]) {
     assert(ruleBySource.get(source)?.permanent === true, `Legacy redirect should be permanent: ${source}`);
@@ -162,6 +165,9 @@ function checkRedirects() {
   assert(ruleBySource.get('/contact-ja')?.destination === '/contact', '/contact-ja should consolidate to /contact');
   assert(ruleBySource.get('/contact-ja/')?.destination === '/contact', '/contact-ja/ should consolidate to /contact');
   assert(ruleBySource.get('/wp-sitemap.xml')?.destination === '/sitemap.xml', 'Dead WordPress sitemap should consolidate to the current sitemap');
+  assert(ruleBySource.get('/press')?.destination === '/#media', '/press should consolidate to the home media section');
+  assert(ruleBySource.get('/press/((?!.*\\.[a-z0-9]+$).*)')?.destination === '/#media', '/press/* pages should consolidate to the home media section');
+  assert(ruleBySource.get('/en/press')?.destination === '/en#media', '/en/press should consolidate to the EN home media section');
 }
 
 function checkJsonLdHelpers() {

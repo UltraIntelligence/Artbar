@@ -53,7 +53,7 @@ export function PopularThemesGrid({
                 <h3 className={`mb-1.5 flex min-h-[2.5rem] items-end text-lg font-heading font-bold leading-tight tracking-tight text-white line-clamp-2 md:mb-2 ${compact ? 'md:min-h-[3.5rem] md:text-2xl' : 'md:min-h-[4.25rem] md:text-3xl'}`}>
                   <JpText>{themeItem.title}</JpText>
                 </h3>
-                <p className={`min-h-[3.75rem] text-xs font-light leading-snug text-white/85 line-clamp-3 sm:text-sm ${compact ? 'md:min-h-0 md:text-sm md:leading-snug md:line-clamp-2' : 'md:min-h-[4.25rem] md:text-base md:leading-relaxed md:line-clamp-3'}`}>
+                <p className={`min-h-[3.75rem] text-xs font-light leading-snug text-white/85 line-clamp-3 sm:text-sm ${compact ? 'md:min-h-[2.5rem] md:text-sm md:leading-snug md:line-clamp-2' : 'md:min-h-[4.25rem] md:text-base md:leading-relaxed md:line-clamp-3'}`}>
                   <JpText>{themeItem.desc}</JpText>
                 </p>
               </div>
