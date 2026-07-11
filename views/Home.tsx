@@ -5,9 +5,7 @@ import Image from 'next/image';
 import Script from 'next/script';
 import {
   Wine,
-  Calendar,
   Palette,
-  Heart,
   Clock,
   MapPin,
   ArrowRight,
@@ -38,6 +36,17 @@ import {
 } from '../lib/guest-count';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useMediaMinMd } from '../hooks/useMediaMinMd';
+import { GI } from '../data/generated-image-paths';
+
+/** Step imagery for the how-it-works flow — reuses the photos from the retired
+    "experience" grid, whose facts (all-inclusive, drinks, bilingual) now live
+    inside the step copy itself. Order matches `howItWorks.steps`. */
+const HOW_IT_WORKS_IMAGES = [
+  GI.featureAllInclusive,
+  GI.featureFreeFlowDrinks,
+  GI.featureBilingual,
+  GI.conceptDetail,
+];
 import { useNearViewport } from '../hooks/useNearViewport';
 import { PrefetchHeroes } from '../components/PrefetchHeroes';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
@@ -86,7 +95,6 @@ export const Home: React.FC = () => {
   const conceptReveal = useScrollReveal();
   const howItWorksReveal = useScrollReveal();
   const themesReveal = useScrollReveal();
-  const featuresReveal = useScrollReveal();
   const featuredTestimonialsReveal = useScrollReveal();
   const carouselTestimonialsReveal = useScrollReveal();
   const asSeenInReveal = useScrollReveal();
@@ -157,12 +165,6 @@ export const Home: React.FC = () => {
   const reviewWall = carouselTestimonials
     .filter((t) => !featuredAuthors.has(t.author) && t.text.length <= 120)
     .slice(0, 6);
-
-  // Icon mapping helper
-  const getStepIcon = (index: number) => {
-    const icons = [Calendar, Wine, Palette, Heart];
-    return icons[index] || Calendar;
-  };
 
 
   const homeUiCopy = localizedCopy.ui.home;
@@ -768,7 +770,11 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-       {/* How it works + what's included — one service-explanation band instead of two identical cards */}
+       {/* How it works — one numbered, photo-led flow. The old icon-card grid and the
+           "experience" photo grid repeated each other (drinks, all-inclusive, guidance);
+           each fact now lives inside its step and real photos replace the icon chips.
+           On desktop, alternate steps sit lower, like canvases leaning at different
+           heights along a studio ledge. */}
        <section className="py-14 md:py-20 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div ref={howItWorksReveal.ref}>
@@ -779,48 +785,33 @@ export const Home: React.FC = () => {
                </p>
             </div>
 
-            <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
-              {site.home.howItWorks.steps.map((step, index) => {
-                const Icon = getStepIcon(index);
-                return (
-                  <div key={index} className="group relative bg-artbar-bg p-6 rounded-[var(--radius-card)] md:rounded-[var(--radius-section)] hover:bg-artbar-navy transition-all duration-300">
-                    <div className="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-white text-artbar-taupe flex items-center justify-center mb-5 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
-                      <Icon size={22} className="md:w-6 md:h-6" />
-                    </div>
-                    <h3 className={`${theme.cardTitle} font-heading font-bold mb-2.5 text-artbar-navy group-hover:text-white transition-colors text-lg md:text-xl`}><JpText>{step.title}</JpText></h3>
-                    <p className={`${theme.body} text-artbar-gray group-hover:text-white/80 transition-colors leading-relaxed text-sm`}>
+            <ol className={`grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 lg:pb-12 xl:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
+              {site.home.howItWorks.steps.map((step, index) => (
+                <li key={index} className={`group flex items-start gap-4 md:block ${index % 2 === 1 ? 'lg:translate-y-12' : ''}`}>
+                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl shadow-sm md:h-auto md:w-full md:aspect-[4/3] lg:aspect-[4/5] md:rounded-[var(--radius-card)]">
+                    <Image
+                      src={HOW_IT_WORKS_IMAGES[index] ?? HOW_IT_WORKS_IMAGES[0]}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 96px, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span
+                      aria-hidden
+                      className="absolute left-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 pt-0.5 font-heading text-sm font-bold leading-none text-artbar-navy shadow-sm ring-1 ring-artbar-navy/10 md:left-4 md:top-4 md:h-10 md:w-10 md:text-lg"
+                    >
+                      {index + 1}
+                    </span>
+                  </div>
+                  <div className="pt-1 md:mt-5 md:pt-0">
+                    <h3 className={`${theme.cardTitle} font-heading font-bold mb-1.5 text-artbar-navy text-lg md:mb-2.5 md:text-xl`}><JpText>{step.title}</JpText></h3>
+                    <p className={`${theme.body} text-artbar-gray leading-relaxed text-sm`}>
                       <JpText>{step.desc}</JpText>
                     </p>
                   </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <div ref={featuresReveal.ref} className="mt-12 border-t border-artbar-navy/10 pt-10 md:mt-14 md:pt-12">
-            <p className={`mb-8 text-center font-heading text-[10px] font-bold uppercase tracking-[0.3em] text-artbar-taupe md:mb-10 md:text-xs reveal ${featuresReveal.isVisible ? 'visible' : ''}`}>
-              <JpText>{site.home.features.title}</JpText>
-            </p>
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 reveal-stagger ${featuresReveal.isVisible ? 'visible' : ''}`}>
-              {site.home.features.items.map((feature, i) => (
-                <div key={i} className="flex flex-col items-center text-center group">
-                   <div className="w-full h-44 md:h-52 rounded-[var(--radius-card)] overflow-hidden mb-5 md:mb-6 shadow-sm relative">
-                      <Image
-                        src={feature.image}
-                        alt={stripJpSentinel(feature.title)}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-artbar-navy/10 group-hover:bg-transparent transition-colors"></div>
-                   </div>
-                   <h3 className="text-lg md:text-xl font-heading font-bold text-artbar-navy mb-2.5"><JpText>{feature.title}</JpText></h3>
-                   <p className="text-artbar-gray leading-relaxed text-sm">
-                     <JpText>{feature.desc}</JpText>
-                   </p>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </div>
       </section>

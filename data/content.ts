@@ -410,10 +410,10 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         title: "How Artbar works",
         subtitle: "No art skills? No problem. We make it easy to go from blank canvas to masterpiece.",
         steps: [
-          { title: "Book", desc: "Choose a session from our calendar that sparks your interest. We update our schedule monthly." },
-          { title: "Sip", desc: "Enjoy bottomless wine, tea, or coffee while you settle in. Arrive 15 minutes early to grab a drink." },
-          { title: "Create", desc: "Follow our artist's step-by-step guidance. No experience is needed to get great results." },
-          { title: "Enjoy", desc: "Most paintings can be taken home the same day. Some require drying time and will be shipped to you COD. See event details." }
+          { title: "Book", desc: "Pick a theme and date from the calendar. Canvas, paints, and apron are all set up for you — just bring yourself." },
+          { title: "Sip", desc: "Wine, tea, coffee, and soft drinks are free-flow all session. Arrive 15 minutes early and start with a toast." },
+          { title: "Create", desc: "Our artist guides you step by step — many sessions in both English and Japanese. No experience needed." },
+          { title: "Enjoy", desc: "Leave with a one-of-a-kind piece. Most paintings go home the same day; some ship after drying. See event details." }
         ]
       },
       themes: {
@@ -723,10 +723,10 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         title: "Artbarの楽しみ方",
         subtitle: "ワインを片手に、自由に描こう。真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。",
         steps: [
-          { title: "予約", desc: "カレンダーから、心惹かれるテーマのセッションをお選びください。" },
-          { title: "乾杯", desc: "スタジオではフリーフローのワインやコーヒーをご用意。エプロンをつけて、リラックスしたひとときを。" },
-          { title: "制作", desc: "経験豊富なインストラクターがサポートするので、初めての方でも驚くような作品に仕上がります。" },
-          { title: "完成", desc: "作品は10〜15日以内にご自宅へ配送。届いたらすぐ飾れます。" }
+          { title: "予約", desc: "カレンダーから、心惹かれるテーマと日程を選ぶだけ。画材もエプロンも全てご用意しているので、手ぶらでどうぞ。" },
+          { title: "乾杯", desc: "ワイン、紅茶、コーヒー、ソフトドリンクはフリーフロー。まずはお好きな一杯で乾杯から。" },
+          { title: "制作", desc: "インストラクターがステップごとに丁寧にガイド。多くのクラスは日英バイリンガル対応で、初めてでも驚くような仕上がりに。" },
+          { title: "完成", desc: "世界にひとつの作品が完成。ほとんどの作品は当日お持ち帰りOK（一部は乾燥後に配送）。" }
         ]
       },
       themes: {
