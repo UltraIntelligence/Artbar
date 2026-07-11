@@ -399,7 +399,7 @@ export const Home: React.FC = () => {
               <button
                 type="button"
                 onClick={scrollToPopularThemes}
-                className="inline-flex min-h-[44px] items-center gap-1.5 px-3 py-2 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200"
+                className="inline-flex min-h-[44px] items-center gap-1.5 px-3 py-2 font-heading text-base md:text-lg text-white/70 tracking-wide hover:text-white transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <span className="animate-text-shimmer"><JpText>{site.home.hero.ctaFindPainting}</JpText></span>
                 <ArrowRight size={14} className="animate-text-shimmer text-white/50" aria-hidden />
@@ -473,7 +473,7 @@ export const Home: React.FC = () => {
                 trackBookingClick('home_today_tomorrow');
                 window.location.href = ARTBAR_BOOKING_URL;
               }}
-              className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 self-start font-heading text-sm font-bold tracking-wide text-artbar-navy underline decoration-artbar-taupe decoration-2 underline-offset-8 transition-colors hover:text-artbar-taupe md:self-auto md:text-base"
+              className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 self-start font-heading text-sm font-bold tracking-wide text-artbar-navy underline decoration-artbar-taupe decoration-2 underline-offset-8 transition-colors hover:text-artbar-taupe md:self-auto md:text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
             >
               <JpText>{upcomingSessions.allLink}</JpText>
               <ArrowRight size={16} className="shrink-0" aria-hidden />
