@@ -729,7 +729,7 @@ export const Home: React.FC = () => {
       <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
         <div className="mx-auto max-w-[1400px]">
           {/* Same header pattern as sibling sections (h2 sectionTitle + bodyLarge lead) */}
-          <div className="mb-10 text-center md:mb-14">
+          <div className="mb-14 text-center md:mb-20">
             <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
               <JpText>{meetRegularsHeading}</JpText>
             </h2>
