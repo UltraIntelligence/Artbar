@@ -106,7 +106,7 @@ export const Navbar: React.FC = () => {
       }`}
     >
       <div
-        className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-24 flex justify-between items-center ${
+        className={`max-w-[1400px] mx-auto px-4 sm:px-6 md:px-16 lg:px-12 2xl:px-24 flex justify-between items-center ${
           isHeroNavLayout ? 'py-6 md:py-10' : 'py-4'
         }`}
       >
@@ -115,7 +115,7 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop Nav: Tighter spacing for Japanese (space-x-4 vs space-x-6) */}
-        <div className={`hidden xl:flex ${lang === 'jp' ? 'space-x-4' : 'space-x-6'} items-center`}>
+        <div className={`hidden xl:flex ${lang === 'jp' ? 'space-x-3 2xl:space-x-4' : 'space-x-6'} items-center`}>
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -131,14 +131,14 @@ export const Navbar: React.FC = () => {
           <button
              onClick={toggleLang}
              aria-label={lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
-             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8`}
+             className={`${isTransparent ? 'text-white' : 'text-artbar-navy'} hover:text-artbar-taupe font-heading font-bold text-sm flex items-center gap-1 uppercase w-8 shrink-0 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current`}
           >
              {lang === 'en' ? jpCopy.ui.navbar.compactJapanese : jpCopy.ui.navbar.compactEnglish}
           </button>
 
           <button
             onClick={() => handleBookClick('nav_book_button')}
-            className="px-6 py-2.5 rounded-full font-heading font-bold transition-all bg-artbar-taupe text-artbar-navy hover:bg-opacity-90 shadow-sm text-sm hover:scale-105 active:scale-95 pt-3 pb-2"
+            className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-artbar-taupe/90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2 shrink-0 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
           >
             {site.nav.book}
           </button>
@@ -171,9 +171,11 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => handleBookClick('mobile_menu_book_button')}
-              className="mb-2 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-base font-bold tracking-wide text-artbar-navy shadow-lg transition-transform active:scale-[0.98] sm:text-lg"
+              className="mb-2 inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-base font-bold tracking-wide text-artbar-navy shadow-lg transition-transform active:scale-[0.98] sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
             >
-              <CalendarDays size={18} className="shrink-0" aria-hidden />
+              {/* Optical alignment: Josefin's glyphs render high in the flex-centered line box,
+                  so the icon must rise to the text's measured ink center (baseline-probe verified) */}
+              <CalendarDays size={18} className="shrink-0 -translate-y-[2px]" aria-hidden />
               {site.nav.book}
             </button>
 
@@ -194,7 +196,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={handleMobileLanguageToggle}
-              className="flex min-h-[44px] items-center gap-2 text-left text-base font-heading font-bold text-artbar-navy sm:text-lg"
+              className="flex min-h-[44px] items-center gap-2 text-left text-base font-heading font-bold text-artbar-navy sm:text-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
             >
               <Globe size={18} className="shrink-0" /> {lang === 'en' ? jpCopy.ui.navbar.switchToJapanese : jpCopy.ui.navbar.switchToEnglish}
             </button>
@@ -204,7 +206,7 @@ export const Navbar: React.FC = () => {
     </nav>
 
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom,0px))] pt-3 transition-all duration-300 ease-out xl:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(0.85rem,env(safe-area-inset-bottom,0px))] pt-3 transition-[transform,opacity] duration-300 ease-out xl:hidden ${
         showMobileStickyCta ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
       aria-hidden={!showMobileStickyCta}
@@ -213,10 +215,12 @@ export const Navbar: React.FC = () => {
         <button
           type="button"
           onClick={() => handleBookClick('mobile_sticky_book_button')}
-          className="inline-flex min-h-[46px] w-full items-center justify-center gap-2 rounded-full bg-artbar-taupe px-6 pt-3 pb-2 text-center font-heading text-sm font-bold tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.98]"
+          className="inline-flex h-[46px] w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-0 text-center font-heading text-sm font-bold leading-none tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
         >
-          <CalendarDays size={17} className="shrink-0" aria-hidden />
-          {site.nav.book}
+          <span className="inline-flex translate-y-px items-center gap-2 leading-none">
+            <CalendarDays size={17} className="shrink-0 -translate-y-[2px]" aria-hidden />
+            <span>{site.nav.book}</span>
+          </span>
         </button>
       </div>
     </div>

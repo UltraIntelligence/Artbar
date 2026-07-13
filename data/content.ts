@@ -26,7 +26,7 @@ export const defaultContent: ContentData = {
     typography: {
       // Mobile-first scale; cap xl so two headline rows fit in viewport with proof + CTAs (no clip/overlap)
       heroTitle:
-        'text-[clamp(1.9rem,min(5.65vw+0.68rem,7vh),2.7rem)] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.75rem] 2xl:text-[6.25rem] tracking-tight',
+        'text-[clamp(1.9rem,min(5.65vw+0.68rem,7vh),2.7rem)] sm:text-[3.75rem] md:text-[min(4.25rem,10vh)] lg:text-[min(5rem,10.5vh)] xl:text-[min(5.75rem,10.5vh)] 2xl:text-[min(6.25rem,11vh)] tracking-tight',
       pageTitle: "text-4xl sm:text-5xl md:text-6xl lg:text-7xl",
       sectionTitle: "text-3xl sm:text-4xl md:text-5xl",
       cardTitle: "text-2xl md:text-3xl",
@@ -389,12 +389,12 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         titleHighlight: "Paint & Sip Studios",
         subtitle:
           "Beginner friendly.\nCentrally located.\nUnforgettable.",
-        ctaSchedule: "Book Your Session",
+        ctaSchedule: "See dates and prices",
         ctaPrivate: "Private Events",
         ctaLineChat: "Chat With Us",
         ctaFindPainting: "Find Your Painting",
         ratingScore: "4.8",
-        ratingSource: "Average rating",
+        ratingSource: "across thousands of classes",
         guestsNumber: "101,000",
         guestsSuffix: "guests across Tokyo — and counting"
       },
@@ -410,16 +410,16 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         title: "How Artbar works",
         subtitle: "No art skills? No problem. We make it easy to go from blank canvas to masterpiece.",
         steps: [
-          { title: "Book", desc: "Choose a session from our calendar that sparks your interest. We update our schedule monthly." },
-          { title: "Sip", desc: "Enjoy bottomless wine, tea, or coffee while you settle in. Arrive 15 minutes early to grab a drink." },
-          { title: "Create", desc: "Follow our artist's step-by-step guidance. No experience is needed to get great results." },
-          { title: "Enjoy", desc: "Most paintings can be taken home the same day. Some require drying time and will be shipped to you COD. See event details." }
+          { title: "Book", desc: "Pick a theme and date from the calendar. Canvas, paints, and apron are all set up for you — just bring yourself." },
+          { title: "Sip", desc: "Wine, tea, coffee, and soft drinks are free-flow all session. Arrive 15 minutes early and start with a toast." },
+          { title: "Create", desc: "Our artist guides you step by step — many sessions in both English and Japanese. No experience needed." },
+          { title: "Enjoy", desc: "Leave with a one-of-a-kind piece. Most paintings go home the same day; some ship after drying. See event details." }
         ]
       },
       themes: {
         title: "Popular Themes",
         subtitle: "From classic masterpieces to modern techniques, we have something for everyone.",
-        cta: "View Schedule",
+        cta: "See dates and prices",
         items: POPULAR_THEMES
       },
       features: {
@@ -692,25 +692,24 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
       press: "メディア掲載",
       contact: "お問い合わせ",
       gifts: "ギフト券",
-      book: "予約する",
+      book: "空き日程を見る",
       blog: "ジャーナル",
       paintYourPet: "ペットを描こう"
     },
     home: {
       hero: {
-        badge: "「10周年記念」",
-        title: "東京で一番愛されている",
-        titleHighlight: "ペイント＆シップスタジオ",
-        subtitle:
-          "初心者歓迎。東京各地で開催中。<wbr>やってみると、意外と簡単。<wbr>楽しさは、想像以上。",
-        ctaSchedule: "セッションを予約する",
+        badge: "10周年記念",
+        title: "ドリンク片手に楽しむ",
+        titleHighlight: "大人のアート体験",
+        subtitle: "初心者歓迎。ワインを飲みながら手ぶらで楽しめる、東京・横浜のペイント＆シップスタジオ。",
+        ctaSchedule: "空き日程と料金を見る",
         ctaPrivate: "プライベートイベント",
         ctaLineChat: "LINEで相談する",
         ctaFindPainting: "描きたい絵を探す",
         ratingScore: "4.8",
-        ratingSource: "平均評価",
+        ratingSource: "数千回のクラスから",
         guestsNumber: "101,000",
-        guestsSuffix: "「{{count}}名が体験済み。まだまだ増えています。」"
+        guestsSuffix: "これまでに{{count}}名が参加。まだまだ増えています。"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
@@ -718,22 +717,22 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         p1: "好きな絵を選んで、グラスを傾けて、自分のペースで描くだけ。\n経験不要。あとは来てみれば、わかります。",
         ratingLabel: "平均評価",
         guestsCount: "101,000",
-        guestsLabel: "{{count}}名が体験済み。まだまだ増えています。"
+        guestsLabel: "これまでに{{count}}名が参加。まだまだ増えています。"
       },
       howItWorks: {
         title: "Artbarの楽しみ方",
-        subtitle: "アートの経験は一切不要. 真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。",
+        subtitle: "ワインを片手に、自由に描こう。真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。",
         steps: [
-          { title: "予約", desc: "カレンダーから、心惹かれるテーマのセッションをお選びください。" },
-          { title: "乾杯", desc: "スタジオではフリーフローのワインやコーヒーをご用意。エプロンをつけて、リラックスしたひとときを。" },
-          { title: "制作", desc: "インストラクターが丁寧にガイドします。初心者の方でも、驚くような作品に仕上がります。" },
-          { title: "完成", desc: "作品は10〜15日以内にご自宅へ配送。届いたらすぐ飾れます。" }
+          { title: "予約", desc: "カレンダーから、心惹かれるテーマと日程を選ぶだけ。画材もエプロンも全てご用意しているので、手ぶらでどうぞ。" },
+          { title: "乾杯", desc: "ワイン、紅茶、コーヒー、ソフトドリンクはフリーフロー。まずはお好きな一杯で乾杯から。" },
+          { title: "制作", desc: "インストラクターがステップごとに丁寧にガイド。多くのクラスは日英バイリンガル対応で、初めてでも驚くような仕上がりに。" },
+          { title: "完成", desc: "世界にひとつの作品が完成。ほとんどの作品は当日お持ち帰りOK（一部は乾燥後に配送）。" }
         ]
       },
       themes: {
         title: "人気のテーマ",
         subtitle: "古典的な名画の模写から、モダンなテクスチャーアートまで。多彩なプログラムをご用意しています。",
-        cta: "スケジュールを見る",
+        cta: "空き日程と料金を見る",
         items: POPULAR_THEMES_JP
       },
       features: {

@@ -44,7 +44,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...localizedEntries('/private-parties', { priority: 0.9, changeFrequency: 'monthly' }),
     ...localizedEntries('/locations', { priority: 0.8, changeFrequency: 'monthly' }),
     ...localizedEntries('/paint-your-pet', { priority: 0.8, changeFrequency: 'monthly' }),
-    ...localizedEntries('/press', { priority: 0.6, changeFrequency: 'monthly' }),
     ...localizedEntries('/contact', { priority: 0.7, changeFrequency: 'yearly' }),
     ...localizedEntries('/blog', { priority: 0.7, changeFrequency: 'weekly' }),
     ...localizedEntries('/guides', { priority: 0.8, changeFrequency: 'monthly' }),

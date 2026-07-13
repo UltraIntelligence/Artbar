@@ -8,6 +8,7 @@ export type BookingClickLocation =
   | 'footer'
   | 'home_hero'
   | 'home_themes'
+  | 'home_today_tomorrow'
   | 'home_bottom'
   | 'paint_your_pet'
   | 'theme_hero'

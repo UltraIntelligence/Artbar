@@ -19,7 +19,7 @@ export const HOME_TESTIMONIALS_FEATURED_EN: Testimonial[] = [
 
 export const HOME_TESTIMONIALS_FEATURED_JP: Testimonial[] = [
   {
-    text: 'このフレンドリーなアートスタジオでは、ワインは創造力を溢れさせるための液体のようなモチベーションです。アーティストである必要はありません！',
+    text: 'Artbar Tokyoでは、ワインを飲みながらリラックスして楽しめるので、自然と創作意欲がわいてきます。アート経験がなくても、誰でも楽しめます！',
     author: 'TimeOut Tokyo',
     role: 'メディア',
   },
