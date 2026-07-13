@@ -202,14 +202,14 @@ export const Home: React.FC = () => {
     lang === 'jp'
       ? {
           title: '直近のセッション',
-          subtitle: '気になる日程を選んで、そのまま予約。空席があれば当日参加もOKです。',
+          subtitle: '当日でも空きがあればご予約可能です。',
           allLink: 'すべての日程を見る',
           iframeTitle: '今日・明日の空きセッション一覧',
           laterIframeTitle: 'この先の開催セッション一覧',
         }
       : {
           title: 'Coming up at Artbar',
-          subtitle: 'Pick a real session and book it — same-day spots are fine while seats last.',
+          subtitle: 'Same-day booking is available while spots last.',
           allLink: 'See the full schedule',
           iframeTitle: 'Artbar sessions today and tomorrow',
           laterIframeTitle: 'Artbar sessions later this week',
