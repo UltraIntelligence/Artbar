@@ -38,14 +38,18 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 import { useMediaMinMd } from '../hooks/useMediaMinMd';
 import { GI } from '../data/generated-image-paths';
 
-/** Step imagery for the how-it-works flow — reuses the photos from the retired
-    "experience" grid, whose facts (all-inclusive, drinks, bilingual) now live
-    inside the step copy itself. Order matches `howItWorks.steps`. */
+/** Step imagery for the how-it-works flow. Order matches `howItWorks.steps`.
+    Step 1 stays the AI blank-canvas flat-lay (no real "booking" photo exists,
+    and it reads as the start); steps 2–4 are real guest photos so most of the
+    flow isn't AI-generated: 乾杯 (guest with rosé + finished field painting),
+    制作 (guests mid-session with a pour-art piece), 完成 (guest beaming beside a
+    finished red-poppy canvas). The AI concept images are still used on other
+    pages, so we point at dedicated assets here rather than overwriting them. */
 const HOW_IT_WORKS_IMAGES = [
   GI.featureAllInclusive,
-  GI.featureFreeFlowDrinks,
-  GI.featureBilingual,
-  GI.conceptDetail,
+  '/media/experience/step-cheers.jpg',
+  '/media/experience/step-create.jpg',
+  '/media/experience/step-finished.jpg',
 ];
 import { useNearViewport } from '../hooks/useNearViewport';
 import { PrefetchHeroes } from '../components/PrefetchHeroes';
