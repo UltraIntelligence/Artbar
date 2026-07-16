@@ -41,9 +41,17 @@ export interface Location {
 
 export interface MediaItem {
   outlet: string;
-  date: string;
+  /** Media-type designation shown on the card, e.g. "Magazine", "TV", "Radio", "Web". */
+  type: string;
   image?: string;
   logo?: string;
+  /**
+   * How the card image fills the portrait frame.
+   * "cover" (default) crops to fill; "contain" shows the whole image uncropped,
+   * with a blurred copy of it behind to fill the letterbox — use for wide stills
+   * that would lose people/subject if cropped.
+   */
+  fit?: 'cover' | 'contain';
 }
 
 export interface NavLink {

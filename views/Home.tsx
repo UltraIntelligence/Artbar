@@ -890,13 +890,35 @@ export const Home: React.FC = () => {
                   aria-hidden={idx >= content.media.length}
                   className="group/card relative h-[400px] w-[280px] flex-shrink-0 overflow-hidden rounded-[2rem] bg-gray-200 shadow-lg ring-1 ring-black/5 transition-transform duration-300 hover:-translate-y-2"
                 >
-                  <img
-                    src={item.image || item.logo}
-                    alt={stripJpSentinel(item.outlet)}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
-                  />
+                  {item.fit === 'contain' ? (
+                    <>
+                      {/* Wide still: blurred copy fills the portrait frame behind... */}
+                      <img
+                        src={item.image || item.logo}
+                        alt=""
+                        aria-hidden
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full scale-125 object-cover blur-2xl brightness-[0.7] saturate-150"
+                      />
+                      {/* ...the full uncropped image sits on top, centered. */}
+                      <img
+                        src={item.image || item.logo}
+                        alt={stripJpSentinel(item.outlet)}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 h-full w-full object-contain"
+                      />
+                    </>
+                  ) : (
+                    <img
+                      src={item.image || item.logo}
+                      alt={stripJpSentinel(item.outlet)}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+                    />
+                  )}
 
                   <div className="absolute inset-0 bg-gradient-to-t from-artbar-navy/90 via-artbar-navy/20 to-transparent"></div>
 
@@ -917,8 +939,8 @@ export const Home: React.FC = () => {
 
                     <div>
                       <h3 className="mb-2 font-heading text-2xl font-bold leading-tight drop-shadow-sm"><JpText>{item.outlet}</JpText></h3>
-                      <p className="inline-block rounded border border-white/20 bg-artbar-navy/50 px-2 py-1 font-mono text-sm opacity-80 backdrop-blur-sm">
-                        {item.date}
+                      <p className="inline-block rounded border border-white/20 bg-artbar-navy/50 px-2 py-1 text-xs font-semibold uppercase tracking-[0.15em] opacity-90 backdrop-blur-sm">
+                        {item.type}
                       </p>
                     </div>
                   </div>
