@@ -102,7 +102,7 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
       '東京で自分だけの「星月夜」を。ワイン・おつまみ・画材込み。バイリンガル対応あり。',
   },
   'paint-pouring': {
-    title: 'ペイントポーリング（流動画）クラス',
+    title: 'たらし込みアート',
     heroBadge: 'フルイドアート',
     heroSub: '流体のダイナミクスと鮮やかなセル模様に没頭する、当店自慢のポーリング体験。',
     introTitle: 'ペイントポーリングとは？',
@@ -138,9 +138,9 @@ export const THEME_JP: Record<string, ThemeJpStrings> = {
     ],
     ctaTitle: '内なるフルイドアーティストを解放',
     ctaSub: '近日のポーリング枠をチェックしてご予約を。',
-    seoTitle: 'ペイントポーリング 東京 | Artbar フルイドアート',
+    seoTitle: 'たらし込みアート 東京 | Artbar Tokyo フルイドアート',
     seoDesc:
-      '東京でポーリングアートの魔法を。ワイン・おつまみ付きセッション（バイリンガル対応あり）。',
+      'SNSで話題の「たらし込みアート」を渋谷・銀座で体験。ワイン・おつまみ・画材付きで、初心者の方も楽しめます。',
   },
   'alcohol-ink': {
     title: 'アルコールインク アートクラス',

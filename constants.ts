@@ -27,6 +27,90 @@ export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
 
 /** Public booking engine for all schedule and booking CTAs. */
 export const ARTBAR_BOOKING_URL = 'https://booking.artbar.co.jp';
+/** Painta embed host; production defaults to Painta, local QA can point at port 3001. */
+export const PAINTA_EMBED_ORIGIN =
+  process.env.NEXT_PUBLIC_PAINTA_EMBED_ORIGIN?.replace(/\/$/, '') ?? 'https://painta.co';
+const ARTBAR_BOOKING_THEME_FILTERS: Record<string, { category: string; query?: string }> = {
+  'japan-inspired': { category: 'japan-inspired' },
+  'paint-pouring': { category: 'paint-pouring' },
+  'paint-your-pet': { category: 'paint-your-pet' },
+  'alcohol-ink': { category: 'alcohol-ink' },
+  'van-gogh': { category: 'master-artists', query: 'van gogh,van-gogh,ゴッホ' },
+  monet: { category: 'master-artists', query: 'monet,モネ' },
+  picasso: { category: 'master-artists', query: 'picasso,ピカソ' },
+  renoir: { category: 'master-artists', query: 'renoir,ルノワール' },
+  matisse: { category: 'master-artists', query: 'matisse,マティス' },
+  kids: { category: 'kids-only' },
+  'texture-painting': { category: 'textured' },
+  'paint-your-idol': { category: 'pop-art' },
+};
+
+const getArtbarBookingThemeFilter = (themeSlug: string) =>
+  ARTBAR_BOOKING_THEME_FILTERS[themeSlug] ?? { category: themeSlug };
+
+export const getArtbarBookingThemeUrl = (themeSlug: string): string => {
+  const { category } = getArtbarBookingThemeFilter(themeSlug);
+  return `${ARTBAR_BOOKING_URL}/themes/${encodeURIComponent(category)}`;
+};
+
+export const getArtbarThemeScheduleEmbedUrl = (
+  themeSlug: string,
+  locale: 'en' | 'ja',
+): string => {
+  const { category, query } = getArtbarBookingThemeFilter(themeSlug);
+  const params = new URLSearchParams({
+    locale,
+    category,
+    range: 'week',
+    limit: '4',
+    layout: 'rail',
+    fallback: 'strict',
+    headings: 'hide',
+    cta: 'hide',
+    utm_source: 'artbar-theme-page',
+    utm_medium: 'iframe',
+    utm_campaign: themeSlug,
+  });
+
+  if (query) params.set('query', query);
+
+  return `${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?${params.toString()}`;
+};
+
+/** Painta studio IDs for the Tokyo/Yokohama locations represented on this site. */
+const ARTBAR_BOOKING_LOCATION_IDS: Record<string, string[]> = {
+  daikanyama: ['18244ebb-1fb3-4cb0-9479-fa8ebd32d380'],
+  harajuku: ['7b324032-63e9-4675-aa67-6fdb7773615e'],
+  ginza: ['04f186c0-7603-4d89-ab02-4ec22066df2b'],
+  yokohama: [
+    '76752feb-31ed-4505-a068-8363bbeb576c',
+    'a08ed9ba-04d3-4e21-8ce5-e625c544df5c',
+  ],
+};
+
+export const getArtbarLocationScheduleEmbedUrl = (
+  locationSlug: string,
+  locale: 'en' | 'ja',
+): string | null => {
+  const locationIds = ARTBAR_BOOKING_LOCATION_IDS[locationSlug];
+  if (!locationIds) return null;
+
+  const params = new URLSearchParams({
+    locale,
+    location: locationIds.join(','),
+    range: 'week',
+    limit: '6',
+    layout: 'rail',
+    fallback: 'strict',
+    headings: 'hide',
+    cta: 'hide',
+    utm_source: 'artbar-location-page',
+    utm_medium: 'iframe',
+    utm_campaign: locationSlug,
+  });
+
+  return `${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?${params.toString()}`;
+};
 export const ARTBAR_OSAKA_URL = 'https://osaka.artbar.co.jp';
 export const PRIVATE_PARTY_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=private_party`;
 export const TEAM_BUILDING_INQUIRY_URL = `${ARTBAR_BOOKING_URL}/inquiries?type=team_building`;

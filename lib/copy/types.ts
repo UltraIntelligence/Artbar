@@ -146,6 +146,8 @@ export interface JapaneseUiCopy {
     bilingualArtClass: string;
     perfectForGifting: string;
     viewUpcoming: string;
+    upcomingClassesTitle: string;
+    upcomingClassesSub: string;
     discoverMore: string;
     discoverSub: string;
     allCategories: string;

@@ -4,13 +4,13 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import {
-  Wine,
   Palette,
   Clock,
   MapPin,
   ArrowRight,
   Quote,
   Play,
+  PackageCheck,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '../components/ui/Button';
@@ -26,6 +26,7 @@ import {
   SITE_IMAGES,
   CONCEPT_BLOCK_YOUTUBE_URL,
   PARTNER_LOGOS,
+  PAINTA_EMBED_ORIGIN,
 } from '../constants';
 import { trackBookingClick } from '../lib/analytics';
 import { PartnerLogo } from '../components/PartnerLogo';
@@ -55,8 +56,15 @@ import { useNearViewport } from '../hooks/useNearViewport';
 import { PrefetchHeroes } from '../components/PrefetchHeroes';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
 
-const SHOW_HERO_LINE_CTA = false;
+/** Compact emblems need a small optical lift beside wide wordmarks, but stay in
+ *  the same wall and the same-size frame as every other partner. */
+const PARTNER_LOGO_SCALE_BOOSTS: Partial<Record<(typeof PARTNER_LOGOS)[number]['name'], number>> = {
+  GE: 1.2,
+  Toyota: 1.15,
+  Apple: 1.2,
+};
 
+const SHOW_HERO_LINE_CTA = false;
 /**
  * Square guest-photo crops for the concept social strip. Keep these curated so
  * the homepage only shows public-friendly faces that crop cleanly in circles.
@@ -181,12 +189,12 @@ export const Home: React.FC = () => {
           title: 'すべて込みの、気軽なアート体験。',
           priceLabel: '料金',
           priceValue: '¥4,620〜',
-          priceNote: 'ドリンク・画材すべて込み',
+          priceNote: 'フリードリンク・おつまみ・画材込み',
           items: [
             { icon: Clock, label: '所要時間', value: '約2時間' },
             { icon: MapPin, label: '開催エリア', value: '代官山・原宿・銀座・横浜' },
             { icon: Palette, label: 'はじめての方', value: '初心者OK・手ぶらOK' },
-            { icon: Wine, label: '含まれるもの', value: 'ワイン・ドリンク・画材' },
+            { icon: PackageCheck, label: '作品のお持ち帰り', value: 'ほとんどの作品は当日お持ち帰り' },
           ],
         }
       : {
@@ -194,12 +202,12 @@ export const Home: React.FC = () => {
           title: "Everything's included.",
           priceLabel: 'Price',
           priceValue: '¥4,620+',
-          priceNote: 'drinks & materials included',
+          priceNote: 'free-flow drinks, snacks & materials included',
           items: [
             { icon: Clock, label: 'Duration', value: 'Around 2 hours' },
             { icon: MapPin, label: 'Studios', value: 'Daikanyama · Harajuku · Ginza · Yokohama' },
             { icon: Palette, label: 'Who it’s for', value: 'Beginners welcome, nothing to bring' },
-            { icon: Wine, label: 'Included', value: 'Wine, drinks & art materials' },
+            { icon: PackageCheck, label: 'Take-home', value: 'Most artwork goes home with you the same day' },
           ],
         };
   const upcomingSessions =
@@ -455,13 +463,14 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Live sessions (HB 4-3): real bookable sessions from the booking system — today, tomorrow,
-          and upcoming rails via the painta embed. The column is locked to the embed's internal
-          geometry (976px max content, px-4/sm:px-6 gutters) so cards align with our heading, and
-          the section bg matches the embed body (#F3F3ED) so the iframe edges disappear.
+          and upcoming rails via the painta embed. The desktop shell shares the same 1400px grid
+          as Popular Themes; the event cards retain their compact fixed width so the added room
+          reveals more choices instead of stretching transaction cards into feature tiles.
+          The section bg matches the embed body (#F3F3ED) so the iframe edges disappear.
           painta.co/embed.js resizes the iframe to its content via postMessage; the h-* fallback
           keeps the rails visible if the script never runs. */}
       <section id="upcoming-sessions" className="scroll-mt-28 bg-[#F3F3ED] pt-14 pb-6 md:scroll-mt-32 md:pt-20 md:pb-10">
-        <div className="mx-auto max-w-5xl px-6">
+        <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <div className="mb-4 flex flex-col justify-between gap-3 md:mb-6 md:flex-row md:items-end">
             <div>
               <h2 className={`font-heading font-heavy leading-none tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
@@ -487,13 +496,13 @@ export const Home: React.FC = () => {
           {/* Two widgets instead of section=all: its upcoming rail repeats the same sessions the
               today/tomorrow rails already show. Starting the second widget the day after
               tomorrow (business timezone) keeps the rails and the grid disjoint. */}
-          <div className="-mx-4 sm:-mx-6">
+          <div className="-mx-4 sm:-mx-6 md:-mx-10">
             {/* Fallback heights stay LOW on purpose: the embed body never shrinks below the iframe's
                 current height (its min-height mirrors the frame), so embed.js can only grow from
                 here to true content height. Oversized fallbacks become permanent dead space. */}
             <iframe
               data-painta-embed
-              src={`https://painta.co/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
+              src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
               title={stripJpSentinel(upcomingSessions.iframeTitle)}
               loading="lazy"
               className="block h-[520px] w-full border-0"
@@ -508,17 +517,17 @@ export const Home: React.FC = () => {
             {hasMounted && (
               <iframe
                 data-painta-embed
-                src={`https://painta.co/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
+                src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&layout=rail&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
                 title={stripJpSentinel(upcomingSessions.laterIframeTitle)}
                 loading="lazy"
-                className="block h-[640px] w-full border-0"
+                className="block h-[420px] w-full border-0"
               />
             )}
           </div>
         </div>
         {/* afterInteractive (not lazyOnload): the listener must attach before the lazy iframe
             finishes rendering, or the broadcaster's initial height message is missed. */}
-        <Script src="https://painta.co/embed.js" strategy="afterInteractive" />
+        <Script src={`${PAINTA_EMBED_ORIGIN}/embed.js`} strategy="afterInteractive" />
       </section>
 
       {/* Popular sessions: make the bookable inspiration visible before longer proof sections. */}
@@ -738,7 +747,7 @@ export const Home: React.FC = () => {
       <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
         <div className="mx-auto max-w-[1400px]">
           {/* Same header pattern as sibling sections (h2 sectionTitle + bodyLarge lead) */}
-          <div className="mb-14 text-center md:mb-20">
+          <div className="mb-12 text-center md:mb-14">
             <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
               <JpText>{meetRegularsHeading}</JpText>
             </h2>
@@ -750,15 +759,20 @@ export const Home: React.FC = () => {
             </p>
           </div>
 
-          {/* Five-wide, centered wrap on a narrower column so the marks breathe and the
-              partial last row stays centered instead of hugging the left edge. */}
-          <div className="mx-auto mb-16 flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-12 md:mb-24 md:gap-x-12 md:gap-y-16">
-            {PARTNER_LOGOS.map((logo, i) => (
+          {/* A conventional logo wall: equal cells, optically normalized marks,
+              and centered partial rows. Seven columns makes the 14-brand desktop
+              wall two calm rows instead of a long stack. */}
+          <div className="mx-auto mb-16 flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-9 md:gap-x-8 md:gap-y-10 lg:mb-20 lg:gap-x-6">
+            {PARTNER_LOGOS.map((logo) => (
               <div
-                key={i}
-                className="flex min-w-0 basis-[calc(33.333%-1.4rem)] justify-center sm:basis-[calc(25%-1.6rem)] md:basis-[calc(20%-2.5rem)]"
+                key={logo.name}
+                className="flex min-w-0 basis-[calc(50%-0.625rem)] justify-center sm:basis-[calc(33.333%-1rem)] md:basis-[calc(25%-1.5rem)] lg:basis-[calc(14.285%-1.3rem)]"
               >
-                <PartnerLogo {...logo} size="compact" />
+                <PartnerLogo
+                  {...logo}
+                  size="compact"
+                  scaleBoost={PARTNER_LOGO_SCALE_BOOSTS[logo.name]}
+                />
               </div>
             ))}
           </div>
