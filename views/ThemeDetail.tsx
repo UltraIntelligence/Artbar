@@ -124,7 +124,7 @@ export const ThemeDetail: React.FC = () => {
     viewUpcoming: localizedCopy.ui.themeDetail.viewUpcoming,
     upcomingClassesTitle: localizedCopy.ui.themeDetail.upcomingClassesTitle.replace(
       /\{\{name\}\}/g,
-      stripTitleForGallery(localizedTheme.title),
+      stripTitleForGallery(localizedTheme.title ?? ''),
     ),
     upcomingClassesSub: localizedCopy.ui.themeDetail.upcomingClassesSub,
     discoverMore: localizedCopy.ui.themeDetail.discoverMore,
@@ -310,7 +310,7 @@ export const ThemeDetail: React.FC = () => {
                   className="flex flex-col items-center gap-4 text-center"
                 >
                   <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-artbar-bg text-artbar-taupe shadow-sm">
-                    <Icon size={28} aria-hidden />
+                    {Icon ? <Icon size={28} aria-hidden /> : null}
                   </div>
                   <div>
                     <h4 className="mb-2 font-heading text-xl font-bold tracking-tight text-artbar-navy">
@@ -352,7 +352,11 @@ export const ThemeDetail: React.FC = () => {
               <div key={i} className="group flex flex-col items-center">
                 <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
                   <Image
-                    src={themeImages.examples[i] ?? ex.image}
+                    src={
+                      themeImages.examples[i] ||
+                      ex.image ||
+                      getPh(400, 400, stripJpSentinel(ex.title))
+                    }
                     alt={stripJpSentinel(ex.title)}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"

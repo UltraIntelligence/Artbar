@@ -27,9 +27,9 @@ export const LINE_ADD_FRIEND_URL = 'https://line.me/R/ti/p/@PLACEHOLDER_ID';
 
 /** Public booking engine for all schedule and booking CTAs. */
 export const ARTBAR_BOOKING_URL = 'https://booking.artbar.co.jp';
-/** Painta embed host; production defaults to Painta, local QA can point at port 3001. */
+/** Painta embed host; production uses Artbar's tenant storefront, local QA can point at port 3001. */
 export const PAINTA_EMBED_ORIGIN =
-  process.env.NEXT_PUBLIC_PAINTA_EMBED_ORIGIN?.replace(/\/$/, '') ?? 'https://painta.co';
+  process.env.NEXT_PUBLIC_PAINTA_EMBED_ORIGIN?.replace(/\/$/, '') || ARTBAR_BOOKING_URL;
 const ARTBAR_BOOKING_THEME_FILTERS: Record<string, { category: string; query?: string }> = {
   'japan-inspired': { category: 'japan-inspired' },
   'paint-pouring': { category: 'paint-pouring' },

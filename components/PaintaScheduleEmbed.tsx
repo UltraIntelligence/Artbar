@@ -3,7 +3,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { PAINTA_EMBED_ORIGIN } from '../constants';
 
-const PAINTA_ORIGIN = new URL(PAINTA_EMBED_ORIGIN).origin;
+const getPaintaOrigin = () => {
+  try {
+    return new URL(PAINTA_EMBED_ORIGIN).origin;
+  } catch {
+    return 'https://booking.artbar.co.jp';
+  }
+};
+
+const PAINTA_ORIGIN = getPaintaOrigin();
 const MIN_EMBED_HEIGHT = 200;
 const MAX_EMBED_HEIGHT = 800;
 
