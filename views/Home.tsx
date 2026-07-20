@@ -497,9 +497,9 @@ export const Home: React.FC = () => {
               today/tomorrow rails already show. Starting the second widget the day after
               tomorrow (business timezone) keeps the rails and the grid disjoint. */}
           <div className="-mx-4 sm:-mx-6 md:-mx-10">
-            {/* Fallback heights stay LOW on purpose: the embed body never shrinks below the iframe's
-                current height (its min-height mirrors the frame), so embed.js can only grow from
-                here to true content height. Oversized fallbacks become permanent dead space. */}
+            {/* The mobile fallback must independently fit both rows if embed.js is blocked or its
+                first message is missed. The current helper measures a dedicated content wrapper,
+                so once it runs it can shrink or grow the frame to the exact content height. */}
             <iframe
               data-painta-embed
               src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
