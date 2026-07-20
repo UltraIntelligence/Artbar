@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useContent } from '../context/ContentContext';
@@ -32,6 +32,8 @@ export const ThemeDetail: React.FC = () => {
   const params = useParams();
   const rawSlug = (params.slug as string) || '';
   const resolvedSlug = resolveThemeContentSlug(rawSlug);
+  const [emptyScheduleSlug, setEmptyScheduleSlug] = useState<string | null>(null);
+  const hideSchedule = emptyScheduleSlug === resolvedSlug;
   const router = useRouter();
   const { site, lang, localizedCopy, media } = useContent();
   const theme = getThemeContent(resolvedSlug, lang);
@@ -218,7 +220,7 @@ export const ThemeDetail: React.FC = () => {
           embed's own light-theme background (#F3F3ED), NOT the brand cream, so the
           opaque iframe blends into the section instead of showing as a rectangle
           seam. Keep these in sync if Painta's embed background changes. */}
-      <section className="relative bg-[#F3F3ED] py-12 md:py-16">
+      {!hideSchedule && <section className="relative bg-[#F3F3ED] py-12 md:py-16">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <div className="mb-8 text-center md:mb-10">
             <span className="mb-3 block font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
@@ -233,13 +235,15 @@ export const ThemeDetail: React.FC = () => {
           </div>
           <div className="-mx-4 sm:-mx-6 md:-mx-10">
             <ThemeScheduleEmbed
+              key={resolvedSlug}
               themeSlug={resolvedSlug}
               locale={lang === 'jp' ? 'ja' : 'en'}
               title={ui.upcomingClassesTitle}
+              onEmptyChange={(isEmpty) => setEmptyScheduleSlug(isEmpty ? resolvedSlug : null)}
             />
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* The Deep Dive */}
       <section className={`py-16 md:py-24 bg-white md:mx-6 md:rounded-[3rem] ${PANEL_SHADOW}`}>

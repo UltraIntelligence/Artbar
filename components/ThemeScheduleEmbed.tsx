@@ -8,13 +8,15 @@ interface ThemeScheduleEmbedProps {
   themeSlug: string;
   locale: "en" | "ja";
   title: string;
+  onEmptyChange?: (isEmpty: boolean) => void;
 }
 
 export const ThemeScheduleEmbed: React.FC<ThemeScheduleEmbedProps> = ({
   themeSlug,
   locale,
   title,
+  onEmptyChange,
 }) => {
   const src = getArtbarThemeScheduleEmbedUrl(themeSlug, locale);
-  return <PaintaScheduleEmbed src={src} title={title} />;
+  return <PaintaScheduleEmbed src={src} title={title} onEmptyChange={onEmptyChange} />;
 };

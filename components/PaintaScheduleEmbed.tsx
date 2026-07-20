@@ -18,32 +18,46 @@ const MAX_EMBED_HEIGHT = 800;
 interface PaintaScheduleEmbedProps {
   src: string;
   title: string;
+  onEmptyChange?: (isEmpty: boolean) => void;
 }
 
-export const PaintaScheduleEmbed: React.FC<PaintaScheduleEmbedProps> = ({ src, title }) => {
+export const PaintaScheduleEmbed: React.FC<PaintaScheduleEmbedProps> = ({
+  src,
+  title,
+  onEmptyChange,
+}) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const onEmptyChangeRef = useRef(onEmptyChange);
   const [height, setHeight] = useState(420);
 
   useEffect(() => {
-    const handleResizeMessage = (event: MessageEvent) => {
-      if (
-        event.origin !== PAINTA_ORIGIN ||
-        event.source !== iframeRef.current?.contentWindow ||
-        event.data?.type !== 'painta:embed:height'
-      ) {
+    onEmptyChangeRef.current = onEmptyChange;
+  }, [onEmptyChange]);
+
+  useEffect(() => {
+    const handleEmbedMessage = (event: MessageEvent) => {
+      if (event.origin !== PAINTA_ORIGIN || event.source !== iframeRef.current?.contentWindow) {
         return;
       }
 
-      const reportedHeight = Number(event.data.height);
-      if (!Number.isFinite(reportedHeight) || reportedHeight <= 0) return;
+      if (event.data?.type === 'painta:embed:state') {
+        if (event.data.state === 'empty') onEmptyChangeRef.current?.(true);
+        if (event.data.state === 'ready') onEmptyChangeRef.current?.(false);
+        return;
+      }
 
-      setHeight(
-        Math.min(Math.max(Math.ceil(reportedHeight), MIN_EMBED_HEIGHT), MAX_EMBED_HEIGHT),
-      );
+      if (event.data?.type !== 'painta:embed:height') return;
+
+      const reportedHeight = Number(event.data.height);
+      if (Number.isFinite(reportedHeight) && reportedHeight > 0) {
+        setHeight(
+          Math.min(Math.max(Math.ceil(reportedHeight), MIN_EMBED_HEIGHT), MAX_EMBED_HEIGHT),
+        );
+      }
     };
 
-    window.addEventListener('message', handleResizeMessage);
-    return () => window.removeEventListener('message', handleResizeMessage);
+    window.addEventListener('message', handleEmbedMessage);
+    return () => window.removeEventListener('message', handleEmbedMessage);
   }, []);
 
   return (
