@@ -16,11 +16,17 @@ import {
 } from '../data/theme-details';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
+import { ThemeScheduleEmbed } from '../components/ThemeScheduleEmbed';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { ARTBAR_BOOKING_URL, HERO_BLUR_DATA_URL } from '../constants';
+import { getArtbarBookingThemeUrl, HERO_BLUR_DATA_URL } from '../constants';
 import { localizeHrefForLanguage } from '../lib/locale-routing';
 import { trackBookingClick } from '../lib/analytics';
 import { Heart, Lightbulb, Star, Users, ArrowRight } from 'lucide-react';
+
+/** Shared soft, navy-tinted elevation for the white content panels (intro,
+ *  experience, discovery) so each canvas lifts off the cream ground identically
+ *  instead of the old shadow-xl / shadow-sm mix. */
+const PANEL_SHADOW = 'shadow-[0_20px_50px_-28px_rgba(5,55,97,0.30)]';
 
 export const ThemeDetail: React.FC = () => {
   const params = useParams();
@@ -90,6 +96,7 @@ export const ThemeDetail: React.FC = () => {
    *  contexts (alt text, placeholder URLs) — they're rendering hints, not content. */
   const titleAsText = stripJpSentinel(localizedTheme.title.replace(/<wbr\s*\/?>/gi, ''));
   const heroSrc = themeImages.hero || getPh(1920, 1080, titleAsText);
+  const filteredBookingUrl = getArtbarBookingThemeUrl(resolvedSlug);
 
   const stripTitleForGallery = (t: string) =>
     t
@@ -115,6 +122,11 @@ export const ThemeDetail: React.FC = () => {
     expertGuidance: localizedCopy.ui.themeDetail.expertGuidance,
     community: localizedCopy.ui.themeDetail.community,
     viewUpcoming: localizedCopy.ui.themeDetail.viewUpcoming,
+    upcomingClassesTitle: localizedCopy.ui.themeDetail.upcomingClassesTitle.replace(
+      /\{\{name\}\}/g,
+      stripTitleForGallery(localizedTheme.title ?? ''),
+    ),
+    upcomingClassesSub: localizedCopy.ui.themeDetail.upcomingClassesSub,
     discoverMore: localizedCopy.ui.themeDetail.discoverMore,
     discoverSub: localizedCopy.ui.themeDetail.discoverSub,
     allCategories: localizedCopy.ui.themeDetail.allCategories,
@@ -154,9 +166,9 @@ export const ThemeDetail: React.FC = () => {
               size="cta"
               onClick={() => {
                 trackBookingClick('theme_hero', { theme: resolvedSlug });
-                window.location.href = ARTBAR_BOOKING_URL;
+                window.location.href = filteredBookingUrl;
               }}
-              className="animate-pulse w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
+              className="w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
               <JpText>{ui.viewSchedule}</JpText>
               <ArrowRight size={18} className="shrink-0" aria-hidden />
@@ -166,7 +178,7 @@ export const ThemeDetail: React.FC = () => {
       </div>
 
       {/* The Concept Intro */}
-      <section className="py-24 bg-white mx-0 md:mx-6 md:-mt-12 relative z-10 md:rounded-[3rem] shadow-xl text-center">
+      <section className={`py-16 md:py-24 bg-white mx-0 md:mx-6 md:-mt-12 relative z-10 md:rounded-[3rem] ${PANEL_SHADOW} text-center`}>
         <div
           ref={intro.ref}
           className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${intro.isVisible ? 'visible' : ''}`}
@@ -184,8 +196,8 @@ export const ThemeDetail: React.FC = () => {
             className={`grid sm:grid-cols-3 gap-12 max-w-5xl mx-auto reveal-stagger ${intro.isVisible ? 'visible' : ''}`}
           >
             {localizedTheme.quickFeatures.map((feat, i) => (
-              <div key={i} className="flex flex-col items-center gap-4 group">
-                <div className="w-16 h-16 bg-artbar-bg rounded-2xl flex items-center justify-center text-artbar-taupe shrink-0 shadow-sm transition-transform group-hover:scale-110">
+              <div key={i} className="flex flex-col items-center gap-4">
+                <div className="w-16 h-16 bg-artbar-bg rounded-2xl flex items-center justify-center text-artbar-taupe shrink-0 shadow-sm">
                   <feat.icon size={28} />
                 </div>
                 <div>
@@ -202,50 +214,35 @@ export const ThemeDetail: React.FC = () => {
         </div>
       </section>
 
-      {/* Visual Gallery */}
-      <section className="grain relative py-24 bg-artbar-bg">
-        <div
-          ref={gallery.ref}
-          className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${gallery.isVisible ? 'visible' : ''}`}
-        >
-          <div className="text-center mb-16">
-            <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
-              <JpText>{ui.inspiration}</JpText>
+      {/* Theme-filtered availability from Painta. The band is set to the Painta
+          embed's own light-theme background (#F3F3ED), NOT the brand cream, so the
+          opaque iframe blends into the section instead of showing as a rectangle
+          seam. Keep these in sync if Painta's embed background changes. */}
+      <section className="relative bg-[#F3F3ED] py-12 md:py-16">
+        <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+          <div className="mb-8 text-center md:mb-10">
+            <span className="mb-3 block font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
+              <JpText>{ui.viewUpcoming}</JpText>
             </span>
-            <h2 className="text-4xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4">
-              <JpText>{ui.examplePaintings}</JpText>
+            <h2 className="mb-4 font-heading text-3xl font-heavy text-artbar-navy md:text-5xl">
+              <JpText>{ui.upcomingClassesTitle}</JpText>
             </h2>
-            <p className="text-artbar-gray text-lg md:text-xl font-light">
-              <JpText>{ui.exampleBlurb(stripTitleForGallery(localizedTheme.title))}</JpText>
+            <p className="mx-auto max-w-2xl text-base font-light leading-relaxed text-artbar-gray md:text-lg">
+              <JpText>{ui.upcomingClassesSub}</JpText>
             </p>
           </div>
-
-          <div
-            className={`grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 reveal-stagger ${gallery.isVisible ? 'visible' : ''}`}
-          >
-            {localizedTheme.examples.map((ex, i) => (
-              <div key={i} className="group flex flex-col items-center">
-                <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
-                  <Image
-                    src={themeImages.examples[i] ?? ex.image}
-                    alt={stripJpSentinel(ex.title)}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    sizes="(max-width: 1024px) 50vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-artbar-navy/0 group-hover:bg-artbar-navy/20 transition-colors" />
-                </div>
-                <h4 className="text-center font-heading font-bold text-artbar-navy text-sm md:text-base group-hover:text-artbar-taupe transition-colors px-2">
-                  <JpText>{ex.title}</JpText>
-                </h4>
-              </div>
-            ))}
+          <div className="-mx-4 sm:-mx-6 md:-mx-10">
+            <ThemeScheduleEmbed
+              themeSlug={resolvedSlug}
+              locale={lang === 'jp' ? 'ja' : 'en'}
+              title={ui.upcomingClassesTitle}
+            />
           </div>
         </div>
       </section>
 
       {/* The Deep Dive */}
-      <section className="py-24 bg-white md:mx-6 md:rounded-[3rem] shadow-sm">
+      <section className={`py-16 md:py-24 bg-white md:mx-6 md:rounded-[3rem] ${PANEL_SHADOW}`}>
         <div
           ref={experience.ref}
           className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${experience.isVisible ? 'visible' : ''}`}
@@ -299,23 +296,96 @@ export const ThemeDetail: React.FC = () => {
               </div>
             </div>
           </div>
+
+          <div className="mt-12 border-t border-artbar-navy/10 pt-10 md:mt-16 md:pt-12">
+            <div className="mb-7 text-center">
+              <p className="font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
+                <JpText>{lang === 'jp' ? '体験に含まれるもの' : "What's included"}</JpText>
+              </p>
+            </div>
+            <div className="mx-auto grid max-w-6xl gap-12 sm:grid-cols-2 xl:grid-cols-4">
+              {localizedTheme.whatYouGet.map(({ icon: Icon, text, sub }) => (
+                <div
+                  key={text}
+                  className="flex flex-col items-center gap-4 text-center"
+                >
+                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-artbar-bg text-artbar-taupe shadow-sm">
+                    {Icon ? <Icon size={28} aria-hidden /> : null}
+                  </div>
+                  <div>
+                    <h4 className="mb-2 font-heading text-xl font-bold tracking-tight text-artbar-navy">
+                      <JpText>{text}</JpText>
+                    </h4>
+                    <p className="mx-auto max-w-[240px] text-sm leading-relaxed text-artbar-gray md:text-base">
+                      <JpText>{sub}</JpText>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visual Gallery */}
+      <section className="grain relative py-16 md:py-24 bg-artbar-bg">
+        <div
+          ref={gallery.ref}
+          className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${gallery.isVisible ? 'visible' : ''}`}
+        >
+          <div className="text-center mb-16">
+            <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-3 block">
+              <JpText>{ui.inspiration}</JpText>
+            </span>
+            <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-4">
+              <JpText>{ui.examplePaintings}</JpText>
+            </h2>
+            <p className="text-artbar-gray text-lg md:text-xl font-light">
+              <JpText>{ui.exampleBlurb(stripTitleForGallery(localizedTheme.title))}</JpText>
+            </p>
+          </div>
+
+          <div
+            className={`grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 reveal-stagger ${gallery.isVisible ? 'visible' : ''}`}
+          >
+            {localizedTheme.examples.map((ex, i) => (
+              <div key={i} className="group flex flex-col items-center">
+                <div className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-lg border-4 border-white mb-6 group-hover:shadow-2xl transition-all duration-500">
+                  <Image
+                    src={
+                      themeImages.examples[i] ||
+                      ex.image ||
+                      getPh(400, 400, stripJpSentinel(ex.title))
+                    }
+                    alt={stripJpSentinel(ex.title)}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-artbar-navy/0 group-hover:bg-artbar-navy/20 transition-colors" />
+                </div>
+                <h4 className="text-center font-heading font-bold text-artbar-navy text-sm md:text-base group-hover:text-artbar-taupe transition-colors px-2">
+                  <JpText>{ex.title}</JpText>
+                </h4>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Audience Identification */}
-      <section className="grain relative py-24 bg-artbar-bg">
+      <section className="grain relative py-16 md:py-24 bg-artbar-bg">
         <div
           ref={perfect.ref}
           className={`reveal max-w-[1400px] mx-auto px-6 md:px-10 ${perfect.isVisible ? 'visible' : ''}`}
         >
           <div className="text-center mb-16">
-            <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-3 block">
+            <span className="text-artbar-taupe font-heading font-bold tracking-widest text-xs uppercase mb-3 block">
               <JpText>{ui.community}</JpText>
             </span>
-            <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-4">
+            <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy">
               <JpText>{localizedTheme.perfectTitle}</JpText>
             </h2>
-            <div className="h-1 w-24 bg-artbar-taupe mx-auto rounded-full" />
           </div>
 
           <div
@@ -324,10 +394,10 @@ export const ThemeDetail: React.FC = () => {
             {localizedTheme.perfectFor.map((item, i) => (
               <div
                 key={i}
-                className="p-10 rounded-[3rem] bg-white shadow-sm flex flex-col items-center text-center group hover:bg-artbar-navy hover:scale-105 transition-all duration-500 border border-white"
+                className="p-10 rounded-[2.5rem] bg-white shadow-sm flex flex-col items-center text-center group hover:bg-artbar-navy transition-colors duration-500"
               >
-                <div className="w-14 h-14 rounded-full bg-artbar-bg flex items-center justify-center text-artbar-taupe mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-all">
-                  <Heart size={26} />
+                <div className="w-14 h-14 rounded-full bg-artbar-bg flex items-center justify-center text-artbar-taupe mb-8 group-hover:bg-white/10 group-hover:text-white transition-colors">
+                  <Heart size={24} />
                 </div>
                 <p className="text-artbar-navy font-heading font-bold leading-relaxed group-hover:text-white transition-colors">
                   <JpText>{item}</JpText>
@@ -339,11 +409,11 @@ export const ThemeDetail: React.FC = () => {
       </section>
 
       {/* Bottom Conversion */}
-      <section className="py-24 px-4 md:px-10 bg-artbar-bg">
-        <div className="max-w-[1400px] mx-auto bg-artbar-navy rounded-[3rem] p-12 md:p-24 text-center shadow-2xl relative overflow-hidden group">
+      <section className="py-16 md:py-24 px-4 md:px-10 bg-artbar-bg">
+        <div className="max-w-[1400px] mx-auto bg-artbar-navy rounded-[3rem] p-12 md:p-24 text-center shadow-2xl relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-artbar-taupe/20 to-transparent" />
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-7xl font-heading font-bold text-white mb-6 tracking-tighter">
+            <h2 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
               <JpText>{localizedTheme.ctaTitle}</JpText>
             </h2>
             <p className="text-white/80 text-lg md:text-2xl mb-12 font-light max-w-xl mx-auto leading-relaxed">
@@ -355,7 +425,7 @@ export const ThemeDetail: React.FC = () => {
                 size="cta"
                 onClick={() => {
                   trackBookingClick('theme_bottom', { theme: resolvedSlug });
-                  window.location.href = ARTBAR_BOOKING_URL;
+                  window.location.href = filteredBookingUrl;
                 }}
                 className="shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all hover:scale-105 hover:bg-white hover:text-artbar-navy hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] active:scale-95"
               >
@@ -367,11 +437,11 @@ export const ThemeDetail: React.FC = () => {
       </section>
 
       {/* Discovery Cross-Sell */}
-      <section className="py-24 bg-white md:mx-6 md:rounded-[3rem] shadow-sm mb-12">
+      <section className={`py-16 md:py-24 bg-white md:mx-6 md:rounded-[3rem] ${PANEL_SHADOW} mb-12`}>
         <div className="max-w-[1400px] mx-auto px-6 md:px-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-16 gap-6">
             <div>
-              <h2 className="text-4xl md:text-6xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none">
+              <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy mb-4 tracking-tight leading-none">
                 <JpText>{ui.discoverMore}</JpText>
               </h2>
               <p className="text-artbar-gray text-lg font-light max-w-lg"><JpText>{ui.discoverSub}</JpText></p>

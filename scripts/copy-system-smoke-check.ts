@@ -66,7 +66,7 @@ for (const locale of COPY_LOCALES) {
   const content = mergePublishedLocaleIntoContent(locale, normalized);
   assert.equal(
     content[locale].nav.book,
-    locale === 'en' ? 'Reserve a Seat' : '予約する',
+    locale === 'en' ? 'Reserve a Seat' : '空き日程を見る',
     `${locale} nav copy merges into public content`,
   );
 

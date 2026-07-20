@@ -136,6 +136,18 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     rawThemeItems,
   );
 
+  // Retire the older high-commitment CTA copy still stored in published
+  // locale payloads. Editors can still publish any newer wording they choose.
+  if (normalized.site.nav.book === '予約する') {
+    normalized.site.nav.book = '空き日程を見る';
+  }
+  if (normalized.site.home.hero.ctaSchedule === 'セッションを予約する') {
+    normalized.site.home.hero.ctaSchedule = '空き日程と料金を見る';
+  }
+  if (normalized.ui.home.bookTeamBuildingCta === 'チームビルディングを予約') {
+    normalized.ui.home.bookTeamBuildingCta = '法人向けプランを見る';
+  }
+
   normalized.blog = normalized.blog.map((item) => ({
     ...item,
     content: sanitizeBlogHtml(item.content),
@@ -151,6 +163,13 @@ export function normalizeCopyPayload(locale: CopyLocale, payload: unknown): Loca
 
   const template = DEFAULT_COPY_PAYLOADS[locale];
   const normalized = deepMergeTemplate(template, payload);
+
+  if (normalized.site.home.hero.ctaSchedule === 'Book Your Session') {
+    normalized.site.home.hero.ctaSchedule = 'See dates and prices';
+  }
+  if (normalized.ui.home.bookTeamBuildingCta === 'Book Team Building') {
+    normalized.ui.home.bookTeamBuildingCta = 'View Team-Building Options';
+  }
 
   normalized.blog = normalized.blog.map((item) => ({
     ...item,

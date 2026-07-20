@@ -396,7 +396,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         ratingScore: "4.8",
         ratingSource: "across thousands of classes",
         guestsNumber: "101,000",
-        guestsSuffix: "guests across Tokyo — and counting"
+        guestsSuffix: "guests across Tokyo and counting"
       },
       concept: {
         est: "Artbar Tokyo – Est. 2016",
@@ -404,7 +404,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         p1: "Pick a painting, pour a glass, and follow along at your own pace. No experience needed — just show up and see what happens.",
         ratingLabel: "Average Rating",
         guestsCount: "101,000",
-        guestsLabel: "101,000+ guests across Tokyo — and counting"
+        guestsLabel: "101,000+ guests across Tokyo and counting"
       },
       howItWorks: {
         title: "How Artbar works",

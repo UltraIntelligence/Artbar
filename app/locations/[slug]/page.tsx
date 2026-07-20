@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import {
   ARTBAR_BOOKING_URL,
+  getArtbarLocationScheduleEmbedUrl,
   LOCATION_DEFAULT_OPENING_HOURS,
   LOCATION_DEFAULT_PRICE_RANGE,
 } from '@/constants';
@@ -14,6 +15,7 @@ import { buildLocalBusinessJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { nextImageSrcSet } from '@/lib/image-preload';
 import { getPublishedMediaMap } from '@/lib/media/store';
 import { mediaAssetUrl } from '@/lib/media/resolve';
+import { PaintaScheduleEmbed } from '@/components/PaintaScheduleEmbed';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -64,6 +66,10 @@ export default async function LocationDetailPage({ params }: Props) {
   const publishedMedia = await getPublishedMediaMap();
   const locationImage = mediaAssetUrl(publishedMedia, `locations.${location.id}`, location.image);
   const locationWithMedia = { ...location, image: locationImage };
+  const scheduleEmbedUrl = getArtbarLocationScheduleEmbedUrl(
+    location.id,
+    lang === 'jp' ? 'ja' : 'en',
+  );
 
   const locationJsonLd = {
     '@context': 'https://schema.org',
@@ -164,6 +170,32 @@ export default async function LocationDetailPage({ params }: Props) {
           />
         </div>
       </div>
+
+      {scheduleEmbedUrl && (
+        <section className="mx-auto mt-16 max-w-[1180px] px-6 md:mt-20 md:px-10">
+          {/* Card bg matches the Painta embed body (#F3F3ED), not white, so the
+              iframe blends into the panel instead of showing a seam. */}
+          <div className="overflow-hidden rounded-[2.5rem] bg-[#F3F3ED] px-4 py-10 shadow-sm md:px-10 md:py-14">
+            <div className="mb-8 text-center">
+              <p className="mb-3 font-heading text-xs font-bold uppercase tracking-widest text-artbar-taupe">
+                {lang === 'jp' ? 'このスタジオで予約する' : 'Book this studio'}
+              </p>
+              <h2 className="font-heading text-3xl font-heavy text-artbar-navy md:text-5xl">
+                {lang === 'jp' ? `${name}の今後1週間のクラス` : `Upcoming classes at ${name}`}
+              </h2>
+              <p className="mx-auto mt-4 max-w-2xl text-base font-light leading-relaxed text-artbar-gray md:text-lg">
+                {lang === 'jp'
+                  ? 'このスタジオで現在予約できるクラスをご覧ください。'
+                  : 'See what is available at this studio over the next seven days.'}
+              </p>
+            </div>
+            <PaintaScheduleEmbed
+              src={scheduleEmbedUrl}
+              title={lang === 'jp' ? `${name}のクラススケジュール` : `${name} class schedule`}
+            />
+          </div>
+        </section>
+      )}
     </main>
   );
 }
