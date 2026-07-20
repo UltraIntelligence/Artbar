@@ -27,17 +27,22 @@ export const PaintaScheduleEmbed: React.FC<PaintaScheduleEmbedProps> = ({
   onEmptyChange,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const onEmptyChangeRef = useRef(onEmptyChange);
   const [height, setHeight] = useState(420);
 
   useEffect(() => {
-    const handleResizeMessage = (event: MessageEvent) => {
+    onEmptyChangeRef.current = onEmptyChange;
+  }, [onEmptyChange]);
+
+  useEffect(() => {
+    const handleEmbedMessage = (event: MessageEvent) => {
       if (event.origin !== PAINTA_ORIGIN || event.source !== iframeRef.current?.contentWindow) {
         return;
       }
 
       if (event.data?.type === 'painta:embed:state') {
-        if (event.data.state === 'empty') onEmptyChange?.(true);
-        if (event.data.state === 'ready') onEmptyChange?.(false);
+        if (event.data.state === 'empty') onEmptyChangeRef.current?.(true);
+        if (event.data.state === 'ready') onEmptyChangeRef.current?.(false);
         return;
       }
 
@@ -51,9 +56,9 @@ export const PaintaScheduleEmbed: React.FC<PaintaScheduleEmbedProps> = ({
       }
     };
 
-    window.addEventListener('message', handleResizeMessage);
-    return () => window.removeEventListener('message', handleResizeMessage);
-  }, [onEmptyChange]);
+    window.addEventListener('message', handleEmbedMessage);
+    return () => window.removeEventListener('message', handleEmbedMessage);
+  }, []);
 
   return (
     <iframe

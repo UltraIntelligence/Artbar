@@ -235,6 +235,7 @@ export const ThemeDetail: React.FC = () => {
           </div>
           <div className="-mx-4 sm:-mx-6 md:-mx-10">
             <ThemeScheduleEmbed
+              key={resolvedSlug}
               themeSlug={resolvedSlug}
               locale={lang === 'jp' ? 'ja' : 'en'}
               title={ui.upcomingClassesTitle}
