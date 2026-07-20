@@ -147,6 +147,16 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
   if (normalized.ui.home.bookTeamBuildingCta === 'チームビルディングを予約') {
     normalized.ui.home.bookTeamBuildingCta = '法人向けプランを見る';
   }
+  if (normalized.ui.themeDetail.upcomingClassesTitle === '{{name}}の今後1週間のクラス') {
+    normalized.ui.themeDetail.upcomingClassesTitle = '今後の{{name}}クラス';
+  }
+  if (
+    normalized.ui.themeDetail.upcomingClassesSub ===
+    '現在予約できるクラスをご覧ください。横にスワイプすると、ほかの日程も確認できます。'
+  ) {
+    normalized.ui.themeDetail.upcomingClassesSub =
+      '次回開催予定のクラスをご覧ください。横にスワイプすると、ほかの日程も確認できます。';
+  }
 
   normalized.blog = normalized.blog.map((item) => ({
     ...item,
@@ -169,6 +179,16 @@ export function normalizeCopyPayload(locale: CopyLocale, payload: unknown): Loca
   }
   if (normalized.ui.home.bookTeamBuildingCta === 'Book Team Building') {
     normalized.ui.home.bookTeamBuildingCta = 'View Team-Building Options';
+  }
+  if (normalized.ui.themeDetail.upcomingClassesTitle === 'Upcoming {{name}} Classes') {
+    normalized.ui.themeDetail.upcomingClassesTitle = 'Next {{name}} Classes';
+  }
+  if (
+    normalized.ui.themeDetail.upcomingClassesSub ===
+    'See what is available over the next seven days. Swipe to explore more dates.'
+  ) {
+    normalized.ui.themeDetail.upcomingClassesSub =
+      'See the next scheduled classes. Swipe to explore more dates.';
   }
 
   normalized.blog = normalized.blog.map((item) => ({
