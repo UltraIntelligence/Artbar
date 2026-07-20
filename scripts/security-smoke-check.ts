@@ -44,7 +44,7 @@ assert(
   'CSP script-src must allow the current booking embed helper.'
 );
 assert(
-  homeView.includes('h-[700px] w-full border-0 sm:h-[520px]'),
+  homeView.includes('h-[800px] w-full border-0 sm:h-[520px]'),
   'The mobile today/tomorrow booking fallback must fit both session rows.'
 );
 
