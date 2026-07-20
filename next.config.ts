@@ -9,8 +9,9 @@ const CSP = [
   `default-src 'self'`,
   // Next.js boot scripts and JSON-LD blocks are inline. Keep inline scripts allowed for
   // static performance; only local dev needs eval for tooling.
-  // painta.co serves embed.js, the auto-resize listener for the booking iframe widgets.
-  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://painta.co`,
+  // The booking host serves embed.js, the auto-resize listener for the booking iframe widgets.
+  // Keep painta.co temporarily for older published embed URLs.
+  `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://booking.artbar.co.jp https://painta.co`,
   // Tailwind injects inline style attributes; Google Fonts CSS is loaded by ThemeInjector.
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `img-src 'self' data: blob: https:`,

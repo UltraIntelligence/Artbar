@@ -505,7 +505,7 @@ export const Home: React.FC = () => {
               src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
               title={stripJpSentinel(upcomingSessions.iframeTitle)}
               loading="lazy"
-              className="block h-[520px] w-full border-0"
+              className="block h-[700px] w-full border-0 sm:h-[520px]"
             />
             {/* No negative overlap: the today/tomorrow widget's bottom padding is
                 under 40px, so pulling this widget up clipped the last rail's card
