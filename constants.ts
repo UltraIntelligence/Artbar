@@ -61,7 +61,6 @@ export const getArtbarThemeScheduleEmbedUrl = (
   const params = new URLSearchParams({
     locale,
     category,
-    range: 'week',
     limit: '4',
     layout: 'rail',
     fallback: 'strict',
