@@ -7,6 +7,7 @@ function assert(condition: unknown, message: string): asserts condition {
 
 const sketchRoute = readFileSync(join(process.cwd(), 'app/api/generate-sketch/route.ts'), 'utf8');
 const nextConfig = readFileSync(join(process.cwd(), 'next.config.ts'), 'utf8');
+const homeView = readFileSync(join(process.cwd(), 'views/Home.tsx'), 'utf8');
 const contentLengthIndex = sketchRoute.indexOf("req.headers.get('content-length')");
 const boundedBodyReadIndex = sketchRoute.indexOf('await readBoundedJsonBody(req)');
 
@@ -36,5 +37,15 @@ for (const disallowedHost of ['picsum.photos', 'i.pravatar.cc']) {
     `next/image remotePatterns should not allow unused placeholder host: ${disallowedHost}`
   );
 }
+
+const scriptSource = nextConfig.match(/`script-src[^`]+`/)?.[0] ?? '';
+assert(
+  scriptSource.includes('https://booking.artbar.co.jp'),
+  'CSP script-src must allow the current booking embed helper.'
+);
+assert(
+  homeView.includes('h-[800px]') && homeView.includes('sm:h-[520px]'),
+  'The mobile today/tomorrow booking fallback must fit both session rows.'
+);
 
 console.log('Security smoke check passed.');
