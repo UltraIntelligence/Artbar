@@ -39,10 +39,25 @@ for (const disallowedHost of ['picsum.photos', 'i.pravatar.cc']) {
 }
 
 const scriptSource = nextConfig.match(/`script-src[^`]+`/)?.[0] ?? '';
+const connectSource = nextConfig.match(/`connect-src[^`]+`/)?.[0] ?? '';
+const frameSource = nextConfig.match(/`frame-src[^`]+`/)?.[0] ?? '';
+assert(scriptSource, 'CSP script-src directive must be defined.');
+assert(connectSource, 'CSP connect-src directive must be defined.');
+assert(frameSource, 'CSP frame-src directive must be defined.');
 assert(
   scriptSource.includes('https://booking.artbar.co.jp'),
   'CSP script-src must allow the current booking embed helper.'
 );
+assert(
+  frameSource.includes('https://booking.artbar.co.jp'),
+  'CSP frame-src must allow the current booking iframes.'
+);
+for (const analyticsHost of ['https://analytics.google.com', 'https://ad.doubleclick.net']) {
+  assert(
+    connectSource.includes(analyticsHost),
+    `CSP connect-src must allow the configured Google tag endpoint: ${analyticsHost}`
+  );
+}
 assert(
   homeView.includes('h-[800px]') && homeView.includes('sm:h-[520px]'),
   'The mobile today/tomorrow booking fallback must fit both session rows.'
