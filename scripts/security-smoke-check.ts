@@ -38,23 +38,31 @@ for (const disallowedHost of ['picsum.photos', 'i.pravatar.cc']) {
   );
 }
 
-const scriptSource = nextConfig.match(/`script-src[^`]+`/)?.[0] ?? '';
-const connectSource = nextConfig.match(/`connect-src[^`]+`/)?.[0] ?? '';
-const frameSource = nextConfig.match(/`frame-src[^`]+`/)?.[0] ?? '';
-assert(scriptSource, 'CSP script-src directive must be defined.');
-assert(connectSource, 'CSP connect-src directive must be defined.');
-assert(frameSource, 'CSP frame-src directive must be defined.');
+// Exact whitespace-delimited token match so a malformed entry such as
+// `https://analytics.google.com.evil` cannot satisfy a required-host check.
+const hasCspHost = (source: string, host: string) =>
+  source.replaceAll('`', '').split(/\s+/).includes(host);
+
+const scriptSource = nextConfig.match(/`script-src[^`]+`/)?.[0];
+const connectSource = nextConfig.match(/`connect-src[^`]+`/)?.[0];
+const frameSource = nextConfig.match(/`frame-src[^`]+`/)?.[0];
+// Assert parsing succeeded before host checks so a future refactor of
+// next.config.ts fails with "could not be parsed" rather than a misleading
+// "host missing" message. `assert` also narrows these to `string`.
+assert(scriptSource, 'CSP script-src directive could not be parsed from next.config.ts.');
+assert(connectSource, 'CSP connect-src directive could not be parsed from next.config.ts.');
+assert(frameSource, 'CSP frame-src directive could not be parsed from next.config.ts.');
 assert(
-  scriptSource.includes('https://booking.artbar.co.jp'),
+  hasCspHost(scriptSource, 'https://booking.artbar.co.jp'),
   'CSP script-src must allow the current booking embed helper.'
 );
 assert(
-  frameSource.includes('https://booking.artbar.co.jp'),
+  hasCspHost(frameSource, 'https://booking.artbar.co.jp'),
   'CSP frame-src must allow the current booking iframes.'
 );
 for (const analyticsHost of ['https://analytics.google.com', 'https://ad.doubleclick.net']) {
   assert(
-    connectSource.includes(analyticsHost),
+    hasCspHost(connectSource, analyticsHost),
     `CSP connect-src must allow the configured Google tag endpoint: ${analyticsHost}`
   );
 }
