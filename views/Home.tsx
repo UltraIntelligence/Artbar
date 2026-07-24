@@ -798,7 +798,7 @@ export const Home: React.FC = () => {
            On desktop, alternate steps sit lower, like canvases leaning at different
            heights along a studio ledge. */}
        <section className="py-14 md:py-20 bg-white mx-4 md:mx-6 rounded-[var(--radius-section)] md:rounded-[var(--radius-feature)]">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-10">
           <div ref={howItWorksReveal.ref}>
             <div className={`text-center mb-10 md:mb-14 reveal ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
                <h2 className={`${theme.sectionTitle} font-heading font-heavy text-artbar-navy mb-5`}><JpText>{site.home.howItWorks.title}</JpText></h2>
@@ -807,29 +807,37 @@ export const Home: React.FC = () => {
                </p>
             </div>
 
-            <ol className={`grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
+            <ol className={`grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-6 xl:gap-8 reveal-stagger ${howItWorksReveal.isVisible ? 'visible' : ''}`}>
               {site.home.howItWorks.steps.map((step, index) => (
-                <li key={index} className="group flex items-start gap-4 md:block">
-                  <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl shadow-sm md:h-auto md:w-full md:aspect-[4/3] lg:aspect-[4/5] md:rounded-[var(--radius-card)]">
+                <li key={index} className="group md:block">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] shadow-sm lg:aspect-[4/5]">
                     <Image
                       src={HOW_IT_WORKS_IMAGES[index] ?? HOW_IT_WORKS_IMAGES[0]}
                       alt=""
                       fill
-                      sizes="(max-width: 768px) 96px, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 768px) calc(100vw - 4rem), (max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <span
                       aria-hidden
-                      className="absolute left-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 pt-0.5 font-heading text-sm font-bold leading-none text-artbar-navy shadow-sm ring-1 ring-artbar-navy/10 md:left-4 md:top-4 md:h-10 md:w-10 md:text-lg"
+                      className="absolute left-4 top-4 hidden h-10 w-10 items-center justify-center rounded-full bg-white/95 pt-0.5 font-heading text-lg font-bold leading-none text-artbar-navy shadow-sm ring-1 ring-artbar-navy/10 md:flex"
                     >
                       {index + 1}
                     </span>
                   </div>
-                  <div className="pt-1 md:mt-5 md:pt-0">
-                    <h3 className={`${theme.cardTitle} font-heading font-bold mb-1.5 text-artbar-navy text-lg md:mb-2.5 md:text-xl`}><JpText>{step.title}</JpText></h3>
-                    <p className={`${theme.body} text-artbar-gray leading-relaxed text-sm`}>
-                      <JpText>{step.desc}</JpText>
-                    </p>
+                  <div className="mt-5 flex items-start gap-3 md:block">
+                    <span
+                      aria-hidden
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-artbar-bg pt-0.5 font-heading text-sm font-bold leading-none text-artbar-navy ring-1 ring-artbar-navy/10 md:hidden"
+                    >
+                      {index + 1}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className={`${theme.cardTitle} font-heading font-bold mb-1.5 text-artbar-navy text-lg md:mb-2.5 md:text-xl`}><JpText>{step.title}</JpText></h3>
+                      <p className={`${theme.body} text-artbar-gray leading-relaxed text-sm`}>
+                        <JpText>{step.desc}</JpText>
+                      </p>
+                    </div>
                   </div>
                 </li>
               ))}
