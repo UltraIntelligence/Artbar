@@ -14,6 +14,9 @@ import type {
 const MEDIA_TABLE = 'site_media_overrides';
 const MEDIA_BUCKET = 'artbar-site-media';
 const PUBLISHED_MEDIA_CACHE_TAG = 'artbar-published-site-media';
+export const PUBLISHED_MEDIA_CACHE_VERSION = 2;
+export const PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS = 60 * 60;
+export const PUBLIC_MEDIA_SELECT = 'slot_key, published_asset';
 
 type MediaOverrideRow = {
   slot_key: string;
@@ -24,6 +27,11 @@ type MediaOverrideRow = {
   created_at: string;
   updated_at: string;
   published_at: string | null;
+};
+
+type PublishedMediaRow = {
+  slot_key: string;
+  published_asset: unknown | null;
 };
 
 type ReadMediaRecordsOptions = {
@@ -146,20 +154,39 @@ async function readMediaRecords(
 }
 
 async function readPublishedMediaMap(): Promise<PublishedMediaMap> {
-  const records = await readMediaRecords({ throwOnError: true });
-  return Object.fromEntries(
-    records
-      .filter((record) => record.publishedAsset)
-      .map((record) => [record.slotKey, record.publishedAsset as MediaAsset]),
-  );
+  const supabase = getSupabaseAdmin();
+  if (!supabase) {
+    return {};
+  }
+
+  const { data, error } = await supabase
+    .from(MEDIA_TABLE)
+    .select(PUBLIC_MEDIA_SELECT)
+    .not('published_asset', 'is', null)
+    .order('slot_key', { ascending: true });
+
+  if (error) {
+    console.error('[media-store] failed to load published media', error);
+    throw new Error('Failed to load published site images.');
+  }
+
+  const publishedMedia: PublishedMediaMap = {};
+  for (const row of (data ?? []) as PublishedMediaRow[]) {
+    const asset = normalizeMediaAsset(row.published_asset);
+    if (asset) {
+      publishedMedia[row.slot_key] = asset;
+    }
+  }
+
+  return publishedMedia;
 }
 
 const readCachedPublishedMediaMap = unstable_cache(
   readPublishedMediaMap,
-  ['artbar-published-site-media-v1'],
+  [`artbar-published-site-media-v${PUBLISHED_MEDIA_CACHE_VERSION}`],
   {
     tags: [PUBLISHED_MEDIA_CACHE_TAG],
-    revalidate: 60,
+    revalidate: PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS,
   },
 );
 

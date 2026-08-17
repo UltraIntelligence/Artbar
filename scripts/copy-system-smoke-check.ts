@@ -11,10 +11,25 @@ import {
   normalizeCopyPayload,
 } from '../lib/copy/resolve';
 import {
+  PUBLISHED_COPY_CACHE_VERSION,
+  PUBLIC_COPY_CACHE_REVALIDATE_SECONDS,
+  PUBLIC_COPY_SELECT,
   parseCopyLocale,
   parseCopyLocaleForMutation,
   parseCopyMutationLocale,
 } from '../lib/copy/store';
+import {
+  PUBLISHED_MEDIA_CACHE_VERSION,
+  PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS,
+  PUBLIC_MEDIA_SELECT,
+} from '../lib/media/store';
+
+assert.equal(PUBLISHED_COPY_CACHE_VERSION, 2);
+assert.equal(PUBLIC_COPY_CACHE_REVALIDATE_SECONDS, 60 * 60);
+assert.equal(PUBLIC_COPY_SELECT, 'published_payload');
+assert.equal(PUBLISHED_MEDIA_CACHE_VERSION, 2);
+assert.equal(PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS, 60 * 60);
+assert.equal(PUBLIC_MEDIA_SELECT, 'slot_key, published_asset');
 
 assert.deepEqual(COPY_LOCALES, ['en', 'jp']);
 assert.equal(parseCopyLocale('en'), 'en');
