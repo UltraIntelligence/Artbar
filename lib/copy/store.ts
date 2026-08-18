@@ -56,6 +56,13 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T | nul
 }
 
 const publishedCopyCacheTag = (locale: CopyLocale) => `artbar-published-${locale}-copy`;
+export const PUBLISHED_COPY_CACHE_VERSION = 2;
+export const PUBLIC_COPY_CACHE_REVALIDATE_SECONDS = 60 * 60;
+export const PUBLIC_COPY_SELECT = 'published_payload';
+
+type PublishedCopyRow = {
+  published_payload: unknown;
+};
 
 type CopyRecordWrite = {
   draft_payload: LocalizedCopyPayload;
@@ -65,19 +72,38 @@ type CopyRecordWrite = {
   published_at: string | null;
 };
 
-const readPublishedCopyRecord = (locale: CopyLocale) =>
+const readPublishedCopyPayload = (locale: CopyLocale) =>
   unstable_cache(
     async () => {
-      const record = await readCopyRecord(locale);
-      if (!record) {
+      const supabase = getSupabaseAdmin();
+      if (!supabase) {
         throw new Error(`Published ${locale} copy is unavailable.`);
       }
-      return record;
+
+      const { data, error } = await supabase
+        .from(COPY_TABLE)
+        .select(PUBLIC_COPY_SELECT)
+        .eq('locale', locale)
+        .maybeSingle();
+
+      if (error) {
+        console.error('[copy-store] failed to load published copy', error);
+        throw new Error(`Published ${locale} copy is unavailable.`);
+      }
+
+      if (!data) {
+        throw new Error(`Published ${locale} copy is unavailable.`);
+      }
+
+      return normalizeCopyPayload(
+        locale,
+        (data as PublishedCopyRow).published_payload,
+      );
     },
-    [`artbar-published-${locale}-copy-v1`],
+    [`artbar-published-${locale}-copy-v${PUBLISHED_COPY_CACHE_VERSION}`],
     {
       tags: [publishedCopyCacheTag(locale)],
-      revalidate: 60,
+      revalidate: PUBLIC_COPY_CACHE_REVALIDATE_SECONDS,
     },
   )();
 
@@ -133,11 +159,11 @@ export async function getPublishedCopyPayload(
   locale: CopyLocale,
   options?: { timeoutMs?: number },
 ) {
-  const record = options?.timeoutMs
-    ? await withTimeout(readPublishedCopyRecord(locale), options.timeoutMs)
-    : await readPublishedCopyRecord(locale).catch(() => null);
+  const payload = options?.timeoutMs
+    ? await withTimeout(readPublishedCopyPayload(locale), options.timeoutMs)
+    : await readPublishedCopyPayload(locale).catch(() => null);
 
-  return record?.published_payload ?? null;
+  return payload ?? null;
 }
 
 export async function getPublishedJapaneseCopyPayload(options?: { timeoutMs?: number }) {

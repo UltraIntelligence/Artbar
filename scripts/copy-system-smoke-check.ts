@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import {
   COPY_LOCALES,
   DEFAULT_COPY_PAYLOADS,
@@ -11,10 +13,39 @@ import {
   normalizeCopyPayload,
 } from '../lib/copy/resolve';
 import {
+  PUBLISHED_COPY_CACHE_VERSION,
+  PUBLIC_COPY_CACHE_REVALIDATE_SECONDS,
+  PUBLIC_COPY_SELECT,
   parseCopyLocale,
   parseCopyLocaleForMutation,
   parseCopyMutationLocale,
 } from '../lib/copy/store';
+import {
+  PUBLISHED_MEDIA_CACHE_VERSION,
+  PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS,
+  PUBLIC_MEDIA_SELECT,
+} from '../lib/media/store';
+
+assert.equal(PUBLISHED_COPY_CACHE_VERSION, 2);
+assert.equal(PUBLIC_COPY_CACHE_REVALIDATE_SECONDS, 60 * 60);
+assert.equal(PUBLIC_COPY_SELECT, 'published_payload');
+assert.equal(PUBLISHED_MEDIA_CACHE_VERSION, 2);
+assert.equal(PUBLIC_MEDIA_CACHE_REVALIDATE_SECONDS, 60 * 60);
+assert.equal(PUBLIC_MEDIA_SELECT, 'slot_key, published_asset');
+
+const copyStoreSource = readFileSync(join(process.cwd(), 'lib/copy/store.ts'), 'utf8');
+const mediaStoreSource = readFileSync(join(process.cwd(), 'lib/media/store.ts'), 'utf8');
+
+assert.match(
+  copyStoreSource,
+  /\.select\(PUBLIC_COPY_SELECT\)\s*\.eq\('locale', locale\)\s*\.maybeSingle\(\)/,
+  'Public copy reads only the requested locale and published payload',
+);
+assert.match(
+  mediaStoreSource,
+  /\.select\(PUBLIC_MEDIA_SELECT\)\s*\.not\('published_asset', 'is', null\)\s*\.order\('slot_key', \{ ascending: true \}\)/,
+  'Public media reads only published assets in a stable order',
+);
 
 assert.deepEqual(COPY_LOCALES, ['en', 'jp']);
 assert.equal(parseCopyLocale('en'), 'en');
