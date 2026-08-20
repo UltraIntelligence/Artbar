@@ -167,6 +167,7 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     (faq) => faq.question === 'セッションをキャンセルするにはどうすればよいですか？',
   );
   normalized.faqs = normalized.faqs.map((faq) =>
+    faq.question === 'セッションをキャンセルするにはどうすればよいですか？' &&
     faq.answer === LEGACY_CANCEL_FAQ_JP
       ? { ...faq, answer: currentCancelFaqJp?.answer ?? faq.answer }
       : faq,
@@ -208,6 +209,7 @@ export function normalizeCopyPayload(locale: CopyLocale, payload: unknown): Loca
     (faq) => faq.question === 'How can I cancel my session?',
   );
   normalized.faqs = normalized.faqs.map((faq) =>
+    faq.question === 'How can I cancel my session?' &&
     faq.answer === LEGACY_CANCEL_FAQ_EN
       ? { ...faq, answer: currentCancelFaqEn?.answer ?? faq.answer }
       : faq,
