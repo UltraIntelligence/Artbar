@@ -792,7 +792,7 @@ export const FAQS = [
   },
   {
     question: "How can I cancel my session?",
-    answer: "You can self-cancel your reservation from the bottom of your email confirmation.\n\nCancellation policies may differ for some classes that require custom orders. Please check your individual class information for specifics.\n\nFor most classes, our cancellation policy is:\nFull refund: Cancel up to 3 days before the event start time.\n25% cancellation fee: Cancel between 3 days and 24 hours before the event start time.\nNo refund: Cancellations within 24 hours of the event start time.\n\nGift certificates are non-refundable."
+    answer: "To cancel, open your confirmation email and click \"View your booking\" at the bottom. You can then cancel your reservation yourself.\n\nCancellation policies may differ for some classes that require custom orders. Please check your individual class information for specifics.\n\nFor most classes, our cancellation policy is:\nFull refund: Cancel up to 3 days before the event start time.\n25% cancellation fee: Cancel between 3 days and 24 hours before the event start time.\nNo refund: Cancellations within 24 hours of the event start time.\n\nGift certificates are non-refundable."
   }
 ];
 
@@ -831,6 +831,6 @@ export const FAQS_JP = [
   },
   {
     question: "セッションをキャンセルするにはどうすればよいですか？",
-    answer: "予約確認メールの下部から、ご自身でキャンセル手続きができます。\n\n特注品や準備が必要なクラスは、キャンセルポリシーが異なる場合があります。詳細は各クラスの案内をご確認ください。\n\n多くのクラスのキャンセルポリシーは以下の通りです。\n全額返金: イベント開始3日前までのキャンセル。\n25%キャンセル料: イベント開始3日前から24時間前までのキャンセル。\n返金不可: イベント開始24時間以内のキャンセル。\n\nギフト券は返金不可です。"
+    answer: "キャンセルするには、予約確認メールの下部にある「View your booking」をクリックしてください。表示された予約ページから、ご自身でキャンセル手続きができます。\n\n特注品や準備が必要なクラスは、キャンセルポリシーが異なる場合があります。詳細は各クラスの案内をご確認ください。\n\n多くのクラスのキャンセルポリシーは以下の通りです。\n全額返金: イベント開始3日前までのキャンセル。\n25%キャンセル料: イベント開始3日前から24時間前までのキャンセル。\n返金不可: イベント開始24時間以内のキャンセル。\n\nギフト券は返金不可です。"
   }
 ];
