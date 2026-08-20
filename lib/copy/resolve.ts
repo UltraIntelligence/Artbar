@@ -24,6 +24,12 @@ const LEGACY_THEME_SLUGS: Record<string, string> = {
   'texture-painting': 'texture-art',
 };
 
+const LEGACY_CANCEL_FAQ_EN =
+  'You can self-cancel your reservation from the bottom of your email confirmation.\n\nCancellation policies may differ for some classes that require custom orders. Please check your individual class information for specifics.\n\nFor most classes, our cancellation policy is:\nFull refund: Cancel up to 3 days before the event start time.\n25% cancellation fee: Cancel between 3 days and 24 hours before the event start time.\nNo refund: Cancellations within 24 hours of the event start time.\n\nGift certificates are non-refundable.';
+
+const LEGACY_CANCEL_FAQ_JP =
+  '予約確認メールの下部から、ご自身でキャンセル手続きができます。\n\n特注品や準備が必要なクラスは、キャンセルポリシーが異なる場合があります。詳細は各クラスの案内をご確認ください。\n\n多くのクラスのキャンセルポリシーは以下の通りです。\n全額返金: イベント開始3日前までのキャンセル。\n25%キャンセル料: イベント開始3日前から24時間前までのキャンセル。\n返金不可: イベント開始24時間以内のキャンセル。\n\nギフト券は返金不可です。';
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
@@ -157,6 +163,14 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     normalized.ui.themeDetail.upcomingClassesSub =
       '次回開催予定のクラスをご覧ください。横にスワイプすると、ほかの日程も確認できます。';
   }
+  const currentCancelFaqJp = DEFAULT_COPY_PAYLOADS.jp.faqs.find(
+    (faq) => faq.question === 'セッションをキャンセルするにはどうすればよいですか？',
+  );
+  normalized.faqs = normalized.faqs.map((faq) =>
+    faq.answer === LEGACY_CANCEL_FAQ_JP
+      ? { ...faq, answer: currentCancelFaqJp?.answer ?? faq.answer }
+      : faq,
+  );
 
   normalized.blog = normalized.blog.map((item) => ({
     ...item,
@@ -190,6 +204,14 @@ export function normalizeCopyPayload(locale: CopyLocale, payload: unknown): Loca
     normalized.ui.themeDetail.upcomingClassesSub =
       'See the next scheduled classes. Swipe to explore more dates.';
   }
+  const currentCancelFaqEn = DEFAULT_COPY_PAYLOADS.en.faqs.find(
+    (faq) => faq.question === 'How can I cancel my session?',
+  );
+  normalized.faqs = normalized.faqs.map((faq) =>
+    faq.answer === LEGACY_CANCEL_FAQ_EN
+      ? { ...faq, answer: currentCancelFaqEn?.answer ?? faq.answer }
+      : faq,
+  );
 
   normalized.blog = normalized.blog.map((item) => ({
     ...item,

@@ -7,7 +7,6 @@ import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
-import { ContactTransitionNotice } from '../components/ContactTransitionNotice';
 
 export const Contact: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -90,17 +89,11 @@ export const Contact: React.FC = () => {
         className={`reveal max-w-[1000px] mx-auto px-6 md:px-10 ${mainReveal.isVisible ? 'visible' : ''}`}
       >
         
-        {/* Transition notice */}
-        <ContactTransitionNotice />
-
         {/* Header */}
         <div className="text-center mb-20">
           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{site.contactPage.badge}</JpText></span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-8"><JpText>{site.contactPage.title}</JpText></h1>
           <div className="bg-white p-8 rounded-[2rem] max-w-3xl mx-auto shadow-sm">
-            <p className="text-artbar-gray leading-relaxed mb-4">
-              <JpText>{site.contactPage.notice1}</JpText>
-            </p>
             <p className="text-artbar-navy leading-relaxed font-medium">
               <JpText>{site.contactPage.notice2}</JpText>
             </p>

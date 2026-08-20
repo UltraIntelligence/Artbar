@@ -646,7 +646,6 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     contactPage: {
       badge: "Contact",
       title: "Contact Us",
-      notice1: "Please use the form below for cancellations. Note that cancellations within 24 hours of the event are non-refundable.",
       notice2: "We usually reply within 24 hours. If you do not receive a reply, please check your spam folder.",
       faqTitle: "Frequently Asked Questions",
       formTitle: "Send a Message"
@@ -959,7 +958,6 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     contactPage: {
       badge: "お問い合わせ",
       title: "お問い合わせ",
-      notice1: "キャンセルや変更は以下のフォームより承ります。開催24時間以内のキャンセルは返金対象外となりますのでご注意ください。",
       notice2: "通常24時間以内に担当者より返信いたします。",
       faqTitle: "よくある質問",
       formTitle: "メッセージを送る"

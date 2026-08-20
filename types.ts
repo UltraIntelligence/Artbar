@@ -323,7 +323,6 @@ export interface SiteContent {
   contactPage: {
     badge: string;
     title: string;
-    notice1: string;
     notice2: string;
     faqTitle: string;
     formTitle: string;
