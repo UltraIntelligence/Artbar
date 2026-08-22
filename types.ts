@@ -246,6 +246,10 @@ export interface SiteContent {
       feePrice: string;
       offsiteLabel: string;
       offsitePrice: string;
+      termsTitle: string;
+      termsPayment: string;
+      termsCancellation: string;
+      termsHeadcount: string;
       cta: string;
     };
   };
