@@ -3,7 +3,7 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
-import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, MapPin, Coffee, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
+import { CheckCircle, Briefcase, Users, Zap, Palette, Puzzle, Layers, Wine, MapPin, Coffee, ChevronDown, ChevronLeft, ChevronRight, Quote, ArrowRight, Sparkles } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
 import { TEAM_BUILDING_ACTIVITY_IMAGES, PARTNER_LOGOS, HERO_BLUR_DATA_URL, TEAM_BUILDING_INQUIRY_URL } from '../constants';
 import { PartnerLogo } from '../components/PartnerLogo';
@@ -311,6 +311,17 @@ export const TeamBuilding: React.FC = () => {
                       <div className="flex justify-between text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.feeLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.feePrice}</span></div>
                       <div className="flex justify-between text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.offsiteLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.offsitePrice}</span></div>
                    </div>
+                   <details className="group border-t border-white/10 pt-5 text-left">
+                     <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-white/90 marker:content-none">
+                       <JpText>{site.teamBuilding.pricing.termsTitle}</JpText>
+                       <ChevronDown size={18} className="shrink-0 transition-transform duration-200 group-open:rotate-180" aria-hidden="true" />
+                     </summary>
+                     <div className="space-y-3 pb-1 pt-3 text-sm leading-relaxed text-white/70">
+                       <p><JpText>{site.teamBuilding.pricing.termsPayment}</JpText></p>
+                       <p><JpText>{site.teamBuilding.pricing.termsCancellation}</JpText></p>
+                       <p><JpText>{site.teamBuilding.pricing.termsHeadcount}</JpText></p>
+                     </div>
+                   </details>
                    <Button
 	                     variant="taupe"
 	                     size="cta"

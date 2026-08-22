@@ -531,6 +531,10 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         feePrice: "¥5,500",
         offsiteLabel: "Custom Options",
         offsitePrice: "Contact us for more options.",
+        termsTitle: "Booking & cancellation terms",
+        termsPayment: "Payment and final guest numbers are due seven days before your event.",
+        termsCancellation: "Cancellations made between seven days and 24 hours before the event receive a 50% refund. Cancellations made within 24 hours are non-refundable.",
+        termsHeadcount: "The confirmed guest count remains chargeable if fewer guests attend.",
         cta: "Request Availability"
       }
     },
@@ -843,6 +847,10 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         feePrice: "¥5,500",
         offsiteLabel: "カスタムオプション",
         offsitePrice: "詳しくはお問い合わせください。",
+        termsTitle: "ご予約・キャンセル規定",
+        termsPayment: "お支払いおよび最終参加人数の確定は、開催日の7日前までにお願いいたします。",
+        termsCancellation: "開催日の7日前から24時間前までのキャンセルは、料金の50%を返金いたします。開催24時間以内のキャンセルは返金いたしかねます。",
+        termsHeadcount: "当日の参加人数が確定人数を下回った場合も、確定人数分の料金を申し受けます。",
         cta: "空き状況・見積もりを依頼"
       }
     },
