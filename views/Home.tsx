@@ -21,6 +21,7 @@ import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import {
   ARTBAR_BOOKING_URL,
+  GROUP_EVENT_IMAGE,
   PRIVATE_PARTY_INQUIRY_URL,
   LINE_ADD_FRIEND_URL,
   LINE_BRAND_ICON_SRC,
@@ -29,6 +30,7 @@ import {
   PARTNER_LOGOS,
   PAINTA_EMBED_ORIGIN,
 } from '../constants';
+import { mediaAssetUrl } from '../lib/media/resolve';
 import { isYearEndPartySeason } from '../lib/seasonal';
 import { themeSlugFromItem } from '../lib/theme-slugs';
 import { trackBookingClick, trackInquiryClick } from '../lib/analytics';
@@ -82,7 +84,7 @@ const CONCEPT_SOCIAL_AVATAR_URLS = [
 ] as const;
 
 export const Home: React.FC = () => {
-  const { content, site, lang, localizedCopy } = useContent();
+  const { content, site, lang, localizedCopy, media } = useContent();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
   const [showAllThemes, setShowAllThemes] = useState(false);
@@ -757,26 +759,26 @@ export const Home: React.FC = () => {
 
       {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
       <section id="group-events" className="relative z-[2] scroll-mt-28 px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
-        <div className="mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_60px_-35px_rgba(5,55,97,0.25)] md:rounded-[3rem]">
           {hasMounted && isYearEndPartySeason() ? (
-            <div aria-labelledby="year-end-title" className="mb-12 grid items-center gap-7 md:mb-16 md:grid-cols-2 md:gap-12 lg:gap-20">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-[5/4] md:rounded-[3rem]">
+            <div aria-labelledby="year-end-title" className="grid items-stretch md:grid-cols-2">
+              <div className="relative aspect-[3/2] overflow-hidden md:aspect-auto md:min-h-[470px]">
                 <Image
-                  src={content.images.hero.teamBuilding}
-                  alt={lang === 'jp' ? 'Artbarのグループ向けアート体験' : 'A group art experience at Artbar'}
+                  src={mediaAssetUrl(media, 'home.groupEvents', GROUP_EVENT_IMAGE)}
+                  alt={lang === 'jp' ? 'Artbarのスタジオをもとにした企業グループのアート体験イメージ' : 'Illustration of a company group enjoying art in an Artbar-inspired studio'}
                   fill
                   sizes="(max-width: 767px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
-              <div className="max-w-xl">
+              <div className="flex flex-col items-start justify-center px-6 py-8 md:p-10 lg:p-14">
                 <h2 id="year-end-title" className={`${theme.sectionTitle} font-heading font-heavy leading-tight tracking-tight text-artbar-navy`}><JpText>{site.home.yearEnd.title}</JpText></h2>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-artbar-gray md:text-lg"><JpText>{site.home.yearEnd.body}</JpText></p>
                 <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-3 text-center font-heading text-base font-bold text-artbar-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-artbar-navy sm:w-auto"><JpText>{site.home.yearEnd.cta}</JpText></a>
               </div>
             </div>
           ) : (
-          <div className="mb-12 text-center md:mb-14">
+          <div className="px-6 py-10 text-center md:p-14">
             <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
               <JpText>{meetRegularsHeading}</JpText>
             </h2>
@@ -790,16 +792,17 @@ export const Home: React.FC = () => {
 
           )}
 
+          <div className="border-t border-artbar-navy/10 bg-artbar-bg/35 px-6 py-8 md:px-10 md:py-10">
           {hasMounted && isYearEndPartySeason() && <p className="mb-8 text-center text-sm text-artbar-gray md:text-base">{lang === 'jp' ? '企業イベントでも選ばれています' : 'Companies who have joined Artbar events'}</p>}
 
           {/* A conventional logo wall: equal cells, optically normalized marks,
               and centered partial rows. Seven columns makes the 14-brand desktop
               wall two calm rows instead of a long stack. */}
-          <div className="mx-auto mb-16 flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-9 md:gap-x-8 md:gap-y-10 lg:mb-20 lg:gap-x-6">
+          <div className="[&_img]:max-w-full max-sm:[&_img]:max-h-6 mx-auto mb-8 flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-6 md:mb-10 md:gap-x-6 md:gap-y-8">
             {PARTNER_LOGOS.map((logo) => (
               <div
                 key={logo.name}
-                className="flex min-w-0 basis-[calc(50%-0.625rem)] justify-center sm:basis-[calc(33.333%-1rem)] md:basis-[calc(25%-1.5rem)] lg:basis-[calc(14.285%-1.3rem)]"
+                className="flex min-w-0 basis-[calc(33.333%-0.667rem)] justify-center sm:basis-[calc(25%-1.125rem)] lg:basis-[calc(14.285%-1.3rem)]"
               >
                 <PartnerLogo
                   {...logo}
@@ -813,14 +816,15 @@ export const Home: React.FC = () => {
           <div className="flex justify-center">
             <Button
               type="button"
-              variant="taupe"
+              variant="outline"
               size="cta"
               onClick={() => router.push(localizeHrefForLanguage('/team-building', lang))}
-              className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
+              className="inline-flex w-full max-w-xs gap-2 whitespace-normal text-center leading-snug hover:scale-[1.02] sm:w-auto sm:max-w-none"
             >
               <JpText>{bookTeamBuildingCta}</JpText>
               <ArrowRight size={18} className="shrink-0" aria-hidden />
             </Button>
+          </div>
           </div>
         </div>
       </section>

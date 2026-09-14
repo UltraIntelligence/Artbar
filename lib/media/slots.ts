@@ -5,6 +5,7 @@ import {
   LOCATIONS,
   MEDIA_LIST,
   SITE_IMAGES,
+  GROUP_EVENT_IMAGE,
   TEAM_BUILDING_ACTIVITY_IMAGES,
 } from '@/constants';
 import type { MediaSlot, MediaVariantSpec } from './types';
@@ -113,6 +114,7 @@ const themePageSlots = THEME_PAGE_SLUGS.flatMap((slug) => {
 });
 
 export const MEDIA_SLOTS: MediaSlot[] = [
+  home('home.groupEvents', 'Company event illustration', GROUP_EVENT_IMAGE, undefined, 'GROUP_EVENT_IMAGE', 'AI-generated group scene inspired by the booking studio. Replace with an approved event photo when available.'),
   home(
     'home.hero.desktop',
     'Hero desktop replacement image',
