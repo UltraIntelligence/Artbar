@@ -289,3 +289,15 @@ function assertPublicCopyPayloads() {
 assertPublicCopyPayloads();
 
 console.log('Copy system smoke check passed.');
+
+// Older published copy gets narrow display repairs without changing prices or terms.
+const oldLayoutCopy = structuredClone(DEFAULT_COPY_PAYLOADS.jp);
+oldLayoutCopy.site.privateParties.occasions[3].title = ' ';
+oldLayoutCopy.site.teamBuilding.valueProp.benefits[0].title = 'ウェルウェルビーイング';
+const repairedLayoutCopy = normalizeCopyPayload('jp', oldLayoutCopy);
+assert.equal(repairedLayoutCopy.site.privateParties.occasions[3].title, DEFAULT_COPY_PAYLOADS.jp.site.privateParties.occasions[3].title);
+assert.equal(repairedLayoutCopy.site.teamBuilding.valueProp.benefits[0].title, 'ウェルビーイング');
+assert.deepEqual(repairedLayoutCopy.site.privateParties.pricing, oldLayoutCopy.site.privateParties.pricing);
+assert.deepEqual(repairedLayoutCopy.site.teamBuilding.pricing, oldLayoutCopy.site.teamBuilding.pricing);
+oldLayoutCopy.site.privateParties.occasions[3].title = 'スタッフが編集したタイトル';
+assert.equal(normalizeCopyPayload('jp', oldLayoutCopy).site.privateParties.occasions[3].title, 'スタッフが編集したタイトル');

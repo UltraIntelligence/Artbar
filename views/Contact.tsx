@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/Button';
 import { ChevronDown, ChevronUp, Send } from 'lucide-react';
 import { useContent } from '../context/ContentContext';
-import { useScrollReveal } from '../hooks/useScrollReveal';
 import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 
@@ -21,7 +20,6 @@ export const Contact: React.FC = () => {
     company: '', // honeypot — must stay empty
   });
   const { site, lang, localizedCopy } = useContent();
-  const mainReveal = useScrollReveal();
 
   const updateField = (field: keyof typeof form) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -83,25 +81,32 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-28 md:pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div
-        ref={mainReveal.ref}
-        className={`reveal max-w-[1000px] mx-auto px-6 md:px-10 ${mainReveal.isVisible ? 'visible' : ''}`}
+        className="max-w-[1000px] mx-auto px-6 md:px-10"
       >
         
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-20">
           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-4 block"><JpText>{site.contactPage.badge}</JpText></span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-8"><JpText>{site.contactPage.title}</JpText></h1>
-          <div className="bg-white p-8 rounded-[2rem] max-w-3xl mx-auto shadow-sm">
+          {stripJpSentinel(site.contactPage.notice2).trim() && <div className="bg-white p-6 md:p-8 rounded-[2rem] max-w-3xl mx-auto shadow-sm">
             <p className="text-artbar-navy leading-relaxed font-medium">
               <JpText>{site.contactPage.notice2}</JpText>
             </p>
+          </div>}
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <a href="#contact-form" className="inline-flex min-h-12 items-center justify-center rounded-full bg-artbar-navy px-6 py-3 font-bold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-artbar-navy">
+              {lang === 'jp' ? 'メッセージを送る' : 'Send a message'}
+            </a>
+            <a href="#contact-faqs" className="inline-flex min-h-12 items-center justify-center rounded-full border border-artbar-taupe px-6 py-3 font-bold text-artbar-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-artbar-navy">
+              {lang === 'jp' ? 'よくある質問' : 'Read FAQs'}
+            </a>
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div className="mb-32">
+        <div id="contact-faqs" className="scroll-mt-28 mb-16 md:mb-24">
           <h2 className="text-3xl font-heading font-bold text-artbar-navy mb-10 px-4 border-l-4 border-artbar-taupe"><JpText>{site.contactPage.faqTitle}</JpText></h2>
           <div className="space-y-4">
             {faqs.map((faq, index) => (
@@ -111,21 +116,19 @@ export const Contact: React.FC = () => {
               >
                 <button
                   onClick={() => toggleFaq(index)}
-                  className="w-full px-8 py-6 flex justify-between items-center text-left focus:outline-none"
+                  aria-expanded={openIndex === index}
+                  aria-controls={`faq-answer-${index}`}
+                  className="w-full px-5 md:px-8 py-5 flex justify-between items-center text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-artbar-navy"
                 >
-                  <span className={`font-heading font-bold text-lg pr-8 ${openIndex === index ? 'text-artbar-navy' : 'text-artbar-navy/70'}`}>
+                  <span className={`font-heading font-bold text-base md:text-lg pr-4 ${openIndex === index ? 'text-artbar-navy' : 'text-artbar-navy/70'}`}>
                     <JpText>{faq.question}</JpText>
                   </span>
                   <span className="flex-shrink-0 text-artbar-taupe">
                     {openIndex === index ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
                   </span>
                 </button>
-                <div 
-                  className={`px-8 overflow-hidden transition-all duration-300 ease-in-out ${
-                    openIndex === index ? 'max-h-96 pb-8 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <p className="text-artbar-gray leading-relaxed">
+                <div id={`faq-answer-${index}`} hidden={openIndex !== index} className="px-5 md:px-8 pb-6">
+                  <p className="whitespace-pre-line text-artbar-gray leading-relaxed">
                     <JpText>{faq.answer}</JpText>
                   </p>
                 </div>
@@ -134,7 +137,7 @@ export const Contact: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative overflow-hidden">
+        <div id="contact-form" tabIndex={-1} className="scroll-mt-28 relative overflow-clip">
           <div className="absolute -top-20 -right-20 w-64 h-64 bg-artbar-taupe/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute bottom-0 -left-20 w-64 h-64 bg-artbar-navy/5 rounded-full blur-3xl pointer-events-none"></div>
 

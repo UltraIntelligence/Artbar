@@ -383,6 +383,8 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
       paintYourPet: "Paint Your Pet"
     },
     home: {
+      experienceIntro: "Paint and sip in Tokyo and Yokohama. Enjoy wine or soft drinks and paint with an artist. Beginners are welcome.",
+      yearEnd: {"title": "Year-end parties at Artbar", "body": "Bring your team or friends together for painting and drinks in Tokyo or Yokohama. Tell us your group size and preferred date.", "cta": "Ask about a year-end party"},
       hero: {
         badge: "CELEBRATING OUR 10TH ANNIVERSARY",
         title: "Tokyo's Most Loved",
@@ -461,6 +463,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     },
     teamBuilding: {
       hero: {
+        eventIntro: "Company events and team-building art workshops in Tokyo and Yokohama.",
         badge: "9+ years providing creative team building experiences throughout Japan",
         title: "Unleash Your Team's",
         titleHighlight: "Creative Potential",
@@ -700,6 +703,8 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
       paintYourPet: "ペットを描こう"
     },
     home: {
+      experienceIntro: "東京・横浜で楽しむ、初心者歓迎のアート体験。ワインやソフトドリンクを楽しみながら、講師と一緒に絵を描きます。",
+      yearEnd: {"title": "今年の忘年会は、アートで乾杯。", "body": "会社の仲間や友人と、東京・横浜で絵とドリンクを楽しむ貸切パーティー。人数やご希望の日程をご相談ください。", "cta": "忘年会の相談をする"},
       hero: {
         badge: "10周年記念",
         title: "ドリンク片手に楽しむ",
@@ -777,6 +782,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
     },
     teamBuilding: {
       hero: {
+        eventIntro: "東京・横浜で楽しむ、企業イベント・チームビルディング向けのアート体験。",
         badge: "日本全国で9年以上、創造的なチームビルディング体験を提供",
         title: "チームの結束を深める",
         titleHighlight: "クリエイティブな体験",
@@ -792,7 +798,7 @@ Yokohama is a captivating city where various cultures seamlessly merge. Whether 
         p1: "私たちのプログラムは、リラックスした雰囲気の中で階層や部署の壁を取り払い、心理的安全性とコラボレーションを促進するように設計されています。",
         p2: "スタジオでの開催はもちろん、オフィスや外部会場への出張も可能。チームの課題や目的に合わせた最適なプランをご提案します。",
         benefits: [
-          { title: "ストレス解消とウェルウェルビーイング", desc: "アートに没頭する時間は、デジタルデトックス効果とともにメンタルヘルスを向上させます。" },
+          { title: "ストレス解消とウェルビーイング", desc: "アートに没頭する時間は、デジタルデトックス効果とともにメンタルヘルスを向上させます。" },
           { title: "クリエイティブ思考の刺激", desc: "日常業務から離れ、右脳を使うことで、新しい視点や柔軟な発想を引き出します。" },
           { title: "真のコミュニケーション", desc: "作品を通じた対話は、普段の会議では生まれない深い相互理解と共感を生みます。" },
           { title: "完全お任せの運営", desc: "画材の準備から進行, 片付けまで全て私たちが担当. 幹事様の負担を最小限に抑えます。" }

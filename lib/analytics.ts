@@ -23,3 +23,7 @@ export function trackBookingClick(
   if (extra?.theme) data.theme = extra.theme;
   track('booking_cta_clicked', data);
 }
+
+export function trackInquiryClick(type: 'private_party' | 'team_building', source: string): void {
+  track('inquiry_cta_clicked', { type, source });
+}

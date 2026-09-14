@@ -112,6 +112,8 @@ export interface SiteContent {
     paintYourPet: string; // New
   };
   home: {
+    experienceIntro: string;
+    yearEnd: { title: string; body: string; cta: string };
     hero: {
       badge: string;
       title: string;
@@ -185,6 +187,7 @@ export interface SiteContent {
   };
   teamBuilding: {
     hero: {
+      eventIntro: string;
       badge: string;
       title: string;
       titleHighlight: string;

@@ -15,14 +15,15 @@ import {
  * inserts `<wbr>` between parts. EN strings and non-string children render
  * unchanged — no extra DOM, no language detection here.
  *
- * Authors can also embed literal `<wbr>` in JP source strings, but the segmenter
- * does not currently honor those — to mark a manual breakpoint, add a U+200B
- * directly in source. Most copy goes through the segmenter, which handles this
+ * Authors can also embed literal `<wbr>` in JP source strings, which the segmenter and this renderer
+ * both honor as phrase boundaries. Most copy goes through the segmenter, which handles this
  * automatically.
  *
  * Pairs with `word-break: keep-all; overflow-wrap: anywhere; line-break: strict`
  * (set globally on `html:lang(ja)` in `globals.css`).
  */
+
+import { addJapaneseDisplayBreaks } from '@/lib/jp-display';
 
 const SENTINEL = '​';
 
@@ -34,6 +35,7 @@ interface JpTextProps {
 }
 
 export function JpText({ children, as: Tag = 'span', className }: JpTextProps) {
+  if (typeof children === 'string') children = addJapaneseDisplayBreaks(children);
   if (typeof children !== 'string' || !children.includes(SENTINEL)) {
     if (className || Tag !== 'span') return createElement(Tag, { className }, children);
     return <>{children}</>;

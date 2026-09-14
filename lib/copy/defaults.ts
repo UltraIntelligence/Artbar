@@ -677,6 +677,11 @@ export const COPY_ADMIN_SECTIONS = [
 ] as const;
 
 export const COPY_ADMIN_FIELD_LABELS: Record<string, string> = {
+  'site.home.experienceIntro': 'First visit: art experience introduction',
+  'site.home.yearEnd.title': 'Year-end parties: heading (September–December)',
+  'site.home.yearEnd.body': 'Year-end parties: description',
+  'site.home.yearEnd.cta': 'Year-end parties: enquiry button',
+  'site.teamBuilding.hero.eventIntro': 'Company events: introduction',
   'site.nav.book': 'Main booking button',
   'site.nav.schedule': 'Schedule link',
   'site.nav.instructors': 'Instructors link',

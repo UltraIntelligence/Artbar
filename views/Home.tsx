@@ -21,6 +21,7 @@ import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import {
   ARTBAR_BOOKING_URL,
+  PRIVATE_PARTY_INQUIRY_URL,
   LINE_ADD_FRIEND_URL,
   LINE_BRAND_ICON_SRC,
   SITE_IMAGES,
@@ -28,7 +29,9 @@ import {
   PARTNER_LOGOS,
   PAINTA_EMBED_ORIGIN,
 } from '../constants';
-import { trackBookingClick } from '../lib/analytics';
+import { isYearEndPartySeason } from '../lib/seasonal';
+import { themeSlugFromItem } from '../lib/theme-slugs';
+import { trackBookingClick, trackInquiryClick } from '../lib/analytics';
 import { PartnerLogo } from '../components/PartnerLogo';
 import {
   formatGuestCountCompactK,
@@ -82,6 +85,12 @@ export const Home: React.FC = () => {
   const { content, site, lang, localizedCopy } = useContent();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
+  const [showAllThemes, setShowAllThemes] = useState(false);
+  const priorityThemes = ['paint-pouring', 'paint-your-pet', 'texture-painting'];
+  const orderedThemes = [...site.home.themes.items].sort((a, b) => {
+    const rank = (item: typeof a) => { const index = priorityThemes.indexOf(themeSlugFromItem(item)); return index < 0 ? priorityThemes.length : index; };
+    return rank(a) - rank(b);
+  });
   const theme = content.theme.typography;
   /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. `min(vw, vh)` clause shrinks the title on short viewports (e.g. landscape) so the headline doesn't dominate when there's no vertical room. */
   const heroTitleScale =
@@ -431,6 +440,7 @@ export const Home: React.FC = () => {
             <h2 className={`mt-3 font-heading font-heavy leading-tight tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
               <JpText>{quickInfo.title}</JpText>
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-artbar-gray md:text-lg"><JpText>{site.home.experienceIntro}</JpText></p>
           </div>
 
           <div className="mx-auto max-w-5xl overflow-hidden rounded-[var(--radius-section)] bg-white shadow-[0_28px_80px_-32px_rgba(5,55,97,0.3)] md:grid md:grid-cols-[minmax(11rem,1fr)_minmax(0,3.4fr)]">
@@ -461,6 +471,18 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {hasMounted && isYearEndPartySeason() && (
+        <section aria-labelledby="year-end-title" className="bg-artbar-bg px-6 pb-12 md:px-10 md:pb-16">
+          <div className="mx-auto flex max-w-[1200px] flex-col items-start gap-6 rounded-[2rem] bg-artbar-navy p-6 text-white md:flex-row md:items-center md:justify-between md:p-10">
+            <div className="max-w-2xl">
+              <h2 id="year-end-title" className="font-heading text-2xl font-bold leading-tight md:text-3xl"><JpText>{site.home.yearEnd.title}</JpText></h2>
+              <p className="mt-3 text-base leading-relaxed text-white/85"><JpText>{site.home.yearEnd.body}</JpText></p>
+            </div>
+            <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-full bg-artbar-taupe px-6 py-3 text-center text-sm font-bold text-artbar-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:w-auto md:max-w-64"><JpText>{site.home.yearEnd.cta}</JpText></a>
+          </div>
+        </section>
+      )}
 
       {/* Live sessions (HB 4-3): real bookable sessions from the booking system — today, tomorrow,
           and upcoming rails via the painta embed. The desktop shell shares the same 1400px grid
@@ -557,10 +579,12 @@ export const Home: React.FC = () => {
           </div>
 
           <PopularThemesGrid
-            items={site.home.themes.items}
+            items={showAllThemes ? orderedThemes : orderedThemes.slice(0, 6)}
+            showAvailability
             compact
             className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
           />
+          {orderedThemes.length > 6 && <button type="button" aria-expanded={showAllThemes} onClick={() => setShowAllThemes(!showAllThemes)} className="mx-auto mt-6 block min-h-12 rounded-full border border-artbar-taupe px-6 py-3 font-bold focus-visible:outline-2 focus-visible:outline-artbar-navy">{showAllThemes ? (lang === 'jp' ? '表示を減らす' : 'Show fewer themes') : (lang === 'jp' ? 'すべてのテーマを見る' : 'Show all themes')}</button>}
         </div>
       </section>
 

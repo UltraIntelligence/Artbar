@@ -142,6 +142,17 @@ export function normalizeJapaneseCopyPayload(payload: unknown): JapaneseCopyPayl
     rawThemeItems,
   );
 
+  const celebration = normalized.site.privateParties.occasions[3];
+  if (celebration && !celebration.title.replace(/\u200b/g, '').trim()) {
+    celebration.title = DEFAULT_COPY_PAYLOADS.jp.site.privateParties.occasions[3].title;
+  }
+  normalized.site.teamBuilding.valueProp.benefits = normalized.site.teamBuilding.valueProp.benefits.map((item) => ({
+    ...item, title: item.title.replace('ウェルウェルビーイング', 'ウェルビーイング'),
+  }));
+  normalized.faqs = normalized.faqs.map((faq) => ({
+    ...faq, question: faq.question.replace('子どみ', '子ども').replace('獲得で来ますか', '獲得できますか'),
+  }));
+
   // Retire the older high-commitment CTA copy still stored in published
   // locale payloads. Editors can still publish any newer wording they choose.
   if (normalized.site.nav.book === '予約する') {
