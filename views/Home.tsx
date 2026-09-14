@@ -472,18 +472,6 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {hasMounted && isYearEndPartySeason() && (
-        <section aria-labelledby="year-end-title" className="bg-artbar-bg px-6 pb-12 md:px-10 md:pb-16">
-          <div className="mx-auto flex max-w-[1200px] flex-col items-start gap-6 rounded-[2rem] bg-artbar-navy p-6 text-white md:flex-row md:items-center md:justify-between md:p-10">
-            <div className="max-w-2xl">
-              <h2 id="year-end-title" className="font-heading text-2xl font-bold leading-tight md:text-3xl"><JpText>{site.home.yearEnd.title}</JpText></h2>
-              <p className="mt-3 text-base leading-relaxed text-white/85"><JpText>{site.home.yearEnd.body}</JpText></p>
-            </div>
-            <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-full bg-artbar-taupe px-6 py-3 text-center text-sm font-bold text-artbar-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white md:w-auto md:max-w-64"><JpText>{site.home.yearEnd.cta}</JpText></a>
-          </div>
-        </section>
-      )}
-
       {/* Live sessions (HB 4-3): real bookable sessions from the booking system — today, tomorrow,
           and upcoming rails via the painta embed. The desktop shell shares the same 1400px grid
           as Popular Themes; the event cards retain their compact fixed width so the added room
@@ -768,9 +756,26 @@ export const Home: React.FC = () => {
       </section>
 
       {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
-      <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
+      <section id="group-events" className="relative z-[2] scroll-mt-28 px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
         <div className="mx-auto max-w-[1400px]">
-          {/* Same header pattern as sibling sections (h2 sectionTitle + bodyLarge lead) */}
+          {hasMounted && isYearEndPartySeason() ? (
+            <div aria-labelledby="year-end-title" className="mb-12 grid items-center gap-7 md:mb-16 md:grid-cols-2 md:gap-12 lg:gap-20">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] md:aspect-[5/4] md:rounded-[3rem]">
+                <Image
+                  src={content.images.hero.teamBuilding}
+                  alt={lang === 'jp' ? 'Artbarのグループ向けアート体験' : 'A group art experience at Artbar'}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="max-w-xl">
+                <h2 id="year-end-title" className={`${theme.sectionTitle} font-heading font-heavy leading-tight tracking-tight text-artbar-navy`}><JpText>{site.home.yearEnd.title}</JpText></h2>
+                <p className="mt-5 max-w-lg text-base leading-relaxed text-artbar-gray md:text-lg"><JpText>{site.home.yearEnd.body}</JpText></p>
+                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-3 text-center font-heading text-base font-bold text-artbar-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-artbar-navy sm:w-auto"><JpText>{site.home.yearEnd.cta}</JpText></a>
+              </div>
+            </div>
+          ) : (
           <div className="mb-12 text-center md:mb-14">
             <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
               <JpText>{meetRegularsHeading}</JpText>
@@ -782,6 +787,10 @@ export const Home: React.FC = () => {
                 : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
             </p>
           </div>
+
+          )}
+
+          {hasMounted && isYearEndPartySeason() && <p className="mb-8 text-center text-sm text-artbar-gray md:text-base">{lang === 'jp' ? '企業イベントでも選ばれています' : 'Companies who have joined Artbar events'}</p>}
 
           {/* A conventional logo wall: equal cells, optically normalized marks,
               and centered partial rows. Seven columns makes the 14-brand desktop
