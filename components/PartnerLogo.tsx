@@ -31,10 +31,10 @@ export function PartnerLogo({ name, url, width, height, size = 'default', tone =
   const imageSizeClass = isCompact
     ? tone === 'reverse' ? 'max-h-6 max-w-[min(100%,6rem)] sm:max-h-7 lg:max-h-7' : 'max-h-8 max-w-[7rem] sm:max-h-9 sm:max-w-[7.5rem] lg:max-h-10 lg:max-w-[8rem]'
     : 'max-h-8 max-w-[7rem] sm:max-h-10 sm:max-w-[8.5rem] md:max-h-full md:max-w-full';
-  // Most marks can be flattened to one neutral ink with brightness-0. GE has
-  // a white monogram knocked out of its blue disc, so preserve that contrast.
+  // GE uses a dedicated reversed asset so its monogram stays transparent.
+  // Other marks can be flattened to white with a filter.
   const imageToneClass = tone === 'reverse'
-    ? (name === 'GE' ? 'grayscale contrast-200 opacity-65 group-hover:opacity-100' : 'brightness-0 invert opacity-65 group-hover:opacity-100')
+    ? (name === 'GE' ? 'opacity-65 group-hover:opacity-100' : 'brightness-0 invert opacity-65 group-hover:opacity-100')
     : name === 'GE'
     ? 'grayscale contrast-200 opacity-45 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100'
     : 'grayscale brightness-0 opacity-45 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100';
@@ -46,7 +46,7 @@ export function PartnerLogo({ name, url, width, height, size = 'default', tone =
     <div className={`group flex w-full items-center justify-center ${isCompact ? 'h-12 sm:h-14' : 'h-10 sm:h-12 md:h-16 lg:h-20'}`}>
       {hasUrl && !failed ? (
         <img
-          src={url}
+          src={tone === 'reverse' && name === 'GE' ? '/brand/partners/ge-reverse.svg' : url}
           alt={name}
           width={norm?.width ?? width}
           height={norm?.height ?? height}
