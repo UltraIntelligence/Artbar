@@ -242,7 +242,6 @@ export const Home: React.FC = () => {
   const upcomingFromDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo' }).format(
     new Date(Date.now() + 2 * 86_400_000),
   );
-  const meetRegularsHeading = homeUiCopy.meetRegularsHeading;
   const bookTeamBuildingCta = homeUiCopy.bookTeamBuildingCta;
   const bilingualLine1 = homeUiCopy.bilingualLine1;
   const bilingualLine2 = homeUiCopy.bilingualLine2;
@@ -757,74 +756,49 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
-      <section id="group-events" className="relative z-[2] scroll-mt-28 px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
-        <div className="mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_60px_-35px_rgba(5,55,97,0.25)] md:rounded-[3rem]">
-          {hasMounted && isYearEndPartySeason() ? (
-            <div aria-labelledby="year-end-title" className="grid items-stretch md:grid-cols-2">
-              <div className="relative aspect-[3/2] overflow-hidden md:aspect-auto md:min-h-[470px]">
-                <Image
-                  src={mediaAssetUrl(media, 'home.groupEvents', GROUP_EVENT_IMAGE)}
-                  alt={lang === 'jp' ? 'Artbarのスタジオをもとにした企業グループのアート体験イメージ' : 'Illustration of a company group enjoying art in an Artbar-inspired studio'}
-                  fill
-                  sizes="(max-width: 767px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex flex-col items-start justify-center px-6 py-8 md:p-10 lg:p-14">
-                <h2 id="year-end-title" className={`${theme.sectionTitle} font-heading font-heavy leading-tight tracking-tight text-artbar-navy`}><JpText>{site.home.yearEnd.title}</JpText></h2>
-                <p className="mt-5 max-w-lg text-base leading-relaxed text-artbar-gray md:text-lg"><JpText>{site.home.yearEnd.body}</JpText></p>
-                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-3 text-center font-heading text-base font-bold text-artbar-navy focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-artbar-navy sm:w-auto"><JpText>{site.home.yearEnd.cta}</JpText></a>
+      {/* Private and company events are a primary business offering. */}
+      <section id="group-events" aria-labelledby="group-events-title" className="relative z-[2] my-16 scroll-mt-20 bg-artbar-navy text-white md:my-24">
+        <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-10 md:px-14 md:py-24 lg:px-20 lg:py-28">
+          <div className="grid items-center gap-12 md:grid-cols-[1.05fr_1fr] md:gap-12 lg:gap-20">
+            <div>
+              <p className="mb-7 text-sm font-medium text-white/65 md:mb-9 md:text-base">
+                {lang === 'jp' ? '貸切イベント・チームビルディング' : 'Private parties & company events'}
+              </p>
+              <h2 id="group-events-title" className="max-w-xl font-heading text-[clamp(2rem,4.5vw,4rem)] font-heavy leading-[1.2] tracking-tight text-white">
+                <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.title : (lang === 'jp' ? 'チームで描く、忘れられない時間。' : 'Make something great. Together.')}</JpText>
+              </h2>
+              <p className="mt-7 max-w-md text-base leading-[1.9] text-white/75 md:mt-9 md:text-lg">
+                <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.body : (lang === 'jp' ? '仲間と絵を描き、ドリンクを楽しむ貸切アート体験。東京・横浜で、人数やご予算に合うプランをご相談いただけます。' : 'Bring your people together for painting, drinks, and a shared experience. Plan a private event in Tokyo or Yokohama around your group and budget.')}</JpText>
+              </p>
+              <div className="mt-9 flex flex-col items-start gap-5 md:mt-11 md:gap-6">
+                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-white px-7 py-4 text-center font-heading text-base font-bold text-artbar-navy transition-colors hover:bg-artbar-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto">
+                  <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.cta : (lang === 'jp' ? '貸切イベントを相談する' : 'Plan a private event')}</JpText>
+                </a>
+                <a href={localizeHrefForLanguage('/team-building', lang)} className="inline-flex min-h-11 items-center gap-3 border-b border-white/35 py-2 font-heading text-sm font-bold text-white/85 transition-colors hover:border-white hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  <JpText>{bookTeamBuildingCta}</JpText><ArrowRight size={16} aria-hidden />
+                </a>
               </div>
             </div>
-          ) : (
-          <div className="px-6 py-10 text-center md:p-14">
-            <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
-              <JpText>{meetRegularsHeading}</JpText>
-            </h2>
-            {/* Corporate context above the logos (HB 4-6) */}
-            <p className={`${theme.bodyLarge} mx-auto max-w-2xl leading-relaxed text-artbar-gray`}>
-              <JpText>{lang === 'jp'
-                ? '企業のチームビルディングや貸切イベントにも選ばれています。人数やご予算に合わせた法人向けプランをご用意しています。'
-                : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] md:aspect-[6/5] md:rounded-[2rem]">
+              <Image
+                src={mediaAssetUrl(media, 'home.groupEvents', GROUP_EVENT_IMAGE)}
+                alt={lang === 'jp' ? 'Artbarのスタジオをもとにした企業グループのアート体験イメージ' : 'Illustration of a company group enjoying art in an Artbar-inspired studio'}
+                fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="mt-16 border-t border-white/15 pt-10 md:mt-20 md:pt-12 lg:mt-24">
+            <p className="mb-9 text-center text-sm leading-relaxed text-white/55 md:mb-12">
+              {lang === 'jp' ? '企業イベントでも選ばれています' : 'Companies who have joined Artbar events'}
             </p>
-          </div>
-
-          )}
-
-          <div className="border-t border-artbar-navy/10 bg-artbar-bg/35 px-6 py-8 md:px-10 md:py-10">
-          {hasMounted && isYearEndPartySeason() && <p className="mb-8 text-center text-sm text-artbar-gray md:text-base">{lang === 'jp' ? '企業イベントでも選ばれています' : 'Companies who have joined Artbar events'}</p>}
-
-          {/* A conventional logo wall: equal cells, optically normalized marks,
-              and centered partial rows. Seven columns makes the 14-brand desktop
-              wall two calm rows instead of a long stack. */}
-          <div className="[&_img]:max-w-full max-sm:[&_img]:max-h-6 mx-auto mb-8 flex max-w-6xl flex-wrap items-center justify-center gap-x-4 gap-y-6 md:mb-10 md:gap-x-6 md:gap-y-8">
-            {PARTNER_LOGOS.map((logo) => (
-              <div
-                key={logo.name}
-                className="flex min-w-0 basis-[calc(33.333%-0.667rem)] justify-center sm:basis-[calc(25%-1.125rem)] lg:basis-[calc(14.285%-1.3rem)]"
-              >
-                <PartnerLogo
-                  {...logo}
-                  size="compact"
-                  scaleBoost={PARTNER_LOGO_SCALE_BOOSTS[logo.name]}
-                />
-              </div>
-            ))}
-          </div>
-
-          <div className="flex justify-center">
-            <Button
-              type="button"
-              variant="outline"
-              size="cta"
-              onClick={() => router.push(localizeHrefForLanguage('/team-building', lang))}
-              className="inline-flex w-full max-w-xs gap-2 whitespace-normal text-center leading-snug hover:scale-[1.02] sm:w-auto sm:max-w-none"
-            >
-              <JpText>{bookTeamBuildingCta}</JpText>
-              <ArrowRight size={18} className="shrink-0" aria-hidden />
-            </Button>
-          </div>
+            <div className="group-event-logos mx-auto grid max-w-6xl grid-cols-2 items-center gap-x-10 gap-y-7 sm:grid-cols-4 sm:gap-x-8 sm:gap-y-9 lg:grid-cols-7 lg:gap-x-10 lg:gap-y-10">
+              {PARTNER_LOGOS.map((logo) => (
+                <div key={logo.name} className="min-w-0">
+                  <PartnerLogo {...logo} size="compact" tone="reverse" scaleBoost={PARTNER_LOGO_SCALE_BOOSTS[logo.name]} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
