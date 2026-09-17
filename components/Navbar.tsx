@@ -3,12 +3,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { CalendarDays, Globe, Menu, X } from 'lucide-react';
+import { CalendarDays, MessageCircle, Globe, Menu, X } from 'lucide-react';
 import { Logo } from './Logo';
 import { useContent } from '../context/ContentContext';
-import { ARTBAR_BOOKING_URL } from '../constants';
+import { ARTBAR_BOOKING_URL, PRIVATE_PARTY_INQUIRY_URL, TEAM_BUILDING_INQUIRY_URL } from '../constants';
 import { localizeHrefForLanguage, stripLocalePrefix } from '../lib/locale-routing';
-import { trackBookingClick, type BookingClickLocation } from '../lib/analytics';
+import { trackBookingClick, trackInquiryClick, type BookingClickLocation } from '../lib/analytics';
 
 type NavLink = {
   name: string;
@@ -37,6 +37,13 @@ export const Navbar: React.FC = () => {
   }, [pathname]);
 
   const isHome = barePathname === '/';
+  const inquiryType = barePathname === '/private-parties' ? 'private_party' : barePathname === '/team-building' ? 'team_building' : null;
+  const ActionIcon = inquiryType ? MessageCircle : CalendarDays;
+  const actionLabel = inquiryType === 'private_party'
+    ? (lang === 'jp' ? '貸切の相談をする' : 'Plan a private event')
+    : inquiryType === 'team_building'
+      ? (lang === 'jp' ? '見積もりを依頼' : 'Request a quote')
+      : site.nav.book;
   /** Hero/top-of-home bar height — must not depend on `isOpen` or the logo jumps when the mobile menu opens. */
   const isHeroNavLayout = isHome && !scrolled;
   const isTransparent = isHeroNavLayout && !isOpen;
@@ -76,8 +83,13 @@ export const Navbar: React.FC = () => {
   };
 
   const handleBookClick = (source: BookingClickLocation = 'nav_book_button') => {
-      trackBookingClick(source);
-      window.location.href = ARTBAR_BOOKING_URL;
+      if (inquiryType) {
+        trackInquiryClick(inquiryType, source);
+        window.location.href = inquiryType === 'private_party' ? PRIVATE_PARTY_INQUIRY_URL : TEAM_BUILDING_INQUIRY_URL;
+      } else {
+        trackBookingClick(source);
+        window.location.href = ARTBAR_BOOKING_URL;
+      }
       setIsOpen(false);
   };
 
@@ -96,7 +108,7 @@ export const Navbar: React.FC = () => {
 
   const mobileBarTransition = 'duration-300 ease-out';
 
-  const showMobileStickyCta = !isOpen && scrolled;
+  const showMobileStickyCta = !isOpen && scrolled && barePathname !== '/contact';
 
   return (
     <>
@@ -140,7 +152,7 @@ export const Navbar: React.FC = () => {
             onClick={() => handleBookClick('nav_book_button')}
             className="px-6 py-2.5 rounded-full font-heading font-bold transition bg-artbar-taupe text-artbar-navy hover:bg-artbar-taupe/90 shadow-sm text-sm hover:scale-105 active:scale-[0.96] pt-3 pb-2 shrink-0 whitespace-nowrap focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
           >
-            {site.nav.book}
+            {actionLabel}
           </button>
         </div>
 
@@ -175,8 +187,8 @@ export const Navbar: React.FC = () => {
             >
               {/* Optical alignment: Josefin's glyphs render high in the flex-centered line box,
                   so the icon must rise to the text's measured ink center (baseline-probe verified) */}
-              <CalendarDays size={18} className="shrink-0 -translate-y-[2px]" aria-hidden />
-              {site.nav.book}
+              <ActionIcon size={18} className="shrink-0 -translate-y-[2px]" aria-hidden />
+              {actionLabel}
             </button>
 
             {navLinks.map((link) => (
@@ -210,6 +222,7 @@ export const Navbar: React.FC = () => {
         showMobileStickyCta ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none translate-y-full opacity-0'
       }`}
       aria-hidden={!showMobileStickyCta}
+      inert={!showMobileStickyCta}
     >
       <div className="mx-auto max-w-sm rounded-full border border-white/70 bg-artbar-bg/95 p-1.5 shadow-[0_14px_45px_-14px_rgba(5,55,97,0.55)] backdrop-blur-md">
         <button
@@ -218,8 +231,8 @@ export const Navbar: React.FC = () => {
           className="inline-flex h-[46px] w-full items-center justify-center rounded-full bg-artbar-taupe px-6 py-0 text-center font-heading text-sm font-bold leading-none tracking-wide text-artbar-navy shadow-md transition-transform active:scale-[0.96] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-artbar-taupe"
         >
           <span className="inline-flex translate-y-px items-center gap-2 leading-none">
-            <CalendarDays size={17} className="shrink-0 -translate-y-[2px]" aria-hidden />
-            <span>{site.nav.book}</span>
+            <ActionIcon size={17} className="shrink-0 -translate-y-[2px]" aria-hidden />
+            <span>{actionLabel}</span>
           </span>
         </button>
       </div>

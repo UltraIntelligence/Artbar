@@ -7,7 +7,10 @@ import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
 import { useContent } from '../context/ContentContext';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { ARTBAR_BOOKING_URL, ARTBAR_OSAKA_URL } from '../constants';
+import { ARTBAR_OSAKA_URL } from '../constants';
+import { studioDisplayName } from '../lib/jp-display';
+import { locationPath } from '../lib/location-pages';
+import { localizeHrefForLanguage } from '../lib/locale-routing';
 import { trackBookingClick } from '../lib/analytics';
 import type { Location } from '../types';
 import type { JapaneseUiCopy } from '@/lib/copy/types';
@@ -29,6 +32,9 @@ export const Locations: React.FC = () => {
           </p>
         </div>
 
+        <nav aria-label={lang === 'jp' ? 'スタジオを選ぶ' : 'Choose a studio'} className="mb-8 flex flex-wrap justify-center gap-2">
+          {content.locations.map((loc) => <a key={loc.id} href={`#studio-${loc.id}`} className="inline-flex min-h-11 items-center rounded-full border border-artbar-taupe/50 bg-white px-4 text-sm focus-visible:outline-2 focus-visible:outline-artbar-navy"><JpText>{studioDisplayName(lang === 'en' ? loc.nameEn : loc.nameJp)}</JpText></a>)}
+        </nav>
         <div className="space-y-12 md:space-y-16">
           {content.locations.map((loc) => (
             <LocationCard
@@ -83,11 +89,12 @@ function LocationCard({
   const directionsUrl = loc.mapUrl?.trim()
     ? loc.mapUrl
     : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.addressJp)}`;
-  const bookingUrl = loc.id.startsWith('osaka_') ? ARTBAR_OSAKA_URL : ARTBAR_BOOKING_URL;
+  const bookingUrl = loc.id.startsWith('osaka_') ? ARTBAR_OSAKA_URL : localizeHrefForLanguage(locationPath(loc.id), lang);
   return (
             <div
+              id={`studio-${loc.id}`}
               ref={reveal.ref}
-              className={`reveal bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col lg:flex-row group transition-all hover:shadow-xl ${reveal.isVisible ? 'visible' : ''}`}
+              className={`reveal scroll-mt-28 bg-white rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-lg border border-gray-100 flex flex-col lg:flex-row group transition-all hover:shadow-xl ${reveal.isVisible ? 'visible' : ''}`}
             >
               <div className="lg:w-2/5 relative min-h-[220px] lg:min-h-full overflow-hidden">
                 <Image 
@@ -104,9 +111,9 @@ function LocationCard({
               <div className="lg:w-3/5 p-6 md:p-12 flex flex-col">
                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                     <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy leading-tight">
-                      <JpText>{lang === 'en' ? loc.nameEn : loc.nameJp}</JpText>
+                      <JpText>{studioDisplayName(lang === 'en' ? loc.nameEn : loc.nameJp)}</JpText>
                       {isFranchise && (
-                        <span className="ml-2 text-artbar-taupe">
+                        <span className="mt-2 block text-sm font-normal text-artbar-taupe">
                           <JpText>{lang === 'en' ? '(Franchise)' : '（フランチャイズ）'}</JpText>
                         </span>
                       )}
@@ -122,7 +129,7 @@ function LocationCard({
                       className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-artbar-taupe px-5 pt-3 pb-2 text-xs font-bold uppercase tracking-wide text-artbar-navy shadow-sm transition-transform active:scale-[0.98] md:text-sm"
                     >
                       <CalendarDays size={14} className="shrink-0 md:w-4 md:h-4" aria-hidden />
-                      <JpText>{lang === 'en' ? 'Book This Studio' : 'このスタジオを予約'}</JpText>
+                      <JpText>{lang === 'en' ? 'View studio and classes' : 'スタジオ・開催日程を見る'}</JpText>
                     </a>
                     <a
                       href={directionsUrl}
@@ -136,7 +143,7 @@ function LocationCard({
                  </div>
 
                  {/* Address & Access */}
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mb-8">
                     <div>
                         <span className="text-[9px] font-bold tracking-[0.2em] text-artbar-taupe uppercase block mb-2"><JpText>{locationCopy.locationAddressLabel}</JpText></span>
                         <p className="font-medium text-artbar-navy leading-relaxed text-sm">

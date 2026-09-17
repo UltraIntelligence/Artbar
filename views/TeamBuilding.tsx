@@ -93,14 +93,14 @@ export const TeamBuilding: React.FC = () => {
       </div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-16 md:py-24">
-        
+        <p className="mx-auto mb-10 max-w-3xl text-center text-lg leading-relaxed text-artbar-navy"><JpText>{site.teamBuilding.hero.eventIntro}</JpText></p>
         <div
           ref={socialReveal.ref}
           className={`reveal mb-24 md:mb-32 ${socialReveal.isVisible ? 'visible' : ''}`}
         >
           <div className="mb-12 flex w-full items-center gap-4 md:mb-16">
             <div className="h-px flex-grow bg-artbar-navy/10" />
-            <p className="shrink-0 px-6 text-center font-heading text-[10px] font-bold uppercase tracking-[0.4em] text-artbar-navy md:px-8 md:text-xs">
+            <p className="min-w-0 px-2 text-center font-heading text-[10px] font-bold uppercase tracking-[0.2em] text-artbar-navy md:tracking-[0.4em] md:px-8 md:text-xs">
               <JpText>{site.teamBuilding.socialProof.title}</JpText>
             </p>
             <div className="h-px flex-grow bg-artbar-navy/10" />
@@ -115,16 +115,16 @@ export const TeamBuilding: React.FC = () => {
 
         <div
           ref={valueReveal.ref}
-          className={`reveal bg-white rounded-[3rem] p-8 md:p-16 mb-24 md:mb-32 shadow-sm border border-white relative overflow-hidden ${valueReveal.isVisible ? 'visible' : ''}`}
+          className={`reveal bg-white rounded-[3rem] p-6 md:p-12 mb-16 md:mb-24 shadow-sm border border-white relative overflow-hidden ${valueReveal.isVisible ? 'visible' : ''}`}
         >
            <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none">
               <Briefcase size={400} />
            </div>
 
-           <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-              <div className="space-y-8">
+           <div className="grid gap-8 md:gap-12 relative z-10">
+              <div className="max-w-3xl space-y-6">
                  <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase block"><JpText>{site.teamBuilding.valueProp.badge}</JpText></span>
-                 <h2 className="text-3xl md:text-6xl font-heading font-heavy text-artbar-navy leading-tight whitespace-pre-line">
+                 <h2 className="text-3xl md:text-5xl font-heading font-heavy text-artbar-navy leading-tight whitespace-pre-line">
                     <JpText>{site.teamBuilding.valueProp.title}</JpText>
                  </h2>
                  <div className="space-y-6 text-base md:text-lg text-artbar-gray leading-relaxed">
@@ -134,12 +134,12 @@ export const TeamBuilding: React.FC = () => {
               </div>
 
               {/* Benefits Grid */}
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                  {site.teamBuilding.valueProp.benefits.map((item, i) => {
                     const icons = [Layers, Zap, Users, Briefcase];
                     const Icon = icons[i] || Layers;
                     return (
-                        <div key={i} className="bg-artbar-bg p-6 md:p-8 rounded-[2rem] hover:shadow-lg transition-shadow duration-300">
+                        <div key={i} className="bg-artbar-bg p-5 md:p-8 rounded-[2rem] hover:shadow-lg transition-shadow duration-300">
                         <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-artbar-taupe mb-4 shadow-sm">
                             <Icon size={24} />
                         </div>
@@ -236,7 +236,7 @@ export const TeamBuilding: React.FC = () => {
             <div className="relative z-10">
                <div ref={scrollRef} className="flex overflow-x-auto gap-8 pb-4 hide-scrollbar snap-x snap-mandatory touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                   {teamTestimonials.map((t, i) => (
-                    <div key={i} className="flex-shrink-0 w-[300px] md:w-[500px] snap-start">
+                    <div key={i} className="flex-shrink-0 w-full sm:w-[300px] md:w-[500px] snap-start">
                        <p className="text-artbar-navy text-lg md:text-2xl leading-relaxed mb-8 font-light italic">&ldquo;<JpText>{t.text}</JpText>&rdquo;</p>
                        <div className="flex items-center gap-4">
                           <div className="w-12 h-12 bg-artbar-taupe rounded-full flex items-center justify-center text-white font-heading font-bold text-lg">{t.author.charAt(0)}</div>
@@ -287,7 +287,7 @@ export const TeamBuilding: React.FC = () => {
            </div>
         </div>
 
-        <div ref={pricingReveal.ref} className={`reveal bg-artbar-navy text-white rounded-[3rem] p-8 md:p-20 relative overflow-hidden shadow-2xl ${pricingReveal.isVisible ? 'visible' : ''}`}>
+        <div ref={pricingReveal.ref} className={`reveal bg-artbar-navy text-white rounded-[3rem] p-6 md:p-12 relative overflow-hidden shadow-2xl ${pricingReveal.isVisible ? 'visible' : ''}`}>
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
             <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
               <div>
@@ -295,9 +295,9 @@ export const TeamBuilding: React.FC = () => {
                 <h2 className="text-3xl md:text-5xl font-heading font-bold mb-6"><JpText>{site.teamBuilding.pricing.title}</JpText></h2>
                 <p className="text-lg text-artbar-light-taupe mb-10 leading-relaxed max-w-md"><JpText>{site.teamBuilding.pricing.desc}</JpText></p>
               </div>
-              <div className="bg-white/5 p-8 md:p-10 rounded-[2.5rem] backdrop-blur-sm border border-white/10">
+              <div className="bg-white/5 p-4 sm:p-6 md:p-8 rounded-[2.5rem] backdrop-blur-sm border border-white/10">
                 <div className="flex flex-col gap-8">
-                   <div className="flex justify-between items-end border-b border-white/10 pb-6">
+                   <div className="flex flex-col items-start gap-4 border-b border-white/10 pb-6">
                       <div>
                         <span className="mb-2 inline-flex rounded-sm bg-white px-2 py-1 text-[11px] font-bold uppercase tracking-wide text-artbar-navy">
                           <JpText>{site.teamBuilding.pricing.packageBadge}</JpText>
@@ -305,11 +305,11 @@ export const TeamBuilding: React.FC = () => {
                         <p className="font-heading font-bold text-xl md:text-2xl"><JpText>{site.teamBuilding.pricing.packageTitle}</JpText></p>
                         <p className="text-sm text-artbar-light-taupe mt-1"><JpText>{site.teamBuilding.pricing.packageSubtitle}</JpText></p>
                       </div>
-                      <div className="text-right"><p className="text-3xl md:text-4xl font-heading font-bold">{site.teamBuilding.pricing.price}</p><p className="text-xs opacity-60"><JpText>{site.teamBuilding.pricing.priceNote}</JpText></p></div>
+                      <div className="text-left"><p className="whitespace-nowrap text-3xl md:text-4xl font-heading font-bold">{site.teamBuilding.pricing.price}</p><p className="text-xs opacity-60"><JpText>{site.teamBuilding.pricing.priceNote}</JpText></p></div>
                    </div>
                    <div className="space-y-4">
-                      <div className="flex justify-between text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.feeLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.feePrice}</span></div>
-                      <div className="flex justify-between text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.offsiteLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.offsitePrice}</span></div>
+                      <div className="flex flex-wrap justify-between gap-3 text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.feeLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.feePrice}</span></div>
+                      <div className="flex flex-wrap justify-between gap-3 text-sm"><span className="opacity-80"><JpText>{site.teamBuilding.pricing.offsiteLabel}</JpText></span><span className="font-bold">{site.teamBuilding.pricing.offsitePrice}</span></div>
                    </div>
                    <details className="group border-t border-white/10 pt-5 text-left">
                      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold text-white/90 marker:content-none">

@@ -2,6 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { PriceDisplay } from '../components/PriceDisplay';
+import { cleanDisplayText } from '../lib/jp-display';
 import { Button } from '../components/ui/Button';
 import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
@@ -44,7 +46,7 @@ export const PrivateParties: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-artbar-bg via-artbar-bg/40 to-transparent" />
         </div>
 
-        <div className="text-center max-w-4xl mx-auto mb-20">
+        <div className="text-center max-w-4xl mx-auto mb-12 md:mb-20">
           <span className="text-artbar-taupe font-heading font-bold tracking-widest text-sm uppercase mb-6 block"><JpText>{privateParties.hero.badge}</JpText></span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-heavy text-artbar-navy mb-8 leading-tight">
             <span className="block"><JpText>{privateParties.hero.title}</JpText></span>
@@ -65,10 +67,10 @@ export const PrivateParties: React.FC = () => {
 
         <div
           ref={occasionsReveal.ref}
-          className={`reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-32 ${occasionsReveal.isVisible ? 'visible' : ''}`}
+          className={`reveal grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 md:mb-24 ${occasionsReveal.isVisible ? 'visible' : ''}`}
         >
           {privateParties.occasions.map((item, idx) => (
-            <div key={idx} className="group relative h-48 md:h-96 rounded-[2rem] overflow-hidden cursor-pointer">
+            <div key={idx} className="group relative h-48 md:h-96 rounded-[2rem] overflow-hidden ">
               <Image
                 src={item.image}
                 alt={stripJpSentinel(item.title)}
@@ -77,18 +79,18 @@ export const PrivateParties: React.FC = () => {
                 sizes="(max-width: 768px) 50vw, 25vw"
               />
               <div className="absolute inset-0 bg-artbar-navy/20 group-hover:bg-artbar-navy/40 transition-colors"></div>
-              <div className="absolute bottom-6 left-4 right-4 md:left-6 md:right-6">
-                <div className="bg-white/90 backdrop-blur-sm py-2 md:py-3 px-4 md:px-6 rounded-xl text-center shadow-lg">
+              <div className="absolute bottom-4 left-2 right-2 md:bottom-6 md:left-4 md:right-4">
+                {cleanDisplayText(item.title) && <div className="bg-white/90 backdrop-blur-sm py-3 px-2 md:px-4 rounded-xl text-center shadow-lg">
                   <span className="font-heading font-bold text-artbar-navy text-sm md:text-base"><JpText>{item.title}</JpText></span>
-                </div>
+                </div>}
               </div>
             </div>
           ))}
         </div>
 
-        <div ref={pricingReveal.ref} className={`reveal grid md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,0.7fr)] gap-8 mb-32 ${pricingReveal.isVisible ? 'visible' : ''}`}>
+        <div ref={pricingReveal.ref} className={`reveal grid lg:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(260px,0.7fr)] gap-8 mb-16 md:mb-24 ${pricingReveal.isVisible ? 'visible' : ''}`}>
             {/* Adult Pricing */}
-            <div className="bg-white p-8 md:p-14 rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-300 border border-white relative overflow-hidden group">
+            <div className="bg-white p-6 sm:p-8 rounded-[3rem] shadow-sm hover:shadow-2xl transition-all duration-300 border border-white relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 md:p-10 opacity-5 group-hover:opacity-10 transition-opacity">
                    <Wine size={120} className="text-artbar-navy" />
                 </div>
@@ -102,14 +104,11 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <div className="flex items-baseline gap-2 mb-10">
-                      <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.adult.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg"><JpText>{priceSuffix}</JpText></span>
-                  </div>
+                  <PriceDisplay amount={privateParties.pricing.adult.price} suffix={priceSuffix} />
 
-                  <div className="space-y-6 mb-12">
+                  <div className="space-y-5 mb-8">
                       {privateParties.pricing.adult.items.map((item, i) => (
-                        <div key={i} className="flex gap-4">
+                        <div key={i} className="flex gap-3">
                             <div className="w-6 h-6 rounded-full bg-artbar-bg flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
                             <span className="font-heading font-bold text-artbar-navy block"><JpText>{item.title}</JpText></span>
@@ -119,12 +118,12 @@ export const PrivateParties: React.FC = () => {
                       ))}
                   </div>
 
-                  <div className="bg-artbar-bg p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
-                      <div className="flex justify-between items-center mb-2">
+                  <div className="bg-artbar-bg p-4 sm:p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
+                      <div className="flex flex-col gap-1 mb-4">
                         <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.venueFeeLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.venueFeePrice}</span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      <div className="flex flex-col gap-1">
                         <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.minGuestsLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy"><JpText>{privateParties.pricing.common.minGuests}</JpText></span>
                       </div>
@@ -142,7 +141,7 @@ export const PrivateParties: React.FC = () => {
             </div>
 
             {/* Kids Pricing */}
-             <div className="bg-artbar-bg border border-artbar-light-taupe/30 p-8 md:p-14 rounded-[3rem] hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
+             <div className="bg-artbar-bg border border-artbar-light-taupe/30 p-6 sm:p-8 rounded-[3rem] hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
                 <div className="absolute top-0 right-0 p-6 md:p-10 opacity-5 group-hover:opacity-10 transition-opacity">
                    <Palette size={120} className="text-artbar-taupe" />
                 </div>
@@ -156,14 +155,11 @@ export const PrivateParties: React.FC = () => {
                       </div>
                   </div>
 
-                  <div className="flex items-baseline gap-2 mb-10">
-                      <span className="text-5xl md:text-6xl font-heading font-bold text-artbar-navy">{privateParties.pricing.kids.price}</span>
-                      <span className="text-artbar-gray text-base md:text-lg"><JpText>{priceSuffix}</JpText></span>
-                  </div>
+                  <PriceDisplay amount={privateParties.pricing.kids.price} suffix={priceSuffix} />
 
-                  <div className="space-y-6 mb-12">
+                  <div className="space-y-5 mb-8">
                       {privateParties.pricing.kids.items.map((item, i) => (
-                        <div key={i} className="flex gap-4">
+                        <div key={i} className="flex gap-3">
                             <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center text-artbar-taupe mt-1 flex-shrink-0"><Check size={14} strokeWidth={3} /></div>
                             <div>
                             <span className="font-heading font-bold text-artbar-navy block"><JpText>{item.title}</JpText></span>
@@ -173,12 +169,12 @@ export const PrivateParties: React.FC = () => {
                       ))}
                   </div>
 
-                  <div className="bg-white p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
-                      <div className="flex justify-between items-center mb-2">
+                  <div className="bg-white p-4 sm:p-6 rounded-2xl mb-8 border border-artbar-light-taupe/20">
+                      <div className="flex flex-col gap-1 mb-4">
                         <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.venueFeeLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy">{privateParties.pricing.common.venueFeePrice}</span>
                       </div>
-                      <div className="flex justify-between items-center">
+                      <div className="flex flex-col gap-1">
                         <span className="text-artbar-gray text-sm"><JpText>{privateParties.pricing.common.minGuestsLabel}</JpText></span>
                         <span className="font-heading font-bold text-artbar-navy"><JpText>{privateParties.pricing.common.minGuests}</JpText></span>
                       </div>
@@ -195,7 +191,7 @@ export const PrivateParties: React.FC = () => {
                 </div>
             </div>
 
-            <div className="bg-white/70 border-2 border-artbar-taupe p-8 md:p-10 rounded-[2.5rem] shadow-sm md:col-span-2 xl:col-span-1 xl:self-start">
+            <div className="bg-white/70 border-2 border-artbar-taupe p-6 md:p-10 rounded-[2.5rem] shadow-sm lg:col-span-2 xl:col-span-1 xl:self-start">
               <h3 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy mb-8 leading-tight">
                 <JpText>{specialtyInquiry.title}</JpText>
               </h3>
@@ -220,7 +216,7 @@ export const PrivateParties: React.FC = () => {
             </div>
         </div>
 
-        <div ref={capacityReveal.ref} className={`reveal mb-32 ${capacityReveal.isVisible ? 'visible' : ''}`}>
+        <div ref={capacityReveal.ref} className={`reveal mb-16 md:mb-24 ${capacityReveal.isVisible ? 'visible' : ''}`}>
           <div className="flex items-center gap-4 mb-12">
              <div className="h-px bg-artbar-light-taupe flex-grow"></div>
              <h2 className="text-2xl md:text-3xl font-heading font-bold text-artbar-navy text-center px-4"><JpText>{privateParties.capacity.title}</JpText></h2>
@@ -229,7 +225,7 @@ export const PrivateParties: React.FC = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
              {localizedCopy.privatePartyCapacityRows.map((loc, i) => (
-               <div key={i} className={`p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
+               <div key={i} className={`p-4 md:p-6 rounded-[2rem] text-center flex flex-col items-center justify-center min-h-[160px] md:min-h-[180px] ${loc.highlight ? 'bg-artbar-navy text-white' : 'bg-white text-artbar-navy'}`}>
                   <span className="text-3xl md:text-4xl font-heading font-bold mb-2">{loc.cap}</span>
                   <span className="text-xs font-bold uppercase tracking-widest opacity-60 mb-4"><JpText>{maxGuestsLabel}</JpText></span>
                   <h4 className="font-bold text-base md:text-lg leading-tight"><JpText>{loc.name[lang]}</JpText></h4>
@@ -239,21 +235,21 @@ export const PrivateParties: React.FC = () => {
           </div>
         </div>
 
-        <div ref={timelineReveal.ref} className={`reveal bg-white rounded-[3rem] p-8 md:p-16 border border-artbar-bg shadow-sm ${timelineReveal.isVisible ? 'visible' : ''}`}>
-           <div className="grid lg:grid-cols-2 gap-16">
+        <div ref={timelineReveal.ref} className={`reveal bg-white rounded-[3rem] p-6 md:p-12 border border-artbar-bg shadow-sm ${timelineReveal.isVisible ? 'visible' : ''}`}>
+           <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
               
               {/* Timeline */}
               <div>
-	                 <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-8 flex items-center gap-3">
+	                 <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-8 flex flex-col items-start gap-3">
 	                    <Clock className="text-artbar-taupe" /> <JpText>{privateParties.timeline.title}</JpText>
 	                 </h3>
                    <p className="mb-5 text-sm md:text-base font-bold text-artbar-taupe">
                      <JpText>{privateParties.timeline.note}</JpText>
                    </p>
-	                 <div className="space-y-8 relative pl-4">
-                    <div className="absolute left-[27px] top-2 bottom-4 w-0.5 bg-artbar-bg"></div>
+	                 <div className="space-y-6 relative">
+                    <div className="absolute left-[11px] top-2 bottom-4 w-0.5 bg-artbar-bg"></div>
                     {privateParties.timeline.steps.map((step, i) => (
-                       <div key={i} className="relative flex gap-6 items-start">
+                       <div key={i} className="relative flex gap-3 items-start">
                           <div className="w-6 h-6 rounded-full bg-artbar-taupe border-4 border-white shadow-sm flex-shrink-0 relative z-10"></div>
                           <div>
                              <span className="text-xs font-bold text-artbar-gray bg-artbar-bg px-2 py-1 rounded mb-1 inline-block"><JpText>{step.time}</JpText></span>
@@ -266,8 +262,8 @@ export const PrivateParties: React.FC = () => {
               </div>
 
               {/* Catering */}
-              <div className="bg-artbar-bg rounded-[2.5rem] p-8 md:p-10">
-                  <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-6 flex items-center gap-3">
+              <div className="lg:bg-artbar-bg lg:rounded-[2.5rem] lg:p-8">
+                  <h3 className="text-2xl font-heading font-bold text-artbar-navy mb-6 flex flex-col items-start gap-3">
                     <Utensils className="text-artbar-taupe" /> <JpText>{privateParties.catering.title}</JpText>
                   </h3>
                   <p className="text-artbar-navy leading-relaxed mb-6">

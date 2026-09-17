@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { JpText } from '../components/JpText';
 import { stripJpSentinel } from '../lib/jp-attr';
@@ -9,18 +9,32 @@ import { useContent } from '../context/ContentContext';
 export const Instructors: React.FC = () => {
   const { content, site, lang } = useContent();
 
+  const [language, setLanguage] = useState('all');
+  const languages = Array.from(new Set(content.instructors.flatMap((item) => item.languages.split(',').map((value) => value.trim()).filter(Boolean)))).sort();
+  const instructors = content.instructors.filter((item) => language === 'all' || item.languages.split(',').map((value) => value.trim()).includes(language));
+
   return (
-    <div className="grain relative pt-40 pb-20 bg-artbar-bg min-h-screen">
+    <div className="grain relative pt-28 md:pt-40 pb-20 bg-artbar-bg min-h-screen">
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="text-center mb-20">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{site.instructorsPage.title}</JpText></h1>
+        <div className="text-center mb-10 md:mb-16">
+          <h1 className="-mx-3 sm:mx-0 text-4xl md:text-6xl lg:text-7xl font-heading font-heavy text-artbar-navy mb-6"><JpText>{site.instructorsPage.title}</JpText></h1>
           <p className="text-lg md:text-xl text-artbar-gray max-w-3xl mx-auto">
             <JpText>{site.instructorsPage.subtitle}</JpText>
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {content.instructors.map((instructor) => (
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <label className="flex flex-wrap items-center gap-3 font-bold">
+            {lang === 'jp' ? '対応言語' : 'Language'}
+            <select value={language} onChange={(event) => setLanguage(event.target.value)} className="min-h-12 rounded-xl border border-artbar-taupe bg-white px-4 focus-visible:outline-2 focus-visible:outline-artbar-navy">
+              <option value="all">{lang === 'jp' ? 'すべての言語' : 'All languages'}</option>
+              {languages.map((value) => <option key={value} value={value}>{value}</option>)}
+            </select>
+          </label>
+          <p role="status" className="text-sm text-artbar-gray">{lang === 'jp' ? `${instructors.length}名の講師` : `${instructors.length} instructors`}</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8 md:gap-y-12">
+          {instructors.map((instructor) => (
             <div key={instructor.id} className="group bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full">
               <div className="h-56 relative overflow-hidden bg-artbar-bg">
                  <div className="absolute inset-0 bg-artbar-navy/10 z-[1]"></div>
@@ -33,9 +47,9 @@ export const Instructors: React.FC = () => {
                  />
               </div>
               
-              <div className="px-8 pb-10 relative flex-grow flex flex-col">
-                 <div className="relative -mt-16 mb-6 flex justify-between items-end">
-                    <div className="w-32 h-32 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white relative">
+              <div className="px-6 md:px-8 pb-8 relative flex-grow flex flex-col">
+                 <div className="relative -mt-12 mb-6 flex flex-wrap gap-3 justify-between items-end">
+                    <div className="w-24 h-24 shrink-0 rounded-full border-[6px] border-white overflow-hidden shadow-md bg-white relative">
                        <Image 
                          src={instructor.profileImage} 
                          alt={stripJpSentinel(instructor.name)}

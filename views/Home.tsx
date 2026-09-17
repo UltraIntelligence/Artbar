@@ -21,6 +21,8 @@ import { StarRating } from '../components/StarRating';
 import { useContent } from '../context/ContentContext';
 import {
   ARTBAR_BOOKING_URL,
+  GROUP_EVENT_IMAGE,
+  PRIVATE_PARTY_INQUIRY_URL,
   LINE_ADD_FRIEND_URL,
   LINE_BRAND_ICON_SRC,
   SITE_IMAGES,
@@ -28,7 +30,9 @@ import {
   PARTNER_LOGOS,
   PAINTA_EMBED_ORIGIN,
 } from '../constants';
-import { trackBookingClick } from '../lib/analytics';
+import { mediaAssetUrl } from '../lib/media/resolve';
+import { themeSlugFromItem } from '../lib/theme-slugs';
+import { trackBookingClick, trackInquiryClick } from '../lib/analytics';
 import { PartnerLogo } from '../components/PartnerLogo';
 import {
   formatGuestCountCompactK,
@@ -79,9 +83,15 @@ const CONCEPT_SOCIAL_AVATAR_URLS = [
 ] as const;
 
 export const Home: React.FC = () => {
-  const { content, site, lang, localizedCopy } = useContent();
+  const { content, site, lang, localizedCopy, media } = useContent();
   const router = useRouter();
   const [hasMounted, setHasMounted] = useState(false);
+  const [showAllThemes, setShowAllThemes] = useState(false);
+  const priorityThemes = ['paint-pouring', 'paint-your-pet', 'texture-painting'];
+  const orderedThemes = [...site.home.themes.items].sort((a, b) => {
+    const rank = (item: typeof a) => { const index = priorityThemes.indexOf(themeSlugFromItem(item)); return index < 0 ? priorityThemes.length : index; };
+    return rank(a) - rank(b);
+  });
   const theme = content.theme.typography;
   /** JP hero: nowrap per line; fluid up to 1.9rem below `sm` so glyphs fit ~320px width, then same scale as EN. `min(vw, vh)` clause shrinks the title on short viewports (e.g. landscape) so the headline doesn't dominate when there's no vertical room. */
   const heroTitleScale =
@@ -231,7 +241,6 @@ export const Home: React.FC = () => {
   const upcomingFromDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo' }).format(
     new Date(Date.now() + 2 * 86_400_000),
   );
-  const meetRegularsHeading = homeUiCopy.meetRegularsHeading;
   const bookTeamBuildingCta = homeUiCopy.bookTeamBuildingCta;
   const bilingualLine1 = homeUiCopy.bilingualLine1;
   const bilingualLine2 = homeUiCopy.bilingualLine2;
@@ -431,6 +440,7 @@ export const Home: React.FC = () => {
             <h2 className={`mt-3 font-heading font-heavy leading-tight tracking-tight text-artbar-navy ${theme.sectionTitle}`}>
               <JpText>{quickInfo.title}</JpText>
             </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-artbar-gray md:text-lg"><JpText>{site.home.experienceIntro}</JpText></p>
           </div>
 
           <div className="mx-auto max-w-5xl overflow-hidden rounded-[var(--radius-section)] bg-white shadow-[0_28px_80px_-32px_rgba(5,55,97,0.3)] md:grid md:grid-cols-[minmax(11rem,1fr)_minmax(0,3.4fr)]">
@@ -557,10 +567,12 @@ export const Home: React.FC = () => {
           </div>
 
           <PopularThemesGrid
-            items={site.home.themes.items}
+            items={showAllThemes ? orderedThemes : orderedThemes.slice(0, 6)}
+            showAvailability
             compact
             className={`reveal-stagger ${themesReveal.isVisible ? 'visible' : ''}`}
           />
+          {orderedThemes.length > 6 && <button type="button" aria-expanded={showAllThemes} onClick={() => setShowAllThemes(!showAllThemes)} className="mx-auto mt-6 block min-h-12 rounded-full border border-artbar-taupe px-6 py-3 font-bold focus-visible:outline-2 focus-visible:outline-artbar-navy">{showAllThemes ? (lang === 'jp' ? '表示を減らす' : 'Show fewer themes') : (lang === 'jp' ? 'すべてのテーマを見る' : 'Show all themes')}</button>}
         </div>
       </section>
 
@@ -743,51 +755,49 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Partner logos — quiet proof strip on the page background (HB 4-6: corporate context + inquiry CTA) */}
-      <section className="relative z-[2] px-6 pb-20 pt-10 md:px-10 md:pb-28 md:pt-16">
-        <div className="mx-auto max-w-[1400px]">
-          {/* Same header pattern as sibling sections (h2 sectionTitle + bodyLarge lead) */}
-          <div className="mb-12 text-center md:mb-14">
-            <h2 className={`${theme.sectionTitle} mb-4 font-heading font-heavy tracking-tight text-artbar-navy`}>
-              <JpText>{meetRegularsHeading}</JpText>
-            </h2>
-            {/* Corporate context above the logos (HB 4-6) */}
-            <p className={`${theme.bodyLarge} mx-auto max-w-2xl leading-relaxed text-artbar-gray`}>
-              <JpText>{lang === 'jp'
-                ? '企業のチームビルディングや貸切イベントにも選ばれています。人数やご予算に合わせた法人向けプランをご用意しています。'
-                : 'Chosen for corporate team-building and private company events, with plans tailored to your group size and budget.'}</JpText>
-            </p>
-          </div>
-
-          {/* A conventional logo wall: equal cells, optically normalized marks,
-              and centered partial rows. Seven columns makes the 14-brand desktop
-              wall two calm rows instead of a long stack. */}
-          <div className="mx-auto mb-16 flex max-w-6xl flex-wrap items-center justify-center gap-x-5 gap-y-8 sm:gap-x-6 sm:gap-y-9 md:gap-x-8 md:gap-y-10 lg:mb-20 lg:gap-x-6">
-            {PARTNER_LOGOS.map((logo) => (
-              <div
-                key={logo.name}
-                className="flex min-w-0 basis-[calc(50%-0.625rem)] justify-center sm:basis-[calc(33.333%-1rem)] md:basis-[calc(25%-1.5rem)] lg:basis-[calc(14.285%-1.3rem)]"
-              >
-                <PartnerLogo
-                  {...logo}
-                  size="compact"
-                  scaleBoost={PARTNER_LOGO_SCALE_BOOSTS[logo.name]}
-                />
+      {/* Private and company events are a primary business offering. */}
+      <section id="group-events" aria-labelledby="group-events-title" className="relative z-[2] my-16 scroll-mt-20 bg-artbar-navy text-white md:my-24">
+        <div className="mx-auto max-w-[1400px] px-6 py-16 sm:px-10 md:px-14 md:py-24 lg:px-20 lg:py-28">
+          <div className="grid items-center gap-12 md:grid-cols-[1.05fr_1fr] md:gap-12 lg:gap-20">
+            <div>
+              <p className="mb-7 text-sm font-medium text-white/65 md:mb-9 md:text-base">
+                {lang === 'jp' ? '貸切イベント・チームビルディング' : 'Private parties & company events'}
+              </p>
+              <h2 id="group-events-title" className="max-w-xl font-heading text-[clamp(2rem,4.5vw,4rem)] font-heavy leading-[1.2] tracking-tight text-white">
+                <JpText>{lang === 'jp' ? 'チームで描く、忘れられない時間。' : 'Make something great. Together.'}</JpText>
+              </h2>
+              <p className="mt-7 max-w-md text-base leading-[1.9] text-white/75 md:mt-9 md:text-lg">
+                <JpText>{lang === 'jp' ? '仲間と絵を描き、ドリンクを楽しむ貸切アート体験。東京・横浜で、人数やご予算に合うプランをご相談いただけます。' : 'Bring your people together for painting, drinks, and a shared experience. Plan a private event in Tokyo or Yokohama around your group and budget.'}</JpText>
+              </p>
+              <div className="mt-9 flex flex-col items-start gap-5 md:mt-11 md:gap-6">
+                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_group_events')} className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-white px-7 py-4 text-center font-heading text-base font-bold text-artbar-navy transition-colors hover:bg-artbar-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto">
+                  <JpText>{lang === 'jp' ? '貸切イベントを相談する' : 'Plan a private event'}</JpText>
+                </a>
+                <a href={localizeHrefForLanguage('/team-building', lang)} className="inline-flex min-h-11 items-center gap-3 border-b border-white/35 py-2 font-heading text-sm font-bold text-white/85 transition-colors hover:border-white hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                  <JpText>{bookTeamBuildingCta}</JpText><ArrowRight size={16} aria-hidden />
+                </a>
               </div>
-            ))}
+            </div>
+            <div className="relative aspect-[3/2] overflow-hidden rounded-[1.5rem] md:aspect-[6/5] md:rounded-[2rem]">
+              <Image
+                src={mediaAssetUrl(media, 'home.groupEvents', GROUP_EVENT_IMAGE)}
+                alt={lang === 'jp' ? 'Artbarのスタジオをもとにした企業グループのアート体験イメージ' : 'Illustration of a company group enjoying art in an Artbar-inspired studio'}
+                fill sizes="(max-width: 767px) 100vw, 45vw" className="object-cover"
+              />
+            </div>
           </div>
 
-          <div className="flex justify-center">
-            <Button
-              type="button"
-              variant="taupe"
-              size="cta"
-              onClick={() => router.push(localizeHrefForLanguage('/team-building', lang))}
-              className="inline-flex w-full max-w-xs gap-2 whitespace-nowrap hover:scale-[1.02] sm:w-auto sm:max-w-none"
-            >
-              <JpText>{bookTeamBuildingCta}</JpText>
-              <ArrowRight size={18} className="shrink-0" aria-hidden />
-            </Button>
+          <div className="mt-16 border-t border-white/15 pt-10 md:mt-20 md:pt-12 lg:mt-24">
+            <p className="mb-9 text-center text-sm leading-relaxed text-white/55 md:mb-12">
+              {lang === 'jp' ? '企業イベントでも選ばれています' : 'Companies who have joined Artbar events'}
+            </p>
+            <div className="group-event-logos mx-auto grid max-w-6xl grid-cols-2 items-center gap-x-10 gap-y-7 sm:grid-cols-4 sm:gap-x-8 sm:gap-y-9 lg:grid-cols-7 lg:gap-x-10 lg:gap-y-10">
+              {PARTNER_LOGOS.map((logo) => (
+                <div key={logo.name} className="min-w-0">
+                  <PartnerLogo {...logo} size="compact" tone="reverse" scaleBoost={PARTNER_LOGO_SCALE_BOOSTS[logo.name]} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

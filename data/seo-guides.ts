@@ -51,8 +51,8 @@ export const SEO_GUIDES: SeoGuide[] = [
       bestFor: ['Rainy day dates', 'Couples visiting Tokyo', 'Indoor plans', 'Creative evenings'],
       sections: [
         {
-          title: 'Why this search matters',
-          body: 'People searching for rainy day date ideas in Tokyo usually need an immediate indoor plan. Artbar fits that intent because it is bookable, social, and does not require painting experience.',
+          title: 'An indoor plan for a rainy day',
+          body: 'Stay out of the rain and enjoy painting together at Artbar. An artist guides the session, so you can join even if you have never painted before.',
         },
         {
           title: 'What makes Artbar date-friendly',
@@ -85,7 +85,7 @@ export const SEO_GUIDES: SeoGuide[] = [
       sections: [
         {
           title: 'なぜ「雨の日デート」と相性がいい？',
-          body: '雨の日に検索する人は、すぐに使える屋内プランを探しています。Artbarは予約しやすく、座って楽しめて、初心者でも参加しやすいので、そのニーズに合います。',
+          body: '雨の日は、屋内で絵とドリンクを楽しむデートに。講師がサポートするので、絵を描くのが初めての方も参加できます。',
         },
         {
           title: '食事やカフェだけではないデートに',
@@ -129,11 +129,11 @@ export const SEO_GUIDES: SeoGuide[] = [
       sections: [
         {
           title: 'A casual art experience, not a formal course',
-          body: 'Customers searching for art experiences usually want something approachable and bookable. Artbar gives them a guided session, materials, and a clear finished piece.',
+          body: 'Choose a painting you like and join a guided session. Your materials are included, and an artist helps you create your own piece.',
         },
         {
           title: 'Painting experience in Tokyo',
-          body: 'The Japanese search phrase for painting experience is more natural than a direct translation of paint and sip. This page connects that intent to Artbar sessions.',
+          body: 'Spend time painting with friends, a partner, or on your own. Browse the themes and studio locations to find a session that suits your plans.',
         },
         {
           title: 'Choose by theme',
@@ -162,11 +162,11 @@ export const SEO_GUIDES: SeoGuide[] = [
       sections: [
         {
           title: '気軽に参加できるアート体験',
-          body: '検索している人は、難しい講座ではなく、予約しやすく、手ぶらで参加でき、作品を完成させられる体験を求めています。Artbarはその入り口に合う構成です。',
+          body: '好きな絵を選んで、手ぶらで参加できます。画材は用意されており、講師のサポートを受けながら自分だけの作品を描きます。',
         },
         {
-          title: '「絵画体験 東京」の検索意図に合わせる',
-          body: '日本語では「ペイント＆シップ」よりも、「アート体験」や「絵画体験」の方が自然に探されます。このページはその検索意図から予約導線へつなげます。',
+          title: '東京で気軽に絵を描く時間',
+          body: '友人やパートナーと、またはお一人で、絵を描く時間を楽しみませんか。テーマやスタジオから、ご予定に合うセッションを探せます。',
         },
         {
           title: 'テーマを選んで楽しめる',
@@ -201,12 +201,12 @@ export const SEO_GUIDES: SeoGuide[] = [
       title: 'Art Workshops in Tokyo',
       description: 'A guide to Artbar Tokyo art workshops for groups, beginners, team events, and social creative plans.',
       intro:
-        'Tokyo workshop searches are broad, so this page narrows the intent to creative painting workshops that are easy for groups and beginners to join.',
+        'Try a painting workshop in Tokyo with an artist to guide you. Come with friends or join on your own. Beginners are welcome.',
       bestFor: ['Friend groups', 'Corporate teams', 'Private events', 'Beginner workshops'],
       sections: [
         {
-          title: 'Why workshop searches are valuable',
-          body: 'Workshop searches often come from people comparing activities. Artbar should meet that search with a clear, bookable art workshop option.',
+          title: 'What to expect at an art workshop',
+          body: 'Choose your theme, studio, and date. Artbar provides the painting materials and guides you through the session.',
         },
         {
           title: 'For individuals and groups',
@@ -234,12 +234,12 @@ export const SEO_GUIDES: SeoGuide[] = [
       title: '東京のアートワークショップ',
       description: '東京でワークショップを探している方へ。初心者、友人グループ、企業イベントにも使いやすいArtbarのアートワークショップガイドです。',
       intro:
-        '「東京 ワークショップ」は検索数が大きい一方で、内容が広い言葉です。Artbarでは、絵画を中心にした参加しやすいアートワークショップとして検索意図に応えます。',
+        '東京で、講師と一緒に絵を描くワークショップを楽しみませんか。友人と一緒でも、お一人でも、初めての方を歓迎します。',
       bestFor: ['友人グループ', '企業イベント', '貸切イベント', '初心者向けワークショップ'],
       sections: [
         {
-          title: '検索数が大きい「東京 ワークショップ」',
-          body: 'ワークショップを探している人は、体験型で、予約できて、参加しやすい予定を比較しています。Artbarはその中で、絵を描くアート体験として見つけてもらう価値があります。',
+          title: 'アートワークショップの楽しみ方',
+          body: 'テーマ、スタジオ、日程を選んで参加できます。画材はArtbarが用意し、講師がセッションを通してサポートします。',
         },
         {
           title: '少人数にもグループにも対応',
@@ -363,7 +363,7 @@ export const SEO_GUIDES: SeoGuide[] = [
       title: 'Art and Wine Experiences in Tokyo',
       description: 'Find a relaxed Tokyo art and wine experience for dates, friends, visitors, and private celebrations.',
       intro:
-        'Artbar combines a painting class with a social drink setting, making it a useful option when someone searches for art, wine, and something memorable to do in Tokyo.',
+        'Enjoy painting and a drink in a relaxed studio at Artbar. It is a chance to spend time together and make something of your own in Tokyo.',
       bestFor: ['Evening plans', 'Couples', 'Small groups', 'Visitors who want a Tokyo memory'],
       sections: [
         {
@@ -594,20 +594,20 @@ export const SEO_GUIDES: SeoGuide[] = [
       title: 'Paint Your Pet in Tokyo',
       description: 'A guide to Artbar Tokyo pet portrait painting sessions for dog, cat, and animal lovers.',
       intro:
-        'Paint Your Pet is one of Artbar Tokyo’s clearest search opportunities because it combines a specific subject, an emotional gift, and a Tokyo activity.',
+        'Create a painting of your pet at Artbar Tokyo. Keep it as a memory of your animal companion or give it to someone who loves them.',
       bestFor: ['Pet owners', 'Gift givers', 'Couples', 'Friends who want a keepsake'],
       sections: [
         {
-          title: 'Why pet portrait classes search well',
-          body: 'People searching for pet portrait painting already have a clear subject and a clear reason to book. The page should answer what to bring, what happens, and who it is for.',
+          title: 'Make a portrait of your pet',
+          body: 'Paint your dog, cat, or another animal you love with help from an artist. Check the class details for photo requirements and preparation before you book.',
         },
         {
           title: 'A strong gift angle',
           body: 'Pet paintings work for birthdays, holidays, anniversaries, memorial keepsakes, and surprise gifts.',
         },
         {
-          title: 'Connect the guide to the booking page',
-          body: 'The guide points customers toward the dedicated Paint Your Pet page and theme page, keeping the SEO entry point connected to the real booking path.',
+          title: 'Find your pet painting session',
+          body: 'Visit Paint Your Pet for class details, or open the pet portrait theme to see upcoming sessions.',
         },
       ],
       faqs: [
@@ -627,20 +627,20 @@ export const SEO_GUIDES: SeoGuide[] = [
       title: '東京でペットを描くアート体験',
       description: '犬、猫、大切な動物をキャンバスに残したい方へ。Artbar Tokyoのペット肖像画体験ガイドです。',
       intro:
-        '「ペットを描こう」は、テーマが明確で、ギフトや思い出作りにもつながるArtbar Tokyoの強い検索機会です。',
+        'Artbar Tokyoで、大切なペットの絵を描きませんか。ご自宅に飾る思い出の一枚にも、ペットを愛する方への贈り物にもぴったりです。',
       bestFor: ['ペットオーナー', 'ギフトを探している方', 'カップル', '思い出を残したい友人同士'],
       sections: [
         {
-          title: '検索されやすい理由',
-          body: 'ペット肖像画を探している人は、描きたい対象と目的がはっきりしています。持ち物、流れ、誰に向いているかを伝えることが大切です。',
+          title: '大切なペットを一枚の絵に',
+          body: '講師のサポートを受けながら、犬や猫など大切な動物を描きます。写真の用意や事前準備については、ご予約前にクラスの詳細をご確認ください。',
         },
         {
           title: 'ギフトにも強い',
           body: '誕生日、ホリデー、記念日、メモリアル、サプライズギフトとして使いやすい体験です。',
         },
         {
-          title: '予約導線につなげる',
-          body: 'このガイドから「ペットを描こう」ページやテーマページへつなげることで、検索入口から予約導線まで自然に進めます。',
+          title: 'ペットを描くセッションを探す',
+          body: '「ペットを描こう」ページで参加方法を確認し、ペット肖像画のテーマページから開催予定のセッションをご覧ください。',
         },
       ],
       faqs: [

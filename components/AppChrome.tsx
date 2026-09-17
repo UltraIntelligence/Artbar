@@ -11,7 +11,7 @@ export function AppChrome({ children }: { children: React.ReactNode }) {
   const isCopyAdminRoute = stripLocalePrefix(pathname).startsWith('/copy-admin');
 
   return (
-    <div className="flex min-h-screen flex-col font-sans text-artbar-navy selection:bg-artbar-taupe selection:text-white">
+    <div className={`flex min-h-screen flex-col font-sans text-artbar-navy selection:bg-artbar-taupe selection:text-white ${isCopyAdminRoute ? '' : 'pb-24 xl:pb-0'}`}>
       {isCopyAdminRoute ? null : <Navbar />}
       <main className="flex-grow">{children}</main>
       {isCopyAdminRoute ? null : <Footer />}

@@ -9,13 +9,14 @@ export type PartnerLogoEntry = {
   width?: number;
   height?: number;
   size?: 'default' | 'compact';
+  tone?: 'default' | 'reverse';
   /** Multiplies the per-brand optical scale for a one-off layout emphasis (e.g.
    *  grouping small square emblems on their own row). Defaults to 1 (no change).
    *  This does not touch the generated normalization table. */
   scaleBoost?: number;
 };
 
-export function PartnerLogo({ name, url, width, height, size = 'default', scaleBoost = 1 }: PartnerLogoEntry) {
+export function PartnerLogo({ name, url, width, height, size = 'default', tone = 'default', scaleBoost = 1 }: PartnerLogoEntry) {
   const [failed, setFailed] = useState(false);
   const hasUrl = Boolean(url?.trim());
   const isCompact = size === 'compact';
@@ -28,11 +29,13 @@ export function PartnerLogo({ name, url, width, height, size = 'default', scaleB
   const scale = (norm?.scale ?? 1) * scaleBoost;
   const logoStyle = { '--partner-logo-scale': scale } as CSSProperties;
   const imageSizeClass = isCompact
-    ? 'max-h-8 max-w-[7rem] sm:max-h-9 sm:max-w-[7.5rem] lg:max-h-10 lg:max-w-[8rem]'
+    ? tone === 'reverse' ? 'max-h-6 max-w-[min(100%,6rem)] sm:max-h-7 lg:max-h-7' : 'max-h-8 max-w-[7rem] sm:max-h-9 sm:max-w-[7.5rem] lg:max-h-10 lg:max-w-[8rem]'
     : 'max-h-8 max-w-[7rem] sm:max-h-10 sm:max-w-[8.5rem] md:max-h-full md:max-w-full';
-  // Most marks can be flattened to one neutral ink with brightness-0. GE has
-  // a white monogram knocked out of its blue disc, so preserve that contrast.
-  const imageToneClass = name === 'GE'
+  // GE uses a dedicated reversed asset so its monogram stays transparent.
+  // Other marks can be flattened to white with a filter.
+  const imageToneClass = tone === 'reverse'
+    ? (name === 'GE' ? 'opacity-65 group-hover:opacity-100' : 'brightness-0 invert opacity-65 group-hover:opacity-100')
+    : name === 'GE'
     ? 'grayscale contrast-200 opacity-45 group-hover:grayscale-0 group-hover:contrast-100 group-hover:opacity-100'
     : 'grayscale brightness-0 opacity-45 group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100';
 
@@ -43,7 +46,7 @@ export function PartnerLogo({ name, url, width, height, size = 'default', scaleB
     <div className={`group flex w-full items-center justify-center ${isCompact ? 'h-12 sm:h-14' : 'h-10 sm:h-12 md:h-16 lg:h-20'}`}>
       {hasUrl && !failed ? (
         <img
-          src={url}
+          src={tone === 'reverse' && name === 'GE' ? '/brand/partners/ge-reverse.svg' : url}
           alt={name}
           width={norm?.width ?? width}
           height={norm?.height ?? height}
@@ -54,7 +57,7 @@ export function PartnerLogo({ name, url, width, height, size = 'default', scaleB
           onError={() => setFailed(true)}
         />
       ) : (
-        <span className="cursor-default whitespace-nowrap text-center font-heading text-[10px] font-bold uppercase tracking-widest text-artbar-navy/40 transition-colors group-hover:text-artbar-taupe sm:text-xs md:text-sm">
+        <span className={`cursor-default whitespace-nowrap text-center font-heading text-[10px] font-bold tracking-wide ${tone === 'reverse' ? 'text-white/65' : 'text-artbar-navy/40'} sm:text-xs`}>
           {name}
         </span>
       )}
