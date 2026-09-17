@@ -31,7 +31,6 @@ import {
   PAINTA_EMBED_ORIGIN,
 } from '../constants';
 import { mediaAssetUrl } from '../lib/media/resolve';
-import { isYearEndPartySeason } from '../lib/seasonal';
 import { themeSlugFromItem } from '../lib/theme-slugs';
 import { trackBookingClick, trackInquiryClick } from '../lib/analytics';
 import { PartnerLogo } from '../components/PartnerLogo';
@@ -765,14 +764,14 @@ export const Home: React.FC = () => {
                 {lang === 'jp' ? '貸切イベント・チームビルディング' : 'Private parties & company events'}
               </p>
               <h2 id="group-events-title" className="max-w-xl font-heading text-[clamp(2rem,4.5vw,4rem)] font-heavy leading-[1.2] tracking-tight text-white">
-                <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.title : (lang === 'jp' ? 'チームで描く、忘れられない時間。' : 'Make something great. Together.')}</JpText>
+                <JpText>{lang === 'jp' ? 'チームで描く、忘れられない時間。' : 'Make something great. Together.'}</JpText>
               </h2>
               <p className="mt-7 max-w-md text-base leading-[1.9] text-white/75 md:mt-9 md:text-lg">
-                <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.body : (lang === 'jp' ? '仲間と絵を描き、ドリンクを楽しむ貸切アート体験。東京・横浜で、人数やご予算に合うプランをご相談いただけます。' : 'Bring your people together for painting, drinks, and a shared experience. Plan a private event in Tokyo or Yokohama around your group and budget.')}</JpText>
+                <JpText>{lang === 'jp' ? '仲間と絵を描き、ドリンクを楽しむ貸切アート体験。東京・横浜で、人数やご予算に合うプランをご相談いただけます。' : 'Bring your people together for painting, drinks, and a shared experience. Plan a private event in Tokyo or Yokohama around your group and budget.'}</JpText>
               </p>
               <div className="mt-9 flex flex-col items-start gap-5 md:mt-11 md:gap-6">
-                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_year_end')} className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-white px-7 py-4 text-center font-heading text-base font-bold text-artbar-navy transition-colors hover:bg-artbar-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto">
-                  <JpText>{hasMounted && isYearEndPartySeason() ? site.home.yearEnd.cta : (lang === 'jp' ? '貸切イベントを相談する' : 'Plan a private event')}</JpText>
+                <a href={PRIVATE_PARTY_INQUIRY_URL} onClick={() => trackInquiryClick('private_party', 'home_group_events')} className="inline-flex min-h-14 w-full items-center justify-center rounded-full bg-white px-7 py-4 text-center font-heading text-base font-bold text-artbar-navy transition-colors hover:bg-artbar-bg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:w-auto">
+                  <JpText>{lang === 'jp' ? '貸切イベントを相談する' : 'Plan a private event'}</JpText>
                 </a>
                 <a href={localizeHrefForLanguage('/team-building', lang)} className="inline-flex min-h-11 items-center gap-3 border-b border-white/35 py-2 font-heading text-sm font-bold text-white/85 transition-colors hover:border-white hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                   <JpText>{bookTeamBuildingCta}</JpText><ArrowRight size={16} aria-hidden />
