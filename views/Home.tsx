@@ -510,9 +510,11 @@ export const Home: React.FC = () => {
             {/* The mobile fallback must independently fit both rows if embed.js is blocked or its
                 first message is missed. The current helper measures a dedicated content wrapper,
                 so once it runs it can shrink or grow the frame to the exact content height. */}
+            {/* Painta defaults to eight cards per day; use its supported maximum so busy days
+                do not lose evening classes from this website's schedule. */}
             <iframe
               data-painta-embed
-              src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&utm_campaign=home-sessions`}
+              src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&limit=24&utm_campaign=home-sessions`}
               title={stripJpSentinel(upcomingSessions.iframeTitle)}
               loading="lazy"
               className="block h-[800px] w-full border-0 sm:h-[520px]"
