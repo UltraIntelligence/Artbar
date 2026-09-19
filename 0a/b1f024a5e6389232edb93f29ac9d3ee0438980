@@ -1,0 +1,20 @@
+views/Home.tsx
+  s_cf31eed6d368eb::t_aa2e7483a11ad6 513-514
+  s_cf31eed6d368eb::t_6b7e7b96429436 517
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0ab1f024a5e6389232edb93f29ac9d3ee0438980",
+  "prompts": {},
+  "sessions": {
+    "s_cf31eed6d368eb": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0b7d8-5be8-7b52-bcc5-99c1d8d194ba",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
