@@ -1,0 +1,1989 @@
+{
+  "ui": {
+    "home": {
+      "ctaImageAlt": "Artbarスタジオ",
+      "heroLoading": "ヒーローを読み込み中",
+      "heroImageAlt": "Artbarのメインビジュアル",
+      "storiesLabel": "ストーリー",
+      "bilingualLine1": "フレンドリーなインストラクターが丁寧にガイドします",
+      "bilingualLine2": "",
+      "asSeenInHeading": "メディア掲載実績",
+      "conceptImageAlt": "Artbarの体験イメージ",
+      "conceptVideoCta": "YouTubeでフル動画を見る",
+      "nextTestimonial": "次のレビュー",
+      "mediaCoverageLabel": "",
+      "bookTeamBuildingCta": "チームビルディングを予約",
+      "meetRegularsHeading": "ご利用企業様",
+      "previousTestimonial": "前のレビュー"
+    },
+    "press": {
+      "scrollLeft": "左へスクロール",
+      "scrollRight": "右へスクロール"
+    },
+    "footer": {
+      "faq": "FAQ",
+      "careers": "採用情報",
+      "logoAlt": "Artbar Tokyo",
+      "emailLabel": "Artbar Tokyoへメール",
+      "facebookLabel": "Facebook",
+      "instagramLabel": "Instagram"
+    },
+    "navbar": {
+      "compactEnglish": "EN",
+      "compactJapanese": "JP",
+      "switchToEnglish": "English",
+      "switchToJapanese": "日本語"
+    },
+    "contact": {
+      "send": "送信する",
+      "sent": "送信しました。追ってご連絡いたします。",
+      "failed": "送信に失敗しました。恐れ入りますが、再度お試しいただくかメールでご連絡ください。",
+      "nameLabel": "お名前（必須）",
+      "emailLabel": "メールアドレス（必須）",
+      "phoneLabel": "電話番号（必須）",
+      "messageLabel": "内容",
+      "subjectLabel": "件名（必須）",
+      "subjectOptions": [
+        {
+          "label": "件名を選択…",
+          "value": ""
+        },
+        {
+          "label": "一般的なお問い合わせ",
+          "value": "general"
+        },
+        {
+          "label": "予約について",
+          "value": "booking"
+        },
+        {
+          "label": "貸切・パーティー",
+          "value": "private"
+        },
+        {
+          "label": "インストラクターについて",
+          "value": "instructor"
+        },
+        {
+          "label": "キャンセル",
+          "value": "cancellation"
+        },
+        {
+          "label": "その他",
+          "value": "other"
+        }
+      ],
+      "namePlaceholder": "例：Artbar 太郎",
+      "emailPlaceholder": "例：hello@example.com",
+      "messagePlaceholder": "お問い合わせ内容をご記入ください"
+    },
+    "blogList": {
+      "comingSoon": "近日公開"
+    },
+    "blogPost": {
+      "readStory": "記事を読む",
+      "shareLabel": "この記事をシェア",
+      "xShareLabel": "Xでシェア",
+      "moreFromJournal": "ジャーナルのほかの記事",
+      "articleNotFoundCta": "ジャーナルへ戻る",
+      "facebookShareLabel": "Facebookでシェア",
+      "linkedinShareLabel": "LinkedInでシェア",
+      "articleNotFoundTitle": "記事が見つかりません"
+    },
+    "notFound": {
+      "cta": "ホームへ戻る",
+      "body": "お探しのページは削除されたか、名前が変更されたか、一時的に利用できない可能性があります。",
+      "title": "ページが見つかりません"
+    },
+    "locations": {
+      "intro": "各ロケーションでユニークな雰囲気とクリエイティブな体験をお楽しみください。",
+      "aiError": "現在AIサマリーを読み込めません。",
+      "aiLoaded": "AI情報表示中",
+      "aiSummary": "AI サマリー",
+      "directions": "ルート案内",
+      "sourcePrefix": "出典",
+      "mapsInsightsTitle": "Maps Insights",
+      "transitAccessLabel": "最寄り駅",
+      "locationAddressLabel": "住所"
+    },
+    "themeDetail": {
+      "community": "",
+      "discoverSub": "たらし込みアートからモネの名画まで、次の創作体験をArtbar Tokyoで。",
+      "inspiration": "",
+      "discoverMore": "ほかの人気のセッションを見る",
+      "exampleBlurb": "{{name}}のセッションの一例です",
+      "viewSchedule": "スケジュールを見る",
+      "viewUpcoming": "開催予定を見る",
+      "whatToExpect": "体験に含まれるもの",
+      "allCategories": "TOPに戻る",
+      "guestFavorite": "人気です",
+      "theExperience": "",
+      "expertGuidance": "丁寧でフレンドリーな講師",
+      "whatToExpectSub": "必要なものは全て揃っていますので、手ぶらでお越しください。",
+      "examplePaintings": "作品例",
+      "bilingualArtClass": "",
+      "bilingualSessions": "初めての方も歓迎",
+      "perfectForGifting": "ギフトにも最適",
+      "atmosphereImageAlt": ""
+    },
+    "paintYourPet": {
+      "none": "なし",
+      "dateTbd": "日付未定",
+      "sketching": "下絵を作成中...",
+      "uploadCta": "写真をアップロード",
+      "emailIntro": "Paint Your Petクラスでこの下絵を使用したいです。",
+      "howItWorks": "Artbarの楽しみ方",
+      "notesLabel": "Artbarへのメモ",
+      "photoReady": "写真の準備ができました。",
+      "priceLabel": "Price",
+      "saveSketch": "下絵を保存",
+      "aiSketchAlt": "AI下絵",
+      "emailThanks": "よろしくお願いいたします。",
+      "headerBadge": "Artbar Original Program",
+      "notProvided": "未入力",
+      "sketchIntro": "ペットの写真をアップロードして、キャンバス用のシンプルな下絵イメージをご確認いただけます。",
+      "sketchTitle": "マジックスケッチプレビュー",
+      "useForClass": "この下絵をクラスで使う",
+      "canvasSketch": "キャンバス上のペット下書き",
+      "classUseBody": "下のクラス情報を入力してメインボタンを押してください。下絵とクラス情報をまとめ、Artbarへ送るメールを開きます。",
+      "genericError": "問題が発生しました。もう一度お試しください。",
+      "packageReady": "下絵パッケージの準備ができました。下絵とクラス情報ファイルを保存し、Artbar Tokyo宛ての送信用メールを開きました。",
+      "petNameLabel": "ペット名",
+      "classUseTitle": "この下絵をPaint Your Petクラスで使う",
+      "copyReference": "コピー",
+      "emailAttached": "下絵ファイルを添付しました。",
+      "emailGreeting": "Artbarチームへ",
+      "locationLabel": "スタジオまたは場所",
+      "optionalLabel": "任意",
+      "originalPhoto": "元のペットの写真",
+      "packageFooter": "このパッケージはお客様ご自身のメールから送れるように準備されます。下絵とクラス情報を保存し、{email}宛ての作成済みメールを開きます。",
+      "referenceHelp": "このリファレンスはファイル名、メール件名、引き継ぎメモに使われ、スタッフが生徒様をすぐ確認できるようにします。",
+      "sketchTimeout": "下絵の作成に時間がかかりすぎました。よりシンプルまたは小さい写真でお試しください。",
+      "uploadFormats": "JPG, PNG, HEIC, AVIF",
+      "classDateLabel": "クラス日",
+      "defaultPetName": "ペット",
+      "invalidPetName": "ペット名を入力してください。",
+      "originalPetAlt": "元のペット写真",
+      "photoConverted": "下絵生成がスムーズになるよう写真を変換しました。",
+      "referenceLabel": "検索用リファレンス",
+      "uploadTooLarge": "写真が大きすぎます。15MB未満の写真を選んでください。",
+      "generateLineArt": "線画を生成",
+      "referencePrefix": "リファレンス",
+      "uploadAriaLabel": "ペットの写真をアップロード",
+      "uploadReadError": "写真を読み込めませんでした。JPGまたはPNG画像でお試しください。",
+      "invalidClassDate": "クラス日を入力してください。",
+      "notesPlaceholder": "例：予約名が異なる、ペットが2匹、特記事項など",
+      "preparingMessage": "下絵パッケージを準備中...",
+      "preparingPackage": "パッケージを準備中...",
+      "saveClassDetails": "クラス情報を保存",
+      "sketchIncomplete": "下絵が不完全な状態で返されました。もう一度お試しください。",
+      "studentNameLabel": "生徒名",
+      "classDetailsSaved": "バックアップ用にクラス情報をテキストファイルとして保存しました。",
+      "classSummaryNotes": "メモ",
+      "classSummaryTitle": "Paint Your Petクラス引き継ぎ",
+      "clearAndStartOver": "クリアして最初からやり直す",
+      "invalidNeedSketch": "先に下絵を生成してください。",
+      "sketchCreateError": "現在、下絵を作成できませんでした。",
+      "sketchPlaceholder": "下絵がここに表示されます",
+      "studentEmailLabel": "生徒メールアドレス",
+      "uploadDecodeError": "この写真形式は正常に読み込めません。JPGまたはPNG版でお試しください。",
+      "uploadInvalidType": "JPGまたはPNGなどの写真ファイルをアップロードしてください。",
+      "defaultStudentName": "ゲスト",
+      "invalidStudentName": "生徒名を入力してください。",
+      "petNamePlaceholder": "例：ルナ",
+      "uploadInvalidImage": "この写真は無効のようです。別の画像でお試しください。",
+      "browserPrepareError": "ブラウザで画像を準備できませんでした。もう一度お試しください。",
+      "classSummaryPetName": "ペット名",
+      "invalidStudentEmail": "生徒メールアドレスを入力してください。",
+      "likeThisVersionBody": "クラス情報と一緒にArtbarへ送信すると、スタッフが生徒様とクラス日を確認しやすくなります。",
+      "locationPlaceholder": "例：銀座",
+      "prepareEmailPackage": "メール用パッケージを準備",
+      "classSummaryLocation": "スタジオ/場所",
+      "likeThisVersionTitle": "この下絵で進めますか？",
+      "uploadDifferentImage": "写真を読み込めませんでした。別の画像でお試しください。",
+      "classSummaryClassDate": "クラス日",
+      "classSummaryReference": "リファレンス",
+      "referenceCopiedPrefix": "リファレンスをコピーしました",
+      "classSummarySketchFile": "下絵ファイル",
+      "professionalSketchNote": "※アーティストが事前にキャンバスにこのような下書きを用意してお待ちしています！",
+      "studentNamePlaceholder": "例：田中アレックス",
+      "classSummaryStudentName": "生徒名",
+      "studentEmailPlaceholder": "例：alex@example.com",
+      "classSummaryStudentEmail": "生徒メールアドレス",
+      "invalidStudentEmailFormat": "有効な生徒メールアドレスを入力してください。",
+      "classSummaryDestinationInbox": "送信先メール"
+    },
+    "teamBuilding": {
+      "heroImageAlt": "Artbar Tokyoのチームビルディングアートセッション",
+      "specialtyChips": [
+        "",
+        "",
+        ""
+      ],
+      "nextTestimonial": "次のレビュー",
+      "previousTestimonial": "前のレビュー"
+    },
+    "privateParties": {
+      "priceSuffix": "/ 1名様（税込）",
+      "heroImageAlt": "Artbar Tokyoの貸切パーティー",
+      "maxGuestsLabel": "最大収容人数"
+    }
+  },
+  "blog": [
+    {
+      "id": "13",
+      "slug": "yokohama-walk",
+      "titleJp": "横浜散歩：楽しくてインスピレーション溢れる一日",
+      "authorJp": "キャシー・トンプソン",
+      "contentJp": "<p>日本で2番目に大きな都市、横浜。歴史と現代のクリエイティブカルチャーが融合した街として地元の人々に愛されています。東京から電車ですぐの場所にありながら、開港の歴史、赤レンガ倉庫、中華街など、全く異なる雰囲気を持っています。</p><p>クリエイティブな一日を過ごすためのベストスポットを探索し、最後はもちろん、横浜元町スタジオでのリラックスしたセッションで締めくくりましょう。</p><img src=\"/media/generated/blog-yokohama-inline.jpg\" alt=\"横浜の街並み\" loading=\"lazy\" />",
+      "excerptJp": "日本で2番目に大きな都市、横浜。歴史と現代のクリエイティブカルチャーが融合した街として地元の人々に愛されています。"
+    }
+  ],
+  "faqs": [
+    {
+      "answer": "スケジュールは開催日の2ヶ月前の下旬頃から順次公開されます。ウェブサイトを定期的にご確認ください。(例：7月のスケジュールは5月下旬ごろから公開します)",
+      "question": "新しいセッションのスケジュールはいつウェブサイトに掲載されますか？"
+    },
+    {
+      "answer": "ウェイティングリストにご登録ください。空席が出たら通知が届きます。",
+      "question": "満席になったセッションのキャンセル待ちはできますか？"
+    },
+    {
+      "answer": "広いスタジオで開催されるセッションの場合、または講師が追加を了承した場合にはお席を追加できる可能性がございますので、お問合せください。諸事情により追加できない可能性もございます旨、予めご了承ください。",
+      "question": "満席のセッションに、もう一人追加で参加することは可能でしょうか？"
+    },
+    {
+      "answer": "大人向けのセッションへのお子様のご同伴はご遠慮いただいております。(アルコールの提供があり、大人同士の社交の場をコンセプトとしているため)",
+      "question": "子どみを大人向けのセッションに連れて行ってもいいですか？"
+    },
+    {
+      "answer": "今年5歳になるお子様はキッズセッションにご参加いただけます。4歳以下のお子様は「全年齢 / ALL Age」と記載されているセッションにご参加ください。",
+      "question": "5歳未満の子供はキッズセッションに参加できますか？"
+    },
+    {
+      "answer": "スタジオで特典獲得画面をインストラクターにご掲示ください。次回のご予約に使用できるクーポンコードが書かれたギフトカードをお渡しいたします。",
+      "question": "LINEのペイントポイントが貯まりました。どのように特典を獲得で来ますか？"
+    },
+    {
+      "answer": "大変恐れ入りますがポイントの後付けはできません。次回は忘れずにスキャンしてください。",
+      "question": "LINEのペイントポイントのQRコードスキャンを忘れてしまいました。ポイントの後付けはできますか？"
+    },
+    {
+      "answer": "スタジオ内に滞在できるのはチケットをお持ちの方のみとなりますので、見学はご遠慮いただいております。キッズセッションの保護者の方についてもスタジオ内でのご見学はできません。",
+      "question": "セッションに参加せずに見学することはできますか？"
+    },
+    {
+      "answer": "ご予約時にお送りしているご予約確認メールからお手続きください。イベント開始時刻の3日前まではキャンセル料なし、開始時刻の3日前〜24時間前までは25%のキャンセル料、それ以降のキャンセルについては100%のキャンセル料がかかります。",
+      "question": "予約をキャンセルしたいです。"
+    }
+  ],
+  "site": {
+    "nav": {
+      "blog": "ブログ",
+      "book": "予約する",
+      "gifts": "ギフト券",
+      "press": "メディア掲載",
+      "contact": "お問い合わせ",
+      "schedule": "スケジュール",
+      "locations": "アクセス",
+      "instructors": "インストラクター",
+      "paintYourPet": "ペットを描こう",
+      "teamBuilding": "チームビルディング",
+      "privateParties": "貸切パーティー"
+    },
+    "home": {
+      "cta": {
+        "badge": "さあ、始めましょう",
+        "title": "次の特別な時間、ここから始めよう。",
+        "btnBook": "スケジュールを見る",
+        "subtitle": "お好きなイベントを選んで、クリエイティブなひと時をお過ごしください。",
+        "btnContact": "お問い合わせ"
+      },
+      "hero": {
+        "badge": "「10周年！」",
+        "title": "東京で一番愛されている",
+        "subtitle": "初心者の方大歓迎。気軽に楽しくアートに触れてみましょう。",
+        "ctaPrivate": "プライベートイベント",
+        "ctaLineChat": "LINEで相談する",
+        "ctaSchedule": "セッションを予約する",
+        "ratingScore": "4.8",
+        "guestsNumber": "101,000",
+        "guestsSuffix": "{{count}}名が体験！好評をいただいております。",
+        "ratingSource": "平均評価",
+        "titleHighlight": "ペイント＆シップスタジオ",
+        "ctaFindPainting": "描きたい絵を探す"
+      },
+      "themes": {
+        "cta": "スケジュールを見る",
+        "items": [
+          {
+            "desc": "桜、富士山など日本の伝統的なモチーフを描きます。",
+            "slug": "japan-inspired",
+            "image": "/media/generated/theme-japan-inspired.jpg",
+            "title": "日本のテーマ"
+          },
+          {
+            "desc": "SNSで大人気！キャンバスの上に絵の具をたらして、自然なマーブル模様を作ります。",
+            "slug": "paint-pouring",
+            "image": "/media/generated/theme-paint-pouring.jpg",
+            "title": "たらし込みアート"
+          },
+          {
+            "desc": "大好きなペットの絵を描いて、お家に飾りましょう！",
+            "slug": "paint-your-pet",
+            "image": "/media/generated/theme-paint-your-pet.jpg",
+            "title": "ペットを描こう"
+          },
+          {
+            "desc": "インクとアルコールを使ったユニークな技法に挑戦！",
+            "slug": "alcohol-ink",
+            "image": "/media/generated/theme-alcohol-ink.jpg",
+            "title": "アルコールインク"
+          },
+          {
+            "desc": "「星月夜」や「ひまわり」など、ゴッホならではの力強いタッチを楽しむことができます。",
+            "slug": "van-gogh",
+            "image": "/media/generated/theme-van-gogh.jpg",
+            "title": "ゴッホ"
+          },
+          {
+            "desc": "印象派の巨匠モネの「睡蓮」など、ドリーミーな色彩を楽しめるセッションです。",
+            "slug": "monet",
+            "image": "/media/generated/theme-monet.jpg",
+            "title": "モネ"
+          },
+          {
+            "desc": "ピカソのスタイルにインスパイアされた、鮮やかな色彩やユニークな形を楽しめます。",
+            "slug": "picasso",
+            "image": "/media/generated/theme-picasso.jpg",
+            "title": "ピカソ風"
+          },
+          {
+            "desc": "モネと並ぶ印象派の巨匠、ルノワールのロマンティックな作品を描きます。",
+            "slug": "renoir",
+            "image": "/media/generated/theme-renoir.jpg",
+            "title": "ルノワール"
+          },
+          {
+            "desc": "野獣派と呼ばれたマティスの力強い色彩と単純化されたフォルムを楽しめるセッションです。",
+            "slug": "matisse",
+            "image": "/media/generated/theme-matisse.jpg",
+            "title": "マティス"
+          },
+          {
+            "desc": "お子様向けの楽しいセッションです。",
+            "slug": "kids",
+            "image": "/media/generated/theme-kids.jpg",
+            "title": "キッズ"
+          },
+          {
+            "desc": "絵の具に特殊な盛り上げ材を混ぜて、立体感のある作品を描きます。",
+            "slug": "texture-painting",
+            "image": "/media/generated/theme-texture-painting.jpg",
+            "title": "テクスチャーアート"
+          },
+          {
+            "desc": "あなたの憧れの人を描いてみましょう！",
+            "slug": "paint-your-idol",
+            "image": "/media/generated/theme-paint-your-idol.jpg",
+            "title": "憧れの人を描く"
+          }
+        ],
+        "title": "人気のセッション",
+        "subtitle": "古典的な名画の模写から、モダンなテクスチャーアートまで。多彩なプログラムをご用意しています。"
+      },
+      "concept": {
+        "p1": "お好きなイベントを選んでご予約、ドリンクを飲みながらアートを楽しみましょう！\nお一人でも、お友達とでもご参加いただけます",
+        "est": "Artbar Tokyo – Est. 2016",
+        "title": "ワインを片手にリラックスして、クリエイティブに！経験は一切不要です。",
+        "guestsCount": "101,000",
+        "guestsLabel": "{{count}}名が体験！好評をいただいております。",
+        "ratingLabel": "平均評価"
+      },
+      "features": {
+        "items": [
+          {
+            "desc": "画材、エプロン、お持ち帰り袋など、必要なものは全てご用意しております。手ぶらでお越しください。",
+            "image": "/media/generated/feature-all-inclusive.jpg",
+            "title": "オールインクルーシブ"
+          },
+          {
+            "desc": "セッション中は飲み放題のドリンクとスナックをお楽しみいただけます。",
+            "image": "/media/generated/feature-free-flow-drinks.jpg",
+            "title": "おかわり自由のドリンク"
+          },
+          {
+            "desc": "一部のインストラクターは複数言語で対応が可能です。講師の対応可能言語はイベントご予約画面からご確認ください。",
+            "image": "/media/generated/feature-bilingual.jpg",
+            "title": "バイリンガル対応"
+          }
+        ],
+        "title": "Artbar Tokyoでの体験",
+        "subtitle": "日常を忘れて没頭できる、充実のサービス。"
+      },
+      "howItWorks": {
+        "steps": [
+          {
+            "desc": "カレンダーから、心惹かれるテーマのセッションをお選びください。",
+            "title": "ご予約"
+          },
+          {
+            "desc": "スタジオでは飲み放題のドリンクとスナックをお楽しみください。ノンアルコールのドリンクもご用意しております。",
+            "title": "乾杯"
+          },
+          {
+            "desc": "インストラクターが丁寧にガイドします。初心者の方でも、驚くような作品に仕上がります。",
+            "title": "制作"
+          },
+          {
+            "desc": "世界に一つだけの、素敵な作品が完成します！ほとんどのイベントはすぐに絵をお持ち帰りいただけますが、一部のイベントは配送が必要なものもありますので、ご予約時にご確認ください。",
+            "title": "完成"
+          }
+        ],
+        "title": "Artbar Tokyoの楽しみ方",
+        "subtitle": "アートの経験は一切不要. 真っ白なキャンバスが、あなただけのアートに変わるまでのプロセスをお楽しみください。"
+      },
+      "testimonials": {
+        "title": "参加者の声",
+        "carousel": [
+          {
+            "date": "2026年3月",
+            "text": "講師の方がとてもチャーミングで2時間があっという間でした。ワイン飲み放題なのも素敵…また行きます！",
+            "author": "N. N."
+          },
+          {
+            "date": "2026年3月",
+            "text": "ダリア先生と、素敵な方々とセッションできました！自由にやらせてくださりつつ、ポイントも教えてくださって本当に素敵な時間でした。必ずまた行きます！",
+            "author": "Manami M."
+          },
+          {
+            "date": "2026年3月",
+            "text": "とても楽しかったです💕",
+            "author": "Ri Ri"
+          },
+          {
+            "date": "2026年3月",
+            "text": "Yesssssss I really had fun sooooo much!!!! I actually first time I did art with friends omg I'm so drank damn I hope you 本当に来てみてください once...love naomi and CEO very much AAHHHH",
+            "author": "Kanemoto Yoshinori"
+          },
+          {
+            "date": "2026年3月",
+            "text": "PEACH BEACHを🩷🫧 偶然の出会いもあって最高の体験になりました❤︎❤︎",
+            "author": "Some"
+          },
+          {
+            "date": "2026年3月",
+            "text": "すごく丁寧に教えて頂いて素敵な体験でした🧡 また行きますー！",
+            "author": "0o 0o"
+          },
+          {
+            "date": "2026年3月",
+            "text": "すごい楽しかったです！ また行きたいです！！",
+            "author": "Sama (Mas)"
+          },
+          {
+            "date": "2026年3月",
+            "text": "先生たちもとても優しくて楽しくデッサンできました！🩷🩷",
+            "author": "Anonymous 1"
+          },
+          {
+            "date": "2026年3月",
+            "text": "This was my very first paint and sip and I had a great time here, the teacher Nanako was so nice and the vibe was so much fun. Would definitely come back again! 😊",
+            "author": "Camillus McLaughlin"
+          },
+          {
+            "date": "2026年3月",
+            "text": "参加された方もとても皆さん良い方ばかりで素敵な時間を過ごすことができました！ ななこ先生ありがとうございました！！",
+            "author": "Ayano Shimizu"
+          },
+          {
+            "date": "2026年3月",
+            "text": "Such a great class! The instructor is super knowledgeable and explains everything kindly. Would definitely come back!",
+            "author": "Paula Cote"
+          },
+          {
+            "date": "2026年2月",
+            "text": "Fantastic experience - whether you’re on vacation or living in the city it’s a lovely souvenir, amazing instructors super friendly and unlimited wine!",
+            "author": "Maddie Hayes"
+          },
+          {
+            "date": "2026年2月",
+            "text": "Amazing even for people that don’t paint the tutors are amazing so nice would recommend",
+            "author": "Emre Kara"
+          },
+          {
+            "date": "2026年1月",
+            "text": "ダリアさんがとても優しく、リラックスして楽しめました！",
+            "author": "Misato Haneda"
+          },
+          {
+            "date": "2026年1月",
+            "text": "とってもいい思い出になりました❣️",
+            "author": "Nao Ono"
+          },
+          {
+            "date": "2026年1月",
+            "text": "Super activité à faire seul ou en groupe. Attention en revanche c'est full japonais, l'animatrice ne parle pas un mot d'anglais, mais ça rajoute encore plus de fun! Les peintures vous sont envoyés sous 15 jours à votre domicile ou hôtel",
+            "author": "Manon"
+          },
+          {
+            "date": "2025年11月",
+            "text": "Surprised my wife with a date here the other day and it was fantastic! The vibe is relaxing, the other students were supportive and the teacher was a joy to be around. Thank you so much!",
+            "author": "Anonymous 2"
+          },
+          {
+            "date": "2025年11月",
+            "text": "Great place! Nice ambiance, very welcoming and friendly host/artist! My girlfriend and I had a blast. Would definitely recommend! Thank you, Naomi and Artbar Tokyo!",
+            "author": "David Salvador"
+          },
+          {
+            "date": "2025年11月",
+            "text": "Beautiful people working and the art, I had so much fun painting my Lucky Cat! Thank you so much! I definitely recommend going and enjoy!!",
+            "author": "Ashleigh Kieser"
+          },
+          {
+            "date": "2025年11月",
+            "text": "super fun, knowledgeable, and kind instructors! I would love to come back on my next trip and see them!",
+            "author": "Brandi Havard"
+          },
+          {
+            "date": "2025年11月",
+            "text": "The most fabulous painting class in all of Tokyo!",
+            "author": "Susan Stephens"
+          },
+          {
+            "date": "2025年10月",
+            "text": "It was my first time doing this activity and it was so so much fun! Naomi’s such a lovely instructor who guided the class so well and our paintings turned out great! Will definitely come again! Arigatou gozaimashita!",
+            "author": "Ida Don"
+          },
+          {
+            "date": "2025年10月",
+            "text": "We really enjoy our time here and our instructor, Naomi, are really helpful and energetic. Really recommend this session as you can get free flow drinks and snacks too.",
+            "author": "Nurin Anwar"
+          },
+          {
+            "date": "2025年10月",
+            "text": "We had such an amazing experience painting with Naomi! As tourist to Tokyo, she made us feel at home. Strongly recommend her to tourist and locals alike!",
+            "author": "Daniel"
+          },
+          {
+            "date": "2025年10月",
+            "text": "Thank you Naomi for such a wonderful experience! The class was energetic, warm, friendly and educational. We went at a very approachable pace and made a great memory with both Naomi and the other participants.",
+            "author": "Jessica Gao"
+          },
+          {
+            "date": "2025年10月",
+            "text": "Highly recommend for a fun night with the girls!",
+            "author": "Bianca McCarthy"
+          },
+          {
+            "date": "2025年10月",
+            "text": "Awesome experience! Great for corporate events and with friends",
+            "author": "Emily Dow"
+          },
+          {
+            "date": "2025年10月",
+            "text": "The perfect spot for a fun night with friends!",
+            "author": "Toya Gattas"
+          },
+          {
+            "date": "2025年10月",
+            "text": "Loved it! Great place to go for with a group of friends",
+            "author": "Valerie Vyvial"
+          },
+          {
+            "date": "2025年10月",
+            "text": "Artbarには何度も通っています。スタッフの先生が明るく、肩の力が抜けた空気をつくってくれるので、入った瞬間こちらもリラックス。 ストレス発散にもなり、次回も行くのが楽しみです。",
+            "author": "Hikaru Terada"
+          }
+        ],
+        "featured": [
+          {
+            "role": "メディア",
+            "text": "Artbar Tokyoでは、ワインは創造力を解き放つための大切な相棒です。熟練したアーティストである必要はありません！",
+            "author": "TimeOut Tokyo"
+          },
+          {
+            "text": "講師の方がとてもチャーミングで2時間があっという間でした。ワイン飲み放題なのも素敵…また行きます！",
+            "author": "N. N."
+          },
+          {
+            "text": "ダリア先生と、素敵な方々とセッションできました！自由にやらせてくださりつつ、ポイントも教えてくださって本当に素敵な時間でした。必ずまた行きます！",
+            "author": "Manami M."
+          }
+        ]
+      }
+    },
+    "footer": {
+      "terms": "利用規約",
+      "rights": "All rights reserved.",
+      "company": "Paint Garage 合同会社",
+      "explore": "探す",
+      "privacy": "プライバシーポリシー",
+      "support": "サポート",
+      "tagline": "2016年創業ー日本初のペイント＆シップスタジオ",
+      "locations": "スタジオ一覧",
+      "commercial": "特定商取引法に基づく表記"
+    },
+    "blogPage": {
+      "back": "ジャーナルに戻る",
+      "title": "Artbarジャーナル",
+      "readMore": "記事を読む",
+      "subtitle": "アート、クリエイティビティ、そして東京のライフスタイルについて。"
+    },
+    "pressPage": {
+      "badge": "メディア掲載",
+      "title": "メディア掲載",
+      "popups": [
+        {
+          "loc": "六本木",
+          "date": "2019",
+          "title": "六本木ヒルズ ヒルズカフェ"
+        },
+        {
+          "loc": "新宿",
+          "date": "2018",
+          "title": "伊勢丹新宿店"
+        },
+        {
+          "loc": "銀座",
+          "date": "2017",
+          "title": "東急プラザ銀座"
+        }
+      ],
+      "subtitle": "日本初のPaint & Sipスタジオとして、ファッション誌やテレビなど多数のメディアにご紹介いただいています。",
+      "popupsTitle": "過去のポップアップイベント"
+    },
+    "contactPage": {
+      "badge": "お問い合わせ",
+      "title": "お問い合わせ",
+      "notice1": "キャンセルは以下のフォームより承ります。ご予約セッションの開始時間24時間前を過ぎてからのキャンセルは返金対象外となりますのでご注意ください。",
+      "notice2": "",
+      "faqTitle": "よくある質問",
+      "formTitle": "メッセージを送る"
+    },
+    "paintYourPet": {
+      "desc": "Artbarで最も人気のあるクラスの一つです！大好きなあなたのペットをペイントしましょう。先生が手伝ってくれるので、絵が苦手でも大丈夫です。ご自宅で挑戦したい方は、下の「マジック・スケッチ」ツールを使って下書きを作成できます！",
+      "steps": [
+        {
+          "desc": "カレンダーから「Paint Your Pet」セッションを予約します。",
+          "title": "予約する"
+        },
+        {
+          "desc": "開催の48時間前までにペットの写真を送ってください。アーティストが手作業で下書きを準備するために必要です。",
+          "title": "写真を送る"
+        },
+        {
+          "desc": "プロのアーティストが、あなたのキャンバスにペットの下書きを描いてお待ちしています。",
+          "title": "下書き準備"
+        },
+        {
+          "desc": "ワインを飲みながら、リラックスして色を塗っていきましょう。",
+          "title": "ペイント＆シップ"
+        }
+      ],
+      "title": "大好きなペットを描こう!",
+      "aiTool": {
+        "desc": "クラスではアーティストが手書きで下書きを用意しますが、このツールを使えばご自宅でプリントして使える「塗り絵用」の下書きをAIで作成できます！",
+        "title": "マジック・スケッチ",
+        "btnUpload": "写真をアップロード",
+        "btnGenerate": "スケッチを作成"
+      },
+      "pricing": {
+        "price": "¥6,600",
+        "includes": [
+          "ワイン・スナック",
+          "キャンバス・画材",
+          "丁寧な指導"
+        ],
+        "priceNote": "税込"
+      },
+      "subtitle": "Paint Your Pet - Artbar Tokyo Original Program"
+    },
+    "teamBuilding": {
+      "hero": {
+        "cta": "見積もりを依頼",
+        "badge": "企業イベント",
+        "title": "チームの結束を深める",
+        "subtitle": "ありきたりな研修とは違う、記憶に残る体験を。\nアート制作を通じた共同作業が、チームの絆を自然と深め、新たなイノベーションを生み出す土壌を作ります。",
+        "titleHighlight": "クリエイティブな体験"
+      },
+      "pricing": {
+        "cta": "空き状況・見積もりを依頼",
+        "desc": "※出張開催は出張料金がかかります",
+        "badge": "料金",
+        "price": "¥7,700",
+        "title": "Artbarスタジオでのインスタジオ価格",
+        "feeLabel": "貸切料金",
+        "feePrice": "¥5,500 (全体に対して)",
+        "priceNote": "1名様あたり (税込)",
+        "offsiteLabel": "(ご希望の場合のみ)\n＋完成した作品の配送料・持ち込みの場合のゴミの引き受け料・延長料金など",
+        "offsitePrice": "",
+        "packageBadge": "スタジオ開催",
+        "packageTitle": "基本料金",
+        "packageSubtitle": "2時間セッション"
+      },
+      "logistics": {
+        "catering": {
+          "cta": "",
+          "desc": "お食事やお飲み物のお持ち込みも可能です。ゴミの引き受け料として1100円をいただきます。(45Lのゴミ袋2つ)",
+          "items": [],
+          "title": "ケータリング・デリバリーもOK"
+        },
+        "included": {
+          "desc": "イベントの成功に必要なものは、すべて基本プランに含まれています。",
+          "items": [
+            "2時間のスタジオ貸切・セッション",
+            "全ての画材・エプロン",
+            "ファシリテーション",
+            "ドリンクの飲み放題（ワイン/ソフトドリンク）",
+            "個包装のスナック(チョコレートやお煎餅)",
+            "準備・片付け"
+          ],
+          "title": "パッケージに含まれるもの"
+        },
+        "locations": {
+          "desc": "弊社スタジオでの開催、または出張での開催も可能です(出張は15名様〜)",
+          "note": "*出張会場には設備等の条件がございます。詳しくはお問い合わせください。",
+          "title": "開催場所"
+        }
+      },
+      "specialty": {
+        "cta": "カスタマイズについて相談する",
+        "desc": "上記2つ以外の実施内容や独自の題材など、カスタマイズをご希望の場合はご相談ください。目的に合わせて最適な内容をご提案いたします。",
+        "badge": "その他の実施内容",
+        "title": "カスタマイズ・アクティビティ"
+      },
+      "valueProp": {
+        "p1": "アートという共通の体験を通して階層や部署の壁を取り払い、参加者同士がリラックスしてコミュニケーションをとることができます。",
+        "p2": "スタジオでの開催はもちろん、オフィスや外部会場への出張も可能。チームの課題や目的に合わせた最適なプランをご提案します。",
+        "badge": "Artbar Tokyoのチームビルディング",
+        "title": "アートがもたらす、\n組織へのポジティブな変化",
+        "benefits": [
+          {
+            "desc": "アートに没頭する時間はデジタルデトックス効果があり、メンタルヘルスを向上させます。",
+            "title": "ストレス解消とウェルウェルビーイング"
+          },
+          {
+            "desc": "日常業務から離れて右脳を使うことで、新しい視点や柔軟な発想を引き出します。",
+            "title": "クリエイティブ思考の刺激"
+          },
+          {
+            "desc": "作品を通じた対話は、普段の会議では生まれない深い相互理解と共感を生みます。",
+            "title": "非言語コミュニケーション"
+          },
+          {
+            "desc": "画材の準備から進行・片付けまで、全て私たちが担当いたします。幹事様の負担を最小限に抑えます。",
+            "title": "完全お任せの運営"
+          }
+        ]
+      },
+      "activities": {
+        "items": [
+          {
+            "desc": "1人1点ずつ作品を仕上げて頂きます。\nインストラクターがステップbyステップで描き方をご説明しますが、色やモチーフなど自由にアレンジが可能です。\n同じステップで描いてもそれぞれの個性を反映した全く違う作品が仕上がります。",
+            "link": "個性を尊重",
+            "title": "パーソナル・マスターピース"
+          },
+          {
+            "desc": "人数分の正方形キャンバスを用意し、パズルの様につなげると一つの大きな絵になるように全員で協力して制作します。\n冒頭にディスカッションの時間を取り、色やモチーフの追加などのアレンジについて話し合います。",
+            "link": "チームワークを重視",
+            "title": "パズル・マスターピース"
+          },
+          {
+            "desc": "",
+            "link": "",
+            "title": ""
+          }
+        ],
+        "title": "メインアクティビティ",
+        "subtitle": "一体感を高める共同制作から、個性を発揮する個人制作まで。"
+      },
+      "socialProof": {
+        "title": "導入実績・パートナー企業"
+      },
+      "testimonials": {
+        "title": "参加企業様の声"
+      }
+    },
+    "locationsPage": {
+      "operating": {
+        "ceo": "代表: キャシー・トンプソン",
+        "name": "Paint Garage 合同会社",
+        "title": "運営会社",
+        "address": "東京都渋谷区代官山町7-2",
+        "btnHiring": "",
+        "inquiryText": "フランチャイズ・採用に関するお問い合わせは、こちらまでご連絡ください。",
+        "btnFranchise": "",
+        "inquiryEmail": "tokyo@artbar.co.jp"
+      }
+    },
+    "privateParties": {
+      "hero": {
+        "badge": "貸切パーティー",
+        "title": "特別な日を、",
+        "subtitle": "誕生日、バチェロレッテ、あるいは友人との特別な集まりに。\nArtbar Tokyoでしか味わえない、洗練されたパーティーを。",
+        "titleHighlight": "アートで彩る"
+      },
+      "pricing": {
+        "kids": {
+          "cta": "予約・お問い合わせ",
+          "items": [
+            {
+              "desc": "お子様も安心の安全な環境",
+              "title": "スタジオ完全貸切"
+            },
+            {
+              "desc": "キャンバス、絵具、エプロン等",
+              "title": "全ての画材一式"
+            },
+            {
+              "desc": "ジュースやお茶、スナックつき",
+              "title": "ソフトドリンク"
+            },
+            {
+              "desc": "お子様の感性を優しく引き出します",
+              "title": "専属インストラクター"
+            }
+          ],
+          "price": "¥4,620〜",
+          "title": "キッズ・パーティー",
+          "subtitle": "2時間 クリエイティブ・ファン"
+        },
+        "adult": {
+          "cta": "予約・お問い合わせ",
+          "items": [
+            {
+              "desc": "プライベートな空間で気兼ねなく",
+              "title": "スタジオ完全貸切"
+            },
+            {
+              "desc": "キャンバス、絵具、エプロン等",
+              "title": "全ての画材一式"
+            },
+            {
+              "desc": "赤白ワイン、ソフトドリンク飲み放題",
+              "title": "おかわり自由のドリンク"
+            },
+            {
+              "desc": "丁寧にガイドします",
+              "title": "専属インストラクター"
+            }
+          ],
+          "price": "¥6,600〜",
+          "title": "大人向け貸切プラン",
+          "subtitle": "2時間 ペイント＆シップ"
+        },
+        "common": {
+          "minGuests": "10名様〜(出張開催は15名様〜)",
+          "venueFeeLabel": "貸切料金",
+          "venueFeePrice": "¥5,500(全体に対して)",
+          "minGuestsLabel": "最小人数"
+        }
+      },
+      "capacity": {
+        "title": "各スタジオの定員"
+      },
+      "catering": {
+        "cta": "",
+        "desc": "食べ物や飲み物のお持ち込みがある場合は事前にお知らせください。ゴミの引き受け料1100円をいただきます。ケーキを食べる時間を設ける場合は、ペインティングを短くするなど調整可能ですので、ご相談ください。お皿やカトラリー・栓抜きなどはご持参ください。",
+        "items": [
+          "",
+          "",
+          ""
+        ],
+        "notes": [
+          "お皿とカトラリーはご持参ください。",
+          "ケータリングをご利用の場合、ゴミ処理費として1,000円を頂戴します。"
+        ],
+        "title": "お食事やケーキのお持ち込み"
+      },
+      "timeline": {
+        "note": "開始時間の5分前からご入店いただけます。",
+        "steps": [
+          {
+            "desc": "ゲストをお迎えし、エプロンをつけて乾杯。",
+            "time": "0:00",
+            "title": "ドアオープン＆乾杯"
+          },
+          {
+            "desc": "インストラクターのデモンストレーションと共にペイント開始。",
+            "time": "0:15",
+            "title": "セッション開始"
+          },
+          {
+            "desc": "おしゃべりを楽しんだり、写真撮影をしたり。ドリンクのおかわりも。",
+            "time": "1:00",
+            "title": "休憩"
+          },
+          {
+            "desc": "作品に最後の仕上げをし、サインを入れて完成です。",
+            "time": "1:45",
+            "title": "仕上げ・サイン"
+          }
+        ],
+        "title": "当日の流れ（例）"
+      },
+      "occasions": [
+        {
+          "image": "/media/generated/private-birthday.jpg",
+          "title": "バースデー・パーティー"
+        },
+        {
+          "image": "/media/generated/private-bachelorette.jpg",
+          "title": "バチェロレッテ"
+        },
+        {
+          "image": "/media/generated/private-kids-party.jpg",
+          "title": "キッズ・パーティー"
+        },
+        {
+          "image": "",
+          "title": ""
+        }
+      ],
+      "specialtyInquiry": {
+        "cta": "問い合わせる",
+        "note": "カスタム料金についてお問い合わせください",
+        "items": [
+          "大人と子どもの合同ファミリーイベント",
+          "クラフト",
+          "プライベートポーリング",
+          "大きなキャンバス",
+          "特別イベント"
+        ],
+        "title": "別の内容をご希望ですか？"
+      }
+    },
+    "instructorsPage": {
+      "title": "インストラクター紹介",
+      "subtitle": "経験豊富でフレンドリーなインストラクターが皆様の制作をサポートします。"
+    }
+  },
+  "locations": [
+    {
+      "id": "daikanyama",
+      "nameJp": "Artbar Daikanyama",
+      "accessJp": "代官山駅 徒歩5分 | 恵比寿駅 徒歩8分",
+      "addressJp": "〒150-0034 東京都渋谷区代官山町 7-2 ベルビュー代官山 1階"
+    },
+    {
+      "id": "harajuku",
+      "nameJp": "Artbar Cat Street Harajuku",
+      "accessJp": "渋谷駅 徒歩7分 | 明治神宮前駅 徒歩5分",
+      "addressJp": "〒150-0001 東京都渋谷区神宮前5-30-2 Takaraビル 201"
+    },
+    {
+      "id": "ginza",
+      "nameJp": "Artbar Ginza",
+      "accessJp": "銀座一丁目駅 徒歩1分\n有楽町駅 徒歩5分\n銀座駅 徒歩5分",
+      "addressJp": "〒104-0061 東京都中央区銀座1-6-1 銀座クレッセントビル10階"
+    },
+    {
+      "id": "yokohama",
+      "nameJp": "Artbar Yokohama Motomachi",
+      "accessJp": "みなとみらい線 元町・中華街駅 徒歩3分\nJR石川町駅 徒歩10分",
+      "addressJp": "〒231-0861 神奈川県横浜市中区元町1-27-2 エンセント横濱元町ビル 2F"
+    },
+    {
+      "id": "osaka_namba",
+      "nameJp": "(フランチャイズ)Artbar Osaka なんばスカイオ",
+      "accessJp": "10階で低層階用エレベーターに乗り換え、17階へお上がりください。スタジオは廊下突き当たり左手です。",
+      "addressJp": "〒542-0076 大阪府大阪市中央区難波5-1-60 なんばスカイオ 17F"
+    },
+    {
+      "id": "osaka_umeda",
+      "nameJp": "(フランチャイズ)Artbar Osaka 梅田",
+      "accessJp": "タリーズコーヒー / 有隣堂 併設",
+      "addressJp": "大阪府大阪市北区大深町6-38 グラングリーン大阪 ショップ＆レストラン 北館 2F"
+    },
+    {
+      "id": "osaka_hirakata",
+      "nameJp": "(フランチャイズ)Artbar Osaka Lab 枚方",
+      "accessJp": "タリーズコーヒー併設",
+      "addressJp": "〒573-0032 大阪府枚方市1-9-1 枚方モール 2F"
+    }
+  ],
+  "themePages": {
+    "kids": {
+      "title": "キッズ向け",
+      "ctaSub": "週末キッズセッションを今すぐチェック。",
+      "heroSub": "",
+      "seoDesc": "週末バイリンガル・スナック・画材込み。安心のキッズ向け環境。",
+      "ctaTitle": "アートの旅を始めよう",
+      "examples": [
+        {
+          "title": "おひさまレインボー"
+        },
+        {
+          "title": "楽しい子猫"
+        },
+        {
+          "title": "海の仲間たち"
+        },
+        {
+          "title": "カラフルお花"
+        }
+      ],
+      "seoTitle": "キッズ アートクラス 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "かわいい動物やお花・宇宙など、楽しいテーマでお子様の想像力を刺激します。",
+      "expectDesc": "2時間のワクワク体験！インストラクターが丁寧にサポートしますので初めてでも安心です。",
+      "introTitle": "Artbar Tokyoのキッズセッション",
+      "perfectFor": [
+        "5〜12歳のお子様",
+        "学校の休み期間中に楽しみたいお子様",
+        "週末のお出かけ",
+        "創作が好きなお子様"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "ジューズ・お茶などお子さま向けドリンクをご用意しています。",
+          "text": "ドリンク"
+        },
+        {
+          "sub": "チョコレートやお煎餅などをご用意しています。(アレルギーのあるお子様は事前にお知らせください)",
+          "text": "おやつ"
+        },
+        {
+          "sub": "初めてのお子様も安心してご参加いただけます。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "お子様の初めてのアート体験はArtbar Tokyoで。",
+      "exampleBlurb": "子どもたちが夢中になれる、楽しい制作テーマの一例。",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "動物・宇宙・魔法など想像を広げます。",
+          "title": "楽しいテーマ"
+        },
+        {
+          "desc": "混色や色の探検を楽しみます。",
+          "title": "色彩の入門"
+        },
+        {
+          "desc": "お子さま一人ひとりがアーティスト。",
+          "title": "自信が育つ"
+        }
+      ]
+    },
+    "monet": {
+      "title": "モネ",
+      "ctaSub": "次回のモネのイベントをチェックしてください！",
+      "heroSub": "",
+      "seoDesc": "渋谷・銀座のスタジオでモネの睡蓮を描こう。飲み放題ワイン付きバイリンガルクラス。",
+      "ctaTitle": "印象派の名画に挑戦しよう",
+      "examples": [
+        {
+          "title": "睡蓮"
+        },
+        {
+          "title": "日傘の女"
+        },
+        {
+          "title": "日本の橋"
+        },
+        {
+          "title": "ポピー畑"
+        }
+      ],
+      "seoTitle": "モネの絵を描くワークショップクラス 東京 | 印象派 ペイント＆シップ",
+      "heroBadge": "人気のセッション",
+      "introDesc": "モネは移りゆく時間の一瞬を切り取る画家。水面の光や朝もやの庭など、自然の美しさに癒されましょう。",
+      "expectDesc": "モネの名画をご自身の手で描くチャンスです！ぜひご参加ください。",
+      "introTitle": "モネの絵の魅力",
+      "perfectFor": [
+        "印象派が好きな方",
+        "自然が好きな方",
+        "優しい色合いがお好きな方",
+        "お部屋に癒しの彩りを加えたい方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意しています。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "詩的なモネの世界を堪能しよう",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "淡い色彩のハーモニーで癒しのひとときを。",
+          "title": "柔らかな色彩"
+        },
+        {
+          "desc": "モネの愛したフランスの美しい自然を描きます。",
+          "title": "自然のモチーフ"
+        },
+        {
+          "desc": "色をブレンドさせる優しい筆致で描きます。",
+          "title": "繊細なタッチ"
+        }
+      ]
+    },
+    "renoir": {
+      "title": "ルノワール",
+      "ctaSub": "今すぐルノワールのイベントをチェック！",
+      "heroSub": "",
+      "seoDesc": "柔らかな光とロマンティックな色。ワイン付きバイリンガルクラス。",
+      "ctaTitle": "ルノアールの光を描こう。",
+      "examples": [
+        {
+          "title": "じょうろを持つ少女"
+        },
+        {
+          "title": "ピアノの前の二人の少女"
+        },
+        {
+          "title": "ボートパーティのムード"
+        },
+        {
+          "title": "夏の花"
+        }
+      ],
+      "seoTitle": "ルノワール 絵画クラス 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "美しさや優雅さ、陽だまりの遊びを描くスタイル。羽毛のような筆致で温かなトーンを重ねます。",
+      "expectDesc": "柔らかなタッチで癒されながらルノワールの世界を堪能しましょう！",
+      "introTitle": "ルノワールの絵の魅力",
+      "perfectFor": [
+        "西洋の古典的な美が好きな方",
+        "肖像画がお好きな方",
+        "淡い色合いでリラックスしたい方",
+        "印象派がお好きな方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "美しさに浸るセッション",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "「内なる光」を表現する技法。",
+          "title": "内側からの光"
+        },
+        {
+          "desc": "柔らかな線で人物や肖像を。",
+          "title": "ロマンティックな人物"
+        },
+        {
+          "desc": "布や肌のトーンを丁寧に。",
+          "title": "柔らかな質感"
+        }
+      ]
+    },
+    "matisse": {
+      "title": "マティス",
+      "ctaSub": "マティスのイベントを今すぐ予約！",
+      "heroSub": "",
+      "seoDesc": "色の歓びを東京で。大胆な色とシンプルな形、バイリンガル＆ワイン込み。",
+      "ctaTitle": "マティスの色の魔法を体験！",
+      "examples": [
+        {
+          "title": "青い裸婦（切り絵風）"
+        },
+        {
+          "title": "金魚鉢"
+        },
+        {
+          "title": "ダンスのスタディ"
+        },
+        {
+          "title": "赤い室内"
+        }
+      ],
+      "seoTitle": "マティス モダンアート 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "色の巨匠と呼ばれたマティス。鮮やかな色彩と純粋なフォルムは唯一無二の美しさです。",
+      "expectDesc": "マティスの色の世界へ飛び込もう。",
+      "introTitle": "マティスの絵の魅力",
+      "perfectFor": [
+        "ミニマルデザイン好きな方",
+        "カラフルな色合いが好きな方",
+        "明るい色で気分を上げたい方",
+        "近代的なデザインがお好きな方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "歓びあふれる創作時間",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "色同士が弾け合うようなアクティブな画面。",
+          "title": "色の躍動"
+        },
+        {
+          "desc": "複雑な景色を美しい形にまとめます。",
+          "title": "簡潔なフォルム"
+        },
+        {
+          "desc": "画面にスパイスを加える効果的な線。",
+          "title": "リズミカルな線"
+        }
+      ]
+    },
+    "picasso": {
+      "title": "ピカソ風アート",
+      "ctaSub": "ピカソ風セッションをカレンダーからチェック。",
+      "heroSub": "",
+      "seoDesc": "渋谷・銀座でピカソ風の絵を描こう。ワインと画材込みのバイリンガルクラス。",
+      "ctaTitle": "ピカソ風のスタイルに挑戦！",
+      "examples": [
+        {
+          "title": "自画像"
+        },
+        {
+          "title": "抽象ギタリスト"
+        },
+        {
+          "title": "青の時代"
+        },
+        {
+          "title": "モダン・ミューズ"
+        }
+      ],
+      "seoTitle": "ピカソ風 アート体験 ワークショップ 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "大胆な形、色の感情表現——ルールをほどいて自分らしさを出すスタイルです。",
+      "expectDesc": "ユニークな形と大胆な色づかい、ピカソのスタイルで誰でも芸術家に！",
+      "introTitle": "ピカソ風の絵の魅力",
+      "perfectFor": [
+        "カラフルな色づかいが好きな方",
+        "イラストレーションが好きな方",
+        "個性的なスタイルがお好きな方",
+        "新しい表現にチャレンジしたい方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "童心に帰って楽しもう",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "物の形をユニークな形に分解して描きます。",
+          "title": "キュビズムの視点"
+        },
+        {
+          "desc": "コントラストの強い色合わせで活気のある画面に。",
+          "title": "大胆な色づかい"
+        },
+        {
+          "desc": "古典的なルールにとらわれず自由な構図へ。",
+          "title": "型破りな発想力"
+        }
+      ]
+    },
+    "van-gogh": {
+      "title": "ゴッホ",
+      "ctaSub": "ゴッホのテーマのイベントをカレンダーでご確認ください。",
+      "heroSub": "「星月夜」や「ひまわり」など、ゴッホならではの力強いタッチを楽しむことができます。",
+      "seoDesc": "渋谷・銀座のおしゃれなスタジオでゴッホの絵を描きましょう。ワイン・おつまみ・画材込みのバイリンガルクラス。",
+      "ctaTitle": "ゴッホになった気分で描こう",
+      "examples": [
+        {
+          "title": "星月夜"
+        },
+        {
+          "title": "ひまわり"
+        },
+        {
+          "title": "夜のカフェテラス"
+        },
+        {
+          "title": "アルルの寝室"
+        }
+      ],
+      "seoTitle": "ゴッホの絵を描いてみよう 絵画クラス 東京 | Artbar Tokyo ペイント＆シップ",
+      "heroBadge": "人気のセッション",
+      "introDesc": "大胆な色、厚みのあるテクスチャ、感情のエネルギーが作品に命を吹き込みます。",
+      "expectDesc": "フレンドリーな講師が丁寧にガイドしますので、初めての方でも安心。星月夜やひまわりなど、難しそうに見えるテーマにも気軽にチャレンジできます。",
+      "introTitle": "ゴッホの絵の魅力",
+      "perfectFor": [
+        "名画を自分の手で再現してみたい方",
+        "鮮やかな色遣いが好きな方",
+        "大胆の筆遣いに挑戦してみたい方",
+        "ゴッホが好きな方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス・アクリル絵の具・エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "お酒が苦手な方でも安心してお楽しみいただけます。",
+          "text": "ノンアルコールドリンクもご用意"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "ゴッホの絵を一緒に描いてみましょう！",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "まるで画面が動き出すかのような荒々しいタッチは生命力に溢れています。",
+          "title": "躍動する画面"
+        },
+        {
+          "desc": "まるで童心に帰ったような気持ちで、キャンバスに向き合いましょう。",
+          "title": "大胆な筆づかい"
+        },
+        {
+          "desc": "感情に訴えかけるような鮮やかな色彩が特徴です。",
+          "title": "鮮やかな色彩"
+        }
+      ]
+    },
+    "alcohol-ink": {
+      "title": "アルコールインク",
+      "ctaSub": "アルコールインクのイベントを今すぐチェック！",
+      "heroSub": "",
+      "seoDesc": "東京で抽象アートを楽しむ。アルコールインクのワークショップ。",
+      "ctaTitle": "色の波に身を委ねる",
+      "examples": [
+        {
+          "title": "深海の奥"
+        },
+        {
+          "title": "夕焼けの雲"
+        },
+        {
+          "title": "大理石のエレガンス"
+        },
+        {
+          "title": "金彩の花"
+        }
+      ],
+      "seoTitle": "アルコールインク 東京 | Artbar Tokyo ペイント＆シップ",
+      "heroBadge": "人気のセッション",
+      "introDesc": "揮発性のアルコールと特殊なインクを風で動かして、透明感のある美しい模様を描きます。",
+      "expectDesc": "インテリア映えする素敵な作品を描きましょう！フレンドリーな講師が丁寧にガイドします。",
+      "introTitle": "アルコールインクとは？",
+      "perfectFor": [
+        "インテリアに合う作品を作りたい方",
+        "繊細な工程が好きな方",
+        "特殊な技法に挑戦したい方",
+        "透明感のある質感がお好きな方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "Copic / Piñata などプロ用インク",
+          "text": "高発色インク"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "アルコールインクを体験しよう！",
+      "exampleBlurb": "上品で一点ものの作品に仕上がる、アルコールインクの表現例。",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "ハンディドライヤーの風でインクを動かし柔らかな模様を作ります。",
+          "title": "エアフロー技法"
+        },
+        {
+          "desc": "金・銀のポイントを入れてラグジュアリーに。",
+          "title": "メタリックアクセント"
+        },
+        {
+          "desc": "夢の中にいるような優しい色合いの波を描きます。",
+          "title": "幻想的なムード"
+        }
+      ]
+    },
+    "texture-art": {
+      "title": "テクスチャーアート",
+      "ctaSub": "渋谷・銀座のテクスチャー枠をご予約ください。",
+      "heroSub": "",
+      "seoDesc": "モデリングペーストとナイフで立体表現。バイリンガル＆ワイン付き。",
+      "ctaTitle": "アートを感じる",
+      "examples": [
+        {
+          "title": "海のうねり"
+        },
+        {
+          "title": "ミニマルな花"
+        },
+        {
+          "title": "山脈の稜線"
+        },
+        {
+          "title": "抽象リズム"
+        }
+      ],
+      "seoTitle": "テクスチャーアート 東京 | 3D ペイント＆シップ",
+      "heroBadge": "人気のセッション",
+      "introDesc": "特殊な薬剤を絵具に混ぜて、立体感のある作品に仕上げます。",
+      "expectDesc": "筆以外のツールで「彫る」ように描く瞑想的な時間。ワインと相性抜群です。",
+      "introTitle": "テクスチャーアートとは？",
+      "perfectFor": [
+        "ミニマルインテリアが好きな方",
+        "触感のある工程が好きな方",
+        "初心者",
+        "抽象画ファン"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "彫りながらリラックス",
+          "text": "プレミアムワイン飲み放題"
+        },
+        {
+          "sub": "プロ用の造形メディウム",
+          "text": "モデリングペースト＆ジェル"
+        },
+        {
+          "sub": "テクスチャー表現の基本",
+          "text": "パレットナイフ指導"
+        },
+        {
+          "sub": "作品のお持ち帰りや配送もご相談ください",
+          "text": "持ち帰り＆配送"
+        }
+      ],
+      "expectTitle": "触覚のアート体験",
+      "perfectTitle": "手を使って作るのが好きな方へ",
+      "quickFeatures": [
+        {
+          "desc": "ペーストで高さと陰影を。",
+          "title": "雕塑的な盛り上げ"
+        },
+        {
+          "desc": "ざらざらと滑らかの違いを楽しむ。",
+          "title": "質感のコントラスト"
+        },
+        {
+          "desc": "影と光だけでミニマルに仕上げる。",
+          "title": "モノトーンの深み"
+        }
+      ]
+    },
+    "paint-pouring": {
+      "title": "たらし込みアート",
+      "ctaSub": "スケジュールをチェック！",
+      "heroSub": "",
+      "seoDesc": "SNSで超話題！渋谷・銀座で「たらし込みアート」を体験しよう。ワイン・おつまみ付きバイリンガルセッション。",
+      "ctaTitle": "話題のたらし込みアートを体験しよう",
+      "examples": [
+        {
+          "title": "青色をメインにした海のようなデザイン"
+        },
+        {
+          "title": "宇宙を思わせるミステリアスな色合い"
+        },
+        {
+          "title": "大理石のような優しいトーン"
+        },
+        {
+          "title": "ビビッドな色でお部屋を明るく！"
+        }
+      ],
+      "seoTitle": "たらし込みアート 東京 | Artbar Tokyo フルイドアート",
+      "heroBadge": "人気のセッション",
+      "introDesc": "SNSで大人気！キャンバスの上に絵の具をたらして、自然なマーブル模様を作ります。",
+      "expectDesc": "初めての方でも安心。フレンドリーな講師が丁寧にガイドします。",
+      "introTitle": "たらし込みアートとは？",
+      "perfectFor": [
+        "手軽にインパクトのある作品を作りたい方",
+        "お部屋にかっこいい抽象画を飾りたい方",
+        "アートを作ってみたいけど筆で描くのは自信がない…という方",
+        "癒しと達成感を味わいたい方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "たらし込みアートは2週間程度乾燥させてから着払いでご自宅へ配送します。(送料はチケット代に含まれていません)",
+          "text": "作品は着払いでご配送"
+        }
+      ],
+      "expectTitle": "たらし込みアートに挑戦しよう！",
+      "exampleBlurb": "これまでのお客様の作品例。同じ模様は二つとない、すべてオリジナルです。",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "筆で描くことのできない美しいマーブリング模様は癒し効果抜群！",
+          "title": "自然なマーブル模様"
+        },
+        {
+          "desc": "経験不要でどなたでもおしゃれな作品が完成します。",
+          "title": "どなたでも簡単！"
+        },
+        {
+          "desc": "お好きな色を選んで制作できます。",
+          "title": "自由な色づかい"
+        }
+      ]
+    },
+    "japan-inspired": {
+      "title": "日本のテーマ",
+      "ctaSub": "近日開催のセッションをチェックして、是非ご予約ください。",
+      "heroSub": "",
+      "seoDesc": "富士山・桜・北斎の波など、和風アートワークショップを渋谷・銀座のArtbar Tokyoで。ワイン付きバイリンガルのペイント＆シップ体験。",
+      "ctaTitle": "日本のテーマのイベントを見る",
+      "examples": [
+        {
+          "title": "葛飾北斎「神奈川沖波裏」"
+        },
+        {
+          "title": "秋の富士山"
+        },
+        {
+          "title": "空に灯るランタン"
+        },
+        {
+          "title": "桜の小道"
+        }
+      ],
+      "seoTitle": "日本テーマのアート体験 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "和の情景は細部よりも「気配」を重視します——冬の空、夕暮れの灯り、秋の富士のやわらかな温かみ。自然や伝統、日常のささやかな美しさへつながる世界観です。",
+      "expectDesc": "フレンドリーな講師が丁寧にガイドしますので、初めての方でも安心。北斎の波や富士山など、難しそうに見えるテーマにも気軽にチャレンジできます。",
+      "introTitle": "日本の伝統的な美に触れましょう。",
+      "perfectFor": [
+        "日本での思い出を作品として残したい方",
+        "和の風景や伝統美が好きな方",
+        "落ち着いたデートを楽しみたいカップルの方",
+        "アートが大好きで、自分でも挑戦してみたい方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "お酒が苦手な方も安心してお楽しみいただけます。",
+          "text": "ノンアルコールドリンクもご用意"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは当日中に作品を持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "日本テーマを描いてみましょう！",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "富士山や桜、季節の情景を描きます。",
+          "title": "象徴的な風景"
+        },
+        {
+          "desc": "移りゆくその時々の景色の美しさを表現します。",
+          "title": "四季を楽しむ"
+        },
+        {
+          "desc": "日本的な静けさや余白の美しさを表現します。",
+          "title": "ムードと空気感"
+        }
+      ]
+    },
+    "paint-your-pet": {
+      "title": "ペットを描こう",
+      "ctaSub": "次回ペットアートのスケジュールをチェック！",
+      "heroSub": "",
+      "seoDesc": "下絵付きで安心。ワイン・おつまみ込みのバイリンガル指導。",
+      "ctaTitle": "ベストフレンドを描こう",
+      "examples": [
+        {
+          "title": "ゴールデン・レトリバー"
+        },
+        {
+          "title": "三毛猫"
+        },
+        {
+          "title": "カラフルなフレンチブル"
+        },
+        {
+          "title": "二匹のポートレート"
+        }
+      ],
+      "seoTitle": "ペットの絵を描こう 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "事前にお預かりしたお写真から講師が下絵を用意しますので、当日は色合いや雰囲気の描写に集中できます。",
+      "expectDesc": "下絵があるので初めての方も安心！ドリンクを飲みながら楽しもう。",
+      "introTitle": "ペットの絵の魅力",
+      "perfectFor": [
+        "ペットオーナーさん",
+        "家族やご友人へ特別なギフトを用意したい方",
+        "一緒に暮らせなくなってしまった家族を偲びたい方",
+        "動物が大好きな方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "事前にお送りいただいた写真を元に講師が下絵を作成します。",
+          "text": "手描き下絵キャンバス"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "ペットの絵を描きましょう",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "プロがアウトラインを用意。",
+          "title": "写真から下絵へ"
+        },
+        {
+          "desc": "大切なペットを形に残せます。",
+          "title": "想い出のギフト"
+        },
+        {
+          "desc": "色をカラフルにアレンジするなど、お好みのテイストで楽しめます。",
+          "title": "お好きな配色で"
+        }
+      ]
+    },
+    "paint-your-idol": {
+      "title": "憧れの人を描く",
+      "ctaSub": "憧れの人を描くセッションをカレンダーでチェック",
+      "heroSub": "",
+      "seoDesc": "推しのアートを描く、究極の推し活。ワイン・バイリンガル指導の渋谷・銀座スタジオ。",
+      "ctaTitle": "アイドルをキャンバスに",
+      "examples": [
+        {
+          "title": "80年代ロック・レジェンド"
+        },
+        {
+          "title": "モダン・ポップスター"
+        },
+        {
+          "title": "アニメヒーロー"
+        },
+        {
+          "title": "クラシック映画スター"
+        }
+      ],
+      "seoTitle": "憧れの人を描こう 東京 | Artbar Tokyo",
+      "heroBadge": "人気のセッション",
+      "introDesc": "昔から大好きだった、推しの「あの人」を描いて、自分だけのファンアートを自宅に飾りましょう！",
+      "expectDesc": "下絵があるので初めての方も安心。インストラクターが丁寧にガイドします。",
+      "introTitle": "ペイント・ユア・アイドルとは？",
+      "perfectFor": [
+        "大好きな推しをアートで残したい方",
+        "同じ推しを分かち合う仲間同士",
+        "ステンシル風の画風に挑戦したい方",
+        "憧れの人を描きたい方"
+      ],
+      "whatYouGet": [
+        {
+          "sub": "赤ワイン・白ワインとスナックをお楽しみいただけます。ノンアルコールドリンクもご用意。",
+          "text": "おかわり自由のワイン"
+        },
+        {
+          "sub": "キャンバス、アクリル絵の具、エプロンなど必要なものは全て揃っています。",
+          "text": "プロ仕様の画材"
+        },
+        {
+          "sub": "はじめての方でも驚くような作品が完成します。",
+          "text": "インストラクターが丁寧にガイド"
+        },
+        {
+          "sub": "ほとんどのセッションは、当日中に作品をお持ち帰りいただけます。配送が必要なイベントもありますので、予約画面でご確認ください。",
+          "text": "作品のお持ち帰り"
+        }
+      ],
+      "expectTitle": "憧れの人を描く、究極の推し活！",
+      "perfectTitle": "こんな方におすすめ",
+      "quickFeatures": [
+        {
+          "desc": "事前にお送りいただいたステンシル写真を元に、講師が下絵を用意します。",
+          "title": "下絵をご用意"
+        },
+        {
+          "desc": "自分だけのアレンジを加えよう。",
+          "title": "色や雰囲気をカスタマイズ"
+        },
+        {
+          "desc": "お家に飾れる一枚を目指します。",
+          "title": "ファンアートの傑作"
+        }
+      ]
+    }
+  },
+  "instructors": [
+    {
+      "id": "cathy",
+      "descJp": "Artbar Tokyoの創設者兼CEO。Artbarが単なる絵画教室ではなく、誰もがクリエイティビティを解放できる「皆さんの居場所」であり続けるよう情熱を注いでいます。スタジオ運営の指揮を執りながら、ゲストの皆様とアートを通じた時間を共有することを楽しみにしています。",
+      "roleJp": "CEO"
+    },
+    {
+      "id": "naomi",
+      "descJp": "インストラクターとマーケティングディレクターを兼務し、常にArtbarの新しいトレンドを発信しています。テクスチャーアートなどのモダンなスタイルから、古典的な名画のテクニックまで幅広く精通。カリフォルニアの太陽のように明るい人柄で、セッションを盛り上げます。",
+      "roleJp": "マーケティング・ディレクター"
+    },
+    {
+      "id": "luci",
+      "descJp": "ファンタジーの世界へ迷い込んだような、柔らかく色彩豊かなスタイルが特徴のアーティスト。ゲスト一人ひとりが独自のスタイルを見つけられるよう、穏やかな雰囲気の中で丁寧にガイドします。日常を忘れ、クリエイティビティを解放する時間をお楽しみください。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "momo",
+      "descJp": "国内外で活躍する現役アーティスト。独自のドットテクニックや抽象画を専門とし、色彩理論や画材に関する深い知識を持っています。プロフェッショナルな視点からのアドバイスで、あなたの作品作りをサポートします。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "nanako",
+      "descJp": "日本画とアクリル画を中心に制作活動を行っています。「その瞬間の感情」を大切に、自由に表現することを重視したセッションです。繊細な色使いを得意とし、皆様が思いのままに個性を発揮できるよう技術面でもサポートします。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "kiyoe",
+      "descJp": "陶芸を専門とし、器やポットなど温かみのある作品を制作しています。とても穏やかな人柄で、大人のセッションからキッズセッションまで幅広く担当。土に触れて心を落ち着けたい方、リラックスしたい方におすすめです。",
+      "roleJp": "陶芸スペシャリスト"
+    },
+    {
+      "id": "michi",
+      "descJp": "Artbarのキッズセッションを中心に、多くの作品を生み出しています。明るくエネルギッシュなMichi先生は、子供たちの自由な発想と笑顔を引き出すのが得意です。お子様の初めてのアート体験は、ぜひMichiにお任せください。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "mineko",
+      "descJp": "文化服装学院卒。長年アパレルファッション業界、アクセサリーパーツ業界を経て自らデザインしたビーズアクセサリーのレシピ本も発売しています。アクセサリーは元気が出るようなカラフルな色が特徴で、それは絵にも表れています。Minekoは動物とファンタジーの世界感が大好きで、物語に登場するようなイラストを描きます。キッズクラスでは皆で楽しく描けるようサポートいたします！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "sakura",
+      "descJp": "筑波大学芸術専門学群日本画領域卒業、東京藝術大学院美術研究科修士課程在籍中。Sakuraは日本画を専門としていますが、アクリル絵の具を使った立体表現も行うマルチスタイルアーティストです。ドイツに住んでいた経験や大学で馬術をしていたことから馬をはじめとした動物を表現するのが得意で、カラフルでエネルギッシュな色使いをします。アートを楽しみながらメルヘンの世界に飛び込んでくれる仲間をお待ちしています！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "daria",
+      "descJp": "Leon Battista Alberti（フィレンツェ）、International School of Illustration Štěpán Zavřel（サルメーデ）、Ca' Foscari University（ヴェネツィア）などで学んだイタリア人アーティスト。オネアリスティックなスタイルのイラストレーターで、さまざまな素材や技法を試すのが好き。アートは自分を見つめ直し、自分らしくいるための強力なツールであると同時に、他者とつながるためのツールでもあると信じている。彼女のクラスでは、すべての抑制や心配から解放され、制限なく創造性を表現できるよう、情熱的に励まします！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "diamanteyuko",
+      "descJp": "クラフトモーニングのワークショップでは、キャンドルアーティストであるユウコさんが、アロマキャンドルやアートキャンドルの作り方を優しく教えてくれます！",
+      "roleJp": "キャンドルアーティスト"
+    },
+    {
+      "id": "rie",
+      "descJp": "Rieはアルコールインクアートとレジンアートを専門とする先生です。彼女は普段、アートと心理学を組み合わせて、アートを通じた自己対話や自分発見のワークショップも開催しています！Artbarでは、持ち前の明るさと丁寧なフォローで、楽しみながらみなさんが表現したいアートを一緒に叶えてくれます！是非、彼女のセッションに参加してオリジナルアートを作りましょう！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "ken",
+      "descJp": "Kenの得意とするペンを使ったドローイングを教えてくれます。アートだけではなくあらゆる事に精通しているのでお話をしているだけでもとっても楽しい先生です。Kenのセッションに参加して新しいアートの技法を学びましょう！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "naoko",
+      "descJp": "武蔵野美術大学短期大学部卒業。Naoko先生は生徒の皆さんに作品を通して自由に表現する事を楽しんでいただける時間にしたいと考えています。アートを体験する事をきっかけに美術館に行くことや、芸術に興味を持ってもらえたら嬉しいです。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "helen",
+      "descJp": "Helenはとても穏やかで思いやりのあるインストラクターで、皆様がリラックスした時間を過ごせるよう、優しく指導してくれます。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "yuka",
+      "descJp": "日本児童教育専門学校 絵本童話科 卒業。Yukaはとても親切な先生で、クラスを優しく指導してくれます。生徒さんはリラックスして、自由にアートを通して自分を表現することができます。Yukaは児童書のイラストを専門としており、彼女のカラフルなアートワークはとても素敵です。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "jenna",
+      "descJp": "University of Hamburg、学習院女子大学。ジェナは、自然の美しさにインスパイアされた、カラフルでリラックスできる作品を作るのが専門。彼女のゴールは、クラスで過ごしている間、誰もが穏やかで幸せな気持ちになり、インスピレーションを得られるようにすること。穏やかなひとときを過ごしたい方にも、自分の創造性を探求したい方にも、ジェナのクラスは、アートを通してくつろぎ、自然とのつながりを取り戻す絶好の機会を提供します。ジェナと一緒に絵を描く楽しさを体験してみませんか？",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "akiko",
+      "descJp": "武蔵野美術大学 日本画学科卒業。Akikoはカラフルでワクワクする作品を作るのが得意です。今まで様々なイラストを担ってきました。Akikoはまた模写をする事が大好きで、模写から学ぶ事の大切さも心得ています。いつも穏やかで自然体のAkikoと一緒に、アートに今まであまり触れてこなかった人も、アートが大好きという方もAkikoのクラスで一緒に楽しく作品作りを体験してみませんか？",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "minako",
+      "descJp": "キングストン大学院修士課程イラストレーション科卒業、武蔵野美術大学視覚伝達デザイン学科卒業。ミナコは、パッケージデザイナー、グラフィックデザイナー、イラストレーター、ジュエリーメーカーとして活躍した後、現在は日本、イギリス、スロベニア、イタリアで版画家兼アートエデュケーターとして活動しています。彼女のユニークなアートスタイルのクラスに参加し、自己表現を楽しんでください。特に子供が大好きなミナコのキッズクラスは、楽しさ満載です！",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "akko",
+      "descJp": "2021年 LSE メディア・コミュニケーション、2025年 京都伝統木工芸スーパー専門学校。アクリル絵の具を使って作品を制作しています。モチーフには動物を取り入れることが多く、背景にはオリジナルの模様を描くことで、自分自身を表現しています。絵を描くことの自由さがとても好きで、クラスでは楽しく、リラックスできる雰囲気づくりを心がけています。",
+      "roleJp": "インストラクター"
+    },
+    {
+      "id": "glicinapeony",
+      "descJp": "グリシーナ・ピオニーは、ドライフラワーのアレンジメントやリースを専門に扱うクラフトパートナーです。",
+      "roleJp": "クラフトパートナー"
+    }
+  ],
+  "locationShortLabels": [
+    "代官山",
+    "原宿キャットストリート",
+    "銀座",
+    "横浜元町",
+    "大阪(フランチャイズ)",
+    "沖縄(フランチャイズ)"
+  ],
+  "privatePartyCapacityRows": [
+    {
+      "desc": "",
+      "name": "Daikanyama"
+    },
+    {
+      "desc": "",
+      "name": "Cat Street Harajuku"
+    },
+    {
+      "desc": "",
+      "name": "Ginza"
+    },
+    {
+      "desc": "",
+      "name": "Yokohama Motomachi"
+    },
+    {
+      "desc": "ご指定の会場へ",
+      "name": "出張"
+    }
+  ],
+  "teamBuildingTestimonials": [
+    {
+      "text": "楽しく進めることができました。 スタッフのみなさまが明るく、 的確にガイドしてくださり、絵が苦手と言っていたメンバーもとても楽しんでいました。 業務上はやりとりの少ない同僚ともセッションを通して交流でき、チームの一体感が増したように思います。またチームで力を合わせることで新しいアイデアが生まれたり、より大きな成果に繋がることを実感できた有意義な時間となりました。",
+      "author": "Amazon Web Services"
+    },
+    {
+      "text": "Cathy and her team hosted a wonderful Women’s Wine & Paint night for us at our offices. The event was fantastic for team-building and most of my colleagues who attended (myself included) now proudly have their paintings displayed on their office wall. I highly recommend Cathy and her team if you’re looking for a fun, interesting and collaborative company event.",
+      "author": "Morrison & Foerster"
+    },
+    {
+      "text": "It was really nice to take time out of normal office work/routine. When we painted our own paintings it was really therapeutic and relaxing -it gave me a new energy and motivation to continue with my work for the rest of the week. Doing some activities like this is every once in a while is great for work motivation!",
+      "author": "Sports Travel & Hospitality Japan"
+    },
+    {
+      "text": "The staff was super welcoming and helpful. I felt that everyone was able to bring out their inner artist.",
+      "author": "Amazon Web Services"
+    },
+    {
+      "text": "It was great to learn more about my colleagues in a relaxed environment – don’t have those opportunities in the office.",
+      "author": "Sports Travel & Hospitality Japan"
+    },
+    {
+      "text": "A team work on Art was a very new exercise for me. Very interesting and insightful. Enjoyable with our colleagues and yet appreciate the quality time and even learn a lot about each other through drawings and conversations.",
+      "author": "Sports Travel & Hospitality Japan"
+    },
+    {
+      "text": "We had a blast! The activity itself was very fun and the team had a great time working together, producing a lot of creative ideas. Highly recommended!",
+      "author": "Go! Go! Nihon"
+    }
+  ],
+  "teamBuildingLogisticsRows": [
+    {
+      "cap": "最大30名",
+      "name": "Artbar Ginza"
+    },
+    {
+      "cap": "最大20名",
+      "name": "Artbar Cat Street Harajuku"
+    },
+    {
+      "cap": "最大40名(2部屋に分かれます)",
+      "name": "Artbar Yokohama"
+    },
+    {
+      "cap": "15〜100名以上",
+      "name": "Your Office / Offsite"
+    }
+  ]
+}

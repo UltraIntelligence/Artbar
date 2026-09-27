@@ -31,7 +31,7 @@ No test framework is configured.
 - **Next.js 15 App Router** with file-based routing in `app/` — supports SSR and Server Components
 - **Tailwind v4 via PostCSS** — theme tokens configured in `app/globals.css`, not a JS config file
 - **Server Components** for route files (`app/**/page.tsx`, `app/layout.tsx`); client components for views and interactive UI
-- **Hybrid static + Supabase content** — default public content still ships from `data/content.ts`, while staff-managed copy and image overrides publish through Supabase-backed admin tools.
+- **Code-managed content** — published English and Japanese payloads ship from `data/published-copy/`; current image replacements ship from `public/media/published/`. `data/content.ts` supplies the structural baseline.
 - **Server-side AI route** at `/api/generate-sketch` — Gemini API key stays server-side
 
 ### Content & i18n system
@@ -42,9 +42,8 @@ No test framework is configured.
 - **Initial language:** Root layout passes `initialLang` to `ContentProvider` from cookie `artbar_lang` or `Accept-Language` (`lib/language.ts`). Middleware sets the cookie on first visit when absent. `toggleLang` persists the cookie.
 - Content schema is defined in `types.ts` — `ContentData` is the root type, `SiteContent` holds per-language strings
 - Shared data (instructors, locations, blog posts, FAQs, media) lives outside the language split on `ContentData`
-- Copy admin at `/copy-admin` manages English and Japanese copy through the Supabase table `site_copy_locales`; each language has separate draft, published, and previous-published state.
-- Image admin at `/copy-admin/images` manages published image replacements through the Supabase table `site_media_overrides` and storage bucket `artbar-site-media`; fallback images still live in repo constants/content.
-- Legacy localStorage admin knowledge (`/admin`, `artbar_content_v5`) is stale for current copy/media publishing. Treat `data/content.ts` as the shipped fallback/default source, not the only source of live public content.
+- The former `/copy-admin` editor and Supabase runtime are retired in this branch. A private recovery archive preserves published, draft, and previous content and all old bucket objects. See `docs/content-recovery.md`.
+- Treat `data/content.ts` as the structural baseline, not the only source of customer-facing copy.
 
 **Domain model:** [`data-model.md`](data-model.md) — entities (`ContentData`, `BlogPost`, themes), relationships, lifecycles, localStorage vs build-time content, and API boundaries.
 
@@ -58,15 +57,15 @@ No test framework is configured.
 - `lib/language.ts` — locale resolution; `middleware.ts` — cookie for `artbar_lang` on first visit
 - `data/content.ts` — shipped fallback/default site content (text, images, blog posts)
 - `types.ts` — TypeScript interfaces for all content structures
-- `lib/copy/` — Supabase-backed copy defaults, normalization, store functions, session/auth helpers, and public merge logic for `/copy-admin` and `/api/copy-public`
-- `lib/media/` — Supabase-backed image slot definitions, upload processing, media store functions, and merge logic for `/copy-admin/images`
+- `lib/copy/` — checked-in published copy, normalization, and public merge logic for `/api/copy-public`
+- `lib/media/` — checked-in published media map and merge logic
 - `constants.ts` — app constants (`INSTRUCTOR_ROWS` → `INSTRUCTORS`; photos wired via `GI.instructors`); `PARTNER_LOGOS` lists partner mark URLs (Wikimedia SVGs) used on home and `/team-building` — edit in one place to update both grids
 - `data/generated-image-paths.ts` — `GI` public URLs; `THEME_PAGE_IMAGES` maps each theme slug to hero / four examples / experience URLs under `public/media/generated/`; `INSTRUCTOR_IDS` lists instructor slugs (keep in sync with `INSTRUCTOR_ROWS`). Client instructor photos: `public/media/instructors/{id}-profile.jpg` and `{id}-banner.jpg`. Studio location photos on `/locations`: `GI.locations` → `public/media/generated/loc-*.jpg` (see `LOCATIONS` in `constants.ts`; image manifest slots for these are disabled—replace files in `public`, not Gemini). Optional local staging folder `media/locations/` is not served by Next.js.
 - `data/theme-page-image-prompts.ts` — Gemini prompts for theme detail imagery; merged into `scripts/image-manifest.ts` via `scripts/theme-page-manifest-items.ts`
 
 ### Routing
 
-Routes are file-based in `app/`. Key routes: `/`, `/en`, `/instructors`, `/team-building`, `/private-parties`, `/locations`, `/press`, `/contact`, `/blog`, `/blog/[slug]`, `/paint-your-pet`, `/themes/[slug]`, `/copy-admin`, `/copy-admin/images`.
+Routes are file-based in `app/`. Key routes: `/`, `/en`, `/instructors`, `/team-building`, `/private-parties`, `/locations`, `/press`, `/contact`, `/blog`, `/blog/[slug]`, `/paint-your-pet`, `/themes/[slug]`.
 
 ### AI Feature (PetSketcher)
 
@@ -77,14 +76,10 @@ Routes are file-based in `app/`. Key routes: `/`, `/en`, `/instructors`, `/team-
 Create `.env.local` with:
 ```
 GEMINI_API_KEY=your_key_here
-SUPABASE_URL=your_supabase_project_url
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-COPY_ADMIN_PASSWORD=your_shared_copy_admin_password
-COPY_ADMIN_SESSION_SECRET=long_random_secret_for_cookie_signing
 ```
 
 The API key is read server-side in `app/api/generate-sketch/route.ts` via `process.env.GEMINI_API_KEY`.
-Supabase service credentials and copy-admin secrets are read server-side only for `/copy-admin`, `/copy-admin/images`, `/api/copy-admin/*`, `/api/media-admin/*`, and `/api/copy-public`.
+Public site copy and media require no Supabase credentials.
 
 ## Design Tokens
 
@@ -103,7 +98,7 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 
 ## Learned User Preferences
 
-- For copy-admin UX, keep it staff-friendly: one language at a time, page/section navigation, plain labels like "Home hero headline", hidden technical paths by default, and separate Save Draft / Preview / Publish actions per language. Do not show English and Japanese in a giant side-by-side spreadsheet unless explicitly requested.
+- Historical copy-admin UX notes below apply only if an editor is intentionally restored in a later approved project.
 - When testimonial or hero-adjacent controls overlap names or labels, adjust vertical padding, min-height, or control offset first; do not change horizontal section margins unless the user asks for it.
 - For hero CTAs and social-proof pills, use shared dimensions and centered content; when matching control size to siblings, constrain the pill or button frame (min-height, padding) first rather than shrinking prominent brand icons or key marks; keep sibling hero CTAs the same size and use the same animation on all of them when any one animates. Keep primary marketing buttons cohesive across pages so key CTAs are not awkwardly oversized or split across many lines on small screens.
 - For headline social proof (guest counts, ratings), prefer exact figures the user provides over rounded shorthand when credibility matters. Keep the proof row full-width with `min-w-0` on flex children. English uses `N+` plus `guestsSuffix`; Japanese can embed `{{count}}` in `guestsSuffix` and use a compact single-line treatment at the smallest breakpoints (smaller type, tighter tracking) so the line does not crowd the star rating, scaling up from `sm`. Long lines should not sit cramped beside star ratings; stack rows on narrow viewports when needed.
@@ -123,7 +118,7 @@ The site was migrated from WordPress (see `migration.md`). The `SEO` component (
 - Tailwind v4 maps `font-heading` and `font-sans` to `--font-heading` and `--font-sans`; `--font-family-heading` / `--font-family-sans` style names do not generate those utilities. `next/font` should expose a dedicated CSS variable (e.g. `--font-josefin`) and reference it from `@theme` `--font-heading`, not reuse `--font-heading` as the font loader variable. Theme or admin-injected font stacks must quote multi-word family names in CSS custom properties so the intended face applies.
 - Assets loaded by URL must live under `public/`; files only in a repo-root folder such as `media/` are not served by Next.js.
 - localStorage key `artbar_content_v5` can retain stale values (empty `images.hero.video`, old `theme.typography` strings) that block new defaults; admin reset or clearing that key applies updated hero media and typography.
-- Current live copy/media publishing is Supabase-backed. `site_copy_locales` stores separate draft/live/previous copy payloads for `en` and `jp`, while `site_media_overrides` stores draft/live/previous image assets by media slot.
+- Published copy and used media are checked into this branch. The original Supabase rows and bucket objects remain in a private recovery archive until a separately approved infrastructure transition.
 - English and Japanese publishes stay separate. English seeds from existing `defaultContent.en`, Japanese keeps the JP defaults and migrations, and the admin UI uses clear language tabs.
 - `next.config.ts` may set `outputFileTracingRoot` to this project root so Next does not pick a wrong workspace root when another lockfile exists on the machine (e.g. in the home directory). In development it also sets `images.unoptimized` so `next/image` skips Sharp; this reduces macOS native crashes when assets 404 or under heavy Fast Refresh, while production builds still optimize images. Editing `next.config.ts` restarts `next dev`. Avoid running `rm -rf .next` while the dev server is using it; right after a clean `.next`, the first request can briefly race with an incomplete build output.
 - The hero viewport uses a still image by default (`HERO_HOME_FALLBACK` in `constants.ts`); `images.hero.home` can point to GIF or MP4 instead. `images.hero.video` and `images.hero.videoMobile` feed the concept/lifestyle block, not the full-screen hero background. MP4 heroes use two full-bleed looping `<video>` elements (desktop vs mobile breakpoints with `hidden`/`md:`), not `<source media>` on one tag—Safari mishandles `media` on video sources; use `encodeURI` for paths with spaces. `app/page.tsx` preloads the two hero MP4s only (no separate hero JPEG preload). Loading UI: `globals.css` `animate-hero-indeterminate` + neutral plate in `views/Home.tsx`; **do not** set hero `<video>` to `opacity-0` while loading (Chrome may not autoplay or fire `playing`/`loadeddata`); keep videos opaque and hide them with the overlay until `onPlaying` / `onLoadedData` / `onCanPlay` or `onError`; explicit z-index keeps media below washes and copy. GIF heroes skip the CSS drift (`hero-bg-motion`); still images keep the drift (`hero-bg-drift` in `globals.css`), disabled when the user prefers reduced motion. The concept block may use looped in-page video with a control that opens a longer clip in a new tab (e.g. YouTube) when embedding would cause letterboxing or layout issues.

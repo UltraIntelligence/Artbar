@@ -38,7 +38,7 @@ const ContentContext = createContext<ContentContextType | undefined>(undefined);
 /**
  * ContentProvider is a pure consumer — initial content + localized copy are merged
  * server-side in `app/layout.tsx`. The runtime language toggle fetches
- * `/api/copy-public`, which returns merged data for the active language.
+ * `/api/copy-public`, which returns the checked-in published data for the active language.
  *
  * Nothing in this client module imports `data/content` or `lib/copy/resolve`,
  * so neither defaultContent nor BudouX ends up in the client bundle.
@@ -50,8 +50,8 @@ export const ContentProvider: React.FC<{
   initialContent: ContentData;
   initialLocalizedCopy: ResolvedJapaneseCopy;
   initialMedia: PublishedMediaMap;
-  /** True when the server already fetched fresh published copy from Supabase.
-   *  When false, the client retries via /api/copy-public on first render. */
+  /** True when the server provided published copy on the first render.
+   *  The client uses /api/copy-public when navigating to another language. */
   initialHasFetchedRuntimeCopy: boolean;
 }> = ({
   children,

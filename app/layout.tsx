@@ -15,13 +15,12 @@ import {
   resolveInitialLanguage,
   resolveRouteLanguage,
 } from '@/lib/language';
-import { getPublishedCopyPayload } from '@/lib/copy/store';
-import { DEFAULT_COPY_PAYLOADS } from '@/lib/copy/defaults';
+import { getPublishedCopyPayload } from '@/lib/copy/published';
 import {
   buildResolvedCopy,
   mergePublishedLocaleIntoContent,
 } from '@/lib/copy/resolve';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
 import { buildOrganizationJsonLd, buildWebsiteJsonLd, safeJsonLd } from '@/lib/jsonld';
@@ -75,14 +74,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     resolveInitialLanguage(cookieStore.get(LANG_COOKIE_NAME)?.value, headersList.get('accept-language'));
   const htmlLang = initialLang === 'jp' ? 'ja' : 'en';
 
-  // Build the active language content tree server-side. Japanese content still
-  // gets BudouX segmentation before render; English receives the same locale-aware
-  // published-copy path without segmentation.
-  const [supabasePayload, publishedMedia] = await Promise.all([
-    getPublishedCopyPayload(initialLang, { timeoutMs: 4000 }),
-    getPublishedMediaMap(),
-  ]);
-  const publishedPayload = supabasePayload ?? DEFAULT_COPY_PAYLOADS[initialLang];
+  // Build the active language content tree from checked-in published copy.
+  // Japanese content still gets BudouX segmentation before render.
+  const publishedPayload = getPublishedCopyPayload(initialLang);
+  const publishedMedia = getPublishedMediaMap();
   const mergedContent = mergePublishedLocaleIntoContent(initialLang, publishedPayload);
   const contentForLanguage = initialLang === 'jp' ? segmentJpDeep(mergedContent) : mergedContent;
   const initialContent = mergeMediaIntoContent(contentForLanguage, publishedMedia);
@@ -92,7 +87,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     initialLang === 'jp'
       ? segmentJpDeep(buildResolvedCopy(initialLang, publishedPayload))
       : buildResolvedCopy(initialLang, publishedPayload);
-  const initialHasFetchedRuntimeCopy = supabasePayload !== null;
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID || DEFAULT_GTM_ID;
 
@@ -119,7 +113,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           initialContent={trimmedInitialContent}
           initialLocalizedCopy={initialLocalizedCopy}
           initialMedia={publishedMedia}
-          initialHasFetchedRuntimeCopy={initialHasFetchedRuntimeCopy}
+          initialHasFetchedRuntimeCopy={true}
         >
           <ThemeInjector />
           <ScrollToTop />

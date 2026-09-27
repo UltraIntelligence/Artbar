@@ -6,7 +6,7 @@ import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 import { absoluteUrl, safeJsonLd } from '@/lib/jsonld';
 import { isBlogPostAvailableForLanguage } from '@/lib/blog-language';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mediaAssetUrl } from '@/lib/media/resolve';
 
 export async function generateMetadata(): Promise<Metadata> {
