@@ -1,0 +1,78 @@
+next.config.ts
+  s_d7ccbbfcc76053::t_312c310a5019dc 20
+app/locations/page.tsx
+  s_d7ccbbfcc76053::t_85fbcd7839e5b4 9
+data/published-source-manifest.json
+  s_d7ccbbfcc76053::t_748b4f2702f012 1-243
+README.md
+  s_d7ccbbfcc76053::t_09f39d96be3e86 3,32,34-37,56,61
+app/layout.tsx
+  s_d7ccbbfcc76053::t_2144678c47ffc4 116
+  s_d7ccbbfcc76053::t_e1268598bcb1fc 18,23,79-80
+  s_d7ccbbfcc76053::t_58239a3ee8cdf4 77-78
+scripts/docs-smoke-check.ts
+  s_d7ccbbfcc76053::t_41e797fcd4395c 18-20
+  s_d7ccbbfcc76053::t_3a49e58d7e1aed 14-17
+app/blog/page.tsx
+  s_d7ccbbfcc76053::t_a02d7f58166183 9
+scripts/published-content-check.ts
+  s_d7ccbbfcc76053::t_9bcbbf5987c21e 33
+  s_d7ccbbfcc76053::t_581d4e2ca282d9 1-3,5-7,13-17,20-31
+  s_d7ccbbfcc76053::t_e79d32581281a0 34
+data/published-copy/jp.json
+  s_d7ccbbfcc76053::t_67958dad0eaee3 1-1989
+data/published-copy/en.json
+  s_d7ccbbfcc76053::t_455fbdd960ae43 1-2103
+app/themes/[slug]/page.tsx
+  s_d7ccbbfcc76053::t_c8fd49a3590502 8
+data/published-media.json
+  s_d7ccbbfcc76053::t_1163ecfb7122c6 1-114
+app/private-parties/page.tsx
+  s_d7ccbbfcc76053::t_e36adf479c9047 6
+middleware.ts
+  s_d7ccbbfcc76053::t_cafc7cd0e68fc6 10,15
+docs/content-recovery.md
+  s_d7ccbbfcc76053::t_f45bff3ef5754a 1-15
+context/ContentContext.tsx
+  s_d7ccbbfcc76053::t_58239a3ee8cdf4 41,53-54
+app/api/blog-post/[slug]/route.ts
+  s_d7ccbbfcc76053::t_e9776918ceb73c 3,5,17
+components/AppChrome.tsx
+  s_d7ccbbfcc76053::t_312c310a5019dc 9-10,12
+app/api/copy-public/route.ts
+  s_d7ccbbfcc76053::t_2144678c47ffc4 2-3,14-15
+lib/copy/published.ts
+  s_d7ccbbfcc76053::t_db844f56c9a759 1-4,6,8-9,12-13
+AGENTS.md
+  s_d7ccbbfcc76053::t_3c6e8091cd463b 34,45-46,60-61,68,82,101,121
+app/page.tsx
+  s_d7ccbbfcc76053::t_df2af54895b4fb 6
+app/locations/[slug]/page.tsx
+  s_d7ccbbfcc76053::t_3b3632e9b79f98 16
+package.json
+  s_d7ccbbfcc76053::t_581d4e2ca282d9 12,17
+data-model.md
+  s_d7ccbbfcc76053::t_3a49e58d7e1aed 3,5,7,9,11,13,15,17
+app/blog/[slug]/page.tsx
+  s_d7ccbbfcc76053::t_b9f1519a7285f3 11
+app/team-building/page.tsx
+  s_d7ccbbfcc76053::t_83dd0fb5678b84 6
+lib/media/published.ts
+  s_d7ccbbfcc76053::t_db844f56c9a759 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "61d8ee28c53367d3e4c95e6925cc2ab9b0783e43",
+  "prompts": {},
+  "sessions": {
+    "s_d7ccbbfcc76053": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2e2-2c15-7793-a5d3-ce63627b974b",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
