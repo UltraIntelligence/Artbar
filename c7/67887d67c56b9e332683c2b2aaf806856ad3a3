@@ -1,0 +1,21 @@
+README.md
+  s_d7ccbbfcc76053::t_cbfc2081b98ec1 57
+scripts/copy-system-smoke-check.ts
+  s_d7ccbbfcc76053::t_cbfc2081b98ec1 5,9-14,21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c767887d67c56b9e332683c2b2aaf806856ad3a3",
+  "prompts": {},
+  "sessions": {
+    "s_d7ccbbfcc76053": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e2e2-2c15-7793-a5d3-ce63627b974b",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
