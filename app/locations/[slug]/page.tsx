@@ -13,7 +13,7 @@ import { getLocationBySlug, getLocationPageSlugs, locationPath } from '@/lib/loc
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 import { buildLocalBusinessJsonLd, safeJsonLd } from '@/lib/jsonld';
 import { nextImageSrcSet } from '@/lib/image-preload';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mediaAssetUrl } from '@/lib/media/resolve';
 import { PaintaScheduleEmbed } from '@/components/PaintaScheduleEmbed';
 

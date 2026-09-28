@@ -8,7 +8,7 @@ import { safeJsonLd, SITE_URL } from '@/lib/jsonld';
 import { publicUrlForPath, siteLanguageToRouteLocale } from '@/lib/locale-routing';
 import { isBlogPostAvailableForLanguage } from '@/lib/blog-language';
 import { metaDescription } from '@/lib/seo-text';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mediaAssetUrl } from '@/lib/media/resolve';
 
 type Props = { params: Promise<{ slug: string }> };

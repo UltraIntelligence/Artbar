@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { DEFAULT_JAPANESE_COPY_PAYLOAD } from '@/lib/copy/defaults';
-import { getPublishedJapaneseCopyPayload } from '@/lib/copy/store';
+import { getPublishedJapaneseCopyPayload } from '@/lib/copy/published';
 import { mergePublishedIntoContent } from '@/lib/copy/resolve';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mergeMediaIntoContent } from '@/lib/media/resolve';
 import { segmentJpDeep } from '@/lib/jp-segment';
 
@@ -14,7 +14,7 @@ type Props = { params: Promise<{ slug: string }> };
 export async function GET(_request: NextRequest, { params }: Props) {
   const { slug } = await params;
   const [publishedPayload, publishedMedia] = await Promise.all([
-    getPublishedJapaneseCopyPayload({ timeoutMs: 4000 }),
+    getPublishedJapaneseCopyPayload(),
     getPublishedMediaMap(),
   ]);
   const published = publishedPayload ?? DEFAULT_JAPANESE_COPY_PAYLOAD;

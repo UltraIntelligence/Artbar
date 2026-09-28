@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { THEME_PAGE_IMAGES, THEME_PAGE_SLUGS, type ThemePageSlug } from '@/data/generated-image-paths';
 import { getCanonicalThemeSlug, getThemeContent, hasThemeContent, resolveThemeContentSlug } from '@/data/theme-details';
 import { nextImageSrcSet } from '@/lib/image-preload';
-import { getPublishedMediaMap } from '@/lib/media/store';
+import { getPublishedMediaMap } from '@/lib/media/published';
 import { mediaAssetUrl } from '@/lib/media/resolve';
 import { getRequestLang, buildOpenGraph, buildLocalizedAlternates } from '@/lib/request-lang';
 import { buildServiceJsonLd, safeJsonLd } from '@/lib/jsonld';

@@ -17,9 +17,7 @@ const CSP = [
   `img-src 'self' data: blob: https:`,
   `media-src 'self' data: blob: https:`,
   `font-src 'self' data: https://fonts.gstatic.com`,
-  // Supabase reads are server-side only today; keeping the host whitelisted keeps the door open
-  // for the copy-admin UI if it ever fetches client-side.
-  `connect-src 'self' https://*.supabase.co https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://ad.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.google.co.jp`,
+  `connect-src 'self' https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://ad.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.google.co.jp`,
   // Google Maps embeds on /locations and booking widgets served from Artbar's Painta tenant.
   // Keep painta.co temporarily for any older embed URLs still present in published content.
   `frame-src https://www.google.com https://maps.google.com https://www.googletagmanager.com https://booking.artbar.co.jp https://painta.co`,
@@ -90,7 +88,6 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'toolandtea.com' },
-      { protocol: 'https', hostname: '**.supabase.co' },
       { protocol: 'https', hostname: 'artbar.co.jp' },
       { protocol: 'https', hostname: 'www.artbar.co.jp' },
     ],

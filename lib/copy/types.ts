@@ -279,24 +279,3 @@ export interface ResolvedCopyBundle {
   content: ContentData;
   jpCopy: ResolvedJapaneseCopy;
 }
-
-export interface CopyRecord {
-  locale: CopyLocale;
-  draft_payload: LocalizedCopyPayload;
-  published_payload: LocalizedCopyPayload;
-  previous_published_payload: LocalizedCopyPayload | null;
-  created_at?: string;
-  updated_at?: string;
-  published_at?: string | null;
-}
-
-export interface LocaleCopyEditorState {
-  draft: LocalizedCopyPayload;
-  published: LocalizedCopyPayload;
-  previousPublished: LocalizedCopyPayload | null;
-}
-
-export interface CopyEditorState {
-  locales: Record<CopyLocale, LocaleCopyEditorState>;
-  isConfigured: boolean;
-}

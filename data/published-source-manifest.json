@@ -1,0 +1,243 @@
+{
+  "project_id": "rlwgkgbtbvwdjlbiksem",
+  "copy": {
+    "en": {
+      "updated_at": "2026-05-19 13:56:40.151+00",
+      "published_at": "2026-05-19 13:56:40.151+00",
+      "sha256_canonical_json": "40a8d8f36c060df4593dcd5db2e444b3ee06035031d0faf85f469255b89dfe50",
+      "sha256_file": "7424e3b54edcc78cfac729c39610df5312eb4206b05f10425f08035784e7136d"
+    },
+    "jp": {
+      "updated_at": "2026-05-08 09:31:31.188+00",
+      "published_at": "2026-05-08 09:31:31.188+00",
+      "sha256_canonical_json": "d8501b79709044902437d1239e1e8b3237cebf034ad34cc0ac69da8ea219a163",
+      "sha256_file": "325b5e82ee817187ef856ad6a3b5da456b5c07f2c8d001128e81172f2c791716"
+    }
+  },
+  "media": {
+    "home.features.3": {
+      "source_storage_path": "home.features.3/f48d6e5f-6404-4b46-880a-d63ebe369fa6/display.webp",
+      "local_url": "/media/published/home.features.3/f48d6e5f-6404-4b46-880a-d63ebe369fa6/display.webp",
+      "sha256": "d535a3d7979b602ea10e0553a9ecc9699cc6c99d49ed58803926d7e9636b5617",
+      "size": 221408,
+      "updated_at": "2026-05-17 00:22:55.747+00",
+      "published_at": "2026-05-17 00:22:55.747+00"
+    },
+    "home.popularThemes.alcohol-ink": {
+      "source_storage_path": "home.popularthemes.alcohol-ink/a969c6aa-3149-4617-b3be-2e023440663c/display.webp",
+      "local_url": "/media/published/home.popularthemes.alcohol-ink/a969c6aa-3149-4617-b3be-2e023440663c/display.webp",
+      "sha256": "b12aa6b0b636e7d6de5a225194e2f6f30a6bab66b1d756624121971b4f45c207",
+      "size": 191574,
+      "updated_at": "2026-05-17 05:17:37.756+00",
+      "published_at": "2026-05-17 05:17:37.756+00"
+    },
+    "home.popularThemes.japan-inspired": {
+      "source_storage_path": "home.popularthemes.japan-inspired/9671e328-bb52-4d44-85ee-5b00388a1f4a/display.webp",
+      "local_url": "/media/published/home.popularthemes.japan-inspired/9671e328-bb52-4d44-85ee-5b00388a1f4a/display.webp",
+      "sha256": "1e3f19908a86f06f0b6d355eed8168c5c5a3048f0a86c8bd0c2adf6af18d1543",
+      "size": 696722,
+      "updated_at": "2026-05-17 03:21:57.748+00",
+      "published_at": "2026-05-17 03:21:57.748+00"
+    },
+    "home.popularThemes.kids": {
+      "source_storage_path": "home.popularthemes.kids/b9c40094-d6e9-42a6-a7a8-f1278fb4f145/display.webp",
+      "local_url": "/media/published/home.popularthemes.kids/b9c40094-d6e9-42a6-a7a8-f1278fb4f145/display.webp",
+      "sha256": "b1d699957550f9b9350512942c73b21aca4c78871a5aaddfdaad4ed73320d825",
+      "size": 410854,
+      "updated_at": "2026-05-17 05:17:37.756+00",
+      "published_at": "2026-05-17 05:17:37.756+00"
+    },
+    "home.popularThemes.matisse": {
+      "source_storage_path": "home.popularthemes.matisse/ef6bf3ce-04ab-40db-a661-22f1fc24a357/display.webp",
+      "local_url": "/media/published/home.popularthemes.matisse/ef6bf3ce-04ab-40db-a661-22f1fc24a357/display.webp",
+      "sha256": "a398b8e34652eb275c5373fd95f4930523fd635c643569fa3e14cebe3a332fa8",
+      "size": 632924,
+      "updated_at": "2026-05-17 03:21:57.748+00",
+      "published_at": "2026-05-17 03:21:57.748+00"
+    },
+    "home.popularThemes.monet": {
+      "source_storage_path": "home.popularthemes.monet/b642752b-f765-45e9-a57b-55db7bbaa3bb/display.webp",
+      "local_url": "/media/published/home.popularthemes.monet/b642752b-f765-45e9-a57b-55db7bbaa3bb/display.webp",
+      "sha256": "745f76b8f7b5c5bcda64e930b229fcb30a937adf7ebb6e4837e8b2fdfbcbe6ee",
+      "size": 721476,
+      "updated_at": "2026-05-17 13:36:37.55+00",
+      "published_at": "2026-05-17 13:36:37.55+00"
+    },
+    "home.popularThemes.paint-pouring": {
+      "source_storage_path": "home.popularthemes.paint-pouring/a2607676-f6bd-4709-bac4-3c31e0cc9cf9/display.webp",
+      "local_url": "/media/published/home.popularthemes.paint-pouring/a2607676-f6bd-4709-bac4-3c31e0cc9cf9/display.webp",
+      "sha256": "9bebfbea2e27eea1225023b3c8466925c57c71d7d9690556775a6ac06655ceb8",
+      "size": 625350,
+      "updated_at": "2026-05-17 13:36:37.55+00",
+      "published_at": "2026-05-17 13:36:37.55+00"
+    },
+    "home.popularThemes.paint-your-idol": {
+      "source_storage_path": "home.popularthemes.paint-your-idol/7ec2a70d-8ca4-4551-b327-c19a6a33394e/display.webp",
+      "local_url": "/media/published/home.popularthemes.paint-your-idol/7ec2a70d-8ca4-4551-b327-c19a6a33394e/display.webp",
+      "sha256": "f931adb4571ed966c95a44b89f71916bb8f98b5d6f03b6414ded261da3bc8e0e",
+      "size": 310604,
+      "updated_at": "2026-05-17 13:36:37.55+00",
+      "published_at": "2026-05-17 13:36:37.55+00"
+    },
+    "home.popularThemes.paint-your-pet": {
+      "source_storage_path": "home.popularthemes.paint-your-pet/f4d0d9f6-380e-4b62-9a7f-fb780126d5b3/display.webp",
+      "local_url": "/media/published/home.popularthemes.paint-your-pet/f4d0d9f6-380e-4b62-9a7f-fb780126d5b3/display.webp",
+      "sha256": "c3371f9ae80997607aa64d8e811a6d7f36eb985ee6f330a67a70cd07eff7f093",
+      "size": 569250,
+      "updated_at": "2026-05-17 03:33:37.274+00",
+      "published_at": "2026-05-17 03:33:37.274+00"
+    },
+    "home.popularThemes.picasso": {
+      "source_storage_path": "home.popularthemes.picasso/d80a6aae-0a9a-4371-9251-0474f4179dfc/display.webp",
+      "local_url": "/media/published/home.popularthemes.picasso/d80a6aae-0a9a-4371-9251-0474f4179dfc/display.webp",
+      "sha256": "96ab8a6379edc9e8c25aad6589cdfebd6f2363e23711eaa43151863e94547fbc",
+      "size": 608158,
+      "updated_at": "2026-05-17 03:33:37.274+00",
+      "published_at": "2026-05-17 03:33:37.274+00"
+    },
+    "home.popularThemes.renoir": {
+      "source_storage_path": "home.popularthemes.renoir/427df5d2-53b0-4565-96e3-7c9408aead47/display.webp",
+      "local_url": "/media/published/home.popularthemes.renoir/427df5d2-53b0-4565-96e3-7c9408aead47/display.webp",
+      "sha256": "cf906992ad34b14e5ba5d2e834c86e206f27064b34aca1dcf795061d894f21e3",
+      "size": 417638,
+      "updated_at": "2026-05-17 05:17:37.756+00",
+      "published_at": "2026-05-17 05:17:37.756+00"
+    },
+    "home.popularThemes.texture-painting": {
+      "source_storage_path": "home.popularthemes.texture-painting/8fdcfb6d-a6fe-481b-b8cc-8a5b7d846cca/display.webp",
+      "local_url": "/media/published/home.popularthemes.texture-painting/8fdcfb6d-a6fe-481b-b8cc-8a5b7d846cca/display.webp",
+      "sha256": "ade083d69decca5a86e0dd923f8d8dce32330b4252bbac7a990f8c413c54eb61",
+      "size": 606722,
+      "updated_at": "2026-05-17 03:21:57.748+00",
+      "published_at": "2026-05-17 03:21:57.748+00"
+    },
+    "home.popularThemes.van-gogh": {
+      "source_storage_path": "home.popularthemes.van-gogh/2c6a7caa-624c-419e-93e3-368748147851/display.webp",
+      "local_url": "/media/published/home.popularthemes.van-gogh/2c6a7caa-624c-419e-93e3-368748147851/display.webp",
+      "sha256": "6b7f137591297d0d625374dcea163da92cf20813d65a5e91f5319eee17d3f1c6",
+      "size": 712916,
+      "updated_at": "2026-05-17 05:17:37.756+00",
+      "published_at": "2026-05-17 05:17:37.756+00"
+    },
+    "privateParties.occasions.1": {
+      "source_storage_path": "privateparties.occasions.1/102c6cfd-8178-4036-a42e-df3224569d0a/display.webp",
+      "local_url": "/media/published/privateparties.occasions.1/102c6cfd-8178-4036-a42e-df3224569d0a/display.webp",
+      "sha256": "f0791540c74ce051eda954add68eaf54d1a9e66334297447823d261ca76589cc",
+      "size": 176864,
+      "updated_at": "2026-05-19 14:28:25.936+00",
+      "published_at": "2026-05-19 14:28:25.936+00"
+    },
+    "privateParties.occasions.2": {
+      "source_storage_path": "privateparties.occasions.2/c470844b-b5cf-4787-84d0-8c9b4247e464/display.webp",
+      "local_url": "/media/published/privateparties.occasions.2/c470844b-b5cf-4787-84d0-8c9b4247e464/display.webp",
+      "sha256": "667b35201df173e3c6ff331436d83ccf45dd3d5a52b497b1f9bb780eb9ded48f",
+      "size": 244762,
+      "updated_at": "2026-05-17 13:45:47.06+00",
+      "published_at": "2026-05-17 13:45:47.06+00"
+    },
+    "privateParties.occasions.3": {
+      "source_storage_path": "privateparties.occasions.3/f529324e-b903-4479-962d-782f46a197f7/display.webp",
+      "local_url": "/media/published/privateparties.occasions.3/f529324e-b903-4479-962d-782f46a197f7/display.webp",
+      "sha256": "987258e534a5141db3ddcc7538604e5e11025765899477df24445c6bb4a5a888",
+      "size": 187340,
+      "updated_at": "2026-05-17 01:38:19.456+00",
+      "published_at": "2026-05-17 01:38:19.456+00"
+    },
+    "privateParties.occasions.4": {
+      "source_storage_path": "privateparties.occasions.4/c4f3a525-d341-4934-9419-50f16b98739b/display.webp",
+      "local_url": "/media/published/privateparties.occasions.4/c4f3a525-d341-4934-9419-50f16b98739b/display.webp",
+      "sha256": "0b0644adfcf887cd1b78f52d0af6962bbb8df9b0daf3ca0b68ae68370085b398",
+      "size": 234672,
+      "updated_at": "2026-05-19 14:01:32.489+00",
+      "published_at": "2026-05-19 14:01:32.489+00"
+    },
+    "teamBuilding.activities.1": {
+      "source_storage_path": "teambuilding.activities.1/f4231ae6-c3af-4bd7-a32a-bfa916c48868/display.webp",
+      "local_url": "/media/published/teambuilding.activities.1/f4231ae6-c3af-4bd7-a32a-bfa916c48868/display.webp",
+      "sha256": "3645674b35c67b6997388180fdc11c67e52759e087e6e2edcc68d15b990a764a",
+      "size": 296200,
+      "updated_at": "2026-05-17 01:23:54.973+00",
+      "published_at": "2026-05-17 01:23:54.973+00"
+    },
+    "teamBuilding.activities.2": {
+      "source_storage_path": "teambuilding.activities.2/e15e94ac-2965-4ec5-8ff7-77f127f12668/display.webp",
+      "local_url": "/media/published/teambuilding.activities.2/e15e94ac-2965-4ec5-8ff7-77f127f12668/display.webp",
+      "sha256": "23dddbf734696fb9873fc0eb7df6ce5c55b4581ad163caf62176522ec2f6fa0a",
+      "size": 216802,
+      "updated_at": "2026-05-17 01:23:54.973+00",
+      "published_at": "2026-05-17 01:23:54.973+00"
+    },
+    "teamBuilding.activities.3": {
+      "source_storage_path": "teambuilding.activities.3/18fd43b3-ba43-4573-9aea-6110857761ac/display.webp",
+      "local_url": "/media/published/teambuilding.activities.3/18fd43b3-ba43-4573-9aea-6110857761ac/display.webp",
+      "sha256": "30f0ad8e19942b59d6fc15c06599d13b0dc74ca2385d350f6d3c41777de04346",
+      "size": 227412,
+      "updated_at": "2026-05-17 01:23:54.973+00",
+      "published_at": "2026-05-17 01:23:54.973+00"
+    },
+    "teamBuilding.hero": {
+      "source_storage_path": "teambuilding.hero/e87395d6-ebfd-447a-ae5d-45913c9e4eed/display.webp",
+      "local_url": "/media/published/teambuilding.hero/e87395d6-ebfd-447a-ae5d-45913c9e4eed/display.webp",
+      "sha256": "dfb83ac95302bfaab47eea8895090eddc8e90d2366033ca6ff8c187a36935942",
+      "size": 221180,
+      "updated_at": "2026-05-16 17:29:37.215+00",
+      "published_at": "2026-05-16 17:29:37.215+00"
+    },
+    "themes.kids.experience": {
+      "source_storage_path": "themes.kids.experience/f483bc3a-0643-4a01-b79c-4539ed91de57/display.webp",
+      "local_url": "/media/published/themes.kids.experience/f483bc3a-0643-4a01-b79c-4539ed91de57/display.webp",
+      "sha256": "b3f64a7712c83736b11869a1c68739633ae39f03fc2faecc1b23f0e9662f9f93",
+      "size": 94438,
+      "updated_at": "2026-05-17 05:12:02.268+00",
+      "published_at": "2026-05-17 05:12:02.268+00"
+    },
+    "themes.paint-your-idol.experience": {
+      "source_storage_path": "themes.paint-your-idol.experience/492abb58-2aaa-4fba-b3be-01ac3847f670/display.webp",
+      "local_url": "/media/published/themes.paint-your-idol.experience/492abb58-2aaa-4fba-b3be-01ac3847f670/display.webp",
+      "sha256": "aefe7e069f8a57cc1c7964d8dd7badc995a05a64dc4034bd4d6fc24a7552841b",
+      "size": 298092,
+      "updated_at": "2026-05-17 13:02:27.214+00",
+      "published_at": "2026-05-17 13:02:27.214+00"
+    },
+    "themes.paint-your-idol.hero": {
+      "source_storage_path": "themes.paint-your-idol.hero/e2b89683-04e5-44ad-8d5c-88053b6e643f/display.webp",
+      "local_url": "/media/published/themes.paint-your-idol.hero/e2b89683-04e5-44ad-8d5c-88053b6e643f/display.webp",
+      "sha256": "86c0cedd06963923ffc9451a1586674fb5ccf3e0d1e6847b28a82ad1b6c458ad",
+      "size": 263676,
+      "updated_at": "2026-05-17 13:02:27.214+00",
+      "published_at": "2026-05-17 13:02:27.214+00"
+    },
+    "themes.paint-your-pet.experience": {
+      "source_storage_path": "themes.paint-your-pet.experience/79a0f7dd-e9a3-4cdc-a116-249a47780bc6/display.webp",
+      "local_url": "/media/published/themes.paint-your-pet.experience/79a0f7dd-e9a3-4cdc-a116-249a47780bc6/display.webp",
+      "sha256": "e71a41961a1c7689e59493423febac2f37e176099234cb926d66579ad4af66f4",
+      "size": 426512,
+      "updated_at": "2026-05-17 12:57:06.76+00",
+      "published_at": "2026-05-17 12:57:06.76+00"
+    },
+    "themes.paint-your-pet.hero": {
+      "source_storage_path": "themes.paint-your-pet.hero/581587cc-229f-405f-a247-45b702b3daf3/display.webp",
+      "local_url": "/media/published/themes.paint-your-pet.hero/581587cc-229f-405f-a247-45b702b3daf3/display.webp",
+      "sha256": "059e98e45f0df98d3d0b2b466faacc14eb0aec844ddc19e1aa883e6279c649cc",
+      "size": 121814,
+      "updated_at": "2026-05-17 03:46:47.107+00",
+      "published_at": "2026-05-17 03:46:47.107+00"
+    },
+    "themes.texture-art.experience": {
+      "source_storage_path": "themes.texture-art.experience/1a43a434-3485-4941-bad4-247e23a0cf07/display.webp",
+      "local_url": "/media/published/themes.texture-art.experience/1a43a434-3485-4941-bad4-247e23a0cf07/display.webp",
+      "sha256": "525d7df92b132a1276c8262c1d1636d8f009dabadb0685b359b114eb52954c24",
+      "size": 296172,
+      "updated_at": "2026-05-17 13:24:20.506+00",
+      "published_at": "2026-05-17 13:24:20.506+00"
+    },
+    "themes.texture-art.hero": {
+      "source_storage_path": "themes.texture-art.hero/a3bd0470-702b-4369-b23f-4c35cc66fd81/display.webp",
+      "local_url": "/media/published/themes.texture-art.hero/a3bd0470-702b-4369-b23f-4c35cc66fd81/display.webp",
+      "sha256": "e708965f146913acd84d7ee8d3d7a77e5cea50bfb88accb77c04f2943a8f52cf",
+      "size": 126444,
+      "updated_at": "2026-05-17 13:29:56.821+00",
+      "published_at": "2026-05-17 13:29:56.821+00"
+    }
+  }
+}
