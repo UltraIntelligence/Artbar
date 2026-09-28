@@ -54,6 +54,7 @@ npm run check:security
 npm run check:performance
 npm run check:docs
 npm run check:published-content
+npm run check:copy-system
 ```
 
 ## Notes
