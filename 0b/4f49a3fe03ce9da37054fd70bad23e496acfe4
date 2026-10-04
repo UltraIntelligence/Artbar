@@ -1,0 +1,46 @@
+components/PaintaAcquisitionBridge.tsx
+  s_0cf1a3d025627e::t_ed05e3e74db93f 1-4,6-10,12-15,19-29,31-46
+  s_0cf1a3d025627e::t_743164a937b684 5,18
+  s_0cf1a3d025627e::t_cfdc43fc86d44d 11,16-17,30
+  s_0cf1a3d025627e::t_1be8ad651f369a 47-79
+scripts/painta-acquisition.test.ts
+  s_0cf1a3d025627e::t_3ca7a4ae60e0a5 1-175
+lib/painta-acquisition.ts
+  s_0cf1a3d025627e::t_ed05e3e74db93f 1-12,41-43,49-59,63,67,71-73,77-78,82-86,94-96,100-101,110-117,126,130-134,138-139,143-145
+  s_0cf1a3d025627e::t_743164a937b684 13-20,24,30,38-40
+  s_0cf1a3d025627e::t_b88ddabc9df402 21-23,25-29,31-37,44-48,60-62,64-66,68-70,74-76,79-81,87-93,97-99,102-109,118-125,127-129,135-137,140-142
+app/layout.tsx
+  s_0cf1a3d025627e::t_ed05e3e74db93f 11,121
+data-model.md
+  s_0cf1a3d025627e::t_5dcad15f694b4d 13-29
+components/Navbar.tsx
+  s_0cf1a3d025627e::t_bce5e0b0e01988 3-4,90,93
+package.json
+  s_0cf1a3d025627e::t_03e6aa8e49d5e0 23-24
+views/Home.tsx
+  s_0cf1a3d025627e::t_d288dfec011c7a 3-4,395,499,519,534,565,1020
+views/PaintYourPet.tsx
+  s_0cf1a3d025627e::t_97dfd6e53a0b16 3-4,119
+views/PrivateParties.tsx
+  s_0cf1a3d025627e::t_3eb9f8c4550cef 3-4,63,137,188,213
+views/TeamBuilding.tsx
+  s_0cf1a3d025627e::t_603374f14d4e42 3-4,88,216,330
+views/ThemeDetail.tsx
+  s_0cf1a3d025627e::t_03bb5087a3b695 3-4,173,434
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0b4f49a3fe03ce9da37054fd70bad23e496acfe4",
+  "prompts": {},
+  "sessions": {
+    "s_0cf1a3d025627e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a106ca-3764-7942-9189-6afa7a7d0d63",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
