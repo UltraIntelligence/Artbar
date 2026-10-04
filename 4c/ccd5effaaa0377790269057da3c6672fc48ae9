@@ -1,0 +1,47 @@
+app/layout.tsx
+  s_0cf1a3d025627e::t_12846831fa15cb 2,122
+lib/painta-acquisition.ts
+  s_0cf1a3d025627e::t_396e8ddd79d058 64,67
+  s_0cf1a3d025627e::t_330a82c04c2e89 68
+  s_0cf1a3d025627e::t_c2f695c0a3844f 14,23,27,46
+  s_0cf1a3d025627e::t_868c2ab981e455 16-20,47-48,66,69
+  s_0cf1a3d025627e::t_76476c081fd21f 21-22,24-25
+  s_0cf1a3d025627e::t_b604356f1d3dec 26,28
+  s_0cf1a3d025627e::t_18477b688774fc 15
+data-model.md
+  s_0cf1a3d025627e::t_330a82c04c2e89 18-22
+  s_0cf1a3d025627e::t_12846831fa15cb 35-38
+scripts/painta-acquisition.test.ts
+  s_0cf1a3d025627e::t_330a82c04c2e89 156
+  s_0cf1a3d025627e::t_396e8ddd79d058 177
+  s_0cf1a3d025627e::t_90d867dd00b80e 257-278,283-292
+  s_0cf1a3d025627e::t_b2e7bdb8f394d4 279-282
+package.json
+  s_0cf1a3d025627e::t_12846831fa15cb 12
+components/PaintaAcquisitionBridge.tsx
+  s_0cf1a3d025627e::t_b604356f1d3dec 11,32,34,36,131
+  s_0cf1a3d025627e::t_e6af04e30a0792 21,25
+  s_0cf1a3d025627e::t_cc61342840b47d 24,26-31,33,35,37-42,130
+  s_0cf1a3d025627e::t_330a82c04c2e89 17,70-71,73-81,84-86,92-96,100-102,111
+  s_0cf1a3d025627e::t_12846831fa15cb 4,20,65,72,82-83,87-91,97,99,104-105,120-121,126,133,139
+  s_0cf1a3d025627e::t_c2f695c0a3844f 43-44,112-118,125
+  s_0cf1a3d025627e::t_868c2ab981e455 7
+  s_0cf1a3d025627e::t_76476c081fd21f 13
+  s_0cf1a3d025627e::t_84e3d763f843ee 45-64,66-67,106-110,119,122-124,127-129,132,134-138,141-143,145-146,148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4cccd5effaaa0377790269057da3c6672fc48ae9",
+  "prompts": {},
+  "sessions": {
+    "s_0cf1a3d025627e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a106ca-3764-7942-9189-6afa7a7d0d63",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
