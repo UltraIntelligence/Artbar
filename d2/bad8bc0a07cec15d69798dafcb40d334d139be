@@ -1,0 +1,23 @@
+lib/painta-acquisition.ts
+  s_0cf1a3d025627e::t_d5973545b16f2d 160-168,176,178,183-185
+scripts/painta-acquisition.test.ts
+  s_0cf1a3d025627e::t_b120c67081fd6c 121-142
+data-model.md
+  s_0cf1a3d025627e::t_b120c67081fd6c 26-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d2bad8bc0a07cec15d69798dafcb40d334d139be",
+  "prompts": {},
+  "sessions": {
+    "s_0cf1a3d025627e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a106ca-3764-7942-9189-6afa7a7d0d63",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "UltraIntelligence <ryan@ultra.com.ai>"
+    }
+  }
+}
