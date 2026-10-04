@@ -23,7 +23,8 @@ open-tab booking links and embeds.
 Restricted storage falls back to memory for the current document.
 If writes fail while an older stored record remains readable, the newer valid
 record in memory wins. Independently tagged booking links keep their tags when
-no first-site acquisition is known; expired forwarded tags are discarded.
+no first-site acquisition is known. Fresh forwarded bundles retain their
+original time; expired, malformed or future-dated bundles are discarded.
 
 Links, iframe URLs and code-driven booking buttons pass that evidence only to
 `https://booking.artbar.co.jp`, preserving locale, filters and destination paths.

@@ -157,7 +157,15 @@ export function withAcquisition(href: string, acquisition: Acquisition | null): 
     (url.searchParams.get('utm_medium') === 'iframe' &&
       ['painta-embed', 'artbar-theme-page', 'artbar-location-page'].includes(source ?? '')) ||
     (!source && url.searchParams.get('utm_campaign') === 'home-sessions');
-  if (acquisition || internalCampaign || url.searchParams.has('painta_acquisition_at')) {
+  const forwarded = !acquisition && !internalCampaign
+    ? readAcquisition(JSON.stringify({
+        capturedAt: url.searchParams.get('painta_acquisition_at'),
+        utm: Object.fromEntries(UTM_KEYS.map((key) => [key, url.searchParams.get(key)])),
+        referrer: url.searchParams.get('painta_acquisition_referrer'),
+      }))
+    : null;
+  const evidence = acquisition ?? forwarded;
+  if (evidence || internalCampaign || url.searchParams.has('painta_acquisition_at')) {
     // Expired forwarded tags must not become a fresh campaign after removing their time.
     for (const key of UTM_KEYS) {
       url.searchParams.delete(key);
@@ -165,16 +173,16 @@ export function withAcquisition(href: string, acquisition: Acquisition | null): 
   }
   url.searchParams.delete('painta_acquisition_at');
   url.searchParams.delete('painta_acquisition_referrer');
-  if (acquisition) {
+  if (evidence) {
     for (const key of UTM_KEYS) {
-      const value = acquisition.utm[key];
+      const value = evidence.utm[key];
       if (value) {
         url.searchParams.set(key, value);
       }
     }
-    url.searchParams.set('painta_acquisition_at', acquisition.capturedAt);
-    if (acquisition.referrer) {
-      url.searchParams.set('painta_acquisition_referrer', acquisition.referrer);
+    url.searchParams.set('painta_acquisition_at', evidence.capturedAt);
+    if (evidence.referrer) {
+      url.searchParams.set('painta_acquisition_referrer', evidence.referrer);
     }
   }
   return url.toString();

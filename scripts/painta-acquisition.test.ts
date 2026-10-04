@@ -118,6 +118,28 @@ test('independent partner tags survive an unknown origin', () => {
   assert.equal(url.searchParams.get('locale'), 'ja');
 });
 
+test('fresh forwarded evidence retains its original time when no local acquisition exists', () => {
+  const timestamp = new Date(Date.now() - 1000).toISOString();
+  const href = new URL('https://booking.artbar.co.jp/calendar?utm_source=partner&utm_medium=referral&locale=ja');
+  href.searchParams.set('painta_acquisition_at', timestamp);
+  href.searchParams.set('painta_acquisition_referrer', 'https://partner.example/path?private=value');
+  const kept = new URL(withAcquisition(href.href, null));
+  assert.equal(kept.searchParams.get('utm_source'), 'partner');
+  assert.equal(kept.searchParams.get('painta_acquisition_at'), timestamp);
+  assert.equal(kept.searchParams.get('painta_acquisition_referrer'), 'https://partner.example');
+  assert.equal(kept.searchParams.get('locale'), 'ja');
+  const current = captureAcquisition(landing, '', null, now);
+  const replaced = new URL(withAcquisition(href.href, current));
+  assert.equal(replaced.searchParams.get('utm_source'), 'google');
+  assert.equal(replaced.searchParams.get('painta_acquisition_at'), current?.capturedAt);
+  for (const invalid of ['malformed', new Date(Date.now() + 60000).toISOString()]) {
+    href.searchParams.set('painta_acquisition_at', invalid);
+    const dropped = new URL(withAcquisition(href.href, null));
+    assert.equal(dropped.searchParams.has('utm_source'), false);
+    assert.equal(dropped.searchParams.has('painta_acquisition_at'), false);
+  }
+});
+
 test('an expired forwarded link cannot restart its campaign window', () => {
   const url = new URL(
     withAcquisition(
