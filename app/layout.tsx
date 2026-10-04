@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/next';
@@ -8,6 +9,7 @@ import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { PaintaAcquisitionBridge } from '@/components/PaintaAcquisitionBridge';
 import {
   LANG_COOKIE_NAME,
   ROUTE_LOCALE_HEADER,
@@ -117,6 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           <ThemeInjector />
           <ScrollToTop />
+          <Suspense fallback={null}><PaintaAcquisitionBridge /></Suspense>
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
         <Analytics />

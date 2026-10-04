@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "normalize:logos": "node scripts/normalize-partner-logos.mjs",
-    "check": "npm run lint && npm run typecheck && npm run check:docs && npm run check:seo && npm run check:security && npm run check:performance && npm run check:published-content && npm run check:copy-system && npm run check:responsive-display && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run test:acquisition && npm run check:docs && npm run check:seo && npm run check:security && npm run check:performance && npm run check:published-content && npm run check:copy-system && npm run check:responsive-display && npm run build",
     "check:seo": "tsx scripts/seo-smoke-check.ts",
     "check:performance": "tsx scripts/performance-smoke-check.ts",
     "check:security": "tsx scripts/security-smoke-check.ts",
@@ -20,7 +20,8 @@
     "generate:images": "tsx scripts/generate-site-images.ts",
     "generate:images:dry": "tsx scripts/generate-site-images.ts --dry-run",
     "generate:images:revision": "tsx scripts/generate-site-images.ts --needs-revision",
-    "generate:images:theme-pages": "tsx scripts/generate-site-images.ts --theme-pages"
+    "generate:images:theme-pages": "tsx scripts/generate-site-images.ts --theme-pages",
+    "test:acquisition": "tsx --test scripts/painta-acquisition.test.ts"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",

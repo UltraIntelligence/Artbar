@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
@@ -390,7 +392,7 @@ export const Home: React.FC = () => {
                 <Button
                   onClick={() => {
                     trackBookingClick('home_hero');
-                    window.location.href = ARTBAR_BOOKING_URL;
+                    window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
                   }}
                   variant="taupe"
                   className={`${heroCtaFrame} w-full max-w-[20rem] !text-artbar-navy shadow-[0_8px_30px_-8px_rgba(163,147,132,0.5)] sm:w-auto sm:min-w-[19rem] sm:max-w-none`}
@@ -494,7 +496,7 @@ export const Home: React.FC = () => {
               type="button"
               onClick={() => {
                 trackBookingClick('home_today_tomorrow');
-                window.location.href = ARTBAR_BOOKING_URL;
+                window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
               }}
               className="inline-flex min-h-[44px] shrink-0 items-center gap-1.5 self-start font-heading text-sm font-bold tracking-wide text-artbar-navy underline decoration-artbar-taupe decoration-2 underline-offset-8 transition-colors hover:text-artbar-taupe md:self-auto md:text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
             >
@@ -514,7 +516,7 @@ export const Home: React.FC = () => {
                 do not lose evening classes from this website's schedule. */}
             <iframe
               data-painta-embed
-              src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&limit=24&utm_campaign=home-sessions`}
+              src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/today-tomorrow?locale=${embedLocale}&cta=hide&limit=24`}
               title={stripJpSentinel(upcomingSessions.iframeTitle)}
               loading="lazy"
               className="block h-[800px] w-full border-0 sm:h-[520px]"
@@ -529,7 +531,7 @@ export const Home: React.FC = () => {
             {hasMounted && (
               <iframe
                 data-painta-embed
-                src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&layout=rail&from=${upcomingFromDate}&limit=8&utm_campaign=home-sessions`}
+                src={`${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?locale=${embedLocale}&cta=hide&layout=rail&from=${upcomingFromDate}&limit=8`}
                 title={stripJpSentinel(upcomingSessions.laterIframeTitle)}
                 loading="lazy"
                 className="block h-[420px] w-full border-0"
@@ -560,7 +562,7 @@ export const Home: React.FC = () => {
               size="cta"
               onClick={() => {
                 trackBookingClick('home_themes');
-                window.location.href = ARTBAR_BOOKING_URL;
+                window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
               }}
               className="w-full uppercase tracking-widest text-[10px] sm:text-xs md:w-auto"
             >
@@ -1015,7 +1017,7 @@ export const Home: React.FC = () => {
                    size="cta"
                    onClick={() => {
                      trackBookingClick('home_bottom');
-                     window.location.href = ARTBAR_BOOKING_URL;
+                     window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
                    }}
                    className="w-full min-w-0 whitespace-nowrap shadow-xl sm:w-auto sm:min-w-[12.5rem]"
                  >
