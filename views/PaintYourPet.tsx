@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React from 'react';
 import Image from 'next/image';
 import { useContent } from '../context/ContentContext';
@@ -114,7 +116,7 @@ export const PaintYourPet: React.FC = () => {
                      size="cta"
                      onClick={() => {
                        trackBookingClick('paint_your_pet');
-                       window.location.href = ARTBAR_BOOKING_URL;
+                       window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
                      }}
                      className="mt-auto w-full rounded-2xl text-base shadow-md"
                    >

@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -85,10 +87,10 @@ export const Navbar: React.FC = () => {
   const handleBookClick = (source: BookingClickLocation = 'nav_book_button') => {
       if (inquiryType) {
         trackInquiryClick(inquiryType, source);
-        window.location.href = inquiryType === 'private_party' ? PRIVATE_PARTY_INQUIRY_URL : TEAM_BUILDING_INQUIRY_URL;
+        window.location.href = withBrowserAcquisition(inquiryType === 'private_party' ? PRIVATE_PARTY_INQUIRY_URL : TEAM_BUILDING_INQUIRY_URL);
       } else {
         trackBookingClick(source);
-        window.location.href = ARTBAR_BOOKING_URL;
+        window.location.href = withBrowserAcquisition(ARTBAR_BOOKING_URL);
       }
       setIsOpen(false);
   };

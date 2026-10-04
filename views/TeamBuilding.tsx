@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '../components/ui/Button';
@@ -83,7 +85,7 @@ export const TeamBuilding: React.FC = () => {
             <Button
               variant="taupe"
               size="cta"
-              onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
+              onClick={() => { window.location.href = withBrowserAcquisition(TEAM_BUILDING_INQUIRY_URL); }}
               className="w-full shadow-xl sm:w-auto"
             >
                <JpText>{site.teamBuilding.hero.cta}</JpText>
@@ -211,7 +213,7 @@ export const TeamBuilding: React.FC = () => {
                  <Button
 	                    variant="primary"
 	                    size="cta"
-	                    onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
+	                    onClick={() => { window.location.href = withBrowserAcquisition(TEAM_BUILDING_INQUIRY_URL); }}
 	                    className="w-full rounded-2xl text-base shadow-lg md:w-auto"
                  >
                     <JpText>{site.teamBuilding.specialty.cta}</JpText>
@@ -325,7 +327,7 @@ export const TeamBuilding: React.FC = () => {
                    <Button
 	                     variant="taupe"
 	                     size="cta"
-	                     onClick={() => { window.location.href = TEAM_BUILDING_INQUIRY_URL; }}
+	                     onClick={() => { window.location.href = withBrowserAcquisition(TEAM_BUILDING_INQUIRY_URL); }}
 	                     className="mt-4 w-full rounded-xl text-base hover:bg-white hover:text-artbar-navy"
                    >
                      <JpText>{bookTeamCta}</JpText>

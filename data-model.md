@@ -10,6 +10,23 @@ Current published image replacements live under `public/media/published/`. `data
 
 Theme landing page structure, SEO metadata, sitemap entries, and redirects remain code-managed. Contact form email and Paint Your Pet sketch generation still use their separate server-side services.
 
+## Booking acquisition
+
+`components/PaintaAcquisitionBridge.tsx` and `lib/painta-acquisition.ts` retain
+the most recent tagged or external-referral visit in browser localStorage
+(`artbar.painta.acquisition.v1`) for 30 days. The record holds five UTM fields,
+the original capture time and external referrer origin; it contains no customer
+or GA4 identifiers. Direct/internal navigation preserves the existing record.
+Restricted storage falls back to memory for the current document.
+
+Links, iframe URLs and code-driven booking buttons pass that evidence only to
+`https://booking.artbar.co.jp`, preserving locale, filters and destination paths.
+Internal theme/location/home tags are removed. Unknown origins remain unknown.
+Painta must support `painta_acquisition_at` and `painta_acquisition_referrer`
+before this producer is deployed. Run `npm run test:acquisition` and verify a
+tagged landing through both language routes, an embed and a booking button.
+This does not backfill historical sources or prove a GA4/Google Ads receipt.
+
 ## Editing and recovery
 
 Change customer-facing wording in both published language files as needed, keep the structural baseline in `data/content.ts` aligned when adding or removing fields, and review both language routes. Replace image files locally and update `data/published-media.json` for the relevant slot. Run `npm run check:published-content` and the full `npm run check` before review.

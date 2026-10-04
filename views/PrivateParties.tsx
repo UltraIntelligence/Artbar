@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React from 'react';
 import Image from 'next/image';
 import { PriceDisplay } from '../components/PriceDisplay';
@@ -58,7 +60,7 @@ export const PrivateParties: React.FC = () => {
           <Button
             variant="taupe"
             size="cta"
-            onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+            onClick={() => { window.location.href = withBrowserAcquisition(PRIVATE_PARTY_INQUIRY_URL); }}
             className="mt-8 w-full max-w-xs shadow-xl sm:w-auto"
           >
             <JpText>{privateParties.specialtyInquiry.cta}</JpText>
@@ -132,7 +134,7 @@ export const PrivateParties: React.FC = () => {
 	                  <Button
 	                    variant="primary"
 	                    size="cta"
-	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                    onClick={() => { window.location.href = withBrowserAcquisition(PRIVATE_PARTY_INQUIRY_URL); }}
 	                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
                   >
                     <JpText>{privateParties.pricing.adult.cta}</JpText>
@@ -183,7 +185,7 @@ export const PrivateParties: React.FC = () => {
 	                  <Button
 	                    variant="primary"
 	                    size="cta"
-	                    onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                    onClick={() => { window.location.href = withBrowserAcquisition(PRIVATE_PARTY_INQUIRY_URL); }}
 	                    className="w-full rounded-2xl text-base shadow-lg shadow-artbar-navy/20 transition-transform hover:scale-[1.01]"
                   >
                     <JpText>{privateParties.pricing.kids.cta}</JpText>
@@ -208,7 +210,7 @@ export const PrivateParties: React.FC = () => {
               <Button
 	                variant="taupe"
 	                size="cta"
-	                onClick={() => { window.location.href = PRIVATE_PARTY_INQUIRY_URL; }}
+	                onClick={() => { window.location.href = withBrowserAcquisition(PRIVATE_PARTY_INQUIRY_URL); }}
 	                className="w-full rounded-2xl text-base"
               >
                 <JpText>{specialtyInquiry.cta}</JpText>

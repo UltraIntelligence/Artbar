@@ -8,6 +8,7 @@ import { ContentProvider } from '@/context/ContentContext';
 import { ThemeInjector } from '@/components/ThemeInjector';
 import { AppChrome } from '@/components/AppChrome';
 import { ScrollToTop } from '@/components/ScrollToTop';
+import { PaintaAcquisitionBridge } from '@/components/PaintaAcquisitionBridge';
 import {
   LANG_COOKIE_NAME,
   ROUTE_LOCALE_HEADER,
@@ -117,6 +118,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           <ThemeInjector />
           <ScrollToTop />
+          <PaintaAcquisitionBridge />
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
         <Analytics />

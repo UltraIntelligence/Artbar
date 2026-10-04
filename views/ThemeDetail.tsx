@@ -1,5 +1,7 @@
 'use client';
 
+import { withBrowserAcquisition } from '@/lib/painta-acquisition';
+
 import React, { useMemo, useState } from 'react';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
@@ -168,7 +170,7 @@ export const ThemeDetail: React.FC = () => {
               size="cta"
               onClick={() => {
                 trackBookingClick('theme_hero', { theme: resolvedSlug });
-                window.location.href = filteredBookingUrl;
+                window.location.href = withBrowserAcquisition(filteredBookingUrl);
               }}
               className="w-full max-w-[20rem] gap-2 shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all duration-300 hover:shadow-[0_15px_50px_-10px_rgba(163,147,132,0.7)] sm:w-auto sm:max-w-none"
             >
@@ -429,7 +431,7 @@ export const ThemeDetail: React.FC = () => {
                 size="cta"
                 onClick={() => {
                   trackBookingClick('theme_bottom', { theme: resolvedSlug });
-                  window.location.href = filteredBookingUrl;
+                  window.location.href = withBrowserAcquisition(filteredBookingUrl);
                 }}
                 className="shadow-[0_10px_40px_-10px_rgba(163,147,132,0.6)] transition-all hover:scale-105 hover:bg-white hover:text-artbar-navy hover:shadow-[0_15px_50px_-10px_rgba(255,255,255,0.2)] active:scale-95"
               >

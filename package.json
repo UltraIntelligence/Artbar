@@ -20,7 +20,8 @@
     "generate:images": "tsx scripts/generate-site-images.ts",
     "generate:images:dry": "tsx scripts/generate-site-images.ts --dry-run",
     "generate:images:revision": "tsx scripts/generate-site-images.ts --needs-revision",
-    "generate:images:theme-pages": "tsx scripts/generate-site-images.ts --theme-pages"
+    "generate:images:theme-pages": "tsx scripts/generate-site-images.ts --theme-pages",
+    "test:acquisition": "tsx --test scripts/painta-acquisition.test.ts"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",

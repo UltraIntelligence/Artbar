@@ -66,9 +66,6 @@ export const getArtbarThemeScheduleEmbedUrl = (
     fallback: 'strict',
     headings: 'hide',
     cta: 'hide',
-    utm_source: 'artbar-theme-page',
-    utm_medium: 'iframe',
-    utm_campaign: themeSlug,
   });
 
   if (query) params.set('query', query);
@@ -103,9 +100,6 @@ export const getArtbarLocationScheduleEmbedUrl = (
     fallback: 'strict',
     headings: 'hide',
     cta: 'hide',
-    utm_source: 'artbar-location-page',
-    utm_medium: 'iframe',
-    utm_campaign: locationSlug,
   });
 
   return `${PAINTA_EMBED_ORIGIN}/embed/artbar-tokyo/upcoming?${params.toString()}`;
