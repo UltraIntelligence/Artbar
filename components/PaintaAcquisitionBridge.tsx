@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import {
   ACQUISITION_STORAGE_KEY,
   captureAcquisition,
+  newestAcquisition,
   readAcquisition,
   rememberAcquisition,
   withAcquisition,
@@ -27,7 +28,7 @@ export function PaintaAcquisitionBridge(): null {
     const acquisition = captureAcquisition(
       new URL(window.location.href),
       document.referrer,
-      readAcquisition(raw ?? JSON.stringify(inMemory.current)),
+      newestAcquisition(readAcquisition(raw), readAcquisition(JSON.stringify(inMemory.current))),
       Date.now(),
       firstDocumentCapture.current,
     );

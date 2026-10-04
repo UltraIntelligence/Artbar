@@ -12,6 +12,20 @@ export interface Acquisition {
 
 let browserAcquisition: Acquisition | null = null;
 
+/** Both candidates have already passed expiry and shape validation. */
+export function newestAcquisition(
+  first: Acquisition | null,
+  second: Acquisition | null,
+): Acquisition | null {
+  if (!first) {
+    return second;
+  }
+  if (!second) {
+    return first;
+  }
+  return Date.parse(first.capturedAt) > Date.parse(second.capturedAt) ? first : second;
+}
+
 export function rememberAcquisition(acquisition: Acquisition | null): void {
   browserAcquisition = acquisition;
 }
@@ -27,7 +41,10 @@ export function withBrowserAcquisition(href: string): string {
   } catch {
     /* Use current-document evidence if storage is blocked. */
   }
-  const stored = readAcquisition(raw ?? JSON.stringify(browserAcquisition));
+  const stored = newestAcquisition(
+    readAcquisition(raw),
+    readAcquisition(JSON.stringify(browserAcquisition)),
+  );
   const acquisition = captureAcquisition(
     new URL(window.location.href),
     '',
@@ -100,11 +117,7 @@ export function captureAcquisition(
   }
   if (Object.keys(utm).length) {
     // SPA rerenders/buttons reuse the original click; a fresh tagged document is a new touch.
-    if (
-      stored &&
-      UTM_KEYS.every((key) => stored.utm[key] === utm[key]) &&
-      !captureReferrer
-    ) {
+    if (stored && UTM_KEYS.every((key) => stored.utm[key] === utm[key]) && !captureReferrer) {
       return stored;
     }
     return { capturedAt: new Date(now).toISOString(), utm, referrer: externalOrigin(referrer) };
@@ -123,9 +136,17 @@ export function withAcquisition(href: string, acquisition: Acquisition | null): 
   if (url.origin !== BOOKING_ORIGIN) {
     return href;
   }
-  // Preserve locale, filters, gift/inquiry paths and other functional parameters.
-  for (const key of UTM_KEYS) {
-    url.searchParams.delete(key);
+  // Preserve independent campaign links when no first-site acquisition is known.
+  const source = url.searchParams.get('utm_source');
+  const internalCampaign =
+    (url.searchParams.get('utm_medium') === 'iframe' &&
+      ['painta-embed', 'artbar-theme-page', 'artbar-location-page'].includes(source ?? '')) ||
+    (!source && url.searchParams.get('utm_campaign') === 'home-sessions');
+  if (acquisition || internalCampaign || url.searchParams.has('painta_acquisition_at')) {
+    // Expired forwarded tags must not become a fresh campaign after removing their time.
+    for (const key of UTM_KEYS) {
+      url.searchParams.delete(key);
+    }
   }
   url.searchParams.delete('painta_acquisition_at');
   url.searchParams.delete('painta_acquisition_referrer');

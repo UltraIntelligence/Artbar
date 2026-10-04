@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   ACQUISITION_TTL_MS,
   captureAcquisition,
+  newestAcquisition,
   readAcquisition,
   rememberAcquisition,
   withAcquisition,
@@ -106,6 +107,89 @@ test('unknown origin strips navigation tags rather than labeling direct traffic'
     ).searchParams.get('utm_source'),
     null,
   );
+});
+
+test('independent partner tags survive an unknown origin', () => {
+  const href =
+    'https://booking.artbar.co.jp/themes/paint-pouring?utm_source=partner&utm_medium=referral&utm_campaign=001234&locale=ja';
+  const url = new URL(withAcquisition(href, null));
+  assert.equal(url.searchParams.get('utm_source'), 'partner');
+  assert.equal(url.searchParams.get('utm_campaign'), '001234');
+  assert.equal(url.searchParams.get('locale'), 'ja');
+});
+
+test('an expired forwarded link cannot restart its campaign window', () => {
+  const url = new URL(
+    withAcquisition(
+      'https://booking.artbar.co.jp/?utm_source=google&utm_medium=cpc&painta_acquisition_at=2026-08-01T00%3A00%3A00Z',
+      null,
+    ),
+  );
+  assert.equal(url.searchParams.get('utm_source'), null);
+  assert.equal(url.searchParams.get('painta_acquisition_at'), null);
+});
+
+test('internal navigation preserves newer memory after a failed storage write', () => {
+  const old = captureAcquisition(landing, '', null, now);
+  const current = captureAcquisition(
+    new URL('https://artbar.co.jp/?utm_source=ig&utm_medium=paid'),
+    '',
+    old,
+    now + 1000,
+  );
+  assert.ok(old);
+  assert.ok(current);
+  const next = captureAcquisition(
+    new URL('https://artbar.co.jp/themes/paint-pouring'),
+    '',
+    newestAcquisition(
+      readAcquisition(JSON.stringify(old), now + 2000),
+      readAcquisition(JSON.stringify(current), now + 2000),
+    ),
+    now + 2000,
+    false,
+  );
+  assert.equal(next?.utm.utm_source, 'ig');
+  assert.equal(next?.capturedAt, current.capturedAt);
+});
+
+test('buttons use newer memory when older storage is readable but writes fail', () => {
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const previousNow = Date.now;
+  Date.now = () => now + 2000;
+  const old = captureAcquisition(landing, '', null, now);
+  const current = captureAcquisition(
+    new URL('https://artbar.co.jp/?utm_source=ig&utm_medium=paid'),
+    '',
+    old,
+    now + 1000,
+  );
+  rememberAcquisition(current);
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: {
+      location: { href: 'https://artbar.co.jp/themes/paint-pouring' },
+      localStorage: {
+        getItem: () => JSON.stringify(old),
+        setItem: () => {
+          throw new Error('quota exhausted');
+        },
+      },
+    },
+  });
+  try {
+    const url = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
+    assert.equal(url.searchParams.get('utm_source'), 'ig');
+    assert.equal(url.searchParams.get('painta_acquisition_at'), current?.capturedAt);
+  } finally {
+    Date.now = previousNow;
+    rememberAcquisition(null);
+    if (previousWindow) {
+      Object.defineProperty(globalThis, 'window', previousWindow);
+    } else {
+      Reflect.deleteProperty(globalThis, 'window');
+    }
+  }
 });
 
 test('only the exact Tokyo booking origin is decorated', () => {
