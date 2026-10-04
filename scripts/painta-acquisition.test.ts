@@ -153,7 +153,7 @@ test('internal navigation preserves newer memory after a failed storage write', 
   assert.equal(next?.capturedAt, current.capturedAt);
 });
 
-test('buttons use newer memory when older storage is readable but writes fail', () => {
+test('buttons use newer memory when older storage is readable', () => {
   const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
   const previousNow = Date.now;
   Date.now = () => now + 2000;
@@ -164,20 +164,17 @@ test('buttons use newer memory when older storage is readable but writes fail', 
     old,
     now + 1000,
   );
-  rememberAcquisition(current);
   Object.defineProperty(globalThis, 'window', {
     configurable: true,
     value: {
       location: { href: 'https://artbar.co.jp/themes/paint-pouring' },
       localStorage: {
         getItem: () => JSON.stringify(old),
-        setItem: () => {
-          throw new Error('quota exhausted');
-        },
       },
     },
   });
   try {
+    rememberAcquisition(current);
     const url = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
     assert.equal(url.searchParams.get('utm_source'), 'ig');
     assert.equal(url.searchParams.get('painta_acquisition_at'), current?.capturedAt);
@@ -250,6 +247,42 @@ test('code-driven buttons retain acquisition when browser storage is blocked', (
     const url = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
     assert.equal(url.searchParams.get('utm_campaign'), '001234');
     assert.equal(url.searchParams.get('painta_acquisition_at'), acquisition?.capturedAt);
+  } finally {
+    rememberAcquisition(null);
+    Date.now = clock;
+    if (descriptor) Object.defineProperty(globalThis, 'window', descriptor);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
+
+test('a button on an old tagged page keeps the newer visit stored by another tab', () => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const clock = Date.now;
+  const old = captureAcquisition(landing, '', null, now);
+  const current = captureAcquisition(
+    new URL('https://artbar.co.jp/?utm_source=ig&utm_medium=paid'),
+    '', old, now + 1000,
+  );
+  Object.defineProperty(globalThis, 'window', {
+    configurable: true,
+    value: {
+      location: { href: landing.href },
+      localStorage: { getItem: () => JSON.stringify(current) },
+    },
+  });
+  Date.now = () => now + 2000;
+  try {
+    rememberAcquisition(old);
+    const url = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
+    assert.equal(url.searchParams.get('utm_source'), 'ig');
+    assert.equal(url.searchParams.get('painta_acquisition_at'), current?.capturedAt);
+    window.location.href = `https://artbar.co.jp/en?${landing.searchParams.toString()}`;
+    const translated = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
+    assert.equal(translated.searchParams.get('utm_source'), 'ig');
+    assert.equal(translated.searchParams.get('painta_acquisition_at'), current?.capturedAt);
+    Date.now = () => now + ACQUISITION_TTL_MS + 2000;
+    const expired = new URL(withBrowserAcquisition('https://booking.artbar.co.jp/'));
+    assert.equal(expired.searchParams.has('utm_source'), false);
   } finally {
     rememberAcquisition(null);
     Date.now = clock;

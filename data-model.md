@@ -15,8 +15,11 @@ Theme landing page structure, SEO metadata, sitemap entries, and redirects remai
 `components/PaintaAcquisitionBridge.tsx` and `lib/painta-acquisition.ts` retain
 the most recent tagged or external-referral visit in browser localStorage
 (`artbar.painta.acquisition.v1`) for 30 days. The record holds five UTM fields,
-the original capture time and external referrer origin; it contains no customer
-or GA4 identifiers. Direct/internal navigation preserves the existing record.
+the original capture time and external referrer origin. No separate customer
+or GA4 identifier fields are added, but UTM values are copied from the landing
+URL. Campaign URLs must not include customer identifiers. Direct/internal
+navigation preserves the existing record; newer visits in other tabs update
+open-tab booking links and embeds.
 Restricted storage falls back to memory for the current document.
 If writes fail while an older stored record remains readable, the newer valid
 record in memory wins. Independently tagged booking links keep their tags when
@@ -29,6 +32,10 @@ Painta must support `painta_acquisition_at` and `painta_acquisition_referrer`
 before this producer is deployed. Run `npm run test:acquisition` and verify a
 tagged landing through both language routes, an embed and a booking button.
 This does not backfill historical sources or prove a GA4/Google Ads receipt.
+Capture begins when the client initializes; pre-hydration or JavaScript-disabled
+navigation can still lack evidence. Embeds keep their server-rendered lazy src
+for availability and contain no checkout; decorating a src can restart an
+already-started request, but only click-out booking acquisition is persisted.
 
 ## Editing and recovery
 

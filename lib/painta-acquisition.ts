@@ -11,6 +11,21 @@ export interface Acquisition {
 }
 
 let browserAcquisition: Acquisition | null = null;
+let browserCapturedTags: string | null = null;
+
+/** Navigation and locale changes are not new campaign clicks. */
+export function acquisitionTagSignature(url: URL): string {
+  return JSON.stringify(UTM_KEYS.map((key) => url.searchParams.get(key)?.trim().slice(0, 100) || null));
+}
+
+/** Survives client component remounts within the same document. */
+export function rememberedAcquisitionTagSignature(): string | null {
+  return browserCapturedTags;
+}
+
+export function readRememberedAcquisition(): Acquisition | null {
+  return readAcquisition(JSON.stringify(browserAcquisition));
+}
 
 /** Both candidates have already passed expiry and shape validation. */
 export function newestAcquisition(
@@ -28,6 +43,9 @@ export function newestAcquisition(
 
 export function rememberAcquisition(acquisition: Acquisition | null): void {
   browserAcquisition = acquisition;
+  browserCapturedTags = typeof window === 'undefined'
+    ? null
+    : acquisitionTagSignature(new URL(window.location.href));
 }
 
 /** Buttons navigate in code rather than using an anchor, so decorate at click time. */
@@ -43,15 +61,12 @@ export function withBrowserAcquisition(href: string): string {
   }
   const stored = newestAcquisition(
     readAcquisition(raw),
-    readAcquisition(JSON.stringify(browserAcquisition)),
+    readRememberedAcquisition(),
   );
-  const acquisition = captureAcquisition(
-    new URL(window.location.href),
-    '',
-    stored,
-    Date.now(),
-    false,
-  );
+  const landing = new URL(window.location.href);
+  const acquisition = rememberedAcquisitionTagSignature() === acquisitionTagSignature(landing)
+    ? stored
+    : captureAcquisition(landing, '', stored, Date.now(), false);
   return withAcquisition(href, acquisition);
 }
 

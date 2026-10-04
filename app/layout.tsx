@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import { Josefin_Sans } from 'next/font/google';
 import { cookies, headers } from 'next/headers';
 import { Analytics } from '@vercel/analytics/next';
@@ -118,7 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         >
           <ThemeInjector />
           <ScrollToTop />
-          <PaintaAcquisitionBridge />
+          <Suspense fallback={null}><PaintaAcquisitionBridge /></Suspense>
           <AppChrome>{children}</AppChrome>
         </ContentProvider>
         <Analytics />
